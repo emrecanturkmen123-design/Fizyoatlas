@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {create,act} from 'react-test-renderer';
+import {MuscleStudyActions} from '../app/muscle-study-actions.tsx';
+import {Disclosure} from '../app/disclosure.tsx';
+import {Button} from '../components/ui/button.tsx';
+globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+globalThis.window={addEventListener(){},removeEventListener(){},matchMedia:()=>({matches:false,addEventListener(){},removeEventListener(){}})};
+globalThis.document={activeElement:null,addEventListener(){},removeEventListener(){}};
+const calls={quiz:0,motion:0,case:0,favorite:0,retry:0},props={onQuiz:()=>calls.quiz++,onMotion:()=>calls.motion++,onCase:()=>calls.case++,onFavorite:()=>calls.favorite++,onRetry:()=>calls.retry++,favorite:false,pending:false};
+let root;await act(async()=>{root=create(React.createElement(MuscleStudyActions,props));});
+const visible=root.root.findAllByType(Button);assert.equal(visible.length,2,'two primary study actions are visible');await act(async()=>{visible[0].props.onClick();visible[1].props.onClick();});assert.equal(calls.quiz,1);assert.equal(calls.motion,1);
+const disclosure=root.root.findByType(Disclosure);assert.equal(disclosure.props.title,'Vaka ve favoriler');const secondary=disclosure.props.children.props.children.filter(Boolean);assert.equal(secondary.length,2);secondary[0].props.onClick();secondary[1].props.onClick();assert.equal(calls.case,1);assert.equal(calls.favorite,1);
+await act(async()=>root.update(React.createElement(MuscleStudyActions,{...props,pending:true,favorite:true,error:'Kayıt başarısız'})));assert.equal(root.root.findAllByProps({role:'alert'}).length,1);const saved=root.root.findByType(Disclosure).props.children.props.children.filter(Boolean).at(-1);assert(saved.props.disabled);assert.equal(saved.props['aria-pressed'],true);
+await act(async()=>root.update(React.createElement(MuscleStudyActions,{...props,onMotion:undefined,onCase:undefined,error:'Kayıt başarısız'})));assert.equal(root.root.findAllByType(Button).length,2,'quiz plus the error retry');await act(async()=>root.root.findAllByType(Button).at(-1).props.onClick());assert.equal(calls.retry,1);await act(async()=>root.unmount());
+console.log('PASS: primary quiz/motion, folded case/favorite callbacks, pending disabled state, favorite pressed state, visible save error and retry; optional actions removed cleanly. Browser focus and pixels are not tested.');

@@ -1,0 +1,25 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {DatabaseSync} from 'node:sqlite';import worker from '../server/worker.ts';import {questionDefinition} from '../app/learning-data.ts';import {reviewQuestions} from '../app/quiz-data.ts';
+const sqlite=new DatabaseSync(':memory:');for(const file of fs.readdirSync('drizzle').filter(x=>x.endsWith('.sql')).sort())sqlite.exec(fs.readFileSync('drizzle/'+file,'utf8'));
+const DB={prepare(sql){const statement=sqlite.prepare(sql);let params=[];return{bind(...values){params=values;return this;},async all(){return{results:statement.all(...params)};},async run(){return statement.run(...params);}}}};
+const env={DB,ASSETS:{async fetch(request){return new Response(new URL(request.url).pathname==='/'?'atlas shell':'asset');}}};
+const request=(path,user='student-a',body,origin='https://atlas.test')=>new Request('https://atlas.test'+path,{method:body===undefined?'GET':'PUT',headers:{...(user?{'oai-authenticated-user-id':user,'oai-authenticated-user-email':user+'@example.test'}:{}),'Content-Type':'application/json',Origin:origin},...(body===undefined?{}:{body:JSON.stringify(body)})});
+const call=(path,user,body,origin)=>worker.fetch(request(path,user,body,origin),env);
+assert.equal((await call('/api/learning','')).status,401);assert.equal(await(await call('/','')).text(),'atlas shell');
+assert.equal((await call('/api/learning/favorite','student-a',{key:'deltoid',favorite:true},'https://other.test')).status,403);
+assert.equal((await call('/api/learning/favorite','student-a',{key:'unknown',favorite:true})).status,400);
+assert.equal((await call('/api/learning/favorite','student-a',{key:'deltoid',favorite:true,userId:'student-b'})).status,200);
+await call('/api/learning/favorite','student-a',{key:'deltoid',favorite:true});
+assert.deepEqual((await(await call('/api/learning','student-a')).json()).favorites,['deltoid']);assert.deepEqual((await(await call('/api/learning','student-b')).json()).favorites,[]);
+const q=questionDefinition('biceps brachii-nerve'),wrong=q.options.find(x=>x!==q.answer);
+await call('/api/learning/answer','student-a',{questionId:'biceps brachii-nerve',choice:wrong,correct:true});
+let data=await(await call('/api/learning','student-a')).json();assert.deepEqual(data.answers,[{questionId:'biceps brachii-nerve',correct:false}]);
+const atlas=JSON.parse(fs.readFileSync('public/models/atlas.json'));const review=reviewQuestions(atlas,data.answers.filter(x=>!x.correct).map(x=>x.questionId));assert.equal(review.length,1);assert.equal(review[0].answer,q.answer);
+await call('/api/learning/answer','student-a',{questionId:review[0].id,choice:review[0].answer});data=await(await call('/api/learning','student-a')).json();assert.equal(data.answers.length,1);assert.equal(data.answers.filter(x=>!x.correct).length,0);
+assert.deepEqual((await(await call('/api/learning','student-b')).json()).answers,[]);
+await call('/api/learning/favorite','student-b',{key:'deltoid',favorite:false});assert.equal((await(await call('/api/learning','student-a')).json()).favorites.length,1);
+await call('/api/learning/favorite','student-a',{key:'deltoid',favorite:false});assert.equal((await(await call('/api/learning','student-a')).json()).favorites.length,0);
+assert.equal((await call('/api/learning/answer','student-a',{questionId:'bad-id',choice:'x'})).status,400);
+assert.equal((await worker.fetch(request('/api/learning'),{})).status,503);
+assert.equal((await call('/api/learning','student-a')).headers.get('cache-control'),'private, no-store');
+for(const questionId of ['soleus-action','case:thoracodorsal','journey:ankle-sprain:9','journey:stroke:4']){const q=questionDefinition(questionId);assert(q);const wrong=q.options.find(x=>x!==q.answer);assert.equal((await call('/api/learning/answer','new-student',{questionId,choice:wrong})).status,200);let saved=await(await call('/api/learning','new-student')).json();assert(saved.answers.some(a=>a.questionId===questionId&&!a.correct));assert.equal((await call('/api/learning/answer','new-student',{questionId,choice:q.answer})).status,200);saved=await(await call('/api/learning','new-student')).json();assert(saved.answers.some(a=>a.questionId===questionId&&a.correct));assert.equal(reviewQuestions(atlas,[questionId])[0].answer,q.answer);}
+console.log('PASS: generated migrations on SQLite; identity isolation; CSRF/input guards; idempotent favorites; server-checked answers; wrong-answer review and correction; missing-storage handling; private caching.');

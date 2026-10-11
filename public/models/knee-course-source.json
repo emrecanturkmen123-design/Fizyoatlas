@@ -1,0 +1,359 @@
+{
+  "source": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "archiveURL": "https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip",
+  "archiveSHA256": "e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    "Gauthier Kervyn / Z-Anatomy",
+    "BodyParts3D / The Database Center for Life Science"
+  ],
+  "baseRegistration": {
+    "axes": "x,z,-y",
+    "scale": 0.9850303709151661,
+    "translation": [
+      7.034327618495536e-06,
+      0.03160419848501905,
+      0.0024510506019518874
+    ]
+  },
+  "localRegistration": {
+    "kneel": {
+      "scale": 1.0068587965216325,
+      "translation": [
+        -0.002353363820870119,
+        -0.010857477146321237,
+        0.008093848469726495
+      ],
+      "envelopeRmsMm": 5.671519177750528,
+      "bones": [
+        "Femur",
+        "Tibia"
+      ]
+    },
+    "kneer": {
+      "scale": 0.9687014967774419,
+      "translation": [
+        -0.00042115964838551623,
+        0.0038785718963958438,
+        0.007112253589964836
+      ],
+      "envelopeRmsMm": 5.227632961599063,
+      "bones": [
+        "Femur",
+        "Tibia"
+      ]
+    }
+  },
+  "adaptations": [
+    "Loaded requested source objects only with embedded scripts disabled",
+    "Evaluated and triangulated whole source surfaces",
+    "Combined superficial and deep MCL components without altering either surface",
+    "Used the same bone-envelope registration as the existing ACL",
+    "Quantized signed-short normals; no pathology, graft or dynamic contact simulation"
+  ],
+  "parts": [
+    {
+      "id": "ZA-knee-course-left-posterior-cruciate-ligament",
+      "name": "Left posterior cruciate ligament",
+      "conceptId": "ZA-knee-course-left-posterior-cruciate-ligament",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 0,
+      "normals": 4752,
+      "indices": 7128,
+      "vertexCount": 396,
+      "indexCount": 2364,
+      "bounds": [
+        [
+          0.05836622292483794,
+          0.43186937626805794,
+          -0.04389194393012048
+        ],
+        [
+          0.08150177468890231,
+          0.4694973080436042,
+          -0.0254200548517338
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Posterior cruciate ligament.l"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    },
+    {
+      "id": "ZA-knee-course-right-posterior-cruciate-ligament",
+      "name": "Right posterior cruciate ligament",
+      "conceptId": "ZA-knee-course-right-posterior-cruciate-ligament",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 16584,
+      "normals": 21336,
+      "indices": 23712,
+      "vertexCount": 396,
+      "indexCount": 2364,
+      "bounds": [
+        [
+          -0.08108478067068159,
+          0.42982724220417107,
+          -0.0429034140318169
+        ],
+        [
+          -0.05882600545806453,
+          0.4660291743495074,
+          -0.025131560957327107
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Posterior cruciate ligament.r"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    },
+    {
+      "id": "ZA-knee-course-left-medial-collateral-ligament",
+      "name": "Left medial collateral ligament",
+      "conceptId": "ZA-knee-course-left-medial-collateral-ligament",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 33168,
+      "normals": 35688,
+      "indices": 36948,
+      "vertexCount": 210,
+      "indexCount": 1224,
+      "bounds": [
+        [
+          0.029743147444907275,
+          0.4093281158092644,
+          -0.028061859819927412
+        ],
+        [
+          0.06394070123112729,
+          0.47174048893211495,
+          -0.002246100452748775
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Superficial part of tibial collateral ligament.l",
+        "Deep part of tibial collateral ligament.l"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    },
+    {
+      "id": "ZA-knee-course-right-medial-collateral-ligament",
+      "name": "Right medial collateral ligament",
+      "conceptId": "ZA-knee-course-right-medial-collateral-ligament",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 41844,
+      "normals": 46428,
+      "indices": 48720,
+      "vertexCount": 382,
+      "indexCount": 2256,
+      "bounds": [
+        [
+          -0.06418921148208107,
+          0.4081402362196986,
+          -0.02767325202143502
+        ],
+        [
+          -0.03116966830231365,
+          0.46822257850672316,
+          -0.002738419976096076
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Superficial part of tibial collateral ligament.r",
+        "Deep part of tibial collateral ligament.r"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    },
+    {
+      "id": "ZA-knee-course-left-lateral-collateral-ligament",
+      "name": "Left lateral collateral ligament",
+      "conceptId": "ZA-knee-course-left-lateral-collateral-ligament",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 57744,
+      "normals": 58248,
+      "indices": 58500,
+      "vertexCount": 42,
+      "indexCount": 240,
+      "bounds": [
+        [
+          0.10823234363939696,
+          0.4249035801786882,
+          -0.032884516212410966
+        ],
+        [
+          0.1169563257086029,
+          0.47700043066768427,
+          -0.02475382049208779
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Fibular collateral ligament.l"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    },
+    {
+      "id": "ZA-knee-course-right-lateral-collateral-ligament",
+      "name": "Right lateral collateral ligament",
+      "conceptId": "ZA-knee-course-right-lateral-collateral-ligament",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 59460,
+      "normals": 59964,
+      "indices": 60216,
+      "vertexCount": 42,
+      "indexCount": 240,
+      "bounds": [
+        [
+          -0.11519569747352072,
+          0.42312543146235676,
+          -0.03231313886845577
+        ],
+        [
+          -0.10680233137541982,
+          0.4732479483638584,
+          -0.02449057512731476
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Fibular collateral ligament.r"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    },
+    {
+      "id": "ZA-knee-course-left-medial-meniscus",
+      "name": "Left medial meniscus",
+      "conceptId": "ZA-knee-course-left-medial-meniscus",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 61176,
+      "normals": 62904,
+      "indices": 63768,
+      "vertexCount": 144,
+      "indexCount": 852,
+      "bounds": [
+        [
+          0.038866119368363795,
+          0.43672500040264234,
+          -0.05020854558213147
+        ],
+        [
+          0.06446807426396384,
+          0.4515472499591488,
+          -0.005879998736791849
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Medial meniscus.l"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    },
+    {
+      "id": "ZA-knee-course-right-medial-meniscus",
+      "name": "Right medial meniscus",
+      "conceptId": "ZA-knee-course-right-medial-meniscus",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 67176,
+      "normals": 68904,
+      "indices": 69768,
+      "vertexCount": 144,
+      "indexCount": 852,
+      "bounds": [
+        [
+          -0.06469661268297515,
+          0.4344988509572656,
+          -0.04898063309767668
+        ],
+        [
+          -0.04006490452938454,
+          0.4487593762470082,
+          -0.006332021567045983
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Medial meniscus.r"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    },
+    {
+      "id": "ZA-knee-course-left-lateral-meniscus",
+      "name": "Left lateral meniscus",
+      "conceptId": "ZA-knee-course-left-lateral-meniscus",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 73176,
+      "normals": 76008,
+      "indices": 77424,
+      "vertexCount": 236,
+      "indexCount": 1404,
+      "bounds": [
+        [
+          0.0732822511690061,
+          0.44179083776759487,
+          -0.03775152738959939
+        ],
+        [
+          0.106835077401225,
+          0.45698042844151043,
+          0.0006554959021858832
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Lateral meniscus.l"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    },
+    {
+      "id": "ZA-knee-course-right-lateral-meniscus",
+      "name": "Right lateral meniscus",
+      "conceptId": "ZA-knee-course-right-lateral-meniscus",
+      "system": "connective",
+      "chunk": 104,
+      "positions": 83040,
+      "normals": 85872,
+      "indices": 87288,
+      "vertexCount": 236,
+      "indexCount": 1404,
+      "bounds": [
+        [
+          -0.10545801785202429,
+          0.4393727064122843,
+          -0.036995703125194304
+        ],
+        [
+          -0.07317675546990085,
+          0.45398665155741424,
+          -4.420498260533038e-05
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObjects": [
+        "Lateral meniscus.r"
+      ],
+      "sourceSelection": "Evaluated whole source objects; superficial and deep MCL components combined without changing geometry"
+    }
+  ],
+  "sha256": "f5ae4d92d43538af39dac937365cac9e07e3a7bd0e36a2c2b2c9b270074f1001"
+}

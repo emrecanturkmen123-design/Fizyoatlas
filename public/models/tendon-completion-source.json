@@ -1,0 +1,195 @@
+{
+  "source": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "archiveURL": "https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip",
+  "archiveSHA256": "e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    "Gauthier Kervyn / Z-Anatomy",
+    "BodyParts3D / The Database Center for Life Science"
+  ],
+  "newLocalRegistration": {
+    "elbowr": {
+      "scale": 0.972094796517274,
+      "translation": [
+        -0.0024323906473039947,
+        0.03511550448187806,
+        -0.00046532857636958844
+      ],
+      "envelopeRmsMm": 1.164379418692754
+    },
+    "elbowl": {
+      "scale": 0.975081035391091,
+      "translation": [
+        0.0017725009897618382,
+        0.03249270679721117,
+        -0.00018626782345470758
+      ],
+      "envelopeRmsMm": 1.0950256280196367
+    }
+  },
+  "parts": [
+    {
+      "id": "ZA-tendon-completion-right-biceps-long-head-tendon",
+      "name": "Right biceps long head tendon",
+      "sourceObjects": [
+        "Long head of biceps brachii.r"
+      ],
+      "sourceSelection": "Proximal connected component of source Tendon-material faces; no short-head proximal tendon or generated band",
+      "registration": "shoulderr",
+      "vertices": 335,
+      "triangles": 635,
+      "positionsSHA256": "7c59596dd61592881c9fc0c656ba54d6c894d6de69147ea9c702389508c29099",
+      "normalsSHA256": "32230bed7d7e082a6e47a28563edbecc9fc46324bff587afc10ddde06afc9ff6",
+      "indicesSHA256": "ee6ef411a6dc0ad367c2176f57c26164bde7cce382f57585efea8082d8836d4f",
+      "additionalUniformTranslationMm": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ZA-tendon-completion-right-biceps-distal-tendon",
+      "name": "Right biceps distal tendon",
+      "sourceObjects": [
+        "Long head of biceps brachii.r"
+      ],
+      "sourceSelection": "Distal connected component of source Tendon-material faces; no short-head proximal tendon or generated band",
+      "registration": "elbowr",
+      "vertices": 274,
+      "triangles": 510,
+      "positionsSHA256": "7cc27c4b5b3f266b92b529efc9e2d8a3611ab70d14fe0b63ddbdbece18ea94c4",
+      "normalsSHA256": "3e810b5e1af5f58d22d11a196edce3e433621c58146e2c00e081ba049b41f91d",
+      "indicesSHA256": "7f97ba650146bc83d1e345c6218eac1e3bee262e3499754aafaf531cec0482d5",
+      "additionalUniformTranslationMm": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ZA-tendon-completion-right-common-extensor",
+      "name": "Right common extensor tendon",
+      "sourceObjects": [
+        "Common extensor tendon.or"
+      ],
+      "sourceSelection": "Evaluated source common extensor origin footprint; uniform reference-bone translation; not a complete tendon body",
+      "registration": "elbowr",
+      "vertices": 330,
+      "triangles": 656,
+      "positionsSHA256": "7cca7766eea8496fc6a23751c99472cf653b78be79abc2a54e468e72b059d39c",
+      "normalsSHA256": "879f73a90e013d17542760a19a93160a8c06ac24ea208e682bcdc7e841d65da5",
+      "indicesSHA256": "72719df796a6475660c540ecfb61cd0c7644121962913bf2c2ca8a8d3fa15512",
+      "additionalUniformTranslationMm": [
+        -0.2478096768991217,
+        -0.1955384862777354,
+        0.7793270425484542
+      ]
+    },
+    {
+      "id": "ZA-tendon-completion-right-quadriceps",
+      "name": "Right quadriceps tendon",
+      "sourceObjects": [
+        "Rectus femoris muscle.r",
+        "Vastus intermedius muscle.r",
+        "Vastus lateralis muscle.r"
+      ],
+      "sourceSelection": "Distal source Tendon-material components proximal to the existing patellar extraction boundary; three source muscle regions, not a reconstruction of every quadriceps tendon layer",
+      "registration": "kneer",
+      "vertices": 1630,
+      "triangles": 2935,
+      "positionsSHA256": "304dfe9264f5bf2d10f52d2deb98b08a06b0e8f51a8937afe5b636a0474b54dd",
+      "normalsSHA256": "7a0d531e93671589eba3a9ab7c25e91eed28512802ad0acbbf537b566133d4a6",
+      "indicesSHA256": "bfe17be00930241e816e94ab504b03b3d3281f1982551157b82ee3b67adb4803",
+      "additionalUniformTranslationMm": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ZA-tendon-completion-left-biceps-long-head-tendon",
+      "name": "Left biceps long head tendon",
+      "sourceObjects": [
+        "Long head of biceps brachii.l"
+      ],
+      "sourceSelection": "Proximal connected component of source Tendon-material faces; no short-head proximal tendon or generated band",
+      "registration": "shoulderl",
+      "vertices": 335,
+      "triangles": 635,
+      "positionsSHA256": "01046d25d7c606ded3bac9b2f0f0767688a7f88e6e0d55d041b0385bcb3997f8",
+      "normalsSHA256": "4ed19333c70f42e61e1a48107a677f9b062aff2ec9127b8262a29f0cea778ae9",
+      "indicesSHA256": "090fe7c45865c5ef6c20c1f639393013f4a81814c4b5e6f6458e25726ac51984",
+      "additionalUniformTranslationMm": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ZA-tendon-completion-left-biceps-distal-tendon",
+      "name": "Left biceps distal tendon",
+      "sourceObjects": [
+        "Long head of biceps brachii.l"
+      ],
+      "sourceSelection": "Distal connected component of source Tendon-material faces; no short-head proximal tendon or generated band",
+      "registration": "elbowl",
+      "vertices": 274,
+      "triangles": 510,
+      "positionsSHA256": "5408dc0327e19eeabceac1ef2acb6db667585514d160b74b371954c09676e2e8",
+      "normalsSHA256": "bfbae5fac8d927e3500882c42258f3e17b173a8d222e6c402665b4c5593edb1d",
+      "indicesSHA256": "5e34e98c5b5b43cf387016a39b5d64b8935c901f4d6011d368f87336ddf62fd9",
+      "additionalUniformTranslationMm": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ZA-tendon-completion-left-common-extensor",
+      "name": "Left common extensor tendon",
+      "sourceObjects": [
+        "Common extensor tendon.ol"
+      ],
+      "sourceSelection": "Evaluated source common extensor origin footprint; uniform reference-bone translation; not a complete tendon body",
+      "registration": "elbowl",
+      "vertices": 330,
+      "triangles": 656,
+      "positionsSHA256": "e88cd1c24baa3255d87295fd12dd8e086c7d8bf8aef4f883f5a9311970dd8a60",
+      "normalsSHA256": "8277057596898a6e02f3f001dc9b369c0ab44123cdef449def7b8784fa47b74d",
+      "indicesSHA256": "4f0eec6a8f45b6a8ec2dba6eff0479de1f1752bcc065bb5911c12165da7b7137",
+      "additionalUniformTranslationMm": [
+        0.1488320795254433,
+        -0.4697162141312772,
+        0.803611719647608
+      ]
+    },
+    {
+      "id": "ZA-tendon-completion-left-quadriceps",
+      "name": "Left quadriceps tendon",
+      "sourceObjects": [
+        "Rectus femoris muscle.l",
+        "Vastus intermedius muscle.l",
+        "Vastus lateralis muscle.l"
+      ],
+      "sourceSelection": "Distal source Tendon-material components proximal to the existing patellar extraction boundary; three source muscle regions, not a reconstruction of every quadriceps tendon layer",
+      "registration": "kneel",
+      "vertices": 1630,
+      "triangles": 2935,
+      "positionsSHA256": "d23c71db14d6f9149d77973b02b42a798b59449cf807ebad8f36cff21e60f553",
+      "normalsSHA256": "9caed89f8378f17869dfeb0a763cdf91ce2811bb02079cff4c9e776a87e992e3",
+      "indicesSHA256": "1cd58ee23f071dd479da2e13f666ffd8e7fef50d180e83736d8388eb4c1b9754",
+      "additionalUniformTranslationMm": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "unavailableFullBodies": [
+    "Supraspinatus: full source muscle has no Tendon material",
+    "Subscapularis: full source muscle has no Tendon material",
+    "Teres minor: full source muscle has no Tendon material",
+    "Common extensor: source provides an origin footprint, not a shared tendon body"
+  ],
+  "limitations": "Healthy educational reference anatomy. Source selections and reference registration are not patient-specific segmentation, strain, rupture or healing simulations. Quadriceps shows the available distal material regions, not all anatomical layers."
+}

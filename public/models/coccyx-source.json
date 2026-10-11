@@ -1,0 +1,29 @@
+{
+  "source": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "archiveURL": "https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip",
+  "archiveSHA256": "e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736",
+  "retrieved": "2026-09-14",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    "Gauthier Kervyn / Z-Anatomy",
+    "BodyParts3D / The Database Center for Life Science"
+  ],
+  "sourceObject": "Coccyx",
+  "transform": {
+    "axes": "x,z,-y",
+    "scale": 1.0677441713226552,
+    "translation": [
+      -0.0006524064785855065,
+      -0.05271228614980894,
+      -0.010287260415707995
+    ],
+    "registration": "Uniform scale and translation fitted to sacrum envelope for this coccyx only",
+    "sacrumEnvelopeRmsMm": 7.761704107283693
+  },
+  "adaptations": [
+    "Object world transform",
+    "Uniform registration to reference atlas",
+    "Triangulation and quantized normals"
+  ],
+  "sha256": "b7b54761aef821d0757bd9341dc9d2c4b5b32f6b3aa9df117ccf67dd5ccc106d"
+}

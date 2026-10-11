@@ -1,0 +1,7 @@
+import {fileURLToPath} from 'node:url';
+import {defineConfig} from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/postcss';
+import worker from './server/worker';
+const path=(relative:string)=>fileURLToPath(new URL(relative,import.meta.url));
+export default defineConfig({root:path('./web'),publicDir:path('./public'),plugins:[react(),{name:'atlas-api-preview',apply:'serve',configureServer(server){server.middlewares.use(async(req,res,next)=>{if(!req.url?.startsWith('/api/'))return next();try{const headers=new Headers();for(const [key,value] of Object.entries(req.headers))if(value)headers.set(key,Array.isArray(value)?value.join(','):value);const chunks:Buffer[]=[];for await(const chunk of req)chunks.push(Buffer.from(chunk));const response=await worker.fetch(new Request('http://terminal.local:4173'+req.url,{method:req.method,headers,...(!['GET','HEAD'].includes(req.method??'GET')?{body:Buffer.concat(chunks).toString()}: {})}),{});res.statusCode=response.status;response.headers.forEach((value,key)=>res.setHeader(key,value));res.end(await response.text());}catch{res.statusCode=503;res.setHeader('Content-Type','application/json');res.end(JSON.stringify({error:'Önizlemede kayıt alanı kullanılamıyor.'}));}});}}],resolve:{alias:{'@':path('./')}},css:{postcss:{plugins:[tailwindcss()]}},server:{host:'0.0.0.0',allowedHosts:['terminal.local'],watch:{usePolling:true}},build:{outDir:path('./dist/client'),emptyOutDir:true}});

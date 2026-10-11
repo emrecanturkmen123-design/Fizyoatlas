@@ -1,0 +1,116 @@
+{
+  "v44MainGzipBytes": 413650,
+  "main": {
+    "file": "index-CWtyyb7l.js",
+    "bytes": 834697,
+    "gzipBytes": 257602
+  },
+  "files": [
+    {
+      "file": "index-CWtyyb7l.js",
+      "bytes": 834697,
+      "gzipBytes": 257602
+    },
+    {
+      "file": "three.module-BBNT-9nV.js",
+      "bytes": 497898,
+      "gzipBytes": 123850
+    },
+    {
+      "file": "scene-DPfe3G9f.js",
+      "bytes": 80229,
+      "gzipBytes": 25647
+    },
+    {
+      "file": "clinical-panel-D7ijFHHC.js",
+      "bytes": 27966,
+      "gzipBytes": 9964
+    },
+    {
+      "file": "select-6X4GAHoC.js",
+      "bytes": 26997,
+      "gzipBytes": 9938
+    },
+    {
+      "file": "knee-course-BdNQ2nsE.js",
+      "bytes": 24353,
+      "gzipBytes": 8282
+    },
+    {
+      "file": "quiz-panel-COTszd86.js",
+      "bytes": 15611,
+      "gzipBytes": 5896
+    },
+    {
+      "file": "anatomy-lab-D11_jLLV.js",
+      "bytes": 14641,
+      "gzipBytes": 5577
+    },
+    {
+      "file": "learning-panel-CAMQ6zQb.js",
+      "bytes": 8527,
+      "gzipBytes": 3063
+    },
+    {
+      "file": "shoulder-panel-Bl0--5Ix.js",
+      "bytes": 8024,
+      "gzipBytes": 2896
+    },
+    {
+      "file": "elbow-panel-B4ZuVj-u.js",
+      "bytes": 7145,
+      "gzipBytes": 2672
+    },
+    {
+      "file": "gait-motion-C6jlxeTi.js",
+      "bytes": 6267,
+      "gzipBytes": 2783
+    },
+    {
+      "file": "lower-panel-B2QFqN83.js",
+      "bytes": 5873,
+      "gzipBytes": 2234
+    },
+    {
+      "file": "notebook-panel-BfQ64eGn.js",
+      "bytes": 5493,
+      "gzipBytes": 2007
+    },
+    {
+      "file": "knee-panel-CO8TYxoM.js",
+      "bytes": 4985,
+      "gzipBytes": 2000
+    },
+    {
+      "file": "gait-panel-B8g-_xEU.js",
+      "bytes": 4873,
+      "gzipBytes": 2036
+    },
+    {
+      "file": "finding-projection-DsT-DCp5.js",
+      "bytes": 3901,
+      "gzipBytes": 1863
+    },
+    {
+      "file": "spine-panel-BaJPWSOw.js",
+      "bytes": 2059,
+      "gzipBytes": 981
+    },
+    {
+      "file": "motion-controls-BJ2YYqhJ.js",
+      "bytes": 903,
+      "gzipBytes": 503
+    },
+    {
+      "file": "model-download-D3q2fZaq.js",
+      "bytes": 408,
+      "gzipBytes": 294
+    },
+    {
+      "file": "study-topics-3qHBu0k9.js",
+      "bytes": 317,
+      "gzipBytes": 246
+    }
+  ],
+  "note": "Build file sizes, not measured browser transfer, startup latency or FPS. Full model geometry unchanged."
+}

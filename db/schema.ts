@@ -1,0 +1,10 @@
+import {sqliteTable,text,integer,primaryKey,index} from 'drizzle-orm/sqlite-core';
+export const favorites=sqliteTable('learning_favorites',{userId:text('user_id').notNull(),muscleKey:text('muscle_key').notNull()},t=>[primaryKey({columns:[t.userId,t.muscleKey]})]);
+export const answers=sqliteTable('learning_answers',{userId:text('user_id').notNull(),questionId:text('question_id').notNull(),correct:integer('correct').notNull(),updatedAt:integer('updated_at').notNull()},t=>[primaryKey({columns:[t.userId,t.questionId]})]);
+export const attempts=sqliteTable('learning_attempts',{userId:text('user_id').notNull(),attemptId:text('attempt_id').notNull(),questionId:text('question_id').notNull(),correct:integer('correct').notNull(),answeredAt:integer('answered_at').notNull()},t=>[primaryKey({columns:[t.userId,t.attemptId]}),index('learning_attempts_user_time').on(t.userId,t.answeredAt)]);
+export const caseProgress=sqliteTable('case_progress',{userId:text('user_id').notNull(),caseId:text('case_id').notNull(),mode:text('mode').notNull(),payload:text('payload').notNull(),updatedAt:integer('updated_at').notNull(),revision:integer('revision').notNull().default(0)},t=>[primaryKey({columns:[t.userId,t.caseId,t.mode]})]);
+
+export const notebook=sqliteTable('study_notebook',{userId:text('user_id').notNull(),entryId:text('entry_id').notNull(),payload:text('payload').notNull(),updatedAt:integer('updated_at').notNull(),revision:integer('revision').notNull().default(0)},t=>[primaryKey({columns:[t.userId,t.entryId]})]);
+export const courseProgress=sqliteTable('course_progress',{userId:text('user_id').notNull(),courseId:text('course_id').notNull(),payload:text('payload').notNull(),updatedAt:integer('updated_at').notNull(),revision:integer('revision').notNull().default(0)},t=>[primaryKey({columns:[t.userId,t.courseId]})]);
+
+export const quizSessions=sqliteTable('quiz_sessions',{userId:text('user_id').notNull(),sessionKey:text('session_key').notNull(),payload:text('payload').notNull(),updatedAt:integer('updated_at').notNull(),revision:integer('revision').notNull().default(0)},t=>[primaryKey({columns:[t.userId,t.sessionKey]})]);

@@ -1,0 +1,10 @@
+import fs from 'node:fs';import zlib from 'node:zlib';import * as T from 'three';
+import {createGaitRig,updateGaitRig} from '../app/gait-rig.ts';import {GAIT_SAMPLES,gaitBoneMatrix,gaitSegment} from '../app/gait-motion.ts';import {GAIT_PHASES} from '../app/gait-data.ts';
+const atlas=JSON.parse(fs.readFileSync('public/models/atlas.json')),geometries=new Map(),chunks=new Map();
+for(const p of atlas.parts.filter(p=>['skeletal','muscular'].includes(p.system))){if(!chunks.has(p.chunk)){const b=fs.readFileSync('public'+atlas.chunks[p.chunk].url);chunks.set(p.chunk,b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength));}const b=chunks.get(p.chunk),g=new T.BufferGeometry();g.setAttribute('position',new T.BufferAttribute(new Float32Array(b,p.positions,p.vertexCount*3),3));g.setIndex(new T.BufferAttribute(new Uint32Array(b,p.indices,p.indexCount),1));geometries.set(p.id,g);}
+const rig=createGaitRig(atlas,geometries),scenes=[];
+for(let i=0;i<8;i++){const p=GAIT_SAMPLES[i];updateGaitRig(rig,{progress:p,playing:false,speed:1,muscles:true,plane:false});const objects=[];
+for(const {part,mesh} of rig.bones){if(!gaitSegment(part)&&!/hip bone|sacrum|lumbar/i.test(part.name))continue;const g=mesh.geometry.clone().applyMatrix4(gaitBoneMatrix(part,rig.pose));objects.push({name:part.name,color:/right/i.test(part.name)?[.69,.62,.46]:[.85,.78,.65],p:Array.from(g.attributes.position.array),i:Array.from(g.index.array)});g.dispose();}
+for(const {part,mesh} of rig.muscles.filter(m=>m.mesh.visible))objects.push({name:part.name,color:[.18,.55,.63],p:Array.from(mesh.geometry.attributes.position.array),i:Array.from(mesh.geometry.index.array)});
+scenes.push({name:GAIT_PHASES[i].name,progress:p,contacts:Object.fromEntries(['right','left'].map(s=>[s,{point:rig.pose.legs[s].contact.toArray(),phase:rig.pose.legs[s].phase}])),objects});}
+fs.mkdirSync('/tmp/gait-review',{recursive:true});fs.writeFileSync('/tmp/gait-review/poses.json.gz',zlib.gzipSync(JSON.stringify(scenes)));console.log('Exported eight production poses with optional muscles');

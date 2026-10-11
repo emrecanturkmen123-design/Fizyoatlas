@@ -1,0 +1,132 @@
+[
+  {
+    "id": "O3D-tendon-right-supraspinatus-tendon",
+    "vertices": 145,
+    "triangles": 228,
+    "spanMm": [
+      14.97665023803711,
+      14.172554016113281,
+      18.641504287719727
+    ],
+    "boneVertexMinMm": 1.103153602383003,
+    "muscleVertexMinMm": 0.38410923630907023,
+    "muscleVertexP90Mm": 3.5487459498998537
+  },
+  {
+    "id": "O3D-tendon-right-subscapularis-tendon",
+    "vertices": 105,
+    "triangles": 138,
+    "spanMm": [
+      20.126968383789062,
+      32.517791748046875,
+      14.094532012939453
+    ],
+    "boneVertexMinMm": 0.6468983405868184,
+    "muscleVertexMinMm": 0.649986787853691,
+    "muscleVertexP90Mm": 12.122434305582185
+  },
+  {
+    "id": "O3D-tendon-right-teres-minor-tendon",
+    "vertices": 137,
+    "triangles": 223,
+    "spanMm": [
+      7.297217845916748,
+      15.292167663574219,
+      18.28940200805664
+    ],
+    "boneVertexMinMm": 0.3919343571699506,
+    "muscleVertexMinMm": 0.13991635449383177,
+    "muscleVertexP90Mm": 5.0484288546148965
+  },
+  {
+    "id": "O3D-tendon-right-common-extensor-tendon",
+    "vertices": 447,
+    "triangles": 754,
+    "spanMm": [
+      20.424365997314453,
+      66.10560607910156,
+      11.794012069702148
+    ],
+    "boneVertexMinMm": 0.8185081834340632,
+    "muscleVertexMinMm": 0.18579381238132156,
+    "muscleVertexP90Mm": 5.187557207426468
+  },
+  {
+    "id": "O3D-tendon-right-quadriceps-tendon",
+    "vertices": 963,
+    "triangles": 1800,
+    "spanMm": [
+      83.4831314086914,
+      40.748565673828125,
+      38.93423843383789
+    ],
+    "boneVertexMinMm": 0.9087763110945525,
+    "muscleVertexMinMm": 0.6038488303031739,
+    "muscleVertexP90Mm": 7.892097928841221
+  },
+  {
+    "id": "O3D-tendon-left-supraspinatus-tendon",
+    "vertices": 145,
+    "triangles": 228,
+    "spanMm": [
+      14.980420112609863,
+      14.176249504089355,
+      18.64620018005371
+    ],
+    "boneVertexMinMm": 0.3297103494168206,
+    "muscleVertexMinMm": 0.9847875021508502,
+    "muscleVertexP90Mm": 3.8141447698333772
+  },
+  {
+    "id": "O3D-tendon-left-subscapularis-tendon",
+    "vertices": 105,
+    "triangles": 138,
+    "spanMm": [
+      20.132049560546875,
+      32.52601623535156,
+      14.098085403442383
+    ],
+    "boneVertexMinMm": 0.8666726364258138,
+    "muscleVertexMinMm": 0.47880890994484165,
+    "muscleVertexP90Mm": 12.465518681901614
+  },
+  {
+    "id": "O3D-tendon-left-teres-minor-tendon",
+    "vertices": 137,
+    "triangles": 223,
+    "spanMm": [
+      7.299065589904785,
+      15.295982360839844,
+      18.294010162353516
+    ],
+    "boneVertexMinMm": 0.5748500974008387,
+    "muscleVertexMinMm": 0.4458310709210587,
+    "muscleVertexP90Mm": 5.2056137808547644
+  },
+  {
+    "id": "O3D-tendon-left-common-extensor-tendon",
+    "vertices": 447,
+    "triangles": 754,
+    "spanMm": [
+      20.48228645324707,
+      66.29312133789062,
+      11.827461242675781
+    ],
+    "boneVertexMinMm": 0.7132976756332937,
+    "muscleVertexMinMm": 0.4989364417464046,
+    "muscleVertexP90Mm": 5.263805204300917
+  },
+  {
+    "id": "O3D-tendon-left-quadriceps-tendon",
+    "vertices": 963,
+    "triangles": 1800,
+    "spanMm": [
+      86.40770721435547,
+      42.1760368347168,
+      40.298179626464844
+    ],
+    "boneVertexMinMm": 3.591760130004938,
+    "muscleVertexMinMm": 0.4361209911682314,
+    "muscleVertexP90Mm": 8.034149109982913
+  }
+]

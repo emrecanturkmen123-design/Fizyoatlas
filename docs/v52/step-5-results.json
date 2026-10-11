@@ -1,0 +1,27 @@
+[
+  {
+    "file": "validate-course-overview.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: six independent course summaries, correct control counts, review status, saved step/side links, malformed guest draft, guest/account loading, errors without false progress, retry and warnings. Browser layout is not tested.\n"
+  },
+  {
+    "file": "validate-content-coverage.mjs",
+    "code": 0,
+    "output": "PASS: 40 standardized sourced muscle cards, 24 nerve cards, bilateral model coverage, missing-model state, nerve lessons, shared playback boundaries.\n"
+  },
+  {
+    "file": "validate-site-scope.mjs",
+    "code": 0,
+    "output": "PASS: rendered scope derives current counts, includes all six modules and accurate draft/animation explanations; viewing a motion resumes without false completed controls; distinct radial wrist study links.\n"
+  },
+  {
+    "file": "validate-regional-courses.mjs",
+    "code": 0,
+    "output": "PASS: five content banks, bilateral anatomy targets, bounded regional model contexts/transforms, completion and malformed record checks, routes, six independent D1 records, stale writes and account isolation.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: Omuz anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: Dirsek–önkol anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: El–el bileği anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: Kalça anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: Ayak–ayak bileği anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual guest/account hooks, 503 gating and retry, storage failure recovery, six-module catalog and requested Practice entry. No browser, WebGL or real-device rendering was simulated.\n"
+  },
+  {
+    "file": "validate-study-links.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: all 40 muscle cards have learning paths; nine actual Home links preserve side, stop, refresh/back/forward; four source nerves, array hashes and unchanged previous chunks; honest inferior gluteal muscle fallback. GPU and visual device rendering are not tested.\n"
+  }
+]

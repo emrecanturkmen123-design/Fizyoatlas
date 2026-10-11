@@ -1,0 +1,7 @@
+[
+  {
+    "file": "validate-muscle-groups.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 16 source meshes and indices, bilateral local visibility/chunk demand; real Home group cards, both/left/right, refresh, deep-member inspection, back and sided attachment deep links. GPU rendering and DOM portals are stubbed.\n"
+  }
+]

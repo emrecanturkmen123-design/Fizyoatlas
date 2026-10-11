@@ -1,0 +1,13 @@
+import {FOUNDATION_QUESTIONS} from '../app/foundation-questions.ts';
+import {MODEL_FINDINGS} from '../app/model-finding.ts';
+import {TENDON_QUESTIONS} from '../app/tendon-questions.ts';
+import {FOLLOWUP_QUESTION_IDS} from '../app/case-followup.ts';
+import assert from 'node:assert/strict';import fs from 'node:fs';import {QUESTION_IDS,questionDefinition} from '../app/learning-data.ts';import {reviewQuestions,makeQuiz,answerQuiz,quizScore,quizPool,quizBreakdown,TOPICS,DEFAULT_QUIZ} from '../app/quiz-data.ts';import {REGIONS} from '../app/case-schema.ts';
+import {MUSCLES} from '../app/education-data.ts';import {CASE_JOURNEYS} from '../app/case-journeys.ts';
+const count=FOUNDATION_QUESTIONS.length+MUSCLES.length*5+CASE_JOURNEYS.reduce((n,c)=>n+c.steps.length,0)+TENDON_QUESTIONS.length+FOLLOWUP_QUESTION_IDS.length+MODEL_FINDINGS.length;
+const atlas=JSON.parse(fs.readFileSync('public/models/atlas.json'));
+assert.equal(QUESTION_IDS.length,count);assert.equal(new Set(QUESTION_IDS).size,count);
+for(const id of QUESTION_IDS){const def=questionDefinition(id),q=reviewQuestions(atlas,[id])[0];assert(def&&q,id);assert.equal(new Set(q.choices).size,4,id);assert(q.choices.includes(q.answer));assert(q.source.startsWith('https://'));if(q.topic==='clinical'||q.topic==='tendon')assert.equal(q.elements.length,0,'clinical answer must not be highlighted');}
+for(const topic of Object.keys(TOPICS))for(const region of ['all',...Object.keys(REGIONS)])for(const count of [10,20]){const config={...DEFAULT_QUIZ,topic,region,count},pool=quizPool(atlas,config),q=makeQuiz(atlas,42,config);assert.equal(q.length,Math.min(count,pool.length));assert.equal(new Set(q.map(x=>x.id)).size,q.length);assert.deepEqual(q,makeQuiz(atlas,42,config));for(const x of q){assert(topic==='all'||x.topic===topic);assert(region==='all'||x.region===region);}let state={index:0,answers:q.map(()=>null)};for(let i=0;i<q.length;i++){state=answerQuiz({...state,index:i},q[i].answer);assert.equal(answerQuiz(state,'second'),state);}assert.equal(quizScore(q,state),q.length);assert.equal(quizBreakdown(q,state).reduce((a,x)=>a+x.correct,0),q.length);}
+const mixed=makeQuiz(atlas,52);assert.equal(mixed.length,20);assert.equal(new Set(mixed.map(q=>q.topic)).size,Object.keys(TOPICS).length-1);assert(reviewQuestions(atlas,['case:thoracodorsal']).length,'existing saved questions still readable');assert.equal(reviewQuestions(atlas,['bad','deltoid-name','deltoid-name']).length,1);
+console.log(`PASS: ${count} questions, ${Object.keys(TOPICS).length*(Object.keys(REGIONS).length+1)*2} filter/count combinations, unique sampling, empty/small pools, balanced mixed tests, no clinical highlight leaks, scoring and legacy review.`);

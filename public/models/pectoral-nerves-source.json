@@ -1,0 +1,72 @@
+{
+  "source": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "archiveURL": "https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip",
+  "archiveSHA256": "e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736",
+  "retrieved": "2026-10-04",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    "Gauthier Kervyn / Z-Anatomy",
+    "BodyParts3D / The Database Center for Life Science"
+  ],
+  "transform": {
+    "axes": "x,z,-y",
+    "scale": 0.9850303709151661,
+    "translation": [
+      7.034327618495536e-06,
+      0.03160419848501905,
+      0.0024510506019518874
+    ],
+    "registration": "Least-squares uniform registration of bilateral humerus, femur and scapula envelopes",
+    "envelopeRmsMm": 4.780475937381765
+  },
+  "verifiedBoneEnvelopeRmsMm": 4.780475937381765,
+  "adaptations": [
+    "Embedded script execution disabled",
+    "Loaded only named source objects and registration bones",
+    "Evaluated curves with longitudinal resolution 8 and bevel resolution 2",
+    "Applied existing uniform atlas registration; triangulated and quantized normals"
+  ],
+  "parts": [
+    {
+      "id": "ZA-pectoral-left-lateral-pectoral-nerve",
+      "object": "Lateral pectoral nerve.l",
+      "vertices": 1640,
+      "triangles": 3200,
+      "positionsSHA256": "1010148c67d96772ffc84af148a0e0dde005f6836bddd9017ca3d256e7bf2901",
+      "normalsSHA256": "7dcfbfac71f5a4a61190cbfbedeacd04a3e5851737d510359144f47c12c767df",
+      "indicesSHA256": "6f392891319dacec9a6cb0ea2d2801addc760f3169f358b63395de811dbc4c22"
+    },
+    {
+      "id": "ZA-pectoral-right-lateral-pectoral-nerve",
+      "object": "Lateral pectoral nerve.r",
+      "vertices": 1640,
+      "triangles": 3200,
+      "positionsSHA256": "8385c2d2d9d78ad012b554a2efc85b10ebc8937f2763855b4d7e81f4aaac99ab",
+      "normalsSHA256": "7310a3f3c0fde452bea6ca19b2a1d5a5fb4a9797b3dbe9df324849a45a1cfa3d",
+      "indicesSHA256": "0a88982b46c99f8daf4926a56d0b10a8a122b2da0ceb1a544db8494a51f4cd60"
+    },
+    {
+      "id": "ZA-pectoral-left-medial-pectoral-nerve",
+      "object": "Medial pectoral nerve.l",
+      "vertices": 464,
+      "triangles": 896,
+      "positionsSHA256": "30db5b4b99f071cc68eefd312c9cc0b01589dae1bde5aee338c7db949bb7d397",
+      "normalsSHA256": "7f53cacf7b479f0c7dd359db2ae6ce71222e6532565854974e0908ab38c572c8",
+      "indicesSHA256": "1accfb81969d3a5a67dff85069591b94779260be68b92609556c88050760a9ed"
+    },
+    {
+      "id": "ZA-pectoral-right-medial-pectoral-nerve",
+      "object": "Medial pectoral nerve.r",
+      "vertices": 464,
+      "triangles": 896,
+      "positionsSHA256": "9546ef2326223b11cd59565d446e132b0d2e5d5940d2a7ae6b4c6f9379287ad9",
+      "normalsSHA256": "71f19c4926d071e7fee8c5fc1a66636cd6b924b8c0e4db6168d29a48554e6e0a",
+      "indicesSHA256": "edca5d4dbf9754a60b7ec3645a8d1a96e9fdf999bbb9c25154d92919340a2aa6"
+    }
+  ],
+  "missingRequestedObjects": [
+    "Inferior gluteal nerve.l",
+    "Inferior gluteal nerve.r"
+  ],
+  "sha256": "c9644db7e4543d82dfd830d2eb927ef2b07beb2d5aa7d17485671d006573e7a7"
+}

@@ -1,0 +1,2 @@
+import * as T from './three-math';
+export function nearestVertex(positions:T.BufferAttribute|T.InterleavedBufferAttribute,seed:number[]){let distance=Infinity;const point=new T.Vector3(),best=new T.Vector3(),target=new T.Vector3().fromArray(seed);for(let i=0;i<positions.count;i++){point.fromBufferAttribute(positions,i);const d=point.distanceToSquared(target);if(d<distance){distance=d;best.copy(point);}}return best;}

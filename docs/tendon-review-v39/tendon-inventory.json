@@ -1,0 +1,177 @@
+{
+  "source": "Startup.blend",
+  "meshes": [
+    {
+      "object": "Vastus medialis muscle.r",
+      "vertices": 3232,
+      "trianglesByMaterial": {
+        "Tendon": 658,
+        "Extension": 5802
+      }
+    },
+    {
+      "object": "Vastus medialis muscle.or",
+      "vertices": 948,
+      "trianglesByMaterial": {
+        "Origin-Extension": 1892
+      }
+    },
+    {
+      "object": "Vastus medialis muscle.ol",
+      "vertices": 948,
+      "trianglesByMaterial": {
+        "Origin-Extension": 1892
+      }
+    },
+    {
+      "object": "Vastus medialis muscle.l",
+      "vertices": 3232,
+      "trianglesByMaterial": {
+        "Tendon": 658,
+        "Extension": 5802
+      }
+    },
+    {
+      "object": "Teres minor muscle.r",
+      "vertices": 763,
+      "trianglesByMaterial": {
+        "External rotation": 1522
+      }
+    },
+    {
+      "object": "Teres minor muscle.or",
+      "vertices": 2826,
+      "trianglesByMaterial": {
+        "Origin-External rotation": 5648
+      }
+    },
+    {
+      "object": "Teres minor muscle.ol",
+      "vertices": 2826,
+      "trianglesByMaterial": {
+        "Origin-External rotation": 5648
+      }
+    },
+    {
+      "object": "Teres minor muscle.l",
+      "vertices": 763,
+      "trianglesByMaterial": {
+        "External rotation": 1522
+      }
+    },
+    {
+      "object": "Teres minor muscle.er",
+      "vertices": 912,
+      "trianglesByMaterial": {
+        "End-External rotation": 1820
+      }
+    },
+    {
+      "object": "Teres minor muscle.el",
+      "vertices": 912,
+      "trianglesByMaterial": {
+        "End-External rotation": 1820
+      }
+    },
+    {
+      "object": "Supraspinatus muscle.r",
+      "vertices": 717,
+      "trianglesByMaterial": {
+        "Abductor": 1430
+      }
+    },
+    {
+      "object": "Supraspinatus muscle.or",
+      "vertices": 3998,
+      "trianglesByMaterial": {
+        "Origin-Abduction": 7992
+      }
+    },
+    {
+      "object": "Supraspinatus muscle.ol",
+      "vertices": 3998,
+      "trianglesByMaterial": {
+        "Origin-Abduction": 7992
+      }
+    },
+    {
+      "object": "Supraspinatus muscle.l",
+      "vertices": 717,
+      "trianglesByMaterial": {
+        "Abductor": 1430
+      }
+    },
+    {
+      "object": "Supraspinatus muscle.er",
+      "vertices": 676,
+      "trianglesByMaterial": {
+        "End-Abduction": 1348
+      }
+    },
+    {
+      "object": "Supraspinatus muscle.el",
+      "vertices": 676,
+      "trianglesByMaterial": {
+        "End-Abduction": 1348
+      }
+    },
+    {
+      "object": "Subscapularis muscle.r",
+      "vertices": 1471,
+      "trianglesByMaterial": {
+        "Internal rotator": 2954
+      }
+    },
+    {
+      "object": "Subscapularis muscle.or",
+      "vertices": 8512,
+      "trianglesByMaterial": {
+        "Origin-Internal rotation": 17020
+      }
+    },
+    {
+      "object": "Subscapularis muscle.ol",
+      "vertices": 8512,
+      "trianglesByMaterial": {
+        "Origin-Internal rotation": 17020
+      }
+    },
+    {
+      "object": "Subscapularis muscle.l",
+      "vertices": 1471,
+      "trianglesByMaterial": {
+        "Internal rotator": 2954
+      }
+    },
+    {
+      "object": "Subscapularis muscle.er",
+      "vertices": 250,
+      "trianglesByMaterial": {
+        "End-Internal rotation": 496
+      }
+    },
+    {
+      "object": "Subscapularis muscle.el",
+      "vertices": 250,
+      "trianglesByMaterial": {
+        "End-Internal rotation": 496
+      }
+    },
+    {
+      "object": "Common extensor tendon.or",
+      "vertices": 330,
+      "trianglesByMaterial": {
+        "Origin-Extension fingers": 656
+      }
+    },
+    {
+      "object": "Common extensor tendon.ol",
+      "vertices": 330,
+      "trianglesByMaterial": {
+        "Origin-Extension fingers": 656
+      }
+    }
+  ],
+  "sourceURL": "https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip",
+  "archiveSHA256": "e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736"
+}

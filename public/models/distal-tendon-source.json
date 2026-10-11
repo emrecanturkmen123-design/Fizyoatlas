@@ -1,0 +1,629 @@
+{
+  "source": "https://anatomytool.org/open3dmodel-create",
+  "credits": "https://anatomytool.org/open3dmodel-credit",
+  "license": "CC-BY-SA-4.0",
+  "glbSHA256": {
+    "upper-limb": "e440c84c794239d1850e62b4ede0195d81bcff4f0078c7945528c388ab72fdb4",
+    "lower-limb": "001677bac4e8b4f44f3be0c3695b0123bc9fad1df9a2bddceecccf4a6eef01eb"
+  },
+  "registration": {
+    "right-hand": {
+      "scale": 0.9066723585128784,
+      "translation": [
+        -0.016030848026275635,
+        0.107147216796875,
+        0.008059441111981869
+      ],
+      "envelopeRmsMm": 2.2905917167663574
+    },
+    "right-foot": {
+      "scale": 1.0107500553131104,
+      "translation": [
+        0.004612773656845093,
+        -0.0031276866793632507,
+        0.012971822172403336
+      ],
+      "envelopeRmsMm": 4.4951348304748535
+    },
+    "left-hand": {
+      "scale": 0.9217404127120972,
+      "translation": [
+        0.01215943694114685,
+        0.09413117170333862,
+        0.006910665892064571
+      ],
+      "envelopeRmsMm": 1.1082121133804321
+    },
+    "left-foot": {
+      "scale": 0.9855499863624573,
+      "translation": [
+        -0.0025226548314094543,
+        -0.002165466547012329,
+        0.011803243309259415
+      ],
+      "envelopeRmsMm": 5.231395244598389
+    }
+  },
+  "parts": [
+    {
+      "id": "O3D-distal-right-flexor-digitorum-profundus-tendon",
+      "key": "flexor digitorum profundus tendon",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Flexor digitorum profundus.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 1020,
+      "triangles": 1982,
+      "positionsSHA256": "77ee40040902aa28c45383918b5a02d9de771f8a125a77482a0795f94510ebf3",
+      "normalsSHA256": "a2858941456de877bbbb30f302702b95ff3bec6c782d7ff619ada998294b7679",
+      "indicesSHA256": "56e6115e222626f3d58f053e543401ef6c18f5a3dd0c60da16897461d3e1782a"
+    },
+    {
+      "id": "O3D-distal-right-flexor-digitorum-superficialis-tendon",
+      "key": "flexor digitorum superficialis tendon",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Flexor digitorum superficialis humero-ulnar head.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 1036,
+      "triangles": 1994,
+      "positionsSHA256": "0d83c0088be4b519fbc43b9314102e9926fc743d6e260af8510463eeef2b62b3",
+      "normalsSHA256": "62988cf35b2a0d70f5395e236bee18ffbbbf50276d73be96fd8c0f6263e4c5d9",
+      "indicesSHA256": "1183f4ffae0815fd22327bdc78c8ce8c6b6eaccf2b24e5f5a282cb2e4b7eeb97"
+    },
+    {
+      "id": "O3D-distal-right-extensor-digitorum-tendon",
+      "key": "extensor digitorum tendon",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Extensor digitorum.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 710,
+      "triangles": 1372,
+      "positionsSHA256": "8338949cd5eeab3e1455d25a2a94b2dee96eb28928afa43ab7f0145671cf9180",
+      "normalsSHA256": "cad436555e002dc444c99c733383559c7dbcd2b3999ef274d6112e7010778777",
+      "indicesSHA256": "4550d0800a86afd708e48dec23e3efb455aca0da507f38a5adda1d6cabce1881"
+    },
+    {
+      "id": "O3D-distal-right-flexor-pollicis-longus-tendon",
+      "key": "flexor pollicis longus tendon",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Flexor pollicis longus.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 337,
+      "triangles": 605,
+      "positionsSHA256": "9adc0f1459582767e19963cf3b43cbcf3eb38714148342633e6dd943c56a3539",
+      "normalsSHA256": "a5218ff8762f67cbbd0d3abe31dccd5f67856607b756ec85f8806d203cd2d283",
+      "indicesSHA256": "ceee2bd6d7d6e228e151aed0f055c4e447b1fc7f84714b6ae1a679f1efdf6722"
+    },
+    {
+      "id": "O3D-distal-right-extensor-pollicis-longus-tendon",
+      "key": "extensor pollicis longus tendon",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Extensor pollicis longus.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 273,
+      "triangles": 514,
+      "positionsSHA256": "2cd0a6965b0f4ade18a928c2782a7747c0e75ad8cd175464bce200499c2d4c6b",
+      "normalsSHA256": "13fa454a06b2eb04663e72b9652cb43bd256855438e97438bce1fbc7d969a4d7",
+      "indicesSHA256": "117037d87aae419b4663a44405a1e6bcdeb74c9a913f295e4f86a1dc3e279c91"
+    },
+    {
+      "id": "O3D-distal-right-wrist-flexor-retinaculum",
+      "key": "wrist flexor retinaculum",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Flexor retinaculum"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 192,
+      "triangles": 304,
+      "positionsSHA256": "3d04ec91ee610a05bd1d1b2d1b012252800b8e472577a24ae66bc3472375b6f3",
+      "normalsSHA256": "5a4b2af5c129f5dd0b7f6a90988cbcde0cefa03f4d062f8881947df922e13ff6",
+      "indicesSHA256": "c036f9a4b2e96ad494313b3d132242911bfa033aafecfe93ebfe1d3895cb988e"
+    },
+    {
+      "id": "O3D-distal-right-wrist-extensor-retinaculum",
+      "key": "wrist extensor retinaculum",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Extensor retinaculum of wrist"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 472,
+      "triangles": 784,
+      "positionsSHA256": "95b4cf2b5899fdb3288f979b8e1b2f1d1959f6ceb5d60be41be7edf5f0d0bc22",
+      "normalsSHA256": "1db8f396d416ba1da0c7506d1ddf3488ec076c583f87d5add4d8de3b3062b470",
+      "indicesSHA256": "c7d0ecc770b705b4138593cfe1240ad85f0f2574672ab40d88258af59b443cab"
+    },
+    {
+      "id": "O3D-distal-right-digital-fibrous-sheath",
+      "key": "digital fibrous sheath",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Fibrous sheath of digits of hand"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 2564,
+      "triangles": 4520,
+      "positionsSHA256": "e7abd20aa1d943fb679d069c3ad16f0a0944e4941fee4c3c894b3aee9dc7b704",
+      "normalsSHA256": "269ac9004a06d6aab94832caa39f23bd96efe254f9633c3c5d1d4ab6b19a07ae",
+      "indicesSHA256": "58cdafe2aa67018876f02b3fb976d87a528aad23a1a7e9c5d07846345d1810b7"
+    },
+    {
+      "id": "O3D-distal-right-digital-synovial-sheath",
+      "key": "digital synovial sheath",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Synovial sheaths of fingers"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 9740,
+      "triangles": 19464,
+      "positionsSHA256": "2a1015a2d9bdb29d5c52590d90a29042d82ad909c45d5da74ad50365cfec7436",
+      "normalsSHA256": "00c558875a166adc676c9f92609d02ea69f7d821dc11399642baca0c74e08657",
+      "indicesSHA256": "0652ec6e3e73e107f24134ba45b59052644e35664625bf2b8371e327eae14a3c"
+    },
+    {
+      "id": "O3D-distal-right-common-flexor-tendon-sheath",
+      "key": "common flexor tendon sheath",
+      "side": "right",
+      "region": "hand",
+      "sourceObjects": [
+        "Common flexor tendon sheath"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 3520,
+      "triangles": 7048,
+      "positionsSHA256": "9f0f5fa058cf63591039249dc9e42905de611838fce638088747a9144951e46d",
+      "normalsSHA256": "ee68030a0c0fb39877985d15f57e6fbf22d92dc535f1d97462614889b664d663",
+      "indicesSHA256": "52da7b5f3b7f8a11362eefb73e2d7ea2685807cd730e88877eafeeb304349bdb"
+    },
+    {
+      "id": "O3D-distal-right-tibialis-anterior-tendon",
+      "key": "tibialis anterior tendon",
+      "side": "right",
+      "region": "foot",
+      "sourceObjects": [
+        "Tibialis anterior muscle.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 326,
+      "triangles": 580,
+      "positionsSHA256": "2555b365d04add32d363ddd22a7867d174db18c01245d671695158e1fc31cb6a",
+      "normalsSHA256": "70d00b73b81c202f1977edfe8ed41e79ca7350b516c3d350561aa0a3e2dae29e",
+      "indicesSHA256": "a6b8afa62d59f25ee4d47827f3cac55726e128a47fe293e8cb73e6ad8d257921"
+    },
+    {
+      "id": "O3D-distal-right-tibialis-posterior-tendon",
+      "key": "tibialis posterior tendon",
+      "side": "right",
+      "region": "foot",
+      "sourceObjects": [
+        "Tibialis posterior muscle.r"
+      ],
+      "sourceSelection": "distal-long",
+      "vertices": 819,
+      "triangles": 1580,
+      "positionsSHA256": "9f9cc58749a975a0eb166472c750bcd5197822908f81ca5572621c945973f285",
+      "normalsSHA256": "995b4642579aa4a3ad09caf6c9aa2d5e3a38acdfc1e8f59f25d71e75419a8f5b",
+      "indicesSHA256": "49974f78ef1326a9c832b6443f1ec34dc66565d45b8ddb8d95b22465d1d6290c"
+    },
+    {
+      "id": "O3D-distal-right-fibularis-longus-tendon",
+      "key": "fibularis longus tendon",
+      "side": "right",
+      "region": "foot",
+      "sourceObjects": [
+        "Fibularis longus muscle.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 276,
+      "triangles": 515,
+      "positionsSHA256": "737c35465d0e9c9db68e03137d92178de5a58ca5e4dda3f0774b932dc4ef4e98",
+      "normalsSHA256": "1a2d47f45d75a83d69a4059b1cef0e9b46f9f1286deed5b50dacfdc8df92c498",
+      "indicesSHA256": "b83a46824e1b26c439d43c6dbff48b3a3ce84574755d1e5db87658395d99d5a4"
+    },
+    {
+      "id": "O3D-distal-right-fibularis-brevis-tendon",
+      "key": "fibularis brevis tendon",
+      "side": "right",
+      "region": "foot",
+      "sourceObjects": [
+        "Fibularis brevis muscle.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 224,
+      "triangles": 412,
+      "positionsSHA256": "526e93ac713d378d0b457261f38d9d474e4fcaf825ee99de210699075e1e6252",
+      "normalsSHA256": "c1b18bce2928aa41b5021bf878f5fc5323812501234fa68da7d0ea5062266a81",
+      "indicesSHA256": "585c6c677e6494e5ccd6843e118527a688daaff4ef3e0d62d1234a66441b5c33"
+    },
+    {
+      "id": "O3D-distal-right-ankle-flexor-retinaculum",
+      "key": "ankle flexor retinaculum",
+      "side": "right",
+      "region": "foot",
+      "sourceObjects": [
+        "Flexor retinaculum of ankle.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 622,
+      "triangles": 1104,
+      "positionsSHA256": "e093df7c251275f6bdceb6f9624b6e822551060973d5626554b3634d80c2759b",
+      "normalsSHA256": "7240d89ecc03a2a20947c135c7ef53e38feb961a809da34ee90a9aae53fa2d6f",
+      "indicesSHA256": "b3f8d81eebdd7a8f9b4eda082bf0294a77a6ce1baf585259f7baeb60abbdf9b2"
+    },
+    {
+      "id": "O3D-distal-right-ankle-extensor-retinacula",
+      "key": "ankle extensor retinacula",
+      "side": "right",
+      "region": "foot",
+      "sourceObjects": [
+        "Superior extensor retinaculum of ankle.r",
+        "Inferior extensor retinaculum.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 2416,
+      "triangles": 3898,
+      "positionsSHA256": "38d76e843339ef8c2eeb7e2740f656ce8f5b37723585d0c8c4c4445119e61615",
+      "normalsSHA256": "a5554923125e6c202c9d7f211fc54a17f3a2a2b8a19a02224dd45de50652c92d",
+      "indicesSHA256": "89745b6b5efcae33e59e652a2b5e9c971c9e91ad27512f6f6b2d64f7721adfb6"
+    },
+    {
+      "id": "O3D-distal-right-fibular-retinacula",
+      "key": "fibular retinacula",
+      "side": "right",
+      "region": "foot",
+      "sourceObjects": [
+        "Superior fibular retinaculum.r",
+        "Inferior fibular retinaculum.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 1480,
+      "triangles": 2656,
+      "positionsSHA256": "e78506fe82efbd3dda72090b772f374b0ca6861c4a82deba0c8ec3cd5b1fcf4d",
+      "normalsSHA256": "195e12a40740efa2569afac7bdeafa1670d0d0db887eb7e0c7a6ebcb07e37a8e",
+      "indicesSHA256": "a285a40c28f561f366916d0fa1c35c259cd3db871b6d338c42ef6511e9c84c32"
+    },
+    {
+      "id": "O3D-distal-right-tibialis-tendon-sheaths",
+      "key": "tibialis tendon sheaths",
+      "side": "right",
+      "region": "foot",
+      "sourceObjects": [
+        "Tibialis anterior tendon sheath.r",
+        "Tibialis posterior tendon sheath.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 4430,
+      "triangles": 8852,
+      "positionsSHA256": "0cbf17bdacf9fcd2fc95305d2acf20539c2554453c4d9f0d3fc06ef99bf8a039",
+      "normalsSHA256": "791a556f6f07994ae5c5d4e7552d5a772dab3df352333d300ce94fa263328778",
+      "indicesSHA256": "6c44597e4cfbff494da9b832b4d5c8d6059859c5e5006dda4ce5113ec54083f6"
+    },
+    {
+      "id": "O3D-distal-right-fibular-tendon-sheaths",
+      "key": "fibular tendon sheaths",
+      "side": "right",
+      "region": "foot",
+      "sourceObjects": [
+        "Common tendon sheath of fibularis muscles.r",
+        "Plantar tendinous sheath of fibularis longus.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 3956,
+      "triangles": 7904,
+      "positionsSHA256": "b6fc7c3e1ad0fe616756d52d83c2fa110d6f8bf13d33a993917dc3b6ba71ee99",
+      "normalsSHA256": "8b382dee79794fae29d13db4adb394e117744464f816152a22c1ee650d5a1d1b",
+      "indicesSHA256": "586f35a4a5b473991937e95ed15f5b543bbe184bb423e91a7196575d99df0297"
+    },
+    {
+      "id": "O3D-distal-left-flexor-digitorum-profundus-tendon",
+      "key": "flexor digitorum profundus tendon",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Flexor digitorum profundus.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 1020,
+      "triangles": 1982,
+      "positionsSHA256": "9e7d2154f455aa4464c5498ad6204d9f57c3673dfecc2ab2e5586dacec915606",
+      "normalsSHA256": "b562163ce15a54b8dff17296d6b76b3a01ad73c59c683023e45a5ae8b136ad5e",
+      "indicesSHA256": "aa9b67648c82fab798ad9bdf035e1d324f6f164fa588b6097be6f2e6e6ee7472"
+    },
+    {
+      "id": "O3D-distal-left-flexor-digitorum-superficialis-tendon",
+      "key": "flexor digitorum superficialis tendon",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Flexor digitorum superficialis humero-ulnar head.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 1036,
+      "triangles": 1994,
+      "positionsSHA256": "20758335223766d77c47267b5d146c4bcc268f6caad773aa20ec68de2186ac41",
+      "normalsSHA256": "c776faa51e27c0c974456d9bc668d11147f469ea3b3a9454fd766449b34d4b2b",
+      "indicesSHA256": "d90f49dcbc76a82d8d3ba227e91761a4423858004c7b33279a7f7bdc3b222ad4"
+    },
+    {
+      "id": "O3D-distal-left-extensor-digitorum-tendon",
+      "key": "extensor digitorum tendon",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Extensor digitorum.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 710,
+      "triangles": 1372,
+      "positionsSHA256": "62cd1889df8509e301a3fc86bfd84a9ab5457e895f5ce6aca371b8c70434ca21",
+      "normalsSHA256": "7df7b01bd73c119464d95a5a576ddd05d5720f0907d8caf01f23041de1e26821",
+      "indicesSHA256": "06ee6566b573d31953b0728127ae7891bdde0bca47307ebfac6699972d4f0308"
+    },
+    {
+      "id": "O3D-distal-left-flexor-pollicis-longus-tendon",
+      "key": "flexor pollicis longus tendon",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Flexor pollicis longus.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 337,
+      "triangles": 605,
+      "positionsSHA256": "a7551ee42ba2977c36e8186bbbd83511a75285da005fba329e3a5b109723a94d",
+      "normalsSHA256": "8efd39493ba899097f966b60d834b3ef4a5c46cec8c5cba02381cc32e312ad60",
+      "indicesSHA256": "3a352f51584bbad45d7e73ff7e6eb941f61a9968cd3a7178085ca5c43588b086"
+    },
+    {
+      "id": "O3D-distal-left-extensor-pollicis-longus-tendon",
+      "key": "extensor pollicis longus tendon",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Extensor pollicis longus.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 273,
+      "triangles": 514,
+      "positionsSHA256": "dbbd71a952f0a6357a4c068cbb094d139b21b991c63125bfd6e90c2cd488f850",
+      "normalsSHA256": "eb42c2813a37a6411caafe0db65f3cc98cc9e30d15ca4b7dd39acf3c5d8b8f6f",
+      "indicesSHA256": "5144bca0f4f43634eed2b5fe048fc0caa4452afbd3b6554d5a201235c91ff7b5"
+    },
+    {
+      "id": "O3D-distal-left-wrist-flexor-retinaculum",
+      "key": "wrist flexor retinaculum",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Flexor retinaculum"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 192,
+      "triangles": 304,
+      "positionsSHA256": "5c1845ab9687f69e94f004208a75f4d028f36aa9ff6d6eea1e29c87d6dd3cff4",
+      "normalsSHA256": "11b1aef356fd0246a7dca67f952e4a9070b64b5e7f229eb97144890d80c3fb54",
+      "indicesSHA256": "78515eb695fa6a23154fbd6dbe32c82ab90b5ea02049dbcc4142b46cd51990e0"
+    },
+    {
+      "id": "O3D-distal-left-wrist-extensor-retinaculum",
+      "key": "wrist extensor retinaculum",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Extensor retinaculum of wrist"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 472,
+      "triangles": 784,
+      "positionsSHA256": "a8d42598c943fff9af6a53e7a2ce38b08676196a7d89cba3444f0420585cc26e",
+      "normalsSHA256": "ffc9f1e5d7793811d917b10e8935fba995a26773f5601c97a083cdf01c66665c",
+      "indicesSHA256": "2ff3f309ac12e3c4d4db1efeab6c7940c1fe5be821105d809d03e7c531db2531"
+    },
+    {
+      "id": "O3D-distal-left-digital-fibrous-sheath",
+      "key": "digital fibrous sheath",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Fibrous sheath of digits of hand"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 2564,
+      "triangles": 4520,
+      "positionsSHA256": "c693476f0ff919b8cdd15be98ccbb5227b56850ea04bc7f91363133a34719eb0",
+      "normalsSHA256": "f091c766aeacfe086f51cfcf677d1c57de11da4fa52e2567b64d1bf46d6d1a89",
+      "indicesSHA256": "8f42485700e25ec460f62fb20f66ac1f760b1d5065e74c4409d67883864f41d7"
+    },
+    {
+      "id": "O3D-distal-left-digital-synovial-sheath",
+      "key": "digital synovial sheath",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Synovial sheaths of fingers"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 9740,
+      "triangles": 19464,
+      "positionsSHA256": "9db7044075e49b83d113ca07d30d1ce3b240062cc7a2a3284a3267df10380ad7",
+      "normalsSHA256": "cbd6fdc3ed8dd0a30cf6c12599f6cbc5692bd6cd81143784448483f583b99956",
+      "indicesSHA256": "731159d38fdb134f2e0248ddd58f27a0e6860e60e1164cf2a91e77d489cf6de8"
+    },
+    {
+      "id": "O3D-distal-left-common-flexor-tendon-sheath",
+      "key": "common flexor tendon sheath",
+      "side": "left",
+      "region": "hand",
+      "sourceObjects": [
+        "Common flexor tendon sheath"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 3520,
+      "triangles": 7048,
+      "positionsSHA256": "702cfaad9a45de82e9420d79f4439799b99398a584e7cce760e1f3538ff3c998",
+      "normalsSHA256": "bc9316911e48bc6d1dc7fa2b6cf0631dbbfd03924cf8815787fd084f8f4312b7",
+      "indicesSHA256": "3a60e20ec56482d2b6ddc079d5f392223451e1267d4dc67c1e64e9d6c0f822a4"
+    },
+    {
+      "id": "O3D-distal-left-tibialis-anterior-tendon",
+      "key": "tibialis anterior tendon",
+      "side": "left",
+      "region": "foot",
+      "sourceObjects": [
+        "Tibialis anterior muscle.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 326,
+      "triangles": 580,
+      "positionsSHA256": "b06903afda07c80efa919729584729705f5640687505eb1d4ea9f5a89fe6779d",
+      "normalsSHA256": "3119f8cbd77ced5d1b61d61e8bc80341c011835618879822da38d39cf6c87301",
+      "indicesSHA256": "092c42d6831f5af4cc729847d6ba41c044e800bf1f042392384048c52f05a2b6"
+    },
+    {
+      "id": "O3D-distal-left-tibialis-posterior-tendon",
+      "key": "tibialis posterior tendon",
+      "side": "left",
+      "region": "foot",
+      "sourceObjects": [
+        "Tibialis posterior muscle.r"
+      ],
+      "sourceSelection": "distal-long",
+      "vertices": 819,
+      "triangles": 1580,
+      "positionsSHA256": "f751ef66b1a39c30cbd9701e240e7cbb2fed43b4480d4d46b420d6aa4b4b93dc",
+      "normalsSHA256": "554f937e1936a78ded2406ecb4459e656147ed2510ae5cbe5074c6417d279845",
+      "indicesSHA256": "c330cff34c25783280be003ec643b8970bce19ce0ab0da597df1b3af2a185108"
+    },
+    {
+      "id": "O3D-distal-left-fibularis-longus-tendon",
+      "key": "fibularis longus tendon",
+      "side": "left",
+      "region": "foot",
+      "sourceObjects": [
+        "Fibularis longus muscle.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 276,
+      "triangles": 515,
+      "positionsSHA256": "e846b8c033c4289f74e3986694995c233cb5685b117e4f4ac5cdf9d8b829800f",
+      "normalsSHA256": "172dc657af9eb6c0560ba0d87611b7e3b6cdcab8987cab28a626561dbb027ee8",
+      "indicesSHA256": "4ee44b9da4670a9e076e4f83b93070b7e14367039893d4459e34e4e09f4bc580"
+    },
+    {
+      "id": "O3D-distal-left-fibularis-brevis-tendon",
+      "key": "fibularis brevis tendon",
+      "side": "left",
+      "region": "foot",
+      "sourceObjects": [
+        "Fibularis brevis muscle.r"
+      ],
+      "sourceSelection": "distal",
+      "vertices": 224,
+      "triangles": 412,
+      "positionsSHA256": "ac9bfc1c156c5c4f971335625d8c3348d0b68da7b4bc1e6e0dd2cb6b3dae1ec1",
+      "normalsSHA256": "e9ed1d97c0c07308149ac27f9d8facb560fb32d5a0e20e0cd1d74241608d32b4",
+      "indicesSHA256": "7697d828681da133deef8178698e6e1b9ccabc899fdf25d66fe425ef7f112dba"
+    },
+    {
+      "id": "O3D-distal-left-ankle-flexor-retinaculum",
+      "key": "ankle flexor retinaculum",
+      "side": "left",
+      "region": "foot",
+      "sourceObjects": [
+        "Flexor retinaculum of ankle.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 622,
+      "triangles": 1104,
+      "positionsSHA256": "8e7cbaf76c9c7a7d8d5483a4aff712c805fc8256d1dd12ffeca29d4d58320da5",
+      "normalsSHA256": "23afa9c21d0ea3efd334dc63221d8e2af78ab2b15fa3718dba881e683b92df2f",
+      "indicesSHA256": "95bf1c4ca2ddab10fa152bf19eb72908fd0be98807d4281b16655b104ab7f88a"
+    },
+    {
+      "id": "O3D-distal-left-ankle-extensor-retinacula",
+      "key": "ankle extensor retinacula",
+      "side": "left",
+      "region": "foot",
+      "sourceObjects": [
+        "Superior extensor retinaculum of ankle.r",
+        "Inferior extensor retinaculum.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 2416,
+      "triangles": 3898,
+      "positionsSHA256": "1d701c995dac0e93400dbc277590955c3a03b06ed9a08821317ebc7c33628798",
+      "normalsSHA256": "adb67db0b2e371ca3ecae6e834920acdd2b8d3b3048454956f37c82f294217a2",
+      "indicesSHA256": "642263f5ae0a18955a9ee47b0d68536fd64287ee4e36e78296b619029e1e50eb"
+    },
+    {
+      "id": "O3D-distal-left-fibular-retinacula",
+      "key": "fibular retinacula",
+      "side": "left",
+      "region": "foot",
+      "sourceObjects": [
+        "Superior fibular retinaculum.r",
+        "Inferior fibular retinaculum.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 1480,
+      "triangles": 2656,
+      "positionsSHA256": "5e200ac8407add12394eb8e7d66447b08cf15e68b93679f32ead31362aaae383",
+      "normalsSHA256": "6522ca82c212f6763c41998db529bb308127c8c5ec37948395da085b1b51ebc3",
+      "indicesSHA256": "b9c266fb6f79e244af54641febd77f0850fde271df004c1864a32308aac0cad2"
+    },
+    {
+      "id": "O3D-distal-left-tibialis-tendon-sheaths",
+      "key": "tibialis tendon sheaths",
+      "side": "left",
+      "region": "foot",
+      "sourceObjects": [
+        "Tibialis anterior tendon sheath.r",
+        "Tibialis posterior tendon sheath.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 4430,
+      "triangles": 8852,
+      "positionsSHA256": "77b77b1a2372077cee7aac5c106e1d156ef7247d4fd594ffecece8054cb0ce2d",
+      "normalsSHA256": "6ec92797c786f59e0a3fe9a60e16d48188ea899907b156be26e2cfcac61f1d14",
+      "indicesSHA256": "c9358d55185ec494c54dfa0b86b58b6f14cd7bf312b8b16c48bef19c85127eab"
+    },
+    {
+      "id": "O3D-distal-left-fibular-tendon-sheaths",
+      "key": "fibular tendon sheaths",
+      "side": "left",
+      "region": "foot",
+      "sourceObjects": [
+        "Common tendon sheath of fibularis muscles.r",
+        "Plantar tendinous sheath of fibularis longus.r"
+      ],
+      "sourceSelection": "whole",
+      "vertices": 3956,
+      "triangles": 7904,
+      "positionsSHA256": "195c31cac5b616073451d62237044b10354a38e14fc4697503f63d8a97a65b7a",
+      "normalsSHA256": "15a600e05e2bc233ab361a4d09a82125b246444f09c2103d907e86412a59f12c",
+      "indicesSHA256": "ea0e9831f58640df4c2e560c406250cf8d3d69f3eb04144be0fedada97a61861"
+    }
+  ],
+  "limitations": "Source-colour-defined distal tendon surfaces and named source retinacula/sheaths. Uniform bone-envelope registration, left mirrored. Educational tissue boundaries; not microscopic segmentation, strain, tears, gliding or individual pulley reconstruction.",
+  "sourceSelectionMethod": "GLTF UVs use image top origin. Source tissue colour classified by (R-G)+0.5*(R-B) <= 0.20, triangle edges interpolated at threshold; all distal components retained. Named sheath/retinaculum objects retain all source triangles."
+}

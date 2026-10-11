@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1788955105677,
+      "tag": "0000_right_obadiah_stane",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1790110406534,
+      "tag": "0001_productive_tag",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1790802365557,
+      "tag": "0002_yellow_satana",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1790886165980,
+      "tag": "0003_chief_quasimodo",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1791044586624,
+      "tag": "0004_gifted_plazm",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1791069608910,
+      "tag": "0005_puzzling_sabra",
+      "breakpoints": true
+    }
+  ]
+}

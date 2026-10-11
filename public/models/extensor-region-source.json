@@ -1,0 +1,41 @@
+{
+  "source": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "archiveURL": "https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip",
+  "archiveSHA256": "e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    "Gauthier Kervyn / Z-Anatomy",
+    "BodyParts3D / The Database Center for Life Science"
+  ],
+  "parts": [
+    {
+      "id": "ZA-extensor-region-right-ecrb-proximal",
+      "name": "Right extensor carpi radialis brevis proximal tendon",
+      "sourceObjects": [
+        "Extensor carpi radialis brevis.r"
+      ],
+      "sourceSelection": "Proximal connected component of ECRB Tendon-material faces; one contributor, not the full common extensor tendon",
+      "registration": "elbowr",
+      "vertices": 249,
+      "triangles": 453,
+      "positionsSHA256": "33002cc9396bdd2411566d91ac9be8b8710dc8e4dbbb93d08be9e8ca5fb5cf94",
+      "normalsSHA256": "fca6f70432604ee484834a1250dffa232b330bba0db2cb4ae6d0f4d123b89508",
+      "indicesSHA256": "62fb86b1ab8ab35544ccc2a8156a4d5eb109ffd18cc59d7d788faec7624b90cb"
+    },
+    {
+      "id": "ZA-extensor-region-left-ecrb-proximal",
+      "name": "Left extensor carpi radialis brevis proximal tendon",
+      "sourceObjects": [
+        "Extensor carpi radialis brevis.l"
+      ],
+      "sourceSelection": "Proximal connected component of ECRB Tendon-material faces; one contributor, not the full common extensor tendon",
+      "registration": "elbowl",
+      "vertices": 249,
+      "triangles": 453,
+      "positionsSHA256": "9e1a88b860f152bcb653bd05137fb4b42a59f274790a19aca0498e228803c3de",
+      "normalsSHA256": "f9cf98e55930891e1c0c35f6718311856cf01f272f6d5fd125dc53df7c95bf73",
+      "indicesSHA256": "85c15363a1bfcf9a9a09c83547d47b69473be4dcb3ed951bf88550eb26e5e227"
+    }
+  ],
+  "limitations": "Only the proximal ECRB tendon component is added. Common extensor footprint and body are distinguished. Other contributing tendon bodies and a continuous patient-specific insertion are unavailable."
+}

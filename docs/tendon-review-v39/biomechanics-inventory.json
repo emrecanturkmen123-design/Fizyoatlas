@@ -1,0 +1,119 @@
+{
+  "source": "Startup.blend",
+  "meshes": [
+    {
+      "object": "Common extensor tendon.r",
+      "vertices": 330,
+      "trianglesByMaterial": {
+        "Muscular origin": 656
+      }
+    },
+    {
+      "object": "Common extensor tendon.l",
+      "vertices": 330,
+      "trianglesByMaterial": {
+        "Muscular origin": 656
+      }
+    },
+    {
+      "object": "Teres minor muscle-Scapular insertion.r",
+      "vertices": 2826,
+      "trianglesByMaterial": {
+        "Muscular origin": 5648
+      }
+    },
+    {
+      "object": "Teres minor muscle-Scapular insertion.l",
+      "vertices": 2826,
+      "trianglesByMaterial": {
+        "Muscular origin": 5648
+      }
+    },
+    {
+      "object": "Teres minor muscle-Humeral insertion.r",
+      "vertices": 912,
+      "trianglesByMaterial": {
+        "Muscular ending": 1820
+      }
+    },
+    {
+      "object": "Teres minor muscle-Humeral insertion.l",
+      "vertices": 912,
+      "trianglesByMaterial": {
+        "Muscular ending": 1820
+      }
+    },
+    {
+      "object": "Supraspinatus muscle-Scapular insertion.r",
+      "vertices": 3998,
+      "trianglesByMaterial": {
+        "Muscular origin": 7992
+      }
+    },
+    {
+      "object": "Supraspinatus muscle-Scapular insertion.l",
+      "vertices": 3998,
+      "trianglesByMaterial": {
+        "Muscular origin": 7992
+      }
+    },
+    {
+      "object": "Supraspinatus muscle-Humeral insertion.r",
+      "vertices": 676,
+      "trianglesByMaterial": {
+        "Muscular ending": 1348
+      }
+    },
+    {
+      "object": "Supraspinatus muscle-Humeral insertion.l",
+      "vertices": 676,
+      "trianglesByMaterial": {
+        "Muscular ending": 1348
+      }
+    },
+    {
+      "object": "Subscapularis muscle-Scapular insertion.r",
+      "vertices": 8512,
+      "trianglesByMaterial": {
+        "Muscular origin": 17020
+      }
+    },
+    {
+      "object": "Subscapularis muscle-Scapular insertion.l",
+      "vertices": 8512,
+      "trianglesByMaterial": {
+        "Muscular origin": 17020
+      }
+    },
+    {
+      "object": "Subscapularis muscle-Humeral insertion.r",
+      "vertices": 250,
+      "trianglesByMaterial": {
+        "Muscular ending": 496
+      }
+    },
+    {
+      "object": "Subscapularis muscle-Humeral insertion.l",
+      "vertices": 250,
+      "trianglesByMaterial": {
+        "Muscular ending": 496
+      }
+    },
+    {
+      "object": "Origin of vastus medialis.r",
+      "vertices": 948,
+      "trianglesByMaterial": {
+        "Muscular origin": 1892
+      }
+    },
+    {
+      "object": "Origin of vastus medialis.l",
+      "vertices": 948,
+      "trianglesByMaterial": {
+        "Muscular origin": 1892
+      }
+    }
+  ],
+  "sourceURL": "https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Biomechanics.7z",
+  "archiveSHA256": "0a74b2fa3c47db925b06241fa38c89b0811e58a78ee28ec440cd460e279cf22b"
+}

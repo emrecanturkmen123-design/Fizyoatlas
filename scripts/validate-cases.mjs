@@ -1,0 +1,4 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import {CLINICAL_CASES,caseTargets} from '../app/clinical-cases.ts';
+const a=JSON.parse(fs.readFileSync('public/models/atlas.json'));for(const c of CLINICAL_CASES){assert.ok(c.answer&&c.vignette&&c.effects&&c.note);assert.ok(new URL(c.source).hostname.endsWith('.edu'));for(const side of ['left','right']){const ids=caseTargets(a,c.id,side);assert.ok(ids.length);for(const key of c.keys)assert.ok(ids.some(id=>a.parts.find(p=>p.id===id).name.toLowerCase().includes(key)));assert.ok(ids.every(id=>a.parts.find(p=>p.id===id).name.toLowerCase().includes(side)));}}
+assert.equal(CLINICAL_CASES.length,15);assert.equal(new Set(CLINICAL_CASES.map(c=>c.id)).size,15);
+console.log('PASS: 15 sourced fictional cases, all motor targets on both sides.');

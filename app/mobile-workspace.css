@@ -1,0 +1,86 @@
+/* Keep long lessons mounted while expanding the reading area. */
+.mobile-reading-button{display:none!important}
+.workspace-layout:has(.finding-projection) .restore-hidden{display:none}
+.workspace-layout:has(.search-panel) .restore-hidden{display:none}
+@media(max-width:767px){
+ .workspace-layout{--mobile-top:env(safe-area-inset-top,0px);--mobile-bottom:env(safe-area-inset-bottom,0px)}
+ .workspace-layout::before{height:calc(116px + var(--mobile-top))}
+ .workspace-layout .identity{top:calc(14px + var(--mobile-top))}
+ .workspace-layout .identity .edition{display:none}
+ .workspace-layout .workspace-utilities{top:calc(10px + var(--mobile-top))}
+ .workspace-layout .top-actions{top:calc(62px + var(--mobile-top))}
+ .workspace-layout .top-actions a{min-height:44px;padding:8px;font-size:14px}
+ .workspace-layout .model-toolbar,body:has(.detail-sheet) .workspace-layout .model-toolbar{top:calc(124px + var(--mobile-top));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));min-height:52px;padding:4px;gap:0}
+ .workspace-layout .model-toolbar button{min-height:44px;font-size:13px;padding:6px 0;white-space:normal;line-height:1.25;overflow-wrap:normal;word-break:normal;border-radius:8px}
+ .workspace-layout .model-toolbar{gap:3px}
+ .workspace-layout .mobile-reading-button{display:inline-flex!important;align-items:center;justify-content:center}
+ .workspace-layout .model-toolbar:not(:has(.mobile-reading-button)){grid-template-columns:repeat(4,minmax(0,1fr))}
+ .workspace-layout .model-popover,.workspace-layout .layers-panel.model-popover{top:calc(184px + var(--mobile-top));max-height:calc(100dvh - 200px - var(--mobile-top) - var(--mobile-bottom))}
+ .workspace-layout :is(.study-panel,.learning-panel,.shoulder-panel,.search-panel){bottom:calc(8px + var(--mobile-bottom));max-height:calc(100dvh - 192px - var(--mobile-top) - var(--mobile-bottom));scroll-padding-top:60px}
+ .workspace-layout .study-panel:not(.mobile-study-open){display:flex}
+ .workspace-layout .search-panel{top:calc(184px + var(--mobile-top));bottom:auto;height:auto;max-height:none;overflow:visible}
+ .anatomy-search-results{max-height:calc(100dvh - 280px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important}
+ .anatomy-search-results [role=option]{min-height:44px;font-size:16px}
+ body:has(.detail-sheet) .workspace-layout .study-panel{display:none}
+ body:has(.workspace-layout) .detail-sheet{bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;max-height:calc(100dvh - 192px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))!important}
+ .workspace-layout[data-mobile-expanded=true] :is(.study-panel,.learning-panel,.shoulder-panel){top:calc(184px + var(--mobile-top))!important;bottom:calc(8px + var(--mobile-bottom))!important;height:auto!important;max-height:none!important}
+ body:has(.workspace-layout[data-mobile-expanded=true]) .detail-sheet{top:calc(184px + env(safe-area-inset-top,0px))!important;bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;height:auto!important;max-height:none!important}
+ .workspace-layout button,.workspace-layout .panel-heading button{min-height:44px}
+ .workspace-layout .study-list button{min-height:56px;font-size:16px}
+ .workspace-layout .index-tabs button{min-height:44px;font-size:14px}
+ .workspace-layout .study-list small,.workspace-layout .index-coverage{font-size:13px}
+ .workspace-layout .atlas-region,.workspace-layout .atlas-scope{font-size:14px}
+ .workspace-layout :is(input,select,[data-slot=combobox-input],[data-slot=select-trigger]){font-size:16px;min-height:44px}
+ .workspace-layout .learning-panel>p,.workspace-layout .study-intro,.workspace-layout .learning-options button{font-size:16px}
+ .workspace-layout .learning-options{flex-wrap:wrap;gap:6px}
+ .workspace-layout .motion-controls .learning-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .workspace-layout .motion-controls button{font-size:14px;white-space:normal;padding:8px 4px}
+ .workspace-layout .motion-controls [data-slot=slider]{min-height:44px}
+ .workspace-layout .plane-toggle{font-size:16px;gap:14px;min-height:48px;line-height:1.5}
+ body:has(.workspace-layout) .detail-header{padding-right:36px}
+ body:has(.workspace-layout) .detail-header>button{font-size:14px;min-height:44px}
+ body:has(.workspace-layout) .detail-actions button{min-height:44px;font-size:14px;white-space:normal}
+ body:has(.workspace-layout) .education-card :is(p,dd){font-size:16px;line-height:1.65}
+ body:has(.workspace-layout) .education-card :is(dt,.source-link,.edu-footnote){font-size:14px}
+ .workspace-layout .learning-topics{font-size:14px}
+ .workspace-layout .learning-topics small{font-size:13px}
+ .workspace-layout .learning-topics th:first-child{width:40%}
+ .workspace-layout .learning-topics th:last-child{width:24%}
+ .workspace-layout .tendon-study-panel,.workspace-layout .quiz-panel:has(.finding-projection),.workspace-layout .case-panel.case-reading{top:calc(124px + var(--mobile-top))!important;bottom:calc(8px + var(--mobile-bottom))!important}
+ .tendon-comparison{min-width:0;display:block;font-size:16px;table-layout:auto}
+ .tendon-comparison caption{display:block;font-size:14px}
+ .tendon-comparison thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ .tendon-comparison tbody{display:block}
+ .tendon-comparison tr{display:block;padding:16px 0;border-top:1px solid #dce3e6}
+ .tendon-comparison th:first-child,.tendon-comparison td{display:block;width:100%;padding:8px 0;border:0}
+ .tendon-comparison tbody th{font-size:16px}
+ .tendon-comparison td::before{content:attr(data-label);display:block;font-size:14px;font-weight:600;color:#164e5d;margin-bottom:4px}
+ .tendon-table-wrap{overflow:visible}
+ .tendon-atlas-link{font-size:14px;min-height:44px;padding-block:10px}
+ .tendon-study-actions{display:grid;grid-template-columns:1fr}
+ .finding-projection canvas{touch-action:pan-y}
+}
+
+/* Short landscape screens reserve separate model and lesson space. */
+@media(max-height:500px) and (min-width:600px) and (max-width:1024px){
+ .workspace-layout .top-actions,body:has(.detail-sheet) .workspace-layout .top-actions{visibility:visible}
+ .workspace-layout[data-mobile-expanded=true] :is(.study-panel,.learning-panel,.shoulder-panel),body:has(.workspace-layout[data-mobile-expanded=true]) .detail-sheet{top:84px!important}
+ .workspace-layout:has(.finding-projection) .model-toolbar,.workspace-layout:has(.finding-projection) .restore-hidden{display:none}
+ .workspace-layout::before{height:72px}
+ .workspace-layout .identity{top:18px;left:12px}
+ .workspace-layout .identity h1{font-size:20px}
+ .workspace-layout .top-actions{top:12px;left:50%;right:auto;transform:translateX(-50%);width:auto}
+ .workspace-layout .top-actions a{flex:none;padding:8px 12px;min-height:44px}
+ .workspace-layout .workspace-utilities{top:14px;right:8px}
+ .workspace-layout .workspace-utilities span,.workspace-layout .workspace-utilities kbd{display:none}
+ .workspace-layout .workspace-utilities button{min-width:44px;min-height:44px}
+ .workspace-layout :is(.study-panel,.learning-panel,.shoulder-panel,.search-panel){top:84px!important;bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;left:auto!important;right:8px!important;width:42vw!important;height:auto!important;max-height:none!important;padding:14px}
+ .workspace-layout .study-intro{display:none}
+ .workspace-layout .search-panel{bottom:auto!important;height:auto!important;max-height:calc(100dvh - 100px)!important;overflow:visible}
+ .workspace-layout .model-toolbar,body:has(.detail-sheet) .workspace-layout .model-toolbar{top:auto;bottom:calc(8px + env(safe-area-inset-bottom,0px));left:8px;right:auto;transform:none;width:calc(58vw - 24px);max-width:none}
+ .workspace-layout .model-toolbar button{min-height:44px;font-size:14px;white-space:normal;padding:6px}
+ .workspace-layout .mobile-reading-button{display:none!important}
+ body:has(.workspace-layout) .detail-sheet,body:has(.workspace-layout) .detail-sheet.is-isolated{top:84px!important;bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;left:auto!important;right:8px!important;width:42vw!important;max-width:none!important;height:auto!important;max-height:none!important;padding:14px!important}
+ .workspace-layout .model-popover,.workspace-layout .layers-panel.model-popover{top:84px;bottom:64px;left:8px;right:auto;width:calc(58vw - 24px);max-height:none}
+ .workspace-layout .case-panel.case-reading,.workspace-layout .tendon-study-panel,.workspace-layout .quiz-panel:has(.finding-projection){top:84px!important;left:8px!important;right:8px!important;bottom:8px!important;width:auto!important}
+}

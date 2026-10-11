@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Right biceps long head tendon",
+    "bone": "Right scapula",
+    "patch": "source origin footprint vicinity",
+    "distanceMmMinMedianMax": [
+      0.014834949979558587,
+      0.25506493693683296,
+      3.968967590481043
+    ]
+  },
+  {
+    "name": "Right biceps distal tendon",
+    "bone": "Right radius",
+    "patch": "low",
+    "distanceMmMinMedianMax": [
+      1.2064180336892605,
+      2.6442469097673893,
+      5.645729601383209
+    ]
+  },
+  {
+    "name": "Right quadriceps tendon",
+    "bone": "Right patella",
+    "patch": "low",
+    "distanceMmMinMedianMax": [
+      0.004108346729481127,
+      2.7932575903832912,
+      7.260034326463938
+    ]
+  },
+  {
+    "name": "Right common extensor tendon",
+    "bone": "Right humerus",
+    "patch": "all",
+    "distanceMmMinMedianMax": [
+      0.0019636343040474458,
+      0.47612063644919544,
+      1.221140963025391
+    ]
+  },
+  {
+    "name": "Left biceps long head tendon",
+    "bone": "Left scapula",
+    "patch": "source origin footprint vicinity",
+    "distanceMmMinMedianMax": [
+      0.4002384375780821,
+      0.6909366347827017,
+      3.1972210854291916
+    ]
+  },
+  {
+    "name": "Left biceps distal tendon",
+    "bone": "Left radius",
+    "patch": "low",
+    "distanceMmMinMedianMax": [
+      0.7342980243265629,
+      1.3455785810947418,
+      5.06417965516448
+    ]
+  },
+  {
+    "name": "Left quadriceps tendon",
+    "bone": "Left patella",
+    "patch": "low",
+    "distanceMmMinMedianMax": [
+      0.012575540495163295,
+      3.296307986602187,
+      7.61434156447649
+    ]
+  },
+  {
+    "name": "Left common extensor tendon",
+    "bone": "Left humerus",
+    "patch": "all",
+    "distanceMmMinMedianMax": [
+      0.007970464139361866,
+      0.40909956442192197,
+      1.3920548371970654
+    ]
+  }
+]

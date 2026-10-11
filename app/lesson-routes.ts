@@ -1,0 +1,3 @@
+export type Lesson = 'courses'|'regional-course'|'knee-course'|'notebook'|'lab'|'tendons'|'shoulder'|'elbow'|'cases'|'quiz'|'study'|'movements'|'knee'|'learning'|'hip'|'ankle'|'gait'|'latissimus'|'spine';
+export const LESSON_HASHES:Record<string,Lesson>={'#ogren':'courses','#bolge-dersi':'regional-course','#diz-dersi':'knee-course','#defter':'notebook','#inceleme':'lab','#tendonlar':'tendons','#omurga':'spine','#latissimus':'latissimus','#yuruyus':'gait','#kalca':'hip','#ayak-bilegi':'ankle','#calismalarim':'learning','#diz':'knee','#omuz':'shoulder','#dirsek':'elbow','#vakalar':'cases','#test':'quiz','#kaslar':'study','#hareketler':'movements'};
+export function lessonFromHash(hash:string){return LESSON_HASHES[hash.split('?')[0].toLocaleLowerCase('tr')];}

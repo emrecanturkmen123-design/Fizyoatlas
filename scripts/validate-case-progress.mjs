@@ -1,0 +1,16 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {DatabaseSync} from 'node:sqlite';import worker from '../server/worker.ts';import {freshProgress,parseCaseProgress} from '../app/case-progress.ts';
+const sqlite=new DatabaseSync(':memory:');for(const f of fs.readdirSync('drizzle').filter(x=>x.endsWith('.sql')).sort())sqlite.exec(fs.readFileSync('drizzle/'+f,'utf8'));
+const DB={prepare(sql){const s=sqlite.prepare(sql);let args=[];return{bind(...v){args=v;return this},async all(){return{results:s.all(...args)}},async run(){return s.run(...args)}}}};
+const req=(user,p,origin='https://atlas.test')=>new Request('https://atlas.test/api/cases',{method:p?'PUT':'GET',headers:{'Content-Type':'application/json',Origin:origin,...(user?{'oai-authenticated-user-id':user,'oai-authenticated-user-email':user+'@test.dev'}:{})},...(p?{body:JSON.stringify(p)}:{})});
+const call=async(user,p,origin)=>{if(p){const row=sqlite.prepare('SELECT revision FROM case_progress WHERE user_id = ? AND case_id = ? AND mode = ?').get(user,p.caseId,p.mode);p={...p,revision:row?.revision??0};}return worker.fetch(req(user,p,origin),{DB});};
+const p=freshProgress('ankle-sprain','learn');assert(parseCaseProgress(p));
+assert.equal((await call('',p)).status,401);assert.equal((await call('a',p,'https://other.test')).status,403);
+p.answers[0]=2;p.index=1;p.hinted=[0];assert.equal((await call('a',p)).status,200);
+let result=await(await call('a')).json();assert.equal(result.progress.length,1);assert.deepEqual(result.progress[0].answers,p.answers);assert.equal(result.progress[0].index,1);
+assert.equal((await(await call('b')).json()).progress.length,0);
+const exam=freshProgress('ankle-sprain','exam');assert.equal((await call('a',exam)).status,200);assert.equal((await(await call('a')).json()).progress.length,2);
+for(const bad of [{...p,index:3},{...p,answers:[0]},{...p,mode:'invalid'},{...p,caseId:'bad'},{...p,hinted:[0,0]},{...exam,hinted:[0]},{...p,answers:p.answers.map(()=>9)},{...p,version:2}])assert.equal((await call('a',bad)).status,400);
+p.answers[1]=0;p.index=2;await call('a',p);result=await(await call('a')).json();assert.equal(result.progress.find(x=>x.mode==='learn').index,2);
+const fresh=freshProgress('ankle-sprain','learn');await call('a',fresh);assert.equal((await(await call('a')).json()).progress.find(x=>x.mode==='learn').index,0);
+assert.equal((await worker.fetch(req('a'),{})).status,503);assert.equal((await call('a')).headers.get('Cache-Control'),'private, no-store');
+console.log('PASS: real SQLite migrations, resume payload, independent modes, restart, identity isolation, invalid progress and CSRF rejected.');

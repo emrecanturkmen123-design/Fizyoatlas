@@ -1,0 +1,57 @@
+[
+  {
+    "file": "validate-mobile-controls.mjs",
+    "code": 0,
+    "output": "PASS: actual OrbitControls touch rotation, pinch zoom/pan, canceled gestures and finite camera math at four viewport sizes; software panel bounds. No physical device, browser pixels or GPU rendering tested.\n"
+  },
+  {
+    "file": "validate-card-actions.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: primary quiz/motion, folded case/favorite callbacks, pending disabled state, favorite pressed state, visible save error and retry; optional actions removed cleanly. Browser focus and pixels are not tested.\n"
+  },
+  {
+    "file": "validate-nerve-layer.mjs",
+    "code": 0,
+    "output": "PASS: v30 geometry and metadata preserved through repacking; 74 licensed supplement surfaces, matching gzip; nerve focus toggle/restoration and bilateral nerve-to-muscle links including latissimus.\n"
+  },
+  {
+    "file": "validate-nerve-study.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: all 24 nerves on both sides use actual source IDs; actual Home side/display controls, refresh/back/forward and selected buttons; posterior gluteal view and explicit inferior gluteal source limitation. GPU not tested.\n"
+  },
+  {
+    "file": "validate-viewport-framing.mjs",
+    "code": 0,
+    "output": "PASS: short-screen, expanded-card, keyboard and multi-panel occlusion; all source-box corners fit front/back/side views after orientation changes using real Three camera projection. No browser pixels or GPU tested.\n"
+  },
+  {
+    "file": "validate-webgl-recovery.mjs",
+    "code": 0,
+    "output": "PASS: default GPU selection, fresh-canvas fallback, explicit compatibility mode, bounded total failure, context loss prevention, restoration and listener cleanup. GPU rendering is not covered by this test.\n"
+  },
+  {
+    "file": "validate-muscle-groups.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 16 source meshes and indices, bilateral body context/chunk demand; real Home group cards, both/left/right, refresh, deep-member inspection, back and sided attachment deep links. GPU rendering and DOM portals are stubbed.\n"
+  },
+  {
+    "file": "validate-workspace-routes.mjs",
+    "code": 0,
+    "output": "PASS: deep links restore structures, side, motion, gait, cases and quizzes; legacy links, bounded parameters, history identity and anatomical relevance.\n"
+  },
+  {
+    "file": "validate-workspace.mjs",
+    "code": 0,
+    "output": "PASS: separate destinations, anatomy-first cards, collapsed controls and model framing at desktop/tablet/mobile, including short landscape screens and toolbar clearance.\n"
+  },
+  {
+    "file": "validate-workspace-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: app history state, deep-link fallback without leaving site, native anchors, replace controls, refresh/back/forward; actual Home Atlas → lab → left clinical comparison → quiz → lab → filtered Atlas and search return. GPU scene/DOM portals are stubbed.\n"
+  },
+  {
+    "file": "validate-study-links.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: all 40 muscle cards have learning paths; nine actual Home links preserve side, stop, refresh/back/forward; four source nerves, array hashes and unchanged previous chunks; honest inferior gluteal muscle fallback. GPU and visual device rendering are not tested.\n"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "file": "validate-learning.mjs",
+    "code": 0,
+    "output": "PASS: generated migrations on SQLite; identity isolation; CSRF/input guards; idempotent favorites; server-checked answers; wrong-answer review and correction; missing-storage handling; private caching.\n"
+  },
+  {
+    "file": "validate-learning-reset.mjs",
+    "code": 0,
+    "output": "Learning storage request failed\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: atomic account reset (4 batches), authentication/CSRF/confirmation/idempotency, account isolation and retained favorites/notebook/case/course; actual guest/account hooks, storage failure/retry/reload, expired session protection, quiz resume removal and confirmation controller. Dialog DOM focus is not browser-tested.\n"
+  },
+  {
+    "file": "validate-study-workspace.mjs",
+    "code": 0,
+    "output": "PASS: 33 suggested pairs in both sides; independent centering with common physical scale, shared anatomical coordinates; study tabs, clinical comparisons, context and camera deep links.\n"
+  },
+  {
+    "file": "validate-workspace-routes.mjs",
+    "code": 0,
+    "output": "PASS: deep links restore structures, side, motion, gait, cases and quizzes; legacy links, bounded parameters, history identity and anatomical relevance.\n"
+  },
+  {
+    "file": "validate-workspace.mjs",
+    "code": 0,
+    "output": "PASS: separate destinations, anatomy-first cards, collapsed controls and model framing at desktop/tablet/mobile, including short landscape screens and toolbar clearance.\n"
+  },
+  {
+    "file": "validate-anatomy-lab.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 90 real bilateral section planes, 85131 clipped finite lines; 76 comparisons; actual React mode/side/pair/framing, clinical links/quiz, failure/retry, Canvas 2D calls, reload and cleanup. Browser pixels and GPU are not tested.\n"
+  },
+  {
+    "file": "validate-workspace-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: app history state, deep-link fallback without leaving site, native anchors, replace controls, refresh/back/forward; actual Home Atlas → lab → left clinical comparison → quiz → lab → filtered Atlas and search return. GPU scene/DOM portals are stubbed.\n"
+  }
+]

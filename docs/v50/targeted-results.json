@@ -1,0 +1,37 @@
+[
+  {
+    "file": "validate-attachments.mjs",
+    "code": 0,
+    "output": "PASS: 226 bilateral attachment markers resolve to existing bone vertices; all configured muscles and groups, side separation and origin/insertion filters.\n"
+  },
+  {
+    "file": "validate-selection-palette.mjs",
+    "code": 0,
+    "output": "PASS: stable distinct muscle colors across sides/order, matched labeled group/legend colors, linear GPU texture values and clearing, anatomical bone context, single-muscle blue, protected exam/motion/trace/spine roles, actual Three standard-shader hook. GPU rendering is not covered.\n"
+  },
+  {
+    "file": "validate-model-demand.mjs",
+    "code": 0,
+    "output": "PASS: initial atlas 16.16 MB, skeleton gait 4.40 MB, complete atlas 37.29 MB; deferred layers and bilateral tendon context remain available.\n"
+  },
+  {
+    "file": "validate-workspace-routes.mjs",
+    "code": 0,
+    "output": "PASS: deep links restore structures, side, motion, gait, cases and quizzes; legacy links, bounded parameters, history identity and anatomical relevance.\n"
+  },
+  {
+    "file": "validate-workspace.mjs",
+    "code": 0,
+    "output": "PASS: separate destinations, anatomy-first cards, collapsed controls and model framing at desktop/tablet/mobile, including short landscape screens and toolbar clearance.\n"
+  },
+  {
+    "file": "validate-workspace-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: app history state, deep-link fallback without leaving site, native anchors, replace controls, refresh/back/forward; actual Home Atlas → lab → left clinical comparison → quiz → lab → filtered Atlas and search return. GPU scene/DOM portals are stubbed.\n"
+  },
+  {
+    "file": "validate-muscle-groups.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 16 source meshes and indices, bilateral body context/chunk demand; real Home group cards, both/left/right, refresh, deep-member inspection, back and sided attachment deep links. GPU rendering and DOM portals are stubbed.\n"
+  }
+]

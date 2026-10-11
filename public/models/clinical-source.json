@@ -1,0 +1,584 @@
+{
+  "source": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "archiveURL": "https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip",
+  "archiveSHA256": "e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    "Gauthier Kervyn / Z-Anatomy",
+    "BodyParts3D / The Database Center for Life Science"
+  ],
+  "baseRegistration": {
+    "axes": "x,z,-y",
+    "scale": 0.9850303709151661,
+    "translation": [
+      7.034327618495536e-06,
+      0.03160419848501905,
+      0.0024510506019518874
+    ]
+  },
+  "localRegistration": {
+    "shoulderl": {
+      "scale": 0.9926086332623696,
+      "translation": [
+        -0.003008131513400736,
+        0.009419002216268346,
+        0.00022934112760297082
+      ],
+      "envelopeRmsMm": 3.84249895423808,
+      "bones": [
+        "Humerus",
+        "Scapula"
+      ]
+    },
+    "kneel": {
+      "scale": 1.0068587965216325,
+      "translation": [
+        -0.002353363820870119,
+        -0.010857477146321237,
+        0.008093848469726495
+      ],
+      "envelopeRmsMm": 5.671519177750528,
+      "bones": [
+        "Femur",
+        "Tibia"
+      ]
+    },
+    "anklel": {
+      "scale": 1.0403314598443738,
+      "translation": [
+        -0.006080194565660252,
+        -0.03632909521623498,
+        0.010565612614112416
+      ],
+      "envelopeRmsMm": 4.636141426704757,
+      "bones": [
+        "Tibia",
+        "Fibula",
+        "Talus",
+        "Calcaneus"
+      ]
+    },
+    "shoulderr": {
+      "scale": 0.9972797086084024,
+      "translation": [
+        0.0028657828498497018,
+        0.0030550153232804522,
+        0.0004134208471747447
+      ],
+      "envelopeRmsMm": 3.5369231283867295,
+      "bones": [
+        "Humerus",
+        "Scapula"
+      ]
+    },
+    "kneer": {
+      "scale": 0.9687014967774419,
+      "translation": [
+        -0.00042115964838551623,
+        0.0038785718963958438,
+        0.007112253589964836
+      ],
+      "envelopeRmsMm": 5.227632961599063,
+      "bones": [
+        "Femur",
+        "Tibia"
+      ]
+    },
+    "ankler": {
+      "scale": 1.0283167756353793,
+      "translation": [
+        0.005156322580887732,
+        -0.03568548676415173,
+        0.010122340252899029
+      ],
+      "envelopeRmsMm": 4.601848211089878,
+      "bones": [
+        "Tibia",
+        "Fibula",
+        "Talus",
+        "Calcaneus"
+      ]
+    }
+  },
+  "adaptations": [
+    "Evaluated source modifiers with embedded scripts disabled",
+    "Selected source Tendon faces for infraspinatus; source insertion footprint objects for supraspinatus, subscapularis and teres minor (these are not full tendons)",
+    "Applied local uniform bone-envelope registration, triangulation and quantized normals",
+    "Reference surface meshes; no invented tears, grafts or ligament fibres"
+  ],
+  "parts": [
+    {
+      "id": "ZA-clinical-left-anterior-cruciate-ligament",
+      "name": "Left anterior cruciate ligament",
+      "conceptId": "ZA-clinical-left-anterior-cruciate-ligament",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 0,
+      "normals": 10080,
+      "indices": 15120,
+      "vertexCount": 840,
+      "indexCount": 4728,
+      "bounds": [
+        [
+          0.06402808810058495,
+          0.4443058593590998,
+          -0.035342938807923094
+        ],
+        [
+          0.08503316926870054,
+          0.47377126933223646,
+          -0.010941834749654752
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Anterior cruciate ligament.l",
+      "sourceSelection": "Evaluated whole source object",
+      "registration": "kneel"
+    },
+    {
+      "id": "ZA-clinical-right-anterior-cruciate-ligament",
+      "name": "Right anterior cruciate ligament",
+      "conceptId": "ZA-clinical-right-anterior-cruciate-ligament",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 34032,
+      "normals": 44112,
+      "indices": 49152,
+      "vertexCount": 840,
+      "indexCount": 4728,
+      "bounds": [
+        [
+          -0.08448234468559636,
+          0.4417924153014901,
+          -0.03467839371472747
+        ],
+        [
+          -0.0642733008377602,
+          0.4701411637483883,
+          -0.011202027310693377
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Anterior cruciate ligament.r",
+      "sourceSelection": "Evaluated whole source object",
+      "registration": "kneer"
+    },
+    {
+      "id": "ZA-clinical-left-anterior-talofibular-ligament",
+      "name": "Left anterior talofibular ligament",
+      "conceptId": "ZA-clinical-left-anterior-talofibular-ligament",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 68064,
+      "normals": 68280,
+      "indices": 68388,
+      "vertexCount": 18,
+      "indexCount": 96,
+      "bounds": [
+        [
+          0.08677306016458243,
+          0.05843490959752275,
+          -0.028644993518834268
+        ],
+        [
+          0.09796516999627579,
+          0.06984079680716714,
+          -0.0206530393000298
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Anterior talofibular ligament.l",
+      "sourceSelection": "Evaluated whole source object",
+      "registration": "anklel"
+    },
+    {
+      "id": "ZA-clinical-right-anterior-talofibular-ligament",
+      "name": "Right anterior talofibular ligament",
+      "conceptId": "ZA-clinical-right-anterior-talofibular-ligament",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 68772,
+      "normals": 68988,
+      "indices": 69096,
+      "vertexCount": 18,
+      "indexCount": 96,
+      "bounds": [
+        [
+          -0.09767307107095477,
+          0.057984094241631826,
+          -0.028635422729440314
+        ],
+        [
+          -0.08661021779878166,
+          0.06925825977158528,
+          -0.02073577056577824
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Anterior talofibular ligament.r",
+      "sourceSelection": "Evaluated whole source object",
+      "registration": "ankler"
+    },
+    {
+      "id": "ZA-clinical-left-calcaneofibular-ligament",
+      "name": "Left calcaneofibular ligament",
+      "conceptId": "ZA-clinical-left-calcaneofibular-ligament",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 69480,
+      "normals": 69696,
+      "indices": 69804,
+      "vertexCount": 18,
+      "indexCount": 96,
+      "bounds": [
+        [
+          0.08266410160213372,
+          0.0507963433298768,
+          -0.05017818460073762
+        ],
+        [
+          0.10117070449674363,
+          0.06386381052363811,
+          -0.04378090066938855
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Calcaneofibular ligament.l",
+      "sourceSelection": "Evaluated whole source object",
+      "registration": "anklel"
+    },
+    {
+      "id": "ZA-clinical-right-calcaneofibular-ligament",
+      "name": "Right calcaneofibular ligament",
+      "conceptId": "ZA-clinical-right-calcaneofibular-ligament",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 70188,
+      "normals": 70404,
+      "indices": 70512,
+      "vertexCount": 18,
+      "indexCount": 96,
+      "bounds": [
+        [
+          -0.10084157762650936,
+          0.05043374878694701,
+          -0.04991993290989475
+        ],
+        [
+          -0.08254871318871371,
+          0.06335030110616639,
+          -0.043596530572246536
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Calcaneofibular ligament.r",
+      "sourceSelection": "Evaluated whole source object",
+      "registration": "ankler"
+    },
+    {
+      "id": "ZA-clinical-left-posterior-talofibular-ligament",
+      "name": "Left posterior talofibular ligament",
+      "conceptId": "ZA-clinical-left-posterior-talofibular-ligament",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 70896,
+      "normals": 71112,
+      "indices": 71220,
+      "vertexCount": 18,
+      "indexCount": 96,
+      "bounds": [
+        [
+          0.08149338233042812,
+          0.05824330820108062,
+          -0.04796799625878242
+        ],
+        [
+          0.0996554997336624,
+          0.06755348308142392,
+          -0.0417202942664011
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Posterior talofibular ligament.l",
+      "sourceSelection": "Evaluated whole source object",
+      "registration": "anklel"
+    },
+    {
+      "id": "ZA-clinical-right-posterior-talofibular-ligament",
+      "name": "Right posterior talofibular ligament",
+      "conceptId": "ZA-clinical-right-posterior-talofibular-ligament",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 71604,
+      "normals": 71820,
+      "indices": 71928,
+      "vertexCount": 18,
+      "indexCount": 96,
+      "bounds": [
+        [
+          -0.09934387935889216,
+          0.05779470940402938,
+          -0.0477352698125332
+        ],
+        [
+          -0.08139151443704414,
+          0.0669973620037963,
+          -0.041559721906967245
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Posterior talofibular ligament.r",
+      "sourceSelection": "Evaluated whole source object",
+      "registration": "ankler"
+    },
+    {
+      "id": "ZA-clinical-left-supraspinatus-tendon-insertion-surface",
+      "name": "Left supraspinatus tendon insertion surface",
+      "conceptId": "ZA-clinical-left-supraspinatus-tendon-insertion-surface",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 72312,
+      "normals": 80424,
+      "indices": 84480,
+      "vertexCount": 676,
+      "indexCount": 4044,
+      "bounds": [
+        [
+          0.17582372210491817,
+          1.3979020486519387,
+          -0.024267463659729423
+        ],
+        [
+          0.18631222058300248,
+          1.4127239993578458,
+          -0.008123402330360423
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Supraspinatus muscle.el",
+      "sourceSelection": "Source insertion footprint object; not a complete tendon",
+      "registration": "shoulderl"
+    },
+    {
+      "id": "ZA-clinical-right-supraspinatus-tendon-insertion-surface",
+      "name": "Right supraspinatus tendon insertion surface",
+      "conceptId": "ZA-clinical-right-supraspinatus-tendon-insertion-surface",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 100656,
+      "normals": 108768,
+      "indices": 112824,
+      "vertexCount": 676,
+      "indexCount": 4044,
+      "bounds": [
+        [
+          -0.1873314242923305,
+          1.3980720659064605,
+          -0.02419866242662679
+        ],
+        [
+          -0.1767935684290531,
+          1.412963766608693,
+          -0.007978629435987213
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Supraspinatus muscle.er",
+      "sourceSelection": "Source insertion footprint object; not a complete tendon",
+      "registration": "shoulderr"
+    },
+    {
+      "id": "ZA-clinical-left-infraspinatus-tendon",
+      "name": "Left infraspinatus tendon",
+      "conceptId": "ZA-clinical-left-infraspinatus-tendon",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 129000,
+      "normals": 132372,
+      "indices": 134060,
+      "vertexCount": 281,
+      "indexCount": 1563,
+      "bounds": [
+        [
+          0.16017005091971506,
+          1.381809395263723,
+          -0.05934002726650543
+        ],
+        [
+          0.18819695927413885,
+          1.4091417414016838,
+          -0.022028958564871547
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Infraspinatus muscle.l",
+      "sourceSelection": "Tendon material faces",
+      "registration": "shoulderl"
+    },
+    {
+      "id": "ZA-clinical-right-infraspinatus-tendon",
+      "name": "Right infraspinatus tendon",
+      "conceptId": "ZA-clinical-right-infraspinatus-tendon",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 140312,
+      "normals": 143684,
+      "indices": 145372,
+      "vertexCount": 281,
+      "indexCount": 1563,
+      "bounds": [
+        [
+          -0.1892250762107471,
+          1.38190379988079,
+          -0.05943627253984647
+        ],
+        [
+          -0.16106627720349914,
+          1.4093647681603643,
+          -0.021949634223131877
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Infraspinatus muscle.r",
+      "sourceSelection": "Tendon material faces",
+      "registration": "shoulderr"
+    },
+    {
+      "id": "ZA-clinical-left-subscapularis-tendon-insertion-surface",
+      "name": "Left subscapularis tendon insertion surface",
+      "conceptId": "ZA-clinical-left-subscapularis-tendon-insertion-surface",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 151624,
+      "normals": 154624,
+      "indices": 156124,
+      "vertexCount": 250,
+      "indexCount": 1488,
+      "bounds": [
+        [
+          0.15336858042838905,
+          1.3848363764286065,
+          -0.004208578111863015
+        ],
+        [
+          0.1635890418806245,
+          1.4013656517438016,
+          0.0010747117500651236
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Subscapularis muscle.el",
+      "sourceSelection": "Source insertion footprint object; not a complete tendon",
+      "registration": "shoulderl"
+    },
+    {
+      "id": "ZA-clinical-right-subscapularis-tendon-insertion-surface",
+      "name": "Right subscapularis tendon insertion surface",
+      "conceptId": "ZA-clinical-right-subscapularis-tendon-insertion-surface",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 162076,
+      "normals": 165076,
+      "indices": 166576,
+      "vertexCount": 250,
+      "indexCount": 1488,
+      "bounds": [
+        [
+          -0.16450131353610634,
+          1.3849449084840713,
+          -0.004045382610353119
+        ],
+        [
+          -0.15423275604287867,
+          1.4015519682228805,
+          0.001262769663801767
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Subscapularis muscle.er",
+      "sourceSelection": "Source insertion footprint object; not a complete tendon",
+      "registration": "shoulderr"
+    },
+    {
+      "id": "ZA-clinical-left-teres-minor-tendon-insertion-surface",
+      "name": "Left teres minor tendon insertion surface",
+      "conceptId": "ZA-clinical-left-teres-minor-tendon-insertion-surface",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 172528,
+      "normals": 183472,
+      "indices": 188944,
+      "vertexCount": 912,
+      "indexCount": 5460,
+      "bounds": [
+        [
+          0.17719955905795184,
+          1.3772206689841582,
+          -0.03984645651256222
+        ],
+        [
+          0.18817876183731302,
+          1.394455462858885,
+          -0.01721184643985946
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Teres minor muscle.el",
+      "sourceSelection": "Source insertion footprint object; not a complete tendon",
+      "registration": "shoulderl"
+    },
+    {
+      "id": "ZA-clinical-right-teres-minor-tendon-insertion-surface",
+      "name": "Right teres minor tendon insertion surface",
+      "conceptId": "ZA-clinical-right-teres-minor-tendon-insertion-surface",
+      "system": "connective",
+      "chunk": 17,
+      "positions": 210784,
+      "normals": 221728,
+      "indices": 227200,
+      "vertexCount": 912,
+      "indexCount": 5460,
+      "bounds": [
+        [
+          -0.18920674922486339,
+          1.3772933626012958,
+          -0.03985096780868041
+        ],
+        [
+          -0.1781758798755136,
+          1.3946092609698426,
+          -0.017109842473532092
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Teres minor muscle.er",
+      "sourceSelection": "Source insertion footprint object; not a complete tendon",
+      "registration": "shoulderr"
+    }
+  ],
+  "sha256": "c7bdff6b8af73299d50432d179c311023b0dd2b8f368dc4a5ccfce0886bb62b2",
+  "existingStructureReused": {
+    "ids": [
+      "FJ1405",
+      "FJ1405M"
+    ],
+    "name": "Calcaneal tendons",
+    "source": "Original BodyParts3D atlas; not duplicated"
+  }
+}

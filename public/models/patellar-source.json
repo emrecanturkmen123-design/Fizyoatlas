@@ -1,0 +1,127 @@
+{
+  "source": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "archiveSHA256": "e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    "Gauthier Kervyn / Z-Anatomy",
+    "BodyParts3D / The Database Center for Life Science"
+  ],
+  "parts": [
+    {
+      "id": "ZA-patellar-right",
+      "name": "Right patellar ligament",
+      "conceptId": "ZA-patellar-right",
+      "system": "connective",
+      "chunk": 18,
+      "positions": 0,
+      "normals": 5736,
+      "indices": 8604,
+      "vertexCount": 478,
+      "indexCount": 2556,
+      "bounds": [
+        [
+          -0.09803042841270898,
+          0.38830857491528264,
+          0.007037182109254059
+        ],
+        [
+          -0.06643833937885237,
+          0.4473511874675751,
+          0.017932307937161888
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Rectus femoris muscle.r",
+      "sourceSelection": "Tendon-material faces distal to the patellar origin footprint upper boundary, boundary clipped; endpoint-registered to reference bones"
+    },
+    {
+      "id": "ZA-patellar-left",
+      "name": "Left patellar ligament",
+      "conceptId": "ZA-patellar-left",
+      "system": "connective",
+      "chunk": 18,
+      "positions": 18828,
+      "normals": 24564,
+      "indices": 27432,
+      "vertexCount": 478,
+      "indexCount": 2556,
+      "bounds": [
+        [
+          0.06736082217286087,
+          0.38988514183919504,
+          0.007459976653511984
+        ],
+        [
+          0.10019738194103324,
+          0.4492077461005441,
+          0.019512162840918668
+        ]
+      ],
+      "source": "Z-Anatomy / BodyParts3D",
+      "license": "CC-BY-SA-4.0",
+      "sourceObject": "Rectus femoris muscle.l",
+      "sourceSelection": "Tendon-material faces distal to the patellar origin footprint upper boundary, boundary clipped; endpoint-registered to reference bones"
+    }
+  ],
+  "registration": [
+    {
+      "side": "right",
+      "triangles": 852,
+      "vertices": 478,
+      "bounds": [
+        [
+          -0.09803042841270898,
+          0.38830857491528264,
+          0.007037182109254059
+        ],
+        [
+          -0.06643833937885237,
+          0.4473511874675751,
+          0.017932307937161888
+        ]
+      ],
+      "sourceCutY": 0.43276751041412354,
+      "proximalTranslationMm": [
+        -0.004219604620617212,
+        -0.08934804614568748,
+        0.18971799648658144
+      ],
+      "distalTranslationMm": [
+        0.006949128519340153,
+        0.3037723651397317,
+        -1.9921362164512686
+      ]
+    },
+    {
+      "side": "left",
+      "triangles": 852,
+      "vertices": 478,
+      "bounds": [
+        [
+          0.06736082217286087,
+          0.38988514183919504,
+          0.007459976653511984
+        ],
+        [
+          0.10019738194103324,
+          0.4492077461005441,
+          0.019512162840918668
+        ]
+      ],
+      "sourceCutY": 0.43276745080947876,
+      "proximalTranslationMm": [
+        1.0867800382873827,
+        -0.9686546725476974,
+        -1.916301553679299
+      ],
+      "distalTranslationMm": [
+        0.5295933109794593,
+        1.485745291317342,
+        0.01150109469375514
+      ]
+    }
+  ],
+  "limitations": "Educational extraction and reference-bone registration, not patient-specific segmentation. Static model; no patellar tracking or tendon strain simulation.",
+  "sha256": "d0a8209a2a8cfa079ae3699b2505f7b772b95cce1e20d217103d5c23d8f59405"
+}

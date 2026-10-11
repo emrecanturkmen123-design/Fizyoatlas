@@ -1,0 +1,40 @@
+import {muscleKeyMatches,muscleFor} from './education-data';
+import type {Atlas,Part} from './anatomy';
+const base='https://medicine.uams.edu/neuroscience/education/medical-school-courses/human-structure-module/anatomy-tables/nerve-tables/';
+export type Side='left'|'right'|undefined;
+export interface Nerve {id:string;name:string;aliases:string[];muscles:string[];source:string;note?:string;indirect?:boolean}
+export const NERVES:Nerve[]=[
+{id:'superior-subscapular',name:'N. subscapularis superior',aliases:['superior subscapular nerve','upper subscapular nerve'],muscles:['subscapularis'],note:'Subscapularisin üst bölümüne motor katkı verir; alt subscapular sinir de bu kasa katılır.',source:base+'nerves-of-the-upper-limb/'},
+{id:'inferior-subscapular',name:'N. subscapularis inferior',aliases:['inferior subscapular nerve','lower subscapular nerve'],muscles:['subscapularis','teres major'],source:base+'nerves-of-the-upper-limb/'},
+{id:'lateral-pectoral',name:'N. pectoralis lateralis',aliases:['lateral pectoral nerve'],muscles:['pectoralis major'],source:base+'nerves-of-the-upper-limb/'},
+{id:'medial-pectoral',name:'N. pectoralis medialis',aliases:['medial pectoral nerve'],muscles:['pectoralis major','pectoralis minor'],source:base+'nerves-of-the-upper-limb/'},
+{id:'ulnar',name:'N. ulnaris',aliases:['ulnar nerve'],muscles:['flexor carpi ulnaris'],note:'Seçili motor hedef örneğidir. Flexor digitorum profundusun ulnar yarısı ve elin birçok intrinsik kası da bu sinirden innervasyon alır; burada tam hedef listesi gösterilmez.',source:base+'nerves-of-the-upper-limb/'},
+{id:'sciatic',name:'N. ischiadicus',aliases:['sciatic nerve'],muscles:['semitendinosus','semimembranosus','biceps femoris'],note:'Tibial bölümü semitendinosus, semimembranosus ve biceps femoris uzun başına; ortak fibular bölümü biceps femoris kısa başına motor dallar verir. Distal dalların tüm hedefleri bu seçime dahil değildir.',source:base+'nerves-of-the-lower-limb/'},
+{id:'common-fibular',name:'N. fibularis communis',aliases:['common fibular nerve','common peroneal nerve'],muscles:['fibularis longus','fibularis brevis','tibialis anterior','extensor hallucis longus','extensor digitorum longus','fibularis tertius'],indirect:true,note:'Bacak kaslarına yüzeyel ve derin fibular dalları aracılığıyla ulaşır; listede doğrudan motor dal ilişkisi değil, dal üzerinden bağlantı gösterilir. Biceps femoris kısa başının dalı uylukta ayrıldığı için bu seçime eklenmez.',source:base+'nerves-of-the-lower-limb/'},
+{id:'superficial-fibular',name:'N. fibularis superficialis',aliases:['superficial fibular nerve','superficial peroneal nerve'],muscles:['fibularis longus','fibularis brevis'],source:base+'nerves-of-the-lower-limb/'},
+{id:'inferior-gluteal',name:'N. gluteus inferior',aliases:['inferior gluteal nerve'],muscles:['gluteus maximus'],source:base+'nerves-of-the-lower-limb/'},
+{id:'obturator',name:'N. obturatorius · ön bölüm',aliases:['anterior branch of obturator nerve'],muscles:['adductor longus'],note:'Kalça addüksiyonu için seçili kas örneğidir; sinirin tam hedef listesi değildir.',source:base+'nerves-of-the-lower-limb/'},
+
+{id:'musculocutaneous',name:'N. musculocutaneus',aliases:['musculocutaneous nerve'],muscles:['biceps brachii','brachialis','coracobrachialis'],source:base+'nerves-of-the-upper-limb/'},
+{id:'radial',name:'N. radialis',aliases:['radial nerve'],muscles:['triceps brachii','anconeus','brachioradialis','supinator','extensor carpi radialis longus','extensor carpi radialis brevis'],note:'Dirsek, önkol ve el bileği için seçili motor hedeflerdir; tam hedef listesi değildir. Supinator ve extensor carpi radialis brevis derin dal aracılığıyla innerve edilir.',source:base+'nerves-of-the-upper-limb/'},
+{id:'median',name:'N. medianus',aliases:['median nerve'],muscles:['pronator teres','pronator quadratus','flexor carpi radialis'],note:'Pronasyon ve el bileği için seçili motor hedeflerdir; tam hedef listesi değildir. Pronator quadratus anterior interosseöz dal ile innerve edilir.',source:base+'nerves-of-the-upper-limb/'},
+{id:'thoracodorsal',name:'N. thoracodorsalis',aliases:['thoracodorsal nerve'],muscles:['latissimus dorsi'],source:base+'nerves-of-the-upper-limb/'},
+
+{id:'axillary',name:'N. axillaris',aliases:['axillary nerve'],muscles:['deltoid','teres minor'],source:base+'nerves-of-the-upper-limb/'},
+{id:'suprascapular',name:'N. suprascapularis',aliases:['suprascapular nerve'],muscles:['supraspinatus','infraspinatus'],source:base+'nerves-of-the-upper-limb/'},
+{id:'long-thoracic',name:'N. thoracicus longus',aliases:['long thoracic nerve'],muscles:['serratus anterior'],source:base+'nerves-of-the-upper-limb/'},
+{id:'superior-gluteal',name:'N. gluteus superior',aliases:['superior gluteal nerve'],muscles:['gluteus medius','gluteus minimus','tensor fasciae latae'],source:base+'nerves-of-the-lower-limb/'},
+{id:'femoral',name:'N. femoralis',aliases:['femoral nerve'],muscles:['iliacus','sartorius','rectus femoris','vastus lateralis','vastus intermedius','vastus medialis','pectineus'],note:'Pectineus innervasyonu varyasyon gösterebilir; ek obturator katkı bulunabilir.',source:base+'nerves-of-the-lower-limb/'},
+{id:'deep-fibular',name:'N. fibularis profundus',aliases:['deep fibular nerve','deep peroneal nerve'],muscles:['tibialis anterior','extensor hallucis longus','extensor digitorum longus','fibularis tertius','extensor digitorum brevis','extensor hallucis brevis'],source:base+'nerves-of-the-lower-limb/'},
+{id:'tibial',name:'N. tibialis',aliases:['tibial nerve'],muscles:['gastrocnemius','soleus','plantaris','popliteus','tibialis posterior','flexor hallucis longus','flexor digitorum longus'],note:'Bu kart bacağın motor hedeflerini gösterir. Ayak tabanı kaslarına distal plantar dallarla giden innervasyon ve siyatik sinirin tibial bölümünden uyluğa ayrılan dallar bu seçime dahil değildir.',source:base+'nerves-of-the-lower-limb/'},
+{id:'oculomotor-superior',name:'N. oculomotorius · üst dal',aliases:['superior branch of left oculomotor nerve','superior branch of right oculomotor nerve'],muscles:['superior rectus','levator palpebrae superioris'],source:base+'nerves-of-the-head-and-neck/'},
+{id:'oculomotor-inferior',name:'N. oculomotorius · alt dal',aliases:['inferior branch of left oculomotor nerve','inferior branch of right oculomotor nerve'],muscles:['medial rectus','inferior rectus','inferior oblique'],note:'Listede iskelet kası hedefleri var. Parasempatik lifler siliyer ganglionda sinaps yaparak göz içi kaslarına ulaşır.',source:base+'nerves-of-the-head-and-neck/'},
+{id:'trochlear',name:'N. trochlearis',aliases:['trochlear nerve'],muscles:['superior oblique'],source:base+'nerves-of-the-head-and-neck/'},
+];
+export function sideOf(name:string):Side{return /\bleft\b/i.test(name)?'left':/\bright\b/i.test(name)?'right':undefined;}
+export function aliasMatches(name:string,alias:string){return new RegExp('\\b'+alias+'\\b','i').test(name);}
+export function nerveForName(name:string){return NERVES.find(n=>n.aliases.some(a=>aliasMatches(name,a)));}
+export function matchesMuscle(part:Part,key:string){return part.system==='muscular'&&(muscleKeyMatches(part.name,key)||muscleFor(part.name)?.key===key);}
+export function nervesForMuscle(name:string){const p={name,system:'muscular'} as Part;return NERVES.filter(n=>!n.indirect&&n.muscles.some(k=>matchesMuscle(p,k)));}
+export function targetParts(atlas:Atlas,nerve:Nerve,side?:Side){return atlas.parts.filter(p=>(!side||sideOf(p.name)===side)&&nerve.muscles.some(k=>matchesMuscle(p,k)));}
+export function nerveParts(atlas:Atlas,nerve:Nerve,side?:Side){return atlas.parts.filter(p=>p.system==='nervous'&&(!side||sideOf(p.name)===side)&&nerve.aliases.some(a=>aliasMatches(p.name,a)));}

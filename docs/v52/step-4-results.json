@@ -1,0 +1,42 @@
+[
+  {
+    "file": "validate-mobile-controls.mjs",
+    "code": 0,
+    "output": "PASS: actual OrbitControls touch rotation, pinch zoom/pan, canceled gestures and finite camera math at four viewport sizes; software panel bounds. No physical device, browser pixels or GPU rendering tested.\n"
+  },
+  {
+    "file": "validate-interactions.mjs",
+    "code": 0,
+    "output": "atlas.json: packing at desktop/mobile aspect ratios and search/inspection contracts passed.\nTap, drag, multitouch, cancellation, and empty-view checks passed.\n"
+  },
+  {
+    "file": "validate-navigation.mjs",
+    "code": 0,
+    "output": "PASS: cursor zoom remains anchored and right-button pan preserves distance for normal and focused cameras.\n"
+  },
+  {
+    "file": "validate-tendon-context.mjs",
+    "code": 0,
+    "output": "PASS: all ten bilateral tendon card/muscle mappings, including source-named infraspinatus muscle; no opposite-side leakage or unrelated context.\n"
+  },
+  {
+    "file": "validate-webgl-recovery.mjs",
+    "code": 0,
+    "output": "PASS: default GPU selection, fresh-canvas fallback, explicit compatibility mode, bounded total failure, context loss prevention, restoration and listener cleanup. GPU rendering is not covered by this test.\n"
+  },
+  {
+    "file": "validate-workspace.mjs",
+    "code": 0,
+    "output": "PASS: separate destinations, anatomy-first cards, collapsed controls and model framing at desktop/tablet/mobile, including short landscape screens and toolbar clearance.\n"
+  },
+  {
+    "file": "validate-muscle-stability.mjs",
+    "code": 0,
+    "output": "{\"before\":{\"depth\":0.6024354834926791,\"strain\":13703.110368425063},\"after\":{\"depth\":0,\"strain\":4276.509484273766}}\nPASS: high-angle bilateral shoulder anchors, finite surfaces, reduced bone-core overlap and edge stretch. {\"before\":{\"depth\":0.6024354834926791,\"strain\":13703.110368425063},\"after\":{\"depth\":0,\"strain\":4276.509484273766}}\nPASS: bilateral high-angle biceps/triceps bone-core overlap reduced. { before: 0.0013942914861183944, after: 0 }\n"
+  },
+  {
+    "file": "validate-demand-rigs.mjs",
+    "code": 0,
+    "output": "PASS: 18 bilateral production rigs have identical surface coverage with demanded buffers and full atlas buffers.\n"
+  }
+]

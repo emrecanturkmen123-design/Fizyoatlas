@@ -1,0 +1,34 @@
+[
+  {
+    "side": "left",
+    "lengthMm": 59.322625398635864,
+    "vertices": 478,
+    "triangles": 852,
+    "patellaEndDistanceMmMinMedianMax": [
+      0.001469408971388475,
+      2.9406723333522677,
+      6.250991486012936
+    ],
+    "tibiaEndDistanceMmMinMedianMax": [
+      0.1152942786575295,
+      1.0669540497474372,
+      3.3365339040756226
+    ]
+  },
+  {
+    "side": "right",
+    "lengthMm": 59.04260277748108,
+    "vertices": 478,
+    "triangles": 852,
+    "patellaEndDistanceMmMinMedianMax": [
+      0.0,
+      1.9136994960717857,
+      4.838724620640278
+    ],
+    "tibiaEndDistanceMmMinMedianMax": [
+      0.1004181249300018,
+      1.5147135127335787,
+      3.6586725618690252
+    ]
+  }
+]

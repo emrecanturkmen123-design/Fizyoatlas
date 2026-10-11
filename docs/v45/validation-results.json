@@ -1,0 +1,312 @@
+[
+  {
+    "file": "validate-anatomical-muscles.mjs",
+    "code": 0,
+    "output": "left rig build ms 255\nright rig build ms 175\nPASS: ten anatomical heads, finite morphs/normals, length directions, exact rest restoration, fixed isometric pose, persistent buffers, marker toggles and disposal\n"
+  },
+  {
+    "file": "validate-atlas.mjs",
+    "code": 0,
+    "output": "Verified 2391 individually indexed meshes, 3590 complete concept mappings, 2,595,990 triangles, and every binary buffer.\n"
+  },
+  {
+    "file": "validate-attachments.mjs",
+    "code": 0,
+    "output": "PASS: 226 bilateral attachment markers resolve to existing bone vertices; all configured muscles and groups, side separation and origin/insertion filters.\n"
+  },
+  {
+    "file": "validate-achilles-study.mjs",
+    "code": 0,
+    "output": "PASS 28 bilateral Achilles poses: source preservation, calf context, finite surfaces, calcaneal attachment, visibility, picking IDs and disposal.\n"
+  },
+  {
+    "file": "validate-case-branch.mjs",
+    "code": 0,
+    "output": "PASS: five distinct examination paths, deferred findings, reassessment gates, no skipped transitions, saved branch validation.\nPASS: all 16 cases have validated examination choices; new planning feedback is limited to learning mode, and legacy resumes remain valid.\n"
+  },
+  {
+    "file": "validate-atlas-expansion.mjs",
+    "code": 0,
+    "output": "PASS: 2343 original source arrays unchanged; 38 source hashes, 19 bilateral selections and real muscle/bone context; triangle-plane sections, identical camera transforms; SQLite notebook create/update/archive/restore, saved side/motion/position, identity separation, CSRF and invalid payload rejection.\n"
+  },
+  {
+    "file": "validate-case-feedback.mjs",
+    "code": 0,
+    "output": "PASS: 160 clinical questions, 640 mapped choice explanations; no unrelated sampled distractors.\n"
+  },
+  {
+    "file": "validate-case-journeys.mjs",
+    "code": 0,
+    "output": "PASS: 16 complete ten-step journeys, real model targets, four unique choices, locked answers and scoring.\n"
+  },
+  {
+    "file": "validate-case-progress.mjs",
+    "code": 0,
+    "output": "PASS: real SQLite migrations, resume payload, independent modes, restart, identity isolation, invalid progress and CSRF rejected.\n"
+  },
+  {
+    "file": "validate-cases.mjs",
+    "code": 0,
+    "output": "PASS: 15 sourced fictional cases, all motor targets on both sides.\n"
+  },
+  {
+    "file": "validate-clinical-anatomy.mjs",
+    "code": 0,
+    "output": "PASS: 16 clinical surfaces + 2 Achilles + 2 extracted patellar surfaces, 10 modelled structures, Turkish search aliases, direct case targets, explicit footprint limits, local envelope residual <6 mm.\n"
+  },
+  {
+    "file": "validate-content-coverage.mjs",
+    "code": 0,
+    "output": "PASS: 40 standardized sourced muscle cards, 24 nerve cards, bilateral model coverage, missing-model state, nerve lessons, shared playback boundaries.\n"
+  },
+  {
+    "file": "validate-contractions.mjs",
+    "code": 0,
+    "output": "PASS: bilateral contraction angles, muscle length direction and fixed isometric pose\n"
+  },
+  {
+    "file": "validate-elbow-cards.mjs",
+    "code": 0,
+    "output": "PASS: eight sourced elbow/forearm cards; bilateral model targets; no brachialis/coracobrachialis collision.\n"
+  },
+  {
+    "file": "validate-elbow.mjs",
+    "code": 0,
+    "output": "PASS: four bilateral elbow/forearm motions, 29 bones, rigid hinge, stationary ulna during forearm rotation, complete muscle targets.\n"
+  },
+  {
+    "file": "validate-exercises.mjs",
+    "code": 0,
+    "output": "PASS: all 16 cases have staged exercise illustrations, valid model movement links, quality/regression/progression and sources.\n"
+  },
+  {
+    "file": "validate-connective-study.mjs",
+    "code": 0,
+    "output": "PASS 38 cards × both sides: same-side context, visibility, honest mesh coverage, correct heads, case targets and search aliases.\n"
+  },
+  {
+    "file": "validate-gait.mjs",
+    "code": 0,
+    "output": "{\n  maxLengthError: 3.3306690738754696e-16,\n  maxStep: 0.007672529862010892\n}\nPASS: eight bilateral poses; 401 cycle samples; sole clearance; rigid bone lengths; connected hip/knee/ankle; phase and cycle continuity; optional muscles/plane; single/double support.\n"
+  },
+  {
+    "file": "validate-demand-rigs.mjs",
+    "code": 0,
+    "output": "PASS: 18 bilateral production rigs have identical surface coverage with demanded buffers and full atlas buffers.\n"
+  },
+  {
+    "file": "validate-interactions.mjs",
+    "code": 0,
+    "output": "atlas.json: packing at desktop/mobile aspect ratios and search/inspection contracts passed.\nTap, drag, multitouch, cancellation, and empty-view checks passed.\n"
+  },
+  {
+    "file": "validate-knee-course.mjs",
+    "code": 0,
+    "output": "PASS: actual bilateral source geometry and source-only patellar picks; six lesson deep links; real SQLite resume, finished exam, restart, validation, identity isolation and CSRF; all six rendered lesson stages; 13 structures, four staged cases, rotating 10-question exams, legacy migration, mastery and merge rules. Browser/GPU QA is separate.\n"
+  },
+  {
+    "file": "validate-forearm-tendon.mjs",
+    "code": 0,
+    "output": "PASS: 204 bilateral pronation/supination poses, 6732 exact radial attachment checks, posed muscle transition, finite normals, toggle-off and unchanged source arrays.\n"
+  },
+  {
+    "file": "validate-knee.mjs",
+    "code": 0,
+    "output": "PASS: bilateral knee flexion/extension, 30 moving bones, rigid hinge, posterior direction, disjoint roles, eight complete cards, preserved fibularis muscle and source tendon layers.\n"
+  },
+  {
+    "file": "validate-knee-tendon.mjs",
+    "code": 0,
+    "output": "PASS: 204 bilateral flexion/extension poses, 52632 attachment-vertex checks; finite normals and preserved source geometry. Teaching path is not clinical kinematic validation.\n"
+  },
+  {
+    "file": "validate-learning-history.mjs",
+    "code": 0,
+    "output": "PASS: exactly one attempt per retry; server-checked identity and correctness; stale retries preserve latest answer; 1/3/7/14/30-day scheduling and wrong-answer reset; legacy records retained.\n"
+  },
+  {
+    "file": "validate-learning-timeline.mjs",
+    "code": 0,
+    "output": "PASS: concurrent answer order, retry idempotency, stale retry protection, immutable attempts, review reset and account isolation.\n"
+  },
+  {
+    "file": "validate-knee-deformation.mjs",
+    "code": 0,
+    "output": "PASS 32 knee poses and 111104 protected-belly checks; preserved source and connective tissue classification.\n"
+  },
+  {
+    "file": "validate-learning.mjs",
+    "code": 0,
+    "output": "PASS: generated migrations on SQLite; identity isolation; CSRF/input guards; idempotent favorites; server-checked answers; wrong-answer review and correction; missing-storage handling; private caching.\n"
+  },
+  {
+    "file": "validate-limb-muscles.mjs",
+    "code": 0,
+    "output": "PASS 120 bilateral limb poses, all heads, finite surfaces, correct attachment transforms, preserved sources and separation from each motion/isolation state.\n"
+  },
+  {
+    "file": "validate-lower.mjs",
+    "code": 0,
+    "output": "PASS: eight lower-limb movements, both sides, 32 hip/28 ankle bones, fixed pivots, direction, roles and card links\n"
+  },
+  {
+    "file": "validate-learning-ui.mjs",
+    "code": 0,
+    "output": "PASS: eight lesson routes; server rendering of all new panels, both-side motion controls, sign-in, favorites, wrong-question entry. Browser interaction/visual layout not covered.\n"
+  },
+  {
+    "file": "validate-model-demand.mjs",
+    "code": 0,
+    "output": "PASS: initial atlas 16.16 MB, skeleton gait 4.40 MB, complete atlas 37.29 MB; deferred layers and bilateral tendon context remain available.\n"
+  },
+  {
+    "file": "validate-movement-options.mjs",
+    "code": 0,
+    "output": "PASS 20 movement defaults; opt-in, stepping, saved card return and movement-switch reset.\n"
+  },
+  {
+    "file": "validate-muscle-demo.mjs",
+    "code": 0,
+    "output": "PASS: bilateral schematic lengths, reversible poses, finite geometry, forearm rotation exclusion.\n"
+  },
+  {
+    "file": "validate-movement-ui.mjs",
+    "code": 0,
+    "output": "PASS movement UI rendering: top controls, all contraction modes, hip/ankle angle display, gait and deep links. Browser layout not covered.\n"
+  },
+  {
+    "file": "validate-navigation.mjs",
+    "code": 0,
+    "output": "PASS: cursor zoom remains anchored and right-button pan preserves distance for normal and focused cameras.\n"
+  },
+  {
+    "file": "validate-nerve-layer.mjs",
+    "code": 0,
+    "output": "PASS: v30 geometry and metadata preserved through repacking; 70 licensed supplement surfaces, matching gzip; nerve focus toggle/restoration and bilateral nerve-to-muscle links including latissimus.\n"
+  },
+  {
+    "file": "validate-muscle-stability.mjs",
+    "code": 0,
+    "output": "{\"before\":{\"depth\":0.6024354834926791,\"strain\":13703.110368425063},\"after\":{\"depth\":0,\"strain\":4276.509484273766}}\nPASS: high-angle bilateral shoulder anchors, finite surfaces, reduced bone-core overlap and edge stretch. {\"before\":{\"depth\":0.6024354834926791,\"strain\":13703.110368425063},\"after\":{\"depth\":0,\"strain\":4276.509484273766}}\nPASS: bilateral high-angle biceps/triceps bone-core overlap reduced. { before: 0.0013942914861183944, after: 0 }\n"
+  },
+  {
+    "file": "validate-quiz.mjs",
+    "code": 0,
+    "output": "PASS: 692 questions, 128 filter/count combinations, unique sampling, empty/small pools, balanced mixed tests, no clinical highlight leaks, scoring and legacy review.\n"
+  },
+  {
+    "file": "validate-record-recovery.mjs",
+    "code": 0,
+    "output": "Stored study records could not be decoded: 1\nStored study records could not be decoded: 1\nStored study records could not be decoded: 1\nPASS: atomic revision checks for all four stores, explicit conflict resolution, account isolation, valid records survive corrupt neighbors, bounded/validated quiz sessions.\n"
+  },
+  {
+    "file": "validate-recovery-ui.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual React hooks and quiz interaction; held/503 learning reads gated, guest write retry and unload protection, two notebook drafts survive switches/remount, quiz confirmation and reload resume without duplicate answers.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual generic quiz shares controlled selection between 2D projection and 3D callback without exposing answer labels.\n"
+  },
+  {
+    "file": "validate-scapula.mjs",
+    "code": 0,
+    "output": "PASS: scapula coupling is bilateral, rigid and preserves the moving shoulder and elbow connections.\n"
+  },
+  {
+    "file": "validate-search.mjs",
+    "code": 0,
+    "output": "PASS: Turkish/Latin/English aliases, diacritics, side filters, nerves, and latissimus 3D geometry.\n"
+  },
+  {
+    "file": "validate-local-deformation.mjs",
+    "code": 0,
+    "output": "PASS local deformation: 48030 protected hip/calf vertices; 71540 bent forearm vertices.\n"
+  },
+  {
+    "file": "validate-shoulder-cards.mjs",
+    "code": 0,
+    "output": "PASS: all 9 shoulder movement muscles have complete sourced cards; both-side model selections resolve; original shoulder coverage preserved.\n"
+  },
+  {
+    "file": "validate-shoulder-motion.mjs",
+    "code": 0,
+    "output": "PASS: 30 bones per side; 6 motions across 4 positions; fixed shoulder pivot, connected elbow, rigid lengths, correct direction and playback stop.\n"
+  },
+  {
+    "file": "validate-open3d-tendons.mjs",
+    "code": 0,
+    "output": "PASS: 88 bilateral quadriceps motion poses; four muscle heads; 39424 patellar attachment checks.\nPASS: all 2333 previous meshes unchanged byte for byte; 10 new source hashes, 4 distinct extensor contributors, preferred body selection, 192 bilateral shoulder poses, 31968 humeral and 28320 muscle anchor checks, neutral restoration and demanded buffers.\n"
+  },
+  {
+    "file": "validate-shoulder-roles.mjs",
+    "code": 0,
+    "output": "PASS: six movement pairs on both sides; nonoverlapping role colors, direction reversal and deltoid subdivisions.\n"
+  },
+  {
+    "file": "validate-shoulder-muscles.mjs",
+    "code": 0,
+    "output": "PASS: all source muscle surfaces for six movements, both sides, scapular mode, finite normals, fixed origins, bone-bound insertions, exact rest and source preservation.\n"
+  },
+  {
+    "file": "validate-shoulder.mjs",
+    "code": 0,
+    "output": "PASS: six movements, both sides, every muscle target and finite overlay geometry.\n"
+  },
+  {
+    "file": "validate-spine.mjs",
+    "code": 0,
+    "output": "PASS: 26 actual spine meshes, 5 distinct regions, all region focus states, deep link, accessible legend and exit restoration.\nPASS: every vertebra label, consecutive single-vertebra selections, announced C1/C5/T12/L5 labels and double-click focus.\n"
+  },
+  {
+    "file": "validate-study-workspace.mjs",
+    "code": 0,
+    "output": "PASS: 33 suggested pairs in both sides; independent centering with common physical scale, shared anatomical coordinates; study tabs, clinical comparisons, context and camera deep links.\n"
+  },
+  {
+    "file": "validate-study.mjs",
+    "code": 0,
+    "output": "PASS: all nerve cards have bilateral motor targets, reverse links and branch-safe matching.\n"
+  },
+  {
+    "file": "validate-shoulder-study.mjs",
+    "code": 0,
+    "output": "PASS: 120 poses; 4 cuff muscles and 4 authentic source regions on both sides; humeral insertion patches, muscle-following source bodies, finite geometry, source preservation, disposal and visibility switches.\n"
+  },
+  {
+    "file": "validate-tendon-context.mjs",
+    "code": 0,
+    "output": "PASS: all ten bilateral tendon card/muscle mappings, including source-named infraspinatus muscle; no opposite-side leakage or unrelated context.\n"
+  },
+  {
+    "file": "validate-tendon-learning.mjs",
+    "code": 0,
+    "output": "PASS: 190 explained structure questions, 5 comparison routes/tables, bilateral quadriceps geometry, due reviews, 18 decision paths / 36 follow-up questions, real SQLite resume, independent modes, legacy records and invalid plans.\n"
+  },
+  {
+    "file": "validate-topic-learning.mjs",
+    "code": 0,
+    "output": "PASS: unique-question topic totals, weak-topic recommendations, corrected latest answers, all current model questions graded server-side, retries/idempotency, invalid choices rejected, account isolation and old/new favorites on real SQLite.\n"
+  },
+  {
+    "file": "validate-webgl-recovery.mjs",
+    "code": 0,
+    "output": "PASS: default GPU selection, fresh-canvas fallback, explicit compatibility mode, bounded total failure, context loss prevention, restoration and listener cleanup. GPU rendering is not covered by this test.\n"
+  },
+  {
+    "file": "validate-workspace-routes.mjs",
+    "code": 0,
+    "output": "PASS: deep links restore structures, side, motion, gait, cases and quizzes; legacy links, bounded parameters, history identity and anatomical relevance.\n"
+  },
+  {
+    "file": "validate-workspace.mjs",
+    "code": 0,
+    "output": "PASS: separate destinations, anatomy-first cards, collapsed controls and model framing at desktop/tablet/mobile, including short landscape screens and toolbar clearance.\n"
+  },
+  {
+    "file": "validate-shoulder-belly.mjs",
+    "code": 0,
+    "output": "PASS 224940 fixed scapular belly vertices; 120 shoulder poses; 26840 belly vertices remain rigid on humerus, including abducted isolated deltoid.\n"
+  },
+  {
+    "file": "validate-tendon-completion.mjs",
+    "code": 0,
+    "output": "PASS: 2323 existing meshes preserved byte for byte; 20 earlier source imports and 38 distal source surfaces; historical source hashes retained; 66 bilateral finding questions, 5021 real triangle hits, equal candidate priority, demanded buffers and 6852 moving attachment checks. The previous ECRB context region remains available alongside the four-component source complex.\n"
+  }
+]

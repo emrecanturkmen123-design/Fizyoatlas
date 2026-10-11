@@ -1,0 +1,42 @@
+[
+  {
+    "file": "validate-learning-history.mjs",
+    "code": 0,
+    "output": "PASS: exactly one attempt per retry; server-checked identity and correctness; stale retries preserve latest answer; 1/3/7/14/30-day scheduling and wrong-answer reset; legacy records retained.\n"
+  },
+  {
+    "file": "validate-learning.mjs",
+    "code": 0,
+    "output": "PASS: generated migrations on SQLite; identity isolation; CSRF/input guards; idempotent favorites; server-checked answers; wrong-answer review and correction; missing-storage handling; private caching.\n"
+  },
+  {
+    "file": "validate-nerve-study.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: all 24 nerves on both sides use actual source IDs; actual Home side/display controls, refresh/back/forward and selected buttons; posterior gluteal view and explicit inferior gluteal source limitation. GPU not tested.\n"
+  },
+  {
+    "file": "validate-record-recovery.mjs",
+    "code": 0,
+    "output": "Stored study records could not be decoded: 1\nStored study records could not be decoded: 1\nStored study records could not be decoded: 1\nPASS: atomic revision checks for all four stores, explicit conflict resolution, account isolation, valid records survive corrupt neighbors, bounded/validated quiz sessions.\n"
+  },
+  {
+    "file": "validate-quiz.mjs",
+    "code": 0,
+    "output": "PASS: 866 questions, 128 filter/count combinations, unique sampling, empty/small pools, balanced mixed tests, no clinical highlight leaks, scoring and legacy review.\n"
+  },
+  {
+    "file": "validate-model-study.mjs",
+    "code": 0,
+    "output": "PASS: 250 findings, 40 bilateral muscles, 23 bilateral nerve surfaces, all 24 target studies, valid multiple targets, filtered pools, and actual source-triangle selection. No GPU or browser pixels tested.\n"
+  },
+  {
+    "file": "validate-topic-learning.mjs",
+    "code": 0,
+    "output": "PASS: unique-question topic totals, weak-topic recommendations, corrected latest answers, all current model questions graded server-side, retries/idempotency, invalid choices rejected, account isolation and old/new favorites on real SQLite.\n"
+  },
+  {
+    "file": "validate-tendon-completion.mjs",
+    "code": 0,
+    "output": "PASS: 2323 existing meshes preserved byte for byte; 20 earlier source imports and 38 distal source surfaces; historical source hashes retained; 66 bilateral finding questions, 5021 real triangle hits, equal candidate priority, demanded buffers and 6852 moving attachment checks. The previous ECRB context region remains available alongside the four-component source complex.\n"
+  }
+]

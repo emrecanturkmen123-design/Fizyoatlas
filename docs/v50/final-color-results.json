@@ -1,0 +1,12 @@
+[
+  {
+    "file": "validate-selection-palette.mjs",
+    "code": 0,
+    "output": "PASS: stable distinct muscle colors across sides/order, matched labeled group/legend colors, linear GPU texture values and clearing, anatomical bone context, single-muscle blue, protected exam/motion/trace/spine roles, actual Three standard-shader hook. GPU rendering is not covered.\n"
+  },
+  {
+    "file": "validate-muscle-groups.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 16 source meshes and indices, bilateral body context/chunk demand; real Home group cards, both/left/right, refresh, deep-member inspection, back and sided attachment deep links. GPU rendering and DOM portals are stubbed.\n"
+  }
+]

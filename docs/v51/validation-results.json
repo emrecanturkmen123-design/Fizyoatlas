@@ -1,0 +1,22 @@
+[
+  {
+    "file": "validate-study-workspace.mjs",
+    "code": 0,
+    "output": "PASS: 33 suggested pairs in both sides; independent centering with common physical scale, shared anatomical coordinates; study tabs, clinical comparisons, context and camera deep links.\n"
+  },
+  {
+    "file": "validate-anatomy-lab.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 76 comparisons; actual React mode/side/pair/framing, clinical links/quiz, failure/retry, Canvas 2D calls, reload, removed section controls, legacy-link fallback and cleanup. Browser pixels and GPU are not tested.\n"
+  },
+  {
+    "file": "validate-atlas-expansion.mjs",
+    "code": 0,
+    "output": "PASS: 2343 original source arrays unchanged; 38 source hashes, 19 bilateral selections and real muscle/bone context; comparison routes, identical camera transforms; SQLite notebook create/update/archive/restore, saved side/motion/position, identity separation, CSRF and invalid payload rejection.\n"
+  },
+  {
+    "file": "validate-workspace-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: app history state, deep-link fallback without leaving site, native anchors, replace controls, refresh/back/forward; actual Home Atlas → lab → left clinical comparison → quiz → lab → filtered Atlas and search return. GPU scene/DOM portals are stubbed.\n"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "file": "validate-card-actions.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: primary quiz/motion, folded case/favorite callbacks, pending disabled state, favorite pressed state, visible save error and retry; optional actions removed cleanly. Browser focus and pixels are not tested.\n"
+  },
+  {
+    "file": "validate-selection-palette.mjs",
+    "code": 0,
+    "output": "PASS: stable distinct muscle colors across sides/order, matched labeled group/legend colors, linear GPU texture values and clearing, anatomical bone context, single-muscle blue, protected exam/motion/trace/spine roles, actual Three standard-shader hook. GPU rendering is not covered.\n"
+  },
+  {
+    "file": "validate-content-coverage.mjs",
+    "code": 0,
+    "output": "PASS: 40 standardized sourced muscle cards, 24 nerve cards, bilateral model coverage, missing-model state, nerve lessons, shared playback boundaries.\n"
+  },
+  {
+    "file": "validate-workspace-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: app history state, deep-link fallback without leaving site, native anchors, replace controls, refresh/back/forward; actual Home Atlas → lab → left clinical comparison → quiz → lab → filtered Atlas and search return. GPU scene/DOM portals are stubbed.\n"
+  },
+  {
+    "file": "validate-muscle-groups.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 16 source meshes and indices, bilateral body context/chunk demand; real Home group cards, both/left/right, refresh, deep-member inspection, back and sided attachment deep links. GPU rendering and DOM portals are stubbed.\n"
+  }
+]

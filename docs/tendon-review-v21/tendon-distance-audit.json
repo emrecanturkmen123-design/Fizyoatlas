@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Right calcaneal tendon",
+    "distal12mm_to_calcaneus_mm": [
+      0.1535494375275448,
+      0.518618558999151,
+      2.064033877104521
+    ],
+    "proximal30mm_to_calf_mm": [
+      0.001364722834296117,
+      0.4562644462566823,
+      6.730175577104092
+    ]
+  },
+  {
+    "name": "Right supraspinatus tendon insertion surface",
+    "to_humerus_mm_min_median_max": [
+      0.00012026688978039601,
+      0.5623995384667069,
+      1.479591359384358
+    ]
+  },
+  {
+    "name": "Right infraspinatus tendon",
+    "to_humerus_mm_min_median_max": [
+      0.007230604296637466,
+      0.9313405025750399,
+      15.726946294307709
+    ]
+  },
+  {
+    "name": "Right subscapularis tendon insertion surface",
+    "to_humerus_mm_min_median_max": [
+      0.7039304473437369,
+      1.5151210245676339,
+      2.2255214862525463
+    ]
+  },
+  {
+    "name": "Right teres minor tendon insertion surface",
+    "to_humerus_mm_min_median_max": [
+      0.0008391934898099862,
+      0.25297321553807706,
+      0.8845068514347076
+    ]
+  },
+  {
+    "name": "Left calcaneal tendon",
+    "distal12mm_to_calcaneus_mm": [
+      0.00903379259398207,
+      0.3511605318635702,
+      2.3566479794681072
+    ],
+    "proximal30mm_to_calf_mm": [
+      0.001364722834296117,
+      0.46813429798930883,
+      6.729448679834604
+    ]
+  },
+  {
+    "name": "Left supraspinatus tendon insertion surface",
+    "to_humerus_mm_min_median_max": [
+      0.0011791132692451356,
+      0.39526826003566384,
+      1.3365643098950386
+    ]
+  },
+  {
+    "name": "Left infraspinatus tendon",
+    "to_humerus_mm_min_median_max": [
+      0.004830885700357612,
+      0.9064428741112351,
+      15.185147523880005
+    ]
+  },
+  {
+    "name": "Left subscapularis tendon insertion surface",
+    "to_humerus_mm_min_median_max": [
+      0.6087173824198544,
+      1.7058016965165734,
+      2.5539444759488106
+    ]
+  },
+  {
+    "name": "Left teres minor tendon insertion surface",
+    "to_humerus_mm_min_median_max": [
+      0.006999471679591807,
+      0.8496833615936339,
+      1.5706245321780443
+    ]
+  }
+]

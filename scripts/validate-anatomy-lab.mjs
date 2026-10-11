@@ -1,0 +1,54 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import React from 'react';
+import {create,act} from 'react-test-renderer';
+import Lab from '../app/anatomy-lab.tsx';
+import {Button} from '../components/ui/button.tsx';
+import {CLINICAL_STRUCTURES} from '../app/clinical-structures.ts';
+import {TENDON_COMPARISONS} from '../app/tendon-comparisons.ts';
+import {connectiveSelection} from '../app/connective-study.ts';
+import {comparisonFrames,suggestedComparison} from '../app/comparison-options.ts';
+import {sideOf} from '../app/innervation.ts';
+import {parseWorkspaceRoute,workspaceHash} from '../app/workspace-route.ts';
+const atlas=JSON.parse(fs.readFileSync('public/models/atlas.json')),buffers=new Map();
+function meshes(parts){return parts.map(part=>{if(!buffers.has(part.chunk)){const b=fs.readFileSync('public'+atlas.chunks[part.chunk].url);buffers.set(part.chunk,b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength));}const b=buffers.get(part.chunk);return {part,positions:new Float32Array(b,part.positions,part.vertexCount*3),indices:new Uint32Array(b,part.indices,part.indexCount)};});}
+for(const s of CLINICAL_STRUCTURES)for(const side of ['left','right']){
+ const a=connectiveSelection(atlas,s.key,side),b=connectiveSelection(atlas,suggestedComparison(s.key),side);assert(a.selected.length);assert(a.selected.every(id=>sideOf(atlas.parts.find(p=>p.id===id).name)===side));
+ const frames=comparisonFrames(atlas,a.selected,b.selected,'centered');assert.equal(frames[0].span,frames[1].span);assert.deepEqual(comparisonFrames(atlas,a.selected,b.selected,'aligned')[0],comparisonFrames(atlas,a.selected,b.selected,'aligned')[1]);
+ meshes(atlas.parts.filter(p=>a.selected.includes(p.id)));
+}
+globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+globalThis.window={addEventListener(){},removeEventListener(){},matchMedia:()=>({matches:false,addEventListener(){},removeEventListener(){}})};
+globalThis.document={activeElement:null,addEventListener(){},removeEventListener(){}};
+let observed=0,disconnected=0;
+globalThis.ResizeObserver=class{observe(){observed++;}disconnect(){disconnected++;}};
+globalThis.requestAnimationFrame=f=>setTimeout(f,0);globalThis.cancelAnimationFrame=clearTimeout;globalThis.devicePixelRatio=2;
+const drawn={fills:0,strokes:0,labels:[]};const context={scale(){},fillRect(){},beginPath(){},closePath(){},fill(){drawn.fills++;},stroke(){drawn.strokes++;},moveTo(x,y){assert(Number.isFinite(x)&&Number.isFinite(y));},lineTo(x,y){assert(Number.isFinite(x)&&Number.isFinite(y));},fillText(t,x,y){assert(Number.isFinite(x)&&Number.isFinite(y));drawn.labels.push(t);}};
+const nodeMock=e=>e.type==='canvas'?{clientWidth:480,clientHeight:350,getContext:()=>context}:e.type==='h2'?{focus(){}}:null;
+let fail=true,requests=0;globalThis.fetch=async url=>{requests++;if(fail){fail=false;return new Response('',{status:503});}return new Response(fs.readFileSync('public'+url));};
+let route,opened,quiz,closed=0,root;const props={atlas,initialRoute:{structure:'quadriceps tendon',compare:'quadriceps tendon'},onRouteChange:r=>route=r,onStructure:k=>opened=k,onQuiz:k=>quiz=k,onClose:()=>closed++};
+const text=n=>typeof n==='string'?n:Array.isArray(n)?n.map(text).join(''):n?.props?text(n.props.children):'';
+const button=label=>root.root.findAllByType(Button).find(b=>text(b)===label);
+const select=label=>root.root.findAll(n=>(n.type==='select'||n.type==='input')&&n.props['aria-label']===label)[0];
+const settle=async()=>{for(let i=0;i<100;i++){await act(async()=>{await new Promise(r=>setTimeout(r,10));});if(!root.root.findAllByProps({role:'status'}).some(n=>text(n).includes('Kaynak yüzeyler hazırlanıyor')))return;}throw Error('Model loading did not finish');};
+await act(async()=>{root=create(React.createElement(Lab,props),{createNodeMock:nodeMock});});await settle();
+assert(root.root.findAllByProps({role:'alert'}).length,'download failure visible');assert.notEqual(route.structure,route.compare,'duplicate deep-link pair normalized');
+await act(async()=>button('Yeniden dene').props.onClick());await settle();assert.equal(root.root.findAllByProps({role:'alert'}).length,0);assert.equal(root.root.findAllByType('canvas').length,2);assert(drawn.fills>0);
+await act(async()=>select('İncelenen taraf').props.onChange({target:{value:'left'}}));await settle();assert.equal(route.side,'left');
+assert(root.root.findAllByType('figcaption').every(c=>text(c).startsWith('Sol')));
+assert(select('İkinci yapı').findAllByType('option').find(o=>o.props.value===route.structure).props.disabled);
+await act(async()=>select('Birinci yapı').props.onChange({target:{value:'calcaneal tendon'}}));await settle();assert.equal(route.compare,'tibialis anterior tendon');
+await act(async()=>button('Anatomik konum').props.onClick());assert.equal(route.labFrame,'aligned');
+const cards=root.root.findAllByType(Button).filter(b=>text(b)==='Atlas kartını aç');await act(async()=>cards[0].props.onClick());assert.equal(opened,'calcaneal tendon');
+await act(async()=>button('Bilgiyi karşılaştır').props.onClick());await settle();assert.equal(root.root.findAllByType('canvas').length,0);
+for(const pair of TENDON_COMPARISONS){await act(async()=>select('Tendon karşılaştırması').props.onChange({target:{value:pair.id}}));for(const link of root.root.findAllByProps({className:'tendon-atlas-link'}))assert.equal(parseWorkspaceRoute(link.props.href).side,'left');assert(root.root.findAllByType('td').length);}
+const quizButton=root.root.findAllByType(Button).find(b=>text(b).endsWith(' · 5 soru'));await act(async()=>quizButton.props.onClick());assert(quiz);
+assert(!button('Kaynak model kesiti'));assert(!select('Kesit bölgesi'));assert(!select('Kesit düzlemi'));assert(!select('Kesit konumu'));
+await act(async()=>button('Görsel karşılaştırma').props.onClick());await settle();
+const saved=parseWorkspaceRoute(workspaceHash({lesson:'lab',...route}));await act(async()=>root.unmount());
+await act(async()=>{root=create(React.createElement(Lab,{...props,initialRoute:saved}),{createNodeMock:nodeMock});});await settle();assert.equal(button('Anatomik konum').props['aria-pressed'],true);assert.equal(select('İncelenen taraf').props.value,'left');assert.equal(root.root.findAllByType('canvas').length,2);
+await act(async()=>root.unmount());
+const legacy=parseWorkspaceRoute('#inceleme?gosterim=section&kesitbolge=knee&eksen=0&kesit=73&taraf=sol&yapi=calcaneal+tendon');
+await act(async()=>{root=create(React.createElement(Lab,{...props,initialRoute:legacy}),{createNodeMock:nodeMock});});await settle();assert.equal(route.labMode,'compare');assert.equal(route.side,'left');assert.equal(route.structure,'calcaneal tendon');assert.equal(root.root.findAllByType('canvas').length,2);assert(!button('Kaynak model kesiti'));assert(!/kesit|eksen|section/.test(workspaceHash({lesson:'lab',...route})));
+await act(async()=>root.root.findByProps({'aria-label':'İncelemeyi kapat'}).props.onClick());assert.equal(closed,1);await act(async()=>root.unmount());assert.equal(disconnected,observed,'canvas resize observers cleaned up');
+console.log(`PASS: ${CLINICAL_STRUCTURES.length*2} comparisons; actual React mode/side/pair/framing, clinical links/quiz, failure/retry, Canvas 2D calls, reload, removed section controls, legacy-link fallback and cleanup. Browser pixels and GPU are not tested.`);

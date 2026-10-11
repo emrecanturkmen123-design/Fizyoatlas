@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Right extensor carpi radialis brevis proximal tendon",
+    "triangles": 453,
+    "patch": "within 4 mm of closest source common-origin footprint vertex",
+    "vertices": 25,
+    "distanceToHumerusMmMinMedianMax": [
+      0.032697942515369505,
+      1.4520464465022087,
+      4.711523186415434
+    ],
+    "closestFootprintVertexMm": 1.4433135511353612
+  },
+  {
+    "name": "Left extensor carpi radialis brevis proximal tendon",
+    "triangles": 453,
+    "patch": "within 4 mm of closest source common-origin footprint vertex",
+    "vertices": 27,
+    "distanceToHumerusMmMinMedianMax": [
+      0.08805801917333156,
+      1.4670798555016518,
+      4.570464603602886
+    ],
+    "closestFootprintVertexMm": 1.5656541800126433
+  }
+]

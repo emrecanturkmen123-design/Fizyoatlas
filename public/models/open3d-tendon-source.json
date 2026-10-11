@@ -1,0 +1,586 @@
+{
+  "source": "https://anatomytool.org/open3dmodel-create",
+  "about": "https://anatomytool.org/open3dmodel-about",
+  "credits": "https://anatomytool.org/open3dmodel-credit",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    "Open3DModel project / LUMC",
+    "Eungyeol Lee (medical artist)",
+    "Jan Kooloos (upper/lower limb anatomy)",
+    "Denise Arnold / Marco DeRuiter (upper limb anatomy)",
+    "Z-Anatomy / BodyParts3D (predecessor models)"
+  ],
+  "sourceFiles": [
+    {
+      "url": "https://caskanatomy.info/open3dmodelfiles/upper-limb/upper-limb-glb.zip",
+      "glbSHA256": "e440c84c794239d1850e62b4ede0195d81bcff4f0078c7945528c388ab72fdb4"
+    },
+    {
+      "url": "https://caskanatomy.info/open3dmodelfiles/lower-limb/lower-limb-glb.zip",
+      "glbSHA256": "001677bac4e8b4f44f3be0c3695b0123bc9fad1df9a2bddceecccf4a6eef01eb"
+    }
+  ],
+  "registration": {
+    "right-shoulder": {
+      "scale": 0.9709927439689636,
+      "translation": [
+        0.0010354220867156982,
+        0.04907715320587158,
+        0.00671251118183136
+      ],
+      "envelopeRmsMm": 3.430237054824829
+    },
+    "right-elbow": {
+      "scale": 0.9460472464561462,
+      "translation": [
+        -0.004350125789642334,
+        0.07556343078613281,
+        0.0057710520923137665
+      ],
+      "envelopeRmsMm": 2.724233865737915
+    },
+    "right-knee": {
+      "scale": 0.9546930193901062,
+      "translation": [
+        -0.0007461234927177429,
+        0.03324797749519348,
+        0.008465785533189774
+      ],
+      "envelopeRmsMm": 4.30452299118042
+    },
+    "left-shoulder": {
+      "scale": 0.9712374806404114,
+      "translation": [
+        -0.0010768622159957886,
+        0.048723578453063965,
+        0.006753318011760712
+      ],
+      "envelopeRmsMm": 3.4538872241973877
+    },
+    "left-elbow": {
+      "scale": 0.9487304091453552,
+      "translation": [
+        0.0037599802017211914,
+        0.07330882549285889,
+        0.006060507148504257
+      ],
+      "envelopeRmsMm": 2.9089107513427734
+    },
+    "left-knee": {
+      "scale": 0.9881377220153809,
+      "translation": [
+        -0.0018356144428253174,
+        0.02043306827545166,
+        0.0090312659740448
+      ],
+      "envelopeRmsMm": 4.1650190353393555
+    }
+  },
+  "parts": [
+    {
+      "id": "O3D-tendon-right-supraspinatus-tendon",
+      "key": "supraspinatus tendon insertion surface",
+      "region": "shoulder",
+      "side": "right",
+      "sourceObjects": [
+        "Supraspinatus muscle.r"
+      ],
+      "sourceSelection": "Distal humeral connected component clipped at the source texture tendon/muscle boundary (UV v=0.12 or 0.88); uniform insertion alignment; no generated bridge",
+      "vertices": 145,
+      "triangles": 228,
+      "positionsSHA256": "05510ea1194e9e67f36673b17b5d7a1ee54f18d7af05dd508a691d7d6d193de4",
+      "normalsSHA256": "7974a4a4f8a978c78d452d95c9b495dbc474488039730c37e26d96d9d0b94619",
+      "indicesSHA256": "3aa460391d86f02dda9ecc6787ef0c4830850d28150c6ea6cc410f251a592e74",
+      "muscleBoundaryIndices": [
+        22,
+        24,
+        25,
+        40,
+        41,
+        42,
+        43,
+        45,
+        51,
+        52,
+        53,
+        55,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        68,
+        70,
+        71,
+        73,
+        74,
+        76,
+        77,
+        79,
+        86,
+        87,
+        88,
+        90,
+        104,
+        105,
+        106,
+        108,
+        128,
+        129,
+        130,
+        132,
+        143,
+        144
+      ],
+      "insertionAlignmentMm": [
+        -0.424899160861969,
+        0.1894831657409668,
+        0.3169327974319458
+      ],
+      "boundary": "Source colour boundary, approximate musculotendinous division"
+    },
+    {
+      "id": "O3D-tendon-right-subscapularis-tendon",
+      "key": "subscapularis tendon insertion surface",
+      "region": "shoulder",
+      "side": "right",
+      "sourceObjects": [
+        "Subscapularis muscle.r"
+      ],
+      "sourceSelection": "Distal humeral connected component clipped at the source texture tendon/muscle boundary (UV v=0.12 or 0.88); uniform insertion alignment; no generated bridge",
+      "vertices": 105,
+      "triangles": 138,
+      "positionsSHA256": "0a4083382c006fe7be53554312899db464f0d685200ebf06b394200f0b7157b1",
+      "normalsSHA256": "3c3b9bbd75dc9734afa62f0c610ba1c488d3fa54e29af8ada146c7475ca825d8",
+      "indicesSHA256": "66cff9a0b8092a26063a93c11311b6b28b066604ea3dd8c949bcab92ee8300b6",
+      "muscleBoundaryIndices": [
+        0,
+        2,
+        3,
+        4,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13,
+        15,
+        17,
+        18,
+        19,
+        20,
+        22,
+        23,
+        25,
+        27,
+        28,
+        29,
+        31,
+        32,
+        34,
+        36,
+        37,
+        38,
+        40,
+        41,
+        43,
+        45,
+        46,
+        48,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65,
+        80,
+        81,
+        91,
+        92,
+        93,
+        94,
+        96,
+        97
+      ],
+      "insertionAlignmentMm": [
+        4.6325623989105225,
+        -0.8751153945922852,
+        -1.6035431763157248
+      ],
+      "boundary": "Source colour boundary, approximate musculotendinous division"
+    },
+    {
+      "id": "O3D-tendon-right-teres-minor-tendon",
+      "key": "teres minor tendon insertion surface",
+      "region": "shoulder",
+      "side": "right",
+      "sourceObjects": [
+        "Teres minor muscle.r"
+      ],
+      "sourceSelection": "Distal humeral connected component clipped at the source texture tendon/muscle boundary (UV v=0.12 or 0.88); uniform insertion alignment; no generated bridge",
+      "vertices": 137,
+      "triangles": 223,
+      "positionsSHA256": "db3ae88575e61585491c8e011c2c3228ab4dba8f9d3ac32c0b20dae565b9dc4f",
+      "normalsSHA256": "04c6e9818830f1babdbb1380d4dad9e7580a9aa2c5c212dabb8c4c37bb3eaf52",
+      "indicesSHA256": "8438364c3623da5855ec3d51de4d7cc7804d602dedecd1e252e51b0702acd74f",
+      "muscleBoundaryIndices": [
+        18,
+        19,
+        20,
+        21,
+        23,
+        49,
+        50,
+        51,
+        53,
+        54,
+        60,
+        61,
+        62,
+        71,
+        72,
+        73,
+        74,
+        76,
+        87,
+        88,
+        89,
+        90,
+        92,
+        93,
+        95,
+        97,
+        99,
+        100,
+        101,
+        103,
+        123,
+        124,
+        125,
+        126,
+        135,
+        136
+      ],
+      "insertionAlignmentMm": [
+        0.008054077625274658,
+        0.14400482177734375,
+        0.025439076125621796
+      ],
+      "boundary": "Source colour boundary, approximate musculotendinous division"
+    },
+    {
+      "id": "O3D-tendon-right-common-extensor-tendon",
+      "key": "common extensor tendon",
+      "region": "elbow",
+      "side": "right",
+      "sourceObjects": [
+        "Extensor carpi radialis brevis.r",
+        "Extensor digitorum.r",
+        "Extensor digiti minimi.r",
+        "Humeral head of extensor carpi ulnaris.r"
+      ],
+      "sourceSelection": "Four source-texture-defined proximal extensor tendon regions, retaining separate source shapes; no invented common fibre mesh",
+      "vertices": 447,
+      "triangles": 754,
+      "positionsSHA256": "294072c4b431f433bc897aed32cb80f174ca3a4ca6182e47132d9684f41e1325",
+      "normalsSHA256": "10fccec1c4460f5976bf9d43d4a8f47f555ca6bd87b73b0c9cbbeac5c8eb5dd7",
+      "indicesSHA256": "c7a688a69b965aa7d57ac83cdc181d360de32e756326c7c76f5bd344e8b9b76e",
+      "components": [
+        {
+          "object": "Extensor carpi radialis brevis.r",
+          "vertices": 107,
+          "triangles": 184
+        },
+        {
+          "object": "Extensor digitorum.r",
+          "vertices": 122,
+          "triangles": 194
+        },
+        {
+          "object": "Extensor digiti minimi.r",
+          "vertices": 50,
+          "triangles": 82
+        },
+        {
+          "object": "Humeral head of extensor carpi ulnaris.r",
+          "vertices": 168,
+          "triangles": 294
+        }
+      ],
+      "boundary": "Source colour boundary, approximate musculotendinous division"
+    },
+    {
+      "id": "O3D-tendon-right-quadriceps-tendon",
+      "key": "quadriceps tendon",
+      "region": "knee",
+      "side": "right",
+      "sourceObjects": [
+        "Quadriceps common tendon and patellar ligament.r"
+      ],
+      "sourceSelection": "Source common quadriceps tendon proximal to the source superior patellar pole; four contributing muscle regions are connected by the source common envelope; does not segment microscopic tendon layers",
+      "vertices": 963,
+      "triangles": 1800,
+      "positionsSHA256": "6cef9a2642592fc5760790d4841918865a9ef47055a2b4a360e57b9ba11428fb",
+      "normalsSHA256": "3291e955d00ea4ece43f53ab7b41391dbb9d460c5d88f5b918f3ac4c54564c7b",
+      "indicesSHA256": "1db2f66f911c08f07b59631dd96579e3747b3c2ba7b1bbcb5db71380be6cd877",
+      "sourceCutY": 0.46471279859542847
+    },
+    {
+      "id": "O3D-tendon-left-supraspinatus-tendon",
+      "key": "supraspinatus tendon insertion surface",
+      "region": "shoulder",
+      "side": "left",
+      "sourceObjects": [
+        "Supraspinatus muscle.r"
+      ],
+      "sourceSelection": "Distal humeral connected component clipped at the source texture tendon/muscle boundary (UV v=0.12 or 0.88); uniform insertion alignment; no generated bridge",
+      "vertices": 145,
+      "triangles": 228,
+      "positionsSHA256": "5c7c4c0709fbf53cb9b006e7c40a00d4eadd5df92d023ec6a500a20e6a8ba405",
+      "normalsSHA256": "9a9a61c898dcc1b6e325c095bc43f9929dc22ce5328ddcd0f25d011db4bab44a",
+      "indicesSHA256": "b5f4bb0ef79c7e0b1de337249f4056d4af1b4d0bd6a1c5548d6be22d9a3c1ccb",
+      "muscleBoundaryIndices": [
+        22,
+        24,
+        25,
+        40,
+        41,
+        42,
+        43,
+        45,
+        51,
+        52,
+        53,
+        55,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        68,
+        70,
+        71,
+        73,
+        74,
+        76,
+        77,
+        79,
+        86,
+        87,
+        88,
+        90,
+        104,
+        105,
+        106,
+        108,
+        128,
+        129,
+        130,
+        132,
+        143,
+        144
+      ],
+      "insertionAlignmentMm": [
+        -0.08569657802581787,
+        0.017404556274414062,
+        -0.11372193694114685
+      ],
+      "boundary": "Source colour boundary, approximate musculotendinous division"
+    },
+    {
+      "id": "O3D-tendon-left-subscapularis-tendon",
+      "key": "subscapularis tendon insertion surface",
+      "region": "shoulder",
+      "side": "left",
+      "sourceObjects": [
+        "Subscapularis muscle.r"
+      ],
+      "sourceSelection": "Distal humeral connected component clipped at the source texture tendon/muscle boundary (UV v=0.12 or 0.88); uniform insertion alignment; no generated bridge",
+      "vertices": 105,
+      "triangles": 138,
+      "positionsSHA256": "4f6475d2d94ce6d24fdf41e0cda73f5d27d0b180a6998fff5b3973e475633817",
+      "normalsSHA256": "ec08dbbfd3a9479f9a2df6c82eb31d15beb0e7b874a7627f5184105f0786e1d4",
+      "indicesSHA256": "8e1c45f2027f1bd1d2d1f9f1517780f5c4ac9fb05155628bf3632598d53e901e",
+      "muscleBoundaryIndices": [
+        0,
+        2,
+        3,
+        4,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13,
+        15,
+        17,
+        18,
+        19,
+        20,
+        22,
+        23,
+        25,
+        27,
+        28,
+        29,
+        31,
+        32,
+        34,
+        36,
+        37,
+        38,
+        40,
+        41,
+        43,
+        45,
+        46,
+        48,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65,
+        80,
+        81,
+        91,
+        92,
+        93,
+        94,
+        96,
+        97
+      ],
+      "insertionAlignmentMm": [
+        -4.508987069129944,
+        -1.0386109352111816,
+        -2.118313917890191
+      ],
+      "boundary": "Source colour boundary, approximate musculotendinous division"
+    },
+    {
+      "id": "O3D-tendon-left-teres-minor-tendon",
+      "key": "teres minor tendon insertion surface",
+      "region": "shoulder",
+      "side": "left",
+      "sourceObjects": [
+        "Teres minor muscle.r"
+      ],
+      "sourceSelection": "Distal humeral connected component clipped at the source texture tendon/muscle boundary (UV v=0.12 or 0.88); uniform insertion alignment; no generated bridge",
+      "vertices": 137,
+      "triangles": 223,
+      "positionsSHA256": "e77d24f3cca77ca319cb1b8a45cb2013a31dcbeb0afbd4250fdf52ad0c0b3af1",
+      "normalsSHA256": "eb7b4b926f8d66e286d3b98639d7c46a7585f1274a6255aed0e77a2c1ac47ecd",
+      "indicesSHA256": "5d8b50a45c56244f90b11a3426ad9dc314d3ec083762036ce67f860336b19e1a",
+      "muscleBoundaryIndices": [
+        18,
+        19,
+        20,
+        21,
+        23,
+        49,
+        50,
+        51,
+        53,
+        54,
+        60,
+        61,
+        62,
+        71,
+        72,
+        73,
+        74,
+        76,
+        87,
+        88,
+        89,
+        90,
+        92,
+        93,
+        95,
+        97,
+        99,
+        100,
+        101,
+        103,
+        123,
+        124,
+        125,
+        126,
+        135,
+        136
+      ],
+      "insertionAlignmentMm": [
+        -0.4394128918647766,
+        0.04190206527709961,
+        0.05802512168884277
+      ],
+      "boundary": "Source colour boundary, approximate musculotendinous division"
+    },
+    {
+      "id": "O3D-tendon-left-common-extensor-tendon",
+      "key": "common extensor tendon",
+      "region": "elbow",
+      "side": "left",
+      "sourceObjects": [
+        "Extensor carpi radialis brevis.r",
+        "Extensor digitorum.r",
+        "Extensor digiti minimi.r",
+        "Humeral head of extensor carpi ulnaris.r"
+      ],
+      "sourceSelection": "Four source-texture-defined proximal extensor tendon regions, retaining separate source shapes; no invented common fibre mesh",
+      "vertices": 447,
+      "triangles": 754,
+      "positionsSHA256": "bf38293b243732fe7cd0e01d81a2c7eac94f9f7f964c4d3ddacf5ae371b5fc33",
+      "normalsSHA256": "60d414854f03f14fbb887d7a13e4576cad4847fa0ab6799cb9f5df1fe816c36d",
+      "indicesSHA256": "297408c08e0716c58fc1ebdcb818b2a7f9c0f82b9d2ec3301423e351f1318930",
+      "components": [
+        {
+          "object": "Extensor carpi radialis brevis.r",
+          "vertices": 107,
+          "triangles": 184
+        },
+        {
+          "object": "Extensor digitorum.r",
+          "vertices": 122,
+          "triangles": 194
+        },
+        {
+          "object": "Extensor digiti minimi.r",
+          "vertices": 50,
+          "triangles": 82
+        },
+        {
+          "object": "Humeral head of extensor carpi ulnaris.r",
+          "vertices": 168,
+          "triangles": 294
+        }
+      ],
+      "boundary": "Source colour boundary, approximate musculotendinous division"
+    },
+    {
+      "id": "O3D-tendon-left-quadriceps-tendon",
+      "key": "quadriceps tendon",
+      "region": "knee",
+      "side": "left",
+      "sourceObjects": [
+        "Quadriceps common tendon and patellar ligament.r"
+      ],
+      "sourceSelection": "Source common quadriceps tendon proximal to the source superior patellar pole; four contributing muscle regions are connected by the source common envelope; does not segment microscopic tendon layers",
+      "vertices": 963,
+      "triangles": 1800,
+      "positionsSHA256": "1f48f3ddc4249c5c3513cda2c2f40650ff755f07861aa6b5635496bfed8ddab6",
+      "normalsSHA256": "c0beb1c4fcb894cc33339a159d2ea750f48a8615a4988fc5e1f21c18c3db063d",
+      "indicesSHA256": "7f5e561f7c3ae9721ad02f8648e2fc748a19bbe3dc5aa5d7fbeddb56c271a7db",
+      "sourceCutY": 0.46471279859542847
+    }
+  ],
+  "limitations": "Reference anatomy. Source texture boundaries are approximate educational musculotendinous divisions, not histological segmentation. Extensor components retain distinct source shapes; full microscopic common fibre architecture is not reconstructed. Quadriceps common envelope does not resolve all layers. Left side is mirrored source registered independently. No strain, tear or healing simulation."
+}

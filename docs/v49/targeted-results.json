@@ -1,0 +1,27 @@
+[
+  {
+    "file": "validate-attachments.mjs",
+    "code": 0,
+    "output": "PASS: 226 bilateral attachment markers resolve to existing bone vertices; all configured muscles and groups, side separation and origin/insertion filters.\n"
+  },
+  {
+    "file": "validate-model-demand.mjs",
+    "code": 0,
+    "output": "PASS: initial atlas 16.16 MB, skeleton gait 4.40 MB, complete atlas 37.29 MB; deferred layers and bilateral tendon context remain available.\n"
+  },
+  {
+    "file": "validate-content-coverage.mjs",
+    "code": 0,
+    "output": "PASS: 40 standardized sourced muscle cards, 24 nerve cards, bilateral model coverage, missing-model state, nerve lessons, shared playback boundaries.\n"
+  },
+  {
+    "file": "validate-search.mjs",
+    "code": 0,
+    "output": "PASS: Turkish/Latin/English aliases, diacritics, side filters, nerves, and latissimus 3D geometry.\n"
+  },
+  {
+    "file": "validate-workspace-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: app history state, deep-link fallback without leaving site, native anchors, replace controls, refresh/back/forward; actual Home Atlas → lab → left clinical comparison → quiz → lab → filtered Atlas and search return. GPU scene/DOM portals are stubbed.\n"
+  }
+]

@@ -1,0 +1,4 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import * as T from 'three';import {poseMatrices,motionSegment} from '../app/shoulder-motion.ts';
+const a=JSON.parse(fs.readFileSync('public/models/atlas.json'));
+for(const side of ['left','right'])for(const id of ['flexion','abduction','adduction'])for(const progress of [0,50,100]){const s={id,side,plane:true,progress,scapula:true},p=poseMatrices(a,s),plain=poseMatrices(a,{...s,scapula:false});assert.equal(a.parts.filter(x=>motionSegment(x,s)===3).length,1);assert.ok(Math.abs(p.scapula.determinant()-1)<1e-9);assert.ok(p.shoulder.clone().applyMatrix4(p.upper).distanceTo(p.shoulder.clone().applyMatrix4(p.scapula))<1e-8);assert.ok(p.elbow.clone().applyMatrix4(p.upper).distanceTo(p.elbow.clone().applyMatrix4(p.lower))<1e-8);assert.ok(plain.scapula.equals(new T.Matrix4()));}
+console.log('PASS: scapula coupling is bilateral, rigid and preserves the moving shoulder and elbow connections.');

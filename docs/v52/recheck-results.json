@@ -1,0 +1,22 @@
+[
+  {
+    "file": "validate-atlas.mjs",
+    "code": 0,
+    "output": "Verified 2395 individually indexed meshes, 3596 complete concept mappings, 2,604,182 triangles, and every binary buffer.\n"
+  },
+  {
+    "file": "validate-nerve-layer.mjs",
+    "code": 0,
+    "output": "PASS: v30 geometry and metadata preserved through repacking; 74 licensed supplement surfaces, matching gzip; nerve focus toggle/restoration and bilateral nerve-to-muscle links including latissimus.\n"
+  },
+  {
+    "file": "validate-tendon-completion.mjs",
+    "code": 0,
+    "output": "PASS: 2323 existing meshes preserved byte for byte; 20 earlier source imports and 38 distal source surfaces; historical source hashes retained; 66 bilateral finding questions, 5021 real triangle hits, equal candidate priority, demanded buffers and 6852 moving attachment checks. The previous ECRB context region remains available alongside the four-component source complex.\n"
+  },
+  {
+    "file": "validate-open3d-tendons.mjs",
+    "code": 0,
+    "output": "PASS: 88 bilateral quadriceps motion poses; four muscle heads; 39424 patellar attachment checks.\nPASS: all 2333 previous meshes unchanged byte for byte; 10 new source hashes, 4 distinct extensor contributors, preferred body selection, 192 bilateral shoulder poses, 31968 humeral and 28320 muscle anchor checks, neutral restoration and demanded buffers.\n"
+  }
+]

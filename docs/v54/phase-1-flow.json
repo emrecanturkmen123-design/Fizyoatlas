@@ -1,0 +1,7 @@
+[
+  {
+    "file": "validate-model-study-flow.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual Home muscle and nerve card entry points, wrong-answer save/refresh, preserved left side, multiple correct motor targets, three-stage completion, return to source cards and setup group filtering. GPU and browser pixels not tested.\n"
+  }
+]

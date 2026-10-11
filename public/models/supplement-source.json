@@ -1,0 +1,461 @@
+{
+  "source": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "archive": "Z-Anatomy.zip",
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    "Gauthier Kervyn / Z-Anatomy",
+    "BodyParts3D / The Database Center for Life Science"
+  ],
+  "transform": {
+    "axes": "x,z,-y",
+    "scale": 0.9850303709151661,
+    "translation": [
+      7.034327618495536e-06,
+      0.03160419848501905,
+      0.0024510506019518874
+    ],
+    "registration": "Least-squares uniform registration of bilateral humerus, femur and scapula envelopes",
+    "envelopeRmsMm": 4.780475937381765
+  },
+  "adaptations": [
+    "Evaluated selected source meshes and curves",
+    "Reduced curve sampling to 8 longitudinal / 2 bevel subdivisions when higher",
+    "Applied object transforms and uniform registration",
+    "Triangulated and quantized normals",
+    "No image textures or third-party ear/kidney assets included"
+  ],
+  "parts": [
+    {
+      "id": "ZA-left-latissimus-dorsi",
+      "object": "Latissimus dorsi muscle.l",
+      "vertices": 10796,
+      "triangles": 21580
+    },
+    {
+      "id": "ZA-right-latissimus-dorsi",
+      "object": "Latissimus dorsi muscle.r",
+      "vertices": 10796,
+      "triangles": 21580
+    },
+    {
+      "id": "ZA-left-axillary-nerve",
+      "object": "Axillary nerve.l",
+      "vertices": 264,
+      "triangles": 512
+    },
+    {
+      "id": "ZA-right-axillary-nerve",
+      "object": "Axillary nerve.r",
+      "vertices": 264,
+      "triangles": 512
+    },
+    {
+      "id": "ZA-left-musculocutaneous-nerve",
+      "object": "Musculocutaneous nerve.l",
+      "vertices": 328,
+      "triangles": 640
+    },
+    {
+      "id": "ZA-right-musculocutaneous-nerve",
+      "object": "Musculocutaneous nerve.r",
+      "vertices": 328,
+      "triangles": 640
+    },
+    {
+      "id": "ZA-left-median-nerve",
+      "object": "Median nerve.l",
+      "vertices": 1160,
+      "triangles": 2304
+    },
+    {
+      "id": "ZA-right-median-nerve",
+      "object": "Median nerve.r",
+      "vertices": 1160,
+      "triangles": 2304
+    },
+    {
+      "id": "ZA-left-radial-nerve",
+      "object": "Radial nerve.l",
+      "vertices": 520,
+      "triangles": 1024
+    },
+    {
+      "id": "ZA-right-radial-nerve",
+      "object": "Radial nerve.r",
+      "vertices": 520,
+      "triangles": 1024
+    },
+    {
+      "id": "ZA-left-ulnar-nerve",
+      "object": "Ulnar nerve.l",
+      "vertices": 712,
+      "triangles": 1408
+    },
+    {
+      "id": "ZA-right-ulnar-nerve",
+      "object": "Ulnar nerve.r",
+      "vertices": 712,
+      "triangles": 1408
+    },
+    {
+      "id": "ZA-left-long-thoracic-nerve",
+      "object": "Long thoracic nerve.l",
+      "vertices": 912,
+      "triangles": 1792
+    },
+    {
+      "id": "ZA-right-long-thoracic-nerve",
+      "object": "Long thoracic nerve.r",
+      "vertices": 912,
+      "triangles": 1792
+    },
+    {
+      "id": "ZA-left-thoracodorsal-nerve",
+      "object": "Thoracodorsal nerve.l",
+      "vertices": 1048,
+      "triangles": 2048
+    },
+    {
+      "id": "ZA-right-thoracodorsal-nerve",
+      "object": "Thoracodorsal nerve.r",
+      "vertices": 1048,
+      "triangles": 2048
+    },
+    {
+      "id": "ZA-left-suprascapular-nerve",
+      "object": "Suprascapular nerve.l",
+      "vertices": 1128,
+      "triangles": 2176
+    },
+    {
+      "id": "ZA-right-suprascapular-nerve",
+      "object": "Suprascapular nerve.r",
+      "vertices": 1128,
+      "triangles": 2176
+    },
+    {
+      "id": "ZA-left-superior-subscapular-nerve",
+      "object": "Superior subscapular nerve.l",
+      "vertices": 264,
+      "triangles": 512
+    },
+    {
+      "id": "ZA-right-superior-subscapular-nerve",
+      "object": "Superior subscapular nerve.r",
+      "vertices": 264,
+      "triangles": 512
+    },
+    {
+      "id": "ZA-left-inferior-subscapular-nerve",
+      "object": "Inferior subscapular nerve.l",
+      "vertices": 464,
+      "triangles": 896
+    },
+    {
+      "id": "ZA-right-inferior-subscapular-nerve",
+      "object": "Inferior subscapular nerve.r",
+      "vertices": 464,
+      "triangles": 896
+    },
+    {
+      "id": "ZA-left-femoral-nerve",
+      "object": "Femoral nerve.l",
+      "vertices": 920,
+      "triangles": 1792
+    },
+    {
+      "id": "ZA-right-femoral-nerve",
+      "object": "Femoral nerve.r",
+      "vertices": 920,
+      "triangles": 1792
+    },
+    {
+      "id": "ZA-left-obturator-nerve",
+      "object": "Obturator nerve.l",
+      "vertices": 792,
+      "triangles": 1536
+    },
+    {
+      "id": "ZA-right-obturator-nerve",
+      "object": "Obturator nerve.r",
+      "vertices": 792,
+      "triangles": 1536
+    },
+    {
+      "id": "ZA-left-anterior-branch-of-obturator-nerve",
+      "object": "Anterior branch of obturator nerve.l",
+      "vertices": 392,
+      "triangles": 768
+    },
+    {
+      "id": "ZA-right-anterior-branch-of-obturator-nerve",
+      "object": "Anterior branch of obturator nerve.r",
+      "vertices": 392,
+      "triangles": 768
+    },
+    {
+      "id": "ZA-left-sciatic-nerve",
+      "object": "Sciatic nerve.l",
+      "vertices": 1112,
+      "triangles": 2176
+    },
+    {
+      "id": "ZA-right-sciatic-nerve",
+      "object": "Sciatic nerve.r",
+      "vertices": 1112,
+      "triangles": 2176
+    },
+    {
+      "id": "ZA-left-tibial-nerve",
+      "object": "Tibial nerve.l",
+      "vertices": 584,
+      "triangles": 1152
+    },
+    {
+      "id": "ZA-right-tibial-nerve",
+      "object": "Tibial nerve.r",
+      "vertices": 584,
+      "triangles": 1152
+    },
+    {
+      "id": "ZA-left-common-fibular-nerve",
+      "object": "Common fibular nerve.l",
+      "vertices": 456,
+      "triangles": 896
+    },
+    {
+      "id": "ZA-right-common-fibular-nerve",
+      "object": "Common fibular nerve.r",
+      "vertices": 456,
+      "triangles": 896
+    },
+    {
+      "id": "ZA-left-deep-fibular-nerve",
+      "object": "Deep fibular nerve.l",
+      "vertices": 968,
+      "triangles": 1920
+    },
+    {
+      "id": "ZA-right-deep-fibular-nerve",
+      "object": "Deep fibular nerve.r",
+      "vertices": 968,
+      "triangles": 1920
+    },
+    {
+      "id": "ZA-left-superficial-fibular-nerve",
+      "object": "Superficial fibular nerve.l",
+      "vertices": 712,
+      "triangles": 1408
+    },
+    {
+      "id": "ZA-right-superficial-fibular-nerve",
+      "object": "Superficial fibular nerve.r",
+      "vertices": 712,
+      "triangles": 1408
+    },
+    {
+      "id": "ZA-left-superior-gluteal-nerve",
+      "object": "Superior gluteal nerve.l",
+      "vertices": 792,
+      "triangles": 1536
+    },
+    {
+      "id": "ZA-right-superior-gluteal-nerve",
+      "object": "Superior gluteal nerve.r",
+      "vertices": 792,
+      "triangles": 1536
+    },
+    {
+      "id": "ZA-left-anterior-root-of-spinal-nerve",
+      "object": "Anterior root of spinal nerve.l",
+      "vertices": 1640,
+      "triangles": 2944
+    },
+    {
+      "id": "ZA-right-anterior-root-of-spinal-nerve",
+      "object": "Anterior root of spinal nerve.r",
+      "vertices": 1640,
+      "triangles": 2944
+    },
+    {
+      "id": "ZA-left-posterior-root-of-spinal-nerve",
+      "object": "Posterior root of spinal nerve.l",
+      "vertices": 1512,
+      "triangles": 2688
+    },
+    {
+      "id": "ZA-right-posterior-root-of-spinal-nerve",
+      "object": "Posterior root of spinal nerve.r",
+      "vertices": 1512,
+      "triangles": 2688
+    },
+    {
+      "id": "ZA-left-spinal-ganglion",
+      "object": "Spinal ganglion.l",
+      "vertices": 882,
+      "triangles": 1680
+    },
+    {
+      "id": "ZA-right-spinal-ganglion",
+      "object": "Spinal ganglion.r",
+      "vertices": 882,
+      "triangles": 1680
+    },
+    {
+      "id": "ZA-left-roots-of-brachial-plexus",
+      "object": "Roots of brachial plexus.l",
+      "vertices": 1080,
+      "triangles": 2048
+    },
+    {
+      "id": "ZA-right-roots-of-brachial-plexus",
+      "object": "Roots of brachial plexus.r",
+      "vertices": 1080,
+      "triangles": 2048
+    },
+    {
+      "id": "ZA-left-superior-trunk-of-brachial-plexus",
+      "object": "Superior trunk of brachial plexus.l",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-right-superior-trunk-of-brachial-plexus",
+      "object": "Superior trunk of brachial plexus.r",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-left-middle-trunk-of-brachial-plexus",
+      "object": "Middle trunk of brachial plexus.l",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-right-middle-trunk-of-brachial-plexus",
+      "object": "Middle trunk of brachial plexus.r",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-left-inferior-trunk-of-brachial-plexus",
+      "object": "Inferior trunk of brachial plexus.l",
+      "vertices": 136,
+      "triangles": 256
+    },
+    {
+      "id": "ZA-right-inferior-trunk-of-brachial-plexus",
+      "object": "Inferior trunk of brachial plexus.r",
+      "vertices": 136,
+      "triangles": 256
+    },
+    {
+      "id": "ZA-left-posterior-cord-of-brachial-plexus",
+      "object": "Posterior cord of brachial plexus.l",
+      "vertices": 136,
+      "triangles": 256
+    },
+    {
+      "id": "ZA-right-posterior-cord-of-brachial-plexus",
+      "object": "Posterior cord of brachial plexus.r",
+      "vertices": 136,
+      "triangles": 256
+    },
+    {
+      "id": "ZA-left-anterior-division-of-superior-trunk-of-brachial-plexus",
+      "object": "Anterior division of superior trunk of brachial plexus.l",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-right-anterior-division-of-superior-trunk-of-brachial-plexus",
+      "object": "Anterior division of superior trunk of brachial plexus.r",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-left-anterior-division-of-middle-trunk-of-brachial-plexus",
+      "object": "Anterior division of middle trunk of brachial plexus.l",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-right-anterior-division-of-middle-trunk-of-brachial-plexus",
+      "object": "Anterior division of middle trunk of brachial plexus.r",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-left-anterior-division-of-inferior-trunk-of-brachial-plexus",
+      "object": "Anterior division of inferior trunk of brachial plexus.l",
+      "vertices": 136,
+      "triangles": 256
+    },
+    {
+      "id": "ZA-right-anterior-division-of-inferior-trunk-of-brachial-plexus",
+      "object": "Anterior division of inferior trunk of brachial plexus.r",
+      "vertices": 136,
+      "triangles": 256
+    },
+    {
+      "id": "ZA-left-posterior-division-of-superior-trunk-of-brachial-plexus",
+      "object": "Posterior division of superior trunk of brachial plexus.l",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-right-posterior-division-of-superior-trunk-of-brachial-plexus",
+      "object": "Posterior division of superior trunk of brachial plexus.r",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-left-posterior-division-of-middle-trunk-of-brachial-plexus",
+      "object": "Posterior division of middle trunk of brachial plexus.l",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-right-posterior-division-of-middle-trunk-of-brachial-plexus",
+      "object": "Posterior division of middle trunk of brachial plexus.r",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-left-posterior-division-of-inferior-trunk-of-brachial-plexus",
+      "object": "Posterior division of inferior trunk of brachial plexus.l",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-right-posterior-division-of-inferior-trunk-of-brachial-plexus",
+      "object": "Posterior division of inferior trunk of brachial plexus.r",
+      "vertices": 72,
+      "triangles": 128
+    },
+    {
+      "id": "ZA-spinal-cord-white-matter",
+      "object": "White matter of spinal cord",
+      "vertices": 7854,
+      "triangles": 15554
+    },
+    {
+      "id": "ZA-cauda-equina",
+      "object": "Cauda equina",
+      "vertices": 3216,
+      "triangles": 6144
+    }
+  ],
+  "missingRequestedObjects": [
+    "Lateral cord of brachial plexus.l",
+    "Lateral cord of brachial plexus.r",
+    "Medial cord of brachial plexus.l",
+    "Medial cord of brachial plexus.r"
+  ],
+  "sha256": "b32ddc527f2cd50f7ff921f541cf98b1bc2a8937ca234d65a2deaa77c4b00b97",
+  "archiveURL": "https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip",
+  "retrieved": "2026-09-13",
+  "archiveSHA256": "8c64759030ba82fead9b41f0ddea476ea81d7652526960d3d9bd8dc1ba91bb66",
+  "sourceTreeObserved": "99cb24253f09e63dd99602da7e1ef7204aecf648",
+  "provenanceNote": "Archive bytes are identified by SHA256; the mutable master download is not asserted to match the separately returned Git tree."
+}
