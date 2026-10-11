@@ -16,7 +16,7 @@ assert.equal(summaries.find(c=>c.id==='hand-foundations').done,2);assert.equal(s
 assert(summaries.filter(c=>!['knee-foundations','hand-foundations'].includes(c.id)).every(c=>c.done===0&&!c.started));
 const wrong={...hand,checks:[(definition.motion[0].correct+1)%definition.motion[0].options.length,...hand.checks.slice(1)]};assert(courseOverview([wrong]).find(c=>c.id===hand.courseId).needsReview);
 globalThis.IS_REACT_ACT_ENVIRONMENT=true;
-const stored=new Map();globalThis.sessionStorage={getItem:k=>stored.get(k)??null};let opened;
+const stored=new Map();globalThis.sessionStorage={getItem:()=>null};globalThis.localStorage={getItem:k=>stored.get(k)??null,setItem:(k,v)=>stored.set(k,v),removeItem:k=>stored.delete(k)};let opened;
 globalThis.fetch=async()=>new Response(JSON.stringify({authenticated:true,progress:records,warnings:1}));
 let root;const text=n=>typeof n==='string'||typeof n==='number'?String(n):Array.isArray(n)?n.map(text).join(''):n?.children?text(n.children):n?.props?text(n.props.children):'';
 await act(async()=>{root=create(React.createElement(StudyCourses));});
@@ -24,7 +24,7 @@ let links=root.root.findAllByType('a');assert.equal(links.length,6);assert(root.
 for(const link of links){const route=parseWorkspaceRoute(link.props.href);assert(['knee-course','regional-course'].includes(route.lesson));if(route.courseId==='hand-foundations'){assert.equal(route.courseStep,'case');assert.equal(route.side,'left');}}
 assert(text(root.toJSON()).includes('2 / 4 ders kontrolü doğru'));await act(async()=>root.unmount());
 stored.set(regionalDraftKey(hand.courseId),JSON.stringify(wrong));stored.set('atlas-knee-course-draft','bad JSON');globalThis.fetch=async()=>new Response('{}',{status:401});
-await act(async()=>{root=create(React.createElement(StudyCourses));});assert(text(root.toJSON()).includes('bu sekmede taslak'));assert(text(root.toJSON()).includes('tekrar bekliyor'));assert.equal(root.root.findAllByType('a').length,6);await act(async()=>root.unmount());
+await act(async()=>{root=create(React.createElement(StudyCourses));});assert(text(root.toJSON()).includes('bu tarayıcıda saklanır'));assert(text(root.toJSON()).includes('tekrar bekliyor'));assert.equal(root.root.findAllByType('a').length,6);await act(async()=>root.unmount());
 let fail=true;globalThis.fetch=async()=>fail?new Response('{}',{status:503}):new Response(JSON.stringify({authenticated:true,progress:[hand]}));
 await act(async()=>{root=create(React.createElement(StudyCourses));});assert.equal(root.root.findAllByProps({role:'alert'}).length,1);assert.equal(root.root.findAllByType('a').length,0,'request failure must not claim zero progress');fail=false;await act(async()=>root.root.findByType(Button).props.onClick());assert.equal(root.root.findAllByType('a').length,6);assert(text(root.toJSON()).includes('hesabında kayıtlı'));await act(async()=>root.unmount());
 console.log('PASS: six independent course summaries, correct control counts, review status, saved step/side links, malformed guest draft, guest/account loading, errors without false progress, retry and warnings. Browser layout is not tested.');

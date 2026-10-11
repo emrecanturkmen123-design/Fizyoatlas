@@ -274,14 +274,15 @@ assert(!sessionStorage.data.size);
 globalThis.fetch = guestFetch;
 await act(async () => blocked.value.retry());
 assert(blocked.value.canWork);
-sessionStorage.fail = true;
+localStorage.fail = true;
 await act(async () => blocked.value.save({ ...blocked.value.progress, observed: ["femur"] }));
 assert.equal(blocked.value.status, "error");
-sessionStorage.fail = false;
+localStorage.fail = false;
 await act(async () => blocked.value.retry());
 assert.equal(blocked.value.status, "guest");
 await act(async () => blocked.root.unmount());
 sessionStorage.clear();
+localStorage.clear();
 for (const c of REGIONAL_COURSES) {
   sessionStorage.setItem(
     regionalDraftKey(c.id),
@@ -315,7 +316,7 @@ for (const c of REGIONAL_COURSES) {
     assert(b && !b.props.disabled, q.prompt);
     await act(async () => b.props.onClick());
   };
-  const read = () => JSON.parse(sessionStorage.getItem(regionalDraftKey(c.id)));
+  const read = () => JSON.parse(localStorage.getItem(regionalDraftKey(c.id)));
   for (const s of c.structures) await click(s.label);
   for (const q of c.anatomy) await answer(q);
   assert(regionalCompletion(read())[0]);
@@ -333,7 +334,7 @@ for (const c of REGIONAL_COURSES) {
     assert.deepEqual(read().checks,savedChecks,'extra anatomical stops preserve the original three checks');
     assert(parseRegionalCourse(read()));
     const projection=root.root.findByType(Projection);
-    assert(projection.props.selected.length);
+    if(c.motions[i].joint){assert(projection.props.motion);assert.equal(projection.props.state.hand?.id,c.motions[i].id);}else assert(projection.props.selected.length);
     assert(projection.props.selected.every(id=>regionalParts(atlas,c.motions[i].visualKey,'right').some(p=>p.id===id)));
   }
   assert(regionalCompletion(read())[1]);
@@ -390,7 +391,7 @@ for (const c of REGIONAL_COURSES) {
       " anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.",
   );
 }
-assert.equal(sessionStorage.data.size, 5, "each module has its own guest draft");
+assert.equal(localStorage.data.size, 5, "each module has its own guest draft");
 let root;
 await act(async () => {
   root = create(React.createElement(Catalog, { onOpen() {}, onClose() {} }));

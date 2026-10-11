@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { readBrowserDraft, writeBrowserDraft, removeBrowserDraft } from "./browser-drafts";
 import {
   freshKneeCourse,
   parseKneeCourse,
@@ -10,7 +11,7 @@ const DRAFT_KEY = "atlas-knee-course-draft";
 function draft() {
   try {
     return (
-      parseKneeCourse(JSON.parse(sessionStorage.getItem(DRAFT_KEY) ?? "null")) ?? freshKneeCourse()
+      readBrowserDraft(DRAFT_KEY, parseKneeCourse, mergeKneeCourseDraft) ?? freshKneeCourse()
     );
   } catch {
     return freshKneeCourse();
@@ -28,7 +29,7 @@ export function useKneeCourse() {
     pending = useRef<KneeCourseProgress | null>(null),
     busy = useRef(false),
     alive = useRef(true),
-    importingDraft = useRef(false),
+    importingDraft = useRef<KneeCourseProgress | null>(null),
     unsavedGuest = useRef(false),
     loadGeneration = useRef(0);
   async function refresh() {
@@ -92,10 +93,8 @@ export function useKneeCourse() {
       }
       if (importingDraft.current) {
         // Remove the guest copy only after the account write succeeds.
-        try {
-          sessionStorage.removeItem(DRAFT_KEY);
-        } catch {}
-        importingDraft.current = false;
+        removeBrowserDraft(DRAFT_KEY, importingDraft.current, parseKneeCourse);
+        importingDraft.current = null;
         setPendingDraft(null);
       }
       setError("");
@@ -130,13 +129,13 @@ export function useKneeCourse() {
     setProgress(next);
     if (!authenticated.current) {
       try {
-        sessionStorage.setItem(DRAFT_KEY, JSON.stringify(next));
+        writeBrowserDraft(DRAFT_KEY, next);
         unsavedGuest.current = false;
         setError("");
         setStatus("guest");
       } catch {
         unsavedGuest.current = true;
-        setError("Taslak bu sekmede saklanamadı; açık sayfada korunuyor.");
+        setError("Taslak bu tarayıcıda saklanamadı; açık sayfada korunuyor. Sekmeyi kapatmadan yeniden dene.");
         setStatus("error");
       }
       return;
@@ -153,14 +152,14 @@ export function useKneeCourse() {
     importDraft: () => {
       if (!pendingDraft || !authenticated.current || loadFailed.current || status === "loading")
         return;
-      importingDraft.current = true;
+      importingDraft.current = pendingDraft;
       const merged = mergeKneeCourseDraft(progress, pendingDraft);
       save(merged);
       return merged;
     },
     dismissDraft: () => setPendingDraft(null),
     conflict,
-    useAccount:()=>{if(!conflictProgress.current)return;setProgress(conflictProgress.current);revision.current=conflictProgress.current.revision??0;pending.current=null;conflictProgress.current=null;setConflict(false);setError('');setStatus('ready');},
+    useAccount:()=>{if(!conflictProgress.current)return;setProgress(conflictProgress.current);revision.current=conflictProgress.current.revision??0;pending.current=null;importingDraft.current=null;conflictProgress.current=null;setConflict(false);setError('');setStatus('ready');},
     retry: () => {if(loadFailed.current)return refresh();if(!authenticated.current)return save(progress);if(conflictProgress.current&&pending.current){revision.current=conflictProgress.current.revision??0;pending.current={...pending.current,observed:[...new Set([...conflictProgress.current.observed,...pending.current.observed])]};setProgress(pending.current);conflictProgress.current=null;setConflict(false);}return drain();},
     authenticated: authenticated.current,
     canWork: status !== "loading" && !loadFailed.current&&!conflict,

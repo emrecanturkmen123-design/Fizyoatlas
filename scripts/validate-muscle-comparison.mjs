@@ -11,7 +11,7 @@ import {cameraPoint} from '../app/anatomy-lab-geometry.ts';
 import {sideOf} from '../app/innervation.ts';
 import {parseWorkspaceRoute,workspaceHash} from '../app/workspace-route.ts';
 const atlas=JSON.parse(fs.readFileSync('public/models/atlas.json')),parts=new Map(atlas.parts.map(p=>[p.id,p]));
-assert.equal(MUSCLE_COMPARISON_ITEMS.length,42);assert.equal(new Set(MUSCLE_COMPARISON_ITEMS.map(x=>x.key)).size,42);assert.equal(MUSCLE_COMPARISON_PAIRS.length,6);
+assert.equal(MUSCLE_COMPARISON_ITEMS.length,51);assert.equal(new Set(MUSCLE_COMPARISON_ITEMS.map(x=>x.key)).size,51);assert.equal(MUSCLE_COMPARISON_PAIRS.length,6);
 for(const item of MUSCLE_COMPARISON_ITEMS){
  assert(muscleComparisonItem(suggestedMuscleComparison(item.key)));assert.notEqual(suggestedMuscleComparison(item.key),item.key);
  for(const side of ['right','left']){
@@ -67,7 +67,7 @@ await disclosure('Origo, insertio ve kaynakları karşılaştır');assert(root.r
 assert(root.root.findAllByType('a').some(n=>n.props.href===MUSCLES.find(m=>m.key==='biceps femoris').additionalSource),'short-head source retained');
 await act(async()=>select('Hazır kas çifti').props.onChange({target:{value:'calf'}}));await settle();assert.equal(route.structure,'muscle:gastrocnemius');assert.equal(route.compare,'muscle:soleus');
 await act(async()=>select('İncelenen taraf').props.onChange({target:{value:'right'}}));await settle();assert.equal(route.side,'right');assert(root.root.findAllByType('figcaption').every(c=>text(c).startsWith('Sağ')));
-await disclosure('Kamera ve çevre yapılar');
+assert(root.root.findByProps({'aria-label':'Ortak kamera ayarları'}));
 await act(async()=>select('Ortak kamera dönüşü').props.onChange({target:{value:'65'}}));await act(async()=>select('Ortak kamera eğimi').props.onChange({target:{value:'-35'}}));await act(async()=>button('Anatomik konum').props.onClick());
 const saved=parseWorkspaceRoute(workspaceHash({lesson:'lab',...route}));assert.equal(saved.labKind,'muscles');assert.equal(saved.yaw,65);assert.equal(saved.pitch,-35);
 await act(async()=>root.root.findAllByType(Button).find(b=>text(b)==='Atlas kartını aç').props.onClick());assert.equal(opened,'muscle:gastrocnemius');
@@ -75,7 +75,7 @@ await act(async()=>button('Bilgiyi karşılaştır').props.onClick());await sett
 await act(async()=>button('Bağ ve tendonlar').props.onClick());await settle();assert.equal(route.labKind,undefined);assert(!route.structure.startsWith('muscle:'));
 await act(async()=>button('Kaslar').props.onClick());await settle();assert.equal(route.structure,'muscle:quadriceps');assert(!button('Kaynak model kesiti'));
 await act(async()=>root.unmount());await act(async()=>{root=create(React.createElement(Lab,{...props,initialRoute:saved}),{createNodeMock:nodeMock});});await settle();
-await disclosure('Kamera ve çevre yapılar');
+assert(root.root.findByProps({'aria-label':'Ortak kamera ayarları'}));
 assert.equal(select('Hazır kas çifti').props.value,'calf');assert.equal(select('Ortak kamera dönüşü').props.value,65);assert.equal(select('Ortak kamera eğimi').props.value,-35);assert.equal(button('Anatomik konum').props['aria-pressed'],true);assert.equal(root.root.findAllByType('canvas').length,2);
 await act(async()=>root.unmount());assert.equal(observed,disconnected,'source canvas observers cleaned up');assert(requests>0);
-console.log('PASS: all 42 muscles/groups on both sides, six presets, exact published facts and sources, distinct stable member colors, shared physical scale and full rotational framing; real source Canvas 2D drawing, controls, kind/mode switching, card callbacks and deep-link reload. Browser pixels and GPU are not tested.');
+console.log('PASS: all 51 muscles/groups on both sides, six presets, exact published facts and sources, distinct stable member colors, shared physical scale and full rotational framing; real source Canvas 2D drawing, controls, kind/mode switching, card callbacks and deep-link reload. Browser pixels and GPU are not tested.');

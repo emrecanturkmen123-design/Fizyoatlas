@@ -1,13 +1,15 @@
+import {HAND_DIGITS,type HandDigit} from './hand-motion';
 import {isRegionalCourseId,regionalCourse,type RegionalCourseId} from './regional-course-content';
 import {LESSON_HASHES,type Lesson} from './lesson-routes';
 import {isKneeCourseStep,type KneeCourseStep} from './knee-course-data';
+import {MOVEMENT_LAYER_OPTIONS} from './movement-options';
 export interface WorkspaceRoute {
  lesson:Lesson|'practice';courseId?:RegionalCourseId;courseStep?:KneeCourseStep;courseMotion?:number;tab?:'muscles'|'nerves'|'connective';region?:string;
  concept?:string;muscle?:string;nerve?:string;nerveFocus?:'targets';structure?:string;side?:'left'|'right';motion?:string;
- progress?:number;caseId?:string;mode?:'learn'|'exam';quizMuscle?:string;quizTendon?:string;quizFinding?:string;compare?:string;
+ handDigit?:HandDigit|'all';progress?:number;motionMuscles?:true;motionLayers?:string[];caseId?:string;mode?:'learn'|'exam';quizMuscle?:string;quizTendon?:string;quizFinding?:string;compare?:string;
  attachment?:'both'|'origin'|'insertion';isolate?:true;tendons?:true;trace?:true;learningView?:'favorites';labMode?:'compare'|'clinical';labKind?:'muscles';labFrame?:'centered'|'aligned';labContext?:boolean;clinicalPair?:string;yaw?:number;pitch?:number;zoom?:number;
 }
-const hashes:Record<WorkspaceRoute['lesson'],string>={courses:'ogren','regional-course':'bolge-dersi','knee-course':'diz-dersi',notebook:'defter',lab:'inceleme',tendons:'tendonlar',study:'atlas',practice:'sinama',movements:'hareketler',shoulder:'omuz',elbow:'dirsek',hip:'kalca',ankle:'ayak-bilegi',knee:'diz',gait:'yuruyus',cases:'vakalar',quiz:'test',learning:'calismalarim',spine:'omurga',latissimus:'latissimus'};
+const hashes:Record<WorkspaceRoute['lesson'],string>={hand:'el-parmak',courses:'ogren','regional-course':'bolge-dersi','knee-course':'diz-dersi',notebook:'defter',lab:'inceleme',tendons:'tendonlar',study:'atlas',practice:'sinama',movements:'hareketler',shoulder:'omuz',elbow:'dirsek',hip:'kalca',ankle:'ayak-bilegi',knee:'diz',gait:'yuruyus',cases:'vakalar',quiz:'test',learning:'calismalarim',spine:'omurga',latissimus:'latissimus'};
 export function parseWorkspaceRoute(hash:string):WorkspaceRoute {
  const [base,query='']=hash.replace(/^#/,'').split('?'),params=new URLSearchParams(query);
  const lesson=base==='atlas'?'study':base==='sinama'?'practice':LESSON_HASHES['#'+base]??'study';
@@ -21,7 +23,10 @@ export function parseWorkspaceRoute(hash:string):WorkspaceRoute {
  }
  const side=params.get('taraf');if(side==='sol'||side==='left')route.side='left';if(side==='sag'||side==='right')route.side='right';
  if(lesson==='study'&&route.nerve&&params.get('sinirgosterim')==='kaslar')route.nerveFocus='targets';
+ const digit=params.get('parmak');if(lesson==='hand'&&(digit==='all'||HAND_DIGITS.includes(digit as HandDigit)))route.handDigit=digit as HandDigit|'all';
  const position=params.get('konum');if(position!==null&&position.trim()!==''&&Number.isFinite(Number(position)))route.progress=Math.max(0,Math.min(100,Number(position)));
+ if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(lesson)&&params.get('kaskatmani')==='1')route.motionMuscles=true;
+ if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(lesson)){const layers=params.get('katmanlar')?.split(',')??[],valid=MOVEMENT_LAYER_OPTIONS.filter(key=>layers.includes(key));if(valid.length)route.motionLayers=valid;}
  const mode=params.get('mod');if(mode==='learn'||mode==='exam')route.mode=mode;
  const attachment=params.get('tutunma');if(attachment==='both'||attachment==='origin'||attachment==='insertion')route.attachment=attachment;
  if(params.get('yalin')==='1')route.isolate=true;if(params.get('sema')==='1')route.tendons=true;if(params.get('iz')==='1')route.trace=true;
@@ -37,12 +42,14 @@ export function parseWorkspaceRoute(hash:string):WorkspaceRoute {
 }
 export function workspaceHash(route:WorkspaceRoute){
  const p=new URLSearchParams();
+ if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(route.lesson)&&route.motionMuscles)p.set('kaskatmani','1');
+ if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(route.lesson)){const layers=MOVEMENT_LAYER_OPTIONS.filter(key=>route.motionLayers?.includes(key));if(layers.length)p.set('katmanlar',layers.join(','));}
  if(route.lesson==='regional-course'&&route.courseId)p.set('kurs',route.courseId);
  if((route.lesson==='knee-course'||route.lesson==='regional-course')&&route.courseStep)p.set('adim',route.courseStep);
  if(route.lesson==='regional-course'&&route.courseId&&Number.isInteger(route.courseMotion)&&Number(route.courseMotion)>=0&&Number(route.courseMotion)<regionalCourse(route.courseId)!.motions.length)p.set('durak',String(route.courseMotion));
  if(route.lesson==='study'&&route.nerve&&route.nerveFocus==='targets')p.set('sinirgosterim','kaslar');
  if(route.lesson==='lab'&&route.labKind==='muscles')p.set('karsilastirmagrubu','kaslar');
- for(const [field,param] of Object.entries({tab:'tur',region:'bolge',concept:'secim',muscle:'kas',nerve:'sinir',structure:'yapi',side:'taraf',motion:'hareket',progress:'konum',caseId:'vaka',mode:'mod',quizMuscle:'calis',quizTendon:'tendon',quizFinding:'bul',compare:'karsilastir',attachment:'tutunma',isolate:'yalin',tendons:'sema',trace:'iz',learningView:'bolum',labMode:'gosterim',labFrame:'yerlesim',labContext:'cevre',clinicalPair:'bilgikarsilastirma',yaw:'donus',pitch:'egim',zoom:'yakinlik'})){
+ for(const [field,param] of Object.entries({handDigit:'parmak',tab:'tur',region:'bolge',concept:'secim',muscle:'kas',nerve:'sinir',structure:'yapi',side:'taraf',motion:'hareket',progress:'konum',caseId:'vaka',mode:'mod',quizMuscle:'calis',quizTendon:'tendon',quizFinding:'bul',compare:'karsilastir',attachment:'tutunma',isolate:'yalin',tendons:'sema',trace:'iz',learningView:'bolum',labMode:'gosterim',labFrame:'yerlesim',labContext:'cevre',clinicalPair:'bilgikarsilastirma',yaw:'donus',pitch:'egim',zoom:'yakinlik'})){
   let value=route[field as keyof WorkspaceRoute];
   if(value===undefined||value===''||field==='tab'&&value==='muscles'||field==='region'&&value==='all')continue;
   if(field==='side')value=value==='left'?'sol':'sag';

@@ -1,4 +1,5 @@
 export const LESSON_CAPABILITIES={
+ hand:{short:'13 hareket · bilek/parmak · kaynak model',text:'Bileğin dört yönünü, parmak eklemlerini ve başparmağı kaynak modelde incele. Kas ve tendonlar isteğe bağlı gösterilir; eklem merkezleri yaklaşık öğretim gösterimidir.'},
  shoulder:{short:'6 hareket · iskelet/kas · skapula',text:'İskelet veya kaslı görünümde 6 hareketi oynat. Kas karşılaştırması sabit pozdadır; skapula katkısı seçili hareketlerde açılabilir.'},
  elbow:{short:'4 hareket · iskelet/kas · kasılma',text:'Dirsek ve önkolun 4 hareketini iskelet veya kaslı görünümde incele. Biceps–triceps şeması ve kasılma senaryoları fleksiyon–ekstansiyon içindir.'},
  hip:{short:'6 hareket · iskelet/kas · karşılaştırma',text:'6 kalça hareketinde iskelet veya kaslı görünümü seç. Pelvis sabit, diz düzdür; kas karşılaştırması sabit pozdadır.'},

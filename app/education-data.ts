@@ -1,3 +1,4 @@
+import {HAND_MUSCLES} from './hand-muscle-data';
 import type {Atlas} from './anatomy';
 const upper='https://medicine.uams.edu/neuroscience/education/medical-school-courses/human-structure-module/anatomy-tables/muscle-tables/muscles-of-the-upper-limb/';
 const lower='https://anatomy.ttuhscep.edu/anatomytables/muscles_lowerlimb.html';
@@ -46,7 +47,7 @@ export const MUSCLES=[
 {key:'flexor carpi ulnaris',name:'M. flexor carpi ulnaris',tr:'Ulnar el bileği fleksörü · önkol',origin:'Humeral baş: medial epikondil. Ulnar baş: olecranon ve ulnanın posterior kenarı.',insertion:'Pisiform, hamatum kancası ve 5. metakarp tabanı.',nerve:'N. ulnaris',action:'El bileği fleksiyonu ve ulnar deviasyon.',source:uw+'flexor-carpi-ulnaris'},
 {key:'extensor carpi radialis longus',name:'M. extensor carpi radialis longus',tr:'Uzun radial el bileği ekstansörü · önkol',origin:'Humerus lateral suprakondiler kenarı.',insertion:'2. metakarp tabanı.',nerve:'N. radialis',action:'El bileği ekstansiyonu ve radial deviasyon.',source:uw+'extensor-carpi-radialis-longus'},
 {key:'extensor carpi radialis brevis',name:'M. extensor carpi radialis brevis',tr:'Kısa radial el bileği ekstansörü · önkol',origin:'Humerus lateral epikondili.',insertion:'3. metakarp tabanı.',nerve:'N. radialis derin dalı',action:'El bileği ekstansiyonu ve radial deviasyon.',source:uw+'extensor-carpi-radialis-brevis'},
-
+...HAND_MUSCLES,
 ];
 export const CASES=[
 {id:'cuff',name:'Rotator manşet yırtığı',kind:'Ortopedik · tendon etkilenmesi',keys:['supraspinatus','infraspinatus','teres minor','subscapularis'],text:'Dört rotator manşet kası gösteriliyor. Yırtık bunların bir veya birkaçının tendonunu tutabilir; en sık supraspinatus tendonu etkilenir. İşaretlenen kasların tamamının her vakada yaralandığı anlamına gelmez.',source:'https://www.orthoinfo.org/diseases--conditions/rotator-cuff-tears/'},
@@ -54,6 +55,6 @@ export const CASES=[
 {id:'winging',name:'Uzun torasik sinir lezyonu',kind:'Nörolojik · periferik motor innervasyon',keys:['serratus anterior'],text:'N. thoracicus longus lezyonunda serratus anterior etkilenebilir ve medial skapular kanatlanma görülebilir. Bu bağlantı, tüm skapular kanatlanmaların aynı sinir lezyonundan kaynaklandığı anlamına gelmez.',source:un},
 {id:'footdrop',name:'Derin fibular sinir lezyonu',kind:'Nörolojik · düşük ayak bağlantısı',keys:['tibialis anterior','extensor hallucis longus','extensor digitorum longus','fibularis tertius','peroneus tertius'],text:'Bacağın anterior kompartmanındaki motor hedefler gösteriliyor. Derin fibular sinir hasarı dorsifleksörleri etkileyerek düşük ayağa yol açabilir. Düşük ayak bir bulgudur; bu ekran tüm olası nedenleri veya sinirin tüm hedeflerini kapsamaz.',source:ln},
 ];
-export function muscleKeyMatches(name:string,key:string){return new RegExp('\\b'+key+'\\b','i').test(name);}
+export function muscleKeyMatches(name:string,key:string){if(key==='extensor digitorum'&&/extensor digitorum (?:longus|brevis)/i.test(name))return false;return new RegExp('\\b'+key+'\\b','i').test(name);}
 export function muscleFor(name:string){if(/tendon|ligament|tutunma|çapraz|talofibular|kalkaneofibular/i.test(name))return undefined;return MUSCLES.find(m=>muscleKeyMatches(name,m.key)||name.toLowerCase().includes(m.name.toLowerCase()));}
 export function elementsFor(atlas:Atlas,keys:string[]){return atlas.parts.filter(p=>p.system==='muscular'&&keys.some(k=>muscleKeyMatches(p.name,k))).map(p=>p.id);}

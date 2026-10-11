@@ -1,5 +1,16 @@
-import {Box3,MathUtils,PerspectiveCamera,Vector3} from 'three';
+import {Box3,MathUtils,Mesh,PerspectiveCamera,Vector3,type Object3D} from 'three';
 import {viewportUsable,type PanelRect} from './model-viewport';
+
+// Use the deformed source geometry, not its neutral catalog bounds.
+export function posedSelectionBounds(objects:(Object3D|undefined)[],ids:ReadonlySet<string>){
+ const box=new Box3();
+ for(const object of objects){if(!object?.visible)continue;object.traverse(child=>{
+  if(!(child instanceof Mesh)||!child.visible||!ids.has(child.userData.partId))return;
+  child.updateWorldMatrix(true,false);child.geometry.computeBoundingBox();
+  if(child.geometry.boundingBox)box.union(child.geometry.boundingBox.clone().applyMatrix4(child.matrixWorld));
+ });}
+ return box;
+}
 
 // Fit the actual bounds in camera space, including side/back views and depth.
 export function frameModelBounds(camera:PerspectiveCamera,box:Box3,viewport:PanelRect,width:number,height:number,direction:Vector3){

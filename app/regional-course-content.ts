@@ -17,7 +17,7 @@ export interface CourseMotion {
   label: string;
   text: string;
   visualKey: string;
-  joint?: "shoulder" | "elbow" | "hip" | "ankle";
+  joint?: "shoulder" | "elbow" | "hand" | "hip" | "ankle";
   id?: string;
   progress?: number;
 }
@@ -91,7 +91,7 @@ const ankle = source(
 );
 const hand = source(
   "El ve önkol anatomisi · Texas Tech Üniversitesi",
-  "https://anatomy.ttuhscep.edu/musculoskeletal_system/forearm_tables.html",
+  "https://anatomy.ttuhscep.edu/schemes/forearm_tables.html",
 );
 const pelvis = source(
   "Gluteus medius ve pelvis kontrolü · Kim ve ark.",
@@ -822,37 +822,37 @@ const handCourse: RegionalCourseDefinition = {
     {
       label: "PIP eklemini bük",
       text: "FDS orta falanksa kuvvet aktarır. PIP, proksimal ve orta falanks arasındaki eklemdir.",
-      visualKey: "flexor digitorum superficialis tendon",
+      visualKey: "flexor digitorum superficialis tendon", joint: "hand", id: "pip-flexion", progress: 75,
     },
     {
       label: "DIP eklemini bük",
       text: "FDP distal falanksa kuvvet aktarır. DIP, orta ve distal falanks arasındadır.",
-      visualKey: "flexor digitorum profundus tendon",
+      visualKey: "flexor digitorum profundus tendon", joint: "hand", id: "dip-flexion", progress: 75,
     },
     {
       label: "Başparmağı bük",
       text: "FPL başparmak IP fleksiyonuna kuvvet aktarır. Başparmağın iki falanksı ve tek IP eklemi vardır.",
-      visualKey: "flexor pollicis longus tendon",
+      visualKey: "flexor pollicis longus tendon", joint: "hand", id: "thumb-flexion", progress: 75,
     },
     {
       label: "FCR · Fleksiyon ve radial deviasyon",
       text: "Flexor carpi radialis el bileğini büker ve radius tarafına yönlendirmeye katkı verir. Aynı kasın iki işlevini kaynak modeldeki kas–tendon doğrultusuyla ilişkilendir.",
-      visualKey: "flexor carpi radialis",
+      visualKey: "flexor carpi radialis", joint: "hand", id: "radial-deviation", progress: 75,
     },
     {
       label: "FCU · Fleksiyon ve ulnar deviasyon",
       text: "Flexor carpi ulnaris el bileğini büker ve ulna tarafına yönlendirmeye katkı verir. FCR ile ortak fleksiyon işlevini ve karşıt deviasyon yönünü karşılaştır.",
-      visualKey: "flexor carpi ulnaris",
+      visualKey: "flexor carpi ulnaris", joint: "hand", id: "ulnar-deviation", progress: 75,
     },
     {
       label: "ECRL · Ekstansiyon ve radial deviasyon",
       text: "Extensor carpi radialis longus el bileği ekstansiyonuna ve radial deviasyona katkı verir. İkinci metakarpal tabanına uzanan doğrultuyu incele.",
-      visualKey: "extensor carpi radialis longus",
+      visualKey: "extensor carpi radialis longus", joint: "hand", id: "wrist-extension", progress: 75,
     },
     {
       label: "ECRB · Ekstansiyon ve radial deviasyon",
       text: "Extensor carpi radialis brevis el bileği ekstansiyonuna ve radial deviasyona katkı verir. Üçüncü metakarpal tabanına uzanan doğrultuyu ECRL ile karşılaştır.",
-      visualKey: "extensor carpi radialis brevis",
+      visualKey: "extensor carpi radialis brevis", joint: "hand", id: "wrist-extension", progress: 75,
     },
   ],
   anatomy: [

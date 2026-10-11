@@ -1,3 +1,4 @@
+import MotionInterpretation from './motion-interpretation-view';
 import {useEffect,useRef,useState} from 'react';
 import {Disclosure} from './disclosure';
 import {Switch} from '@/components/ui/switch';
@@ -8,10 +9,11 @@ import {muscleFor} from './education-data';
 import {GAIT_PHASES} from './gait-data';
 import {gaitPhase,gaitContact,gaitSupport,GAIT_SAMPLES,type GaitState} from './gait-motion';
 
-export default function GaitPanel({onChange,onMuscle,onClose,initialProgress=0}:{initialProgress?:number;onChange:(state:GaitState)=>void;onMuscle:(key:string)=>void;onClose:()=>void}){
- const [progress,setProgress]=useState(initialProgress),[playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1),[muscles,setMuscles]=useState(false),[plane,setPlane]=useState(false);
+export default function GaitPanel({onChange,onMuscle,onClose,initialProgress=0,initialState}:{initialProgress?:number;initialState?:GaitState;onChange:(state:GaitState)=>void;onMuscle:(key:string)=>void;onClose:()=>void}){
+ const start=initialState?.progress??initialProgress;
+ const [progress,setProgress]=useState(start),[playing,setPlaying]=useState(false),[speed,setSpeed]=useState(initialState?.speed??1),[muscles,setMuscles]=useState(initialState?.muscles??false),[plane,setPlane]=useState(initialState?.plane??false);
  const publish=useRef(onChange);publish.current=onChange;
- const current=useRef(initialProgress),transition=useRef<{from:number;to:number;start:number}|null>(null);
+ const current=useRef(start),transition=useRef<{from:number;to:number;start:number}|null>(null);
  const step=gaitPhase(progress),phase=GAIT_PHASES[step];
  useEffect(()=>publish.current({progress,playing,speed,muscles,plane}),[progress,playing,speed,muscles,plane]);
  useEffect(()=>{let frame=0,last=0;const tick=(now:number)=>{const dt=last?Math.min((now-last)/1000,.05):0;last=now;
@@ -33,6 +35,7 @@ export default function GaitPanel({onChange,onMuscle,onClose,initialProgress=0}:
    <div className="learning-options"><Button variant="outline" disabled={progress<=0} onClick={()=>go(GAIT_SAMPLES[Math.max(0,step-1)])}>Önceki evre</Button><Button onClick={play}>{playing?'Duraklat':progress>=100?'Tekrar oynat':'Oynat'}</Button><Button variant="outline" disabled={progress>=100} onClick={()=>go(step===7?100:GAIT_SAMPLES[step+1])}>{step===7?'Yeni ilk temas':'Sonraki evre'}</Button><Button variant="ghost" onClick={()=>go(0)}>Başa dön</Button></div>
    <label className="gait-speed">Gösterim hızı <select aria-label="Yürüyüş gösterim hızı" value={speed} onChange={e=>setSpeed(Number(e.target.value))}><option value={.5}>0,5×</option><option value={1}>1×</option><option value={2}>2×</option></select></label>
   </div>
+  <MotionInterpretation state={{gait:{progress,playing,speed,muscles,plane}}} onMuscle={key=>{setPlaying(false);onMuscle(key);}}/>
   <div className="gait-contact-status" aria-label="Ayak zemin teması"><strong>{gaitSupport(progress)}</strong><span><i className="gait-dot right"/>Sağ: {gaitContact(progress)}</span><span><i className="gait-dot left"/>Sol: {gaitContact(progress+50)}</span></div>
   <section aria-live="polite" aria-atomic="true"><p className="edu-tag">{step+1}/8 · {phase.period}</p><h2>{progress===100?'Yeni ilk temas':phase.name}</h2><p>{phase.en}</p><p>{phase.event}</p><p>{phase.action}</p></section>
   <Disclosure title="Kaslar ve hareket düzlemi">

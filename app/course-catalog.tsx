@@ -77,7 +77,7 @@ export default function CourseCatalog({
         Her modülün kaydı ayrıdır.{" "}
         {status === "account"
           ? "İlerleme hesabında saklanır."
-          : "Giriş yapmadan çalışman bu sekmede taslak olarak saklanır; kalıcı kayıt için ders içinden giriş yapabilirsin."}
+          : "Giriş yapmadan çalışman bu tarayıcıda saklanır; cihazlar arasında devam etmek için ders içinden giriş yapabilirsin."}
       </p>
     </section>
   );

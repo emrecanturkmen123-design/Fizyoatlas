@@ -1,7 +1,8 @@
 import {REGIONAL_COURSES,type RegionalCourseId} from './regional-course-content';
-import {freshRegionalCourse,parseRegionalCourse,regionalCompletion,regionalNeedsReview,regionalDraftKey,hasRegionalWork,regionalExamQuestions} from './regional-course-data';
-import {freshKneeCourse,parseKneeCourse,kneeCourseCompletion,kneeCourseNeedsReview,hasKneeCourseWork,KNEE_COURSE_ID,KNEE_COURSE_STEPS,KNEE_STRUCTURES,KNEE_CASES,examQuestions} from './knee-course-data';
+import {freshRegionalCourse,parseRegionalCourse,regionalCompletion,regionalNeedsReview,regionalDraftKey,hasRegionalWork,regionalExamQuestions,mergeRegionalDraft} from './regional-course-data';
+import {freshKneeCourse,parseKneeCourse,kneeCourseCompletion,kneeCourseNeedsReview,hasKneeCourseWork,KNEE_COURSE_ID,KNEE_COURSE_STEPS,KNEE_STRUCTURES,KNEE_CASES,examQuestions,mergeKneeCourseDraft} from './knee-course-data';
 import type {WorkspaceRoute} from './workspace-route';
+import {readBrowserDraft} from './browser-drafts';
 export type CourseId=RegionalCourseId|typeof KNEE_COURSE_ID;
 export const COURSE_DEFINITIONS:{id:CourseId;title:string;summary:string;structures:number;cases:number}[]=[{id:KNEE_COURSE_ID,title:'Diz',summary:'Kemikler, kaslar, bağlar ve menisküsler',structures:KNEE_STRUCTURES.length,cases:KNEE_CASES.length},...REGIONAL_COURSES.map(c=>({id:c.id,title:c.title,summary:c.summary,structures:c.structures.length,cases:c.cases.length}))];
 export function courseOverview(records:unknown[]){
@@ -17,5 +18,6 @@ export function courseOverview(records:unknown[]){
  });
 }
 export function readCourseDrafts(){
- return [{key:'atlas-knee-course-draft',parse:parseKneeCourse},...REGIONAL_COURSES.map(c=>({key:regionalDraftKey(c.id),parse:parseRegionalCourse}))].flatMap(({key,parse})=>{try{const value=parse(JSON.parse(sessionStorage.getItem(key)??'null'));return value?[value]:[];}catch{return [];}});
+ const knee=readBrowserDraft('atlas-knee-course-draft',parseKneeCourse,mergeKneeCourseDraft);
+ return [...(knee?[knee]:[]),...REGIONAL_COURSES.flatMap(c=>{const value=readBrowserDraft(regionalDraftKey(c.id),v=>{const p=parseRegionalCourse(v);return p?.courseId===c.id?p:null;},mergeRegionalDraft);return value?[value]:[];})];
 }

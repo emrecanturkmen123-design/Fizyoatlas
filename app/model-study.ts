@@ -21,14 +21,14 @@ export const MUSCLE_FINDINGS:ModelFinding[]=MUSCLES.flatMap(m=>sides.map(side=>{
  return {id:`locate:muscle:${m.key}:${side}`,structureKey:'muscle:'+m.key,side,region:muscleRegion(m.key),displayName:m.name,group:'muscles',task:'muscle',muscleKey:m.key,
   prompt:`${side==='right'?'Sağ':'Sol'} tarafta ${m.name} kasını modelde bul.`,answer:m.name,options:names,explanation,source:m.source,rationales:rationale(names,m.name,explanation)};
 }));
-// The current source has no independent inferior gluteal nerve surface.
-// Its target-muscle study remains available; it never gets a nerve-finding task.
+// Source-missing branches retain motor-target studies, without impossible
+// nerve-finding tasks. Availability is independently checked against the atlas.
 export const NERVE_FINDINGS:ModelFinding[]=NERVES.flatMap(n=>sides.flatMap(side=>{
  const key=primaryNerveMuscle(n),region=nerveRegion(n),names=['Seçili motor hedef kas','Seçili motor hedefler dışında','Sinir','Kas veya kemik'];
  const explanation=`${n.name} için kartın seçili motor hedefleri: ${n.muscles.map(studyMuscleName).join(', ')}. ${n.indirect?'Bu ilişki distal dalları üzerinden kurulur. ':''}${n.note??'Liste seçili motor hedefleri içerir; sinirin bütün hedeflerinin dökümü değildir.'}`;
  const target:ModelFinding={id:`locate:target:${n.id}:${side}`,structureKey:'nerve:'+n.id,side,region,displayName:n.name+' · motor hedef',group:'nerves',task:'target',muscleKey:key,nerveId:n.id,
   prompt:`${side==='right'?'Sağ':'Sol'} ${n.name} kartının seçili motor hedeflerinden birini modelde bul.`,answer:'Seçili motor hedef kas',options:names,explanation,source:n.source,rationales:rationale(names,'Seçili motor hedef kas',explanation)};
- if(n.id==='inferior-gluteal')return [target];
+ if(n.modelSurface===false)return [target];
  const nerveNames=options(NERVES.map(x=>x.name)),nerveExplanation=`${n.name}: seçili motor hedefler ${n.muscles.map(studyMuscleName).join(', ')}. ${n.note??''}`;
  return [{id:`locate:nerve:${n.id}:${side}`,structureKey:'nerve:'+n.id,side,region,displayName:n.name,group:'nerves',task:'nerve',nerveId:n.id,
   prompt:`${side==='right'?'Sağ':'Sol'} tarafta ${n.name} sinirini modelde bul.`,answer:n.name,options:nerveNames,explanation:nerveExplanation,source:n.source,rationales:rationale(nerveNames,n.name,nerveExplanation)},target];

@@ -4,6 +4,12 @@ Public URL: https://atlas.fizyoatlas.workers.dev
 
 The React/Three.js app and model files are deployed as Cloudflare Worker static assets. The API uses the `fizyo-atlas-study` D1 database. `wrangler.jsonc` is the external hosting configuration; the existing Sites build remains separate.
 
+## Current source update
+
+The V59 interface updates are included: separate muscle-card and model-tool panels on wide screens, a single panel with a return action on narrower screens, and a visible muscle-transparency control. This update also includes the integrated muscle card, guided comparisons, hand/finger motions, motion explanations, adjustable panel widths and persistent guest drafts from the latest Sites source.
+
+The existing Cloudflare identity adapter, D1 binding and account-sign-in setup status are preserved. Model geometry and database migrations are unchanged by this source update.
+
 ## Build and deploy
 
 ```sh

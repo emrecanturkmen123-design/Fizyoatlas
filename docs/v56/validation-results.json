@@ -1,0 +1,494 @@
+[
+  {
+    "file": "validate-achilles-study.mjs",
+    "code": 0,
+    "output": "PASS 28 bilateral Achilles poses: source preservation, calf context, finite surfaces, calcaneal attachment, visibility, picking IDs and disposal.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-anatomical-muscles.mjs",
+    "code": 0,
+    "output": "left rig build ms 238\nright rig build ms 182\nPASS: ten anatomical heads, finite morphs/normals, length directions, exact rest restoration, fixed isometric pose, persistent buffers, marker toggles and disposal\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-anatomy-lab.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 76 comparisons; actual React mode/side/pair/framing, clinical links/quiz, failure/retry, Canvas 2D calls, reload, removed section controls, legacy-link fallback and cleanup. Browser pixels and GPU are not tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-atlas-expansion.mjs",
+    "code": 0,
+    "output": "PASS: 2343 original source arrays unchanged; 38 source hashes, 19 bilateral selections and real muscle/bone context; comparison routes, identical camera transforms; SQLite notebook create/update/archive/restore, saved side/motion/position, identity separation, CSRF and invalid payload rejection.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-atlas.mjs",
+    "code": 0,
+    "output": "Verified 2395 individually indexed meshes, 3596 complete concept mappings, 2,604,182 triangles, and every binary buffer.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-attachments.mjs",
+    "code": 0,
+    "output": "PASS: 246 bilateral attachment markers resolve to existing bone vertices; all configured muscles and groups, side separation and origin/insertion filters.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-browser-drafts.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: six courses and multiple notebook drafts survive new tabs, legacy copies migrate safely, empty titles recover, failed writes retain edits with retry/unload warning, import cleanup waits for success and preserves other-tab changes.\n",
+    "phase": "final-regression"
+  },
+  {
+    "file": "validate-card-actions.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: primary movement, folded quiz/finding/comparison/case/favorite callbacks, pending disabled state, favorite pressed state, visible save error and retry; optional actions removed cleanly. Browser focus and pixels are not tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-case-branch.mjs",
+    "code": 0,
+    "output": "PASS: five distinct examination paths, deferred findings, reassessment gates, no skipped transitions, saved branch validation.\nPASS: all 16 cases have validated examination choices; new planning feedback is limited to learning mode, and legacy resumes remain valid.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-case-feedback.mjs",
+    "code": 0,
+    "output": "PASS: 160 clinical questions, 640 mapped choice explanations; no unrelated sampled distractors.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-case-journeys.mjs",
+    "code": 0,
+    "output": "PASS: 16 complete ten-step journeys, real model targets, four unique choices, locked answers and scoring.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-case-progress.mjs",
+    "code": 0,
+    "output": "PASS: real SQLite migrations, resume payload, independent modes, restart, identity isolation, invalid progress and CSRF rejected.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-cases.mjs",
+    "code": 0,
+    "output": "PASS: 15 sourced fictional cases, all motor targets on both sides.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-clinical-anatomy.mjs",
+    "code": 0,
+    "output": "PASS: 16 clinical surfaces + 2 Achilles + 2 extracted patellar surfaces, 10 modelled structures, Turkish search aliases, direct case targets, explicit footprint limits, local envelope residual <6 mm.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-connective-study.mjs",
+    "code": 0,
+    "output": "PASS 38 cards × both sides: same-side context, visibility, honest mesh coverage, correct heads, case targets and search aliases.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-content-coverage.mjs",
+    "code": 0,
+    "output": "PASS: 40 standardized sourced muscle cards, 24 nerve cards, bilateral model coverage, missing-model state, nerve lessons, shared playback boundaries.\n",
+    "phase": "final-regression"
+  },
+  {
+    "file": "validate-contractions.mjs",
+    "code": 0,
+    "output": "PASS: bilateral contraction angles, muscle length direction and fixed isometric pose\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-course-overview.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: six independent course summaries, correct control counts, review status, saved step/side links, malformed guest draft, guest/account loading, errors without false progress, retry and warnings. Browser layout is not tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-demand-rigs.mjs",
+    "code": 0,
+    "output": "PASS: 18 bilateral production rigs have identical surface coverage with demanded buffers and full atlas buffers.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-elbow-cards.mjs",
+    "code": 0,
+    "output": "PASS: eight sourced elbow/forearm cards; bilateral model targets; no brachialis/coracobrachialis collision.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-elbow.mjs",
+    "code": 0,
+    "output": "PASS: four bilateral elbow/forearm motions, 29 bones, rigid hinge, stationary ulna during forearm rotation, complete muscle targets.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-exercises.mjs",
+    "code": 0,
+    "output": "PASS: all 16 cases have staged exercise illustrations, valid model movement links, quality/regression/progression and sources.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-forearm-tendon.mjs",
+    "code": 0,
+    "output": "PASS: 204 bilateral pronation/supination poses, 6732 exact radial attachment checks, posed muscle transition, finite normals, toggle-off and unchanged source arrays.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-gait.mjs",
+    "code": 0,
+    "output": "{\n  maxLengthError: 3.3306690738754696e-16,\n  maxStep: 0.007672529862010892\n}\nPASS: eight bilateral poses; 401 cycle samples; sole clearance; rigid bone lengths; connected hip/knee/ankle; phase and cycle continuity; optional muscles/plane; single/double support.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-interactions.mjs",
+    "code": 0,
+    "output": "atlas.json: packing at desktop/mobile aspect ratios and search/inspection contracts passed.\nTap, drag, multitouch, cancellation, and empty-view checks passed.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-knee-course.mjs",
+    "code": 0,
+    "output": "PASS: actual bilateral source geometry and source-only patellar picks; six lesson deep links; real SQLite resume, finished exam, restart, validation, identity isolation and CSRF; all six rendered lesson stages; 13 structures, four staged cases, rotating 10-question exams, legacy migration, mastery and merge rules. Browser/GPU QA is separate.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-knee-deformation.mjs",
+    "code": 0,
+    "output": "PASS 32 knee poses and 111104 protected-belly checks; preserved source and connective tissue classification.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-knee-tendon.mjs",
+    "code": 0,
+    "output": "PASS: 204 bilateral flexion/extension poses, 52632 attachment-vertex checks; finite normals and preserved source geometry. Teaching path is not clinical kinematic validation.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-knee.mjs",
+    "code": 0,
+    "output": "PASS: bilateral knee flexion/extension, 30 moving bones, rigid hinge, posterior direction, disjoint roles, eight complete cards, preserved fibularis muscle and source tendon layers.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-learning-history.mjs",
+    "code": 0,
+    "output": "PASS: exactly one attempt per retry; server-checked identity and correctness; stale retries preserve latest answer; 1/3/7/14/30-day scheduling and wrong-answer reset; legacy records retained.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-learning-reset.mjs",
+    "code": 0,
+    "output": "Learning storage request failed\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: atomic account reset (4 batches), authentication/CSRF/confirmation/idempotency, account isolation and retained favorites/notebook/case/course; actual guest/account hooks, storage failure/retry/reload, expired session protection, quiz resume removal and confirmation controller. Dialog DOM focus is not browser-tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-learning-timeline.mjs",
+    "code": 0,
+    "output": "PASS: concurrent answer order, retry idempotency, stale retry protection, immutable attempts, review reset and account isolation.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-learning-ui.mjs",
+    "code": 0,
+    "output": "PASS: eight lesson routes; server rendering of all new panels, both-side motion controls, sign-in, favorites, wrong-question entry. Browser interaction/visual layout not covered.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-learning.mjs",
+    "code": 0,
+    "output": "PASS: generated migrations on SQLite; identity isolation; CSRF/input guards; idempotent favorites; server-checked answers; wrong-answer review and correction; missing-storage handling; private caching.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-limb-muscles.mjs",
+    "code": 0,
+    "output": "PASS 120 bilateral limb poses, all heads, finite surfaces, correct attachment transforms, preserved sources and separation from each motion/isolation state.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-local-deformation.mjs",
+    "code": 0,
+    "output": "PASS local deformation: 52120 protected hip/calf vertices; 71540 bent forearm vertices.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-lower.mjs",
+    "code": 0,
+    "output": "PASS: eight lower-limb movements, both sides, 32 hip/28 ankle bones, fixed pivots, direction, roles and card links\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-mobile-controls.mjs",
+    "code": 0,
+    "output": "PASS: actual OrbitControls touch rotation, pinch zoom/pan, canceled gestures and finite camera math at four viewport sizes; software panel bounds. No physical device, browser pixels or GPU rendering tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-model-demand.mjs",
+    "code": 0,
+    "output": "PASS: initial atlas 16.16 MB, skeleton gait 4.40 MB, complete atlas 37.39 MB; deferred layers and bilateral tendon context remain available.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-model-study-flow.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual Home muscle and nerve card entry points, wrong-answer save/refresh, preserved left side, multiple correct motor targets, three-stage completion, return to source cards and setup group filtering. GPU and browser pixels not tested.\n",
+    "phase": "final-regression"
+  },
+  {
+    "file": "validate-model-study.mjs",
+    "code": 0,
+    "output": "PASS: 250 findings, 40 bilateral muscles, 23 bilateral nerve surfaces, all 24 target studies, valid multiple targets, filtered pools, and actual source-triangle selection. No GPU or browser pixels tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-movement-card-flow.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 12 real Home flows across shoulder, elbow, knee, hip, ankle and gait; source mesh click, exact pose/side/options and bone matrices, card focus, close, back/forward, fresh deep links and panel muscle links. GPU/DOM portals stubbed; browser pixels not tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-movement-options.mjs",
+    "code": 0,
+    "output": "PASS 20 movement defaults; opt-in, stepping, saved card return and movement-switch reset.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-movement-ui.mjs",
+    "code": 0,
+    "output": "PASS movement UI rendering: top controls, all contraction modes, hip/ankle angle display, gait and deep links. Browser layout not covered.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-muscle-comparison-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual Home muscle/group/Atlas entry points, prepared pairs, side/camera/framing URL persistence, source muscle/group cards on both sides, refresh and native back/forward, without adding entries for controls. GPU scene and DOM portals are stubbed.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-muscle-comparison.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: all 42 muscles/groups on both sides, six presets, exact published facts and sources, distinct stable member colors, shared physical scale and full rotational framing; real source Canvas 2D drawing, controls, kind/mode switching, card callbacks and deep-link reload. Browser pixels and GPU are not tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-muscle-demo.mjs",
+    "code": 0,
+    "output": "PASS: bilateral schematic lengths, reversible poses, finite geometry, forearm rotation exclusion.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-muscle-groups.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 16 source meshes and indices, bilateral body context/chunk demand; real Home group cards, both/left/right, refresh, deep-member inspection, back and sided attachment deep links. GPU rendering and DOM portals are stubbed.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-muscle-stability.mjs",
+    "code": 0,
+    "output": "{\"before\":{\"depth\":0.6024354834926791,\"strain\":13703.110368425063},\"after\":{\"depth\":0,\"strain\":4276.509484273766}}\nPASS: high-angle bilateral shoulder anchors, finite surfaces, reduced bone-core overlap and edge stretch. {\"before\":{\"depth\":0.6024354834926791,\"strain\":13703.110368425063},\"after\":{\"depth\":0,\"strain\":4276.509484273766}}\nPASS: bilateral high-angle biceps/triceps bone-core overlap reduced. { before: 0.0013942914861183944, after: 0 }\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-navigation.mjs",
+    "code": 0,
+    "output": "PASS: cursor zoom remains anchored and right-button pan preserves distance for normal and focused cameras.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-nerve-layer.mjs",
+    "code": 0,
+    "output": "PASS: v30 geometry and metadata preserved through repacking; 74 licensed supplement surfaces, matching gzip; nerve focus toggle/restoration and bilateral nerve-to-muscle links including latissimus.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-nerve-study.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: all 24 nerves on both sides use actual source IDs; actual Home side/display controls, refresh/back/forward and selected buttons; posterior gluteal view and explicit inferior gluteal source limitation. GPU not tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-open3d-tendons.mjs",
+    "code": 0,
+    "output": "PASS: 88 bilateral quadriceps motion poses; four muscle heads; 39424 patellar attachment checks.\nPASS: all 2333 previous meshes unchanged byte for byte; 10 new source hashes, 4 distinct extensor contributors, preferred body selection, 192 bilateral shoulder poses, 31968 humeral and 28320 muscle anchor checks, neutral restoration and demanded buffers.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-panel-widths.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual panel handle component keyboard/drag/capture/persistence/reset/cleanup, narrow and reading layouts; 96 width combinations keep usable model space. DOM rectangles are fixtures, browser pixels and GPU are not tested.\n",
+    "phase": "final-regression"
+  },
+  {
+    "file": "validate-quiz.mjs",
+    "code": 0,
+    "output": "PASS: 866 questions, 128 filter/count combinations, unique sampling, empty/small pools, balanced mixed tests, no clinical highlight leaks, scoring and legacy review.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-record-recovery.mjs",
+    "code": 0,
+    "output": "Stored study records could not be decoded: 1\nStored study records could not be decoded: 1\nStored study records could not be decoded: 1\nPASS: atomic revision checks for all four stores, explicit conflict resolution, account isolation, valid records survive corrupt neighbors, bounded/validated quiz sessions.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-recovery-ui.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual React hooks and quiz interaction; held/503 learning reads gated, guest write retry and unload protection, two notebook drafts survive switches/remount, quiz confirmation and reload resume without duplicate answers.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual generic quiz shares controlled selection between 2D projection and 3D callback without exposing answer labels.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-regional-courses.mjs",
+    "code": 0,
+    "output": "PASS: five content banks, bilateral anatomy targets, bounded regional model contexts/transforms, completion and malformed record checks, routes, six independent D1 records, stale writes and account isolation.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: Omuz anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: Dirsek–önkol anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: El–el bileği anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: Kalça anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS actual UI: Ayak–ayak bileği anatomy → motion → chain → two cases → 10-question exam → result/reload → new round.\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual guest/account hooks, 503 gating and retry, storage failure recovery, six-module catalog and requested Practice entry. No browser, WebGL or real-device rendering was simulated.\n",
+    "phase": "final-regression"
+  },
+  {
+    "file": "validate-scapula.mjs",
+    "code": 0,
+    "output": "PASS: scapula coupling is bilateral, rigid and preserves the moving shoulder and elbow connections.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-search.mjs",
+    "code": 0,
+    "output": "PASS: Turkish/Latin/English aliases, diacritics, side filters, nerves, and latissimus 3D geometry.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-selection-palette.mjs",
+    "code": 0,
+    "output": "PASS: stable distinct muscle colors across sides/order, matched labeled group/legend colors, linear GPU texture values and clearing, anatomical bone context, single-muscle blue, protected exam/motion/trace/spine roles, actual Three standard-shader hook. GPU rendering is not covered.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-shoulder-belly.mjs",
+    "code": 0,
+    "output": "PASS 224940 fixed scapular belly vertices; 120 shoulder poses; 26840 belly vertices remain rigid on humerus, including abducted isolated deltoid.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-shoulder-cards.mjs",
+    "code": 0,
+    "output": "PASS: all 9 shoulder movement muscles have complete sourced cards; both-side model selections resolve; original shoulder coverage preserved.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-shoulder-motion.mjs",
+    "code": 0,
+    "output": "PASS: 30 bones per side; 6 motions across 4 positions; fixed shoulder pivot, connected elbow, rigid lengths, correct direction and playback stop.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-shoulder-muscles.mjs",
+    "code": 0,
+    "output": "PASS: all source muscle surfaces for six movements, both sides, scapular mode, finite normals, fixed origins, bone-bound insertions, exact rest and source preservation.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-shoulder-roles.mjs",
+    "code": 0,
+    "output": "PASS: six movement pairs on both sides; nonoverlapping role colors, direction reversal and deltoid subdivisions.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-shoulder-study.mjs",
+    "code": 0,
+    "output": "PASS: 120 poses; 4 cuff muscles and 4 authentic source regions on both sides; humeral insertion patches, muscle-following source bodies, finite geometry, source preservation, disposal and visibility switches.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-shoulder.mjs",
+    "code": 0,
+    "output": "PASS: six movements, both sides, every muscle target and finite overlay geometry.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-site-scope.mjs",
+    "code": 0,
+    "output": "PASS: rendered scope derives current counts, includes all six modules and accurate draft/animation explanations; viewing a motion resumes without false completed controls; distinct radial wrist study links.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-spine.mjs",
+    "code": 0,
+    "output": "PASS: 26 actual spine meshes, 5 distinct regions, all region focus states, deep link, accessible legend and exit restoration.\nPASS: every vertebra label, consecutive single-vertebra selections, announced C1/C5/T12/L5 labels and double-click focus.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-study-links.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: all 40 muscle cards have learning paths; nine actual Home links preserve side, stop, refresh/back/forward; four source nerves, array hashes and unchanged previous chunks; honest inferior gluteal muscle fallback. GPU and visual device rendering are not tested.\n",
+    "phase": "final-regression"
+  },
+  {
+    "file": "validate-study-workspace.mjs",
+    "code": 0,
+    "output": "PASS: 33 suggested pairs in both sides; independent centering with common physical scale, shared anatomical coordinates; study tabs, clinical comparisons, context and camera deep links.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-study.mjs",
+    "code": 0,
+    "output": "PASS: all nerve cards have bilateral motor targets, reverse links and branch-safe matching.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-tendon-completion.mjs",
+    "code": 0,
+    "output": "PASS: 2323 existing meshes preserved byte for byte; 20 earlier source imports and 38 distal source surfaces; historical source hashes retained; 66 bilateral finding questions, 5021 real triangle hits, equal candidate priority, demanded buffers and 6852 moving attachment checks. The previous ECRB context region remains available alongside the four-component source complex.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-tendon-context.mjs",
+    "code": 0,
+    "output": "PASS: all ten bilateral tendon card/muscle mappings, including source-named infraspinatus muscle; no opposite-side leakage or unrelated context.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-tendon-learning.mjs",
+    "code": 0,
+    "output": "PASS: 190 explained structure questions, 5 comparison routes/tables, bilateral quadriceps geometry, due reviews, 18 decision paths / 36 follow-up questions, real SQLite resume, independent modes, legacy records and invalid plans.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-topic-learning.mjs",
+    "code": 0,
+    "output": "PASS: unique-question topic totals, weak-topic recommendations, corrected latest answers, all current model questions graded server-side, retries/idempotency, invalid choices rejected, account isolation and old/new favorites on real SQLite.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-viewport-framing.mjs",
+    "code": 0,
+    "output": "PASS: short-screen, expanded-card, keyboard and multi-panel occlusion; all source-box corners fit front/back/side views after orientation changes using real Three camera projection. No browser pixels or GPU tested.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-webgl-recovery.mjs",
+    "code": 0,
+    "output": "PASS: default GPU selection, fresh-canvas fallback, explicit compatibility mode, bounded total failure, context loss prevention, restoration and listener cleanup. GPU rendering is not covered by this test.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-workspace-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: app history state, deep-link fallback without leaving site, native anchors, replace controls, refresh/back/forward; actual Home Atlas → lab → left clinical comparison → quiz → lab → filtered Atlas and search return. GPU scene/DOM portals are stubbed.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-workspace-routes.mjs",
+    "code": 0,
+    "output": "PASS: deep links restore structures, side, motion, gait, cases and quizzes; legacy links, bounded parameters, history identity and anatomical relevance.\n",
+    "phase": "full-suite"
+  },
+  {
+    "file": "validate-workspace.mjs",
+    "code": 0,
+    "output": "PASS: separate destinations, anatomy-first cards, collapsed controls and model framing at desktop/tablet/mobile, including short landscape screens and toolbar clearance.\n",
+    "phase": "full-suite"
+  }
+]

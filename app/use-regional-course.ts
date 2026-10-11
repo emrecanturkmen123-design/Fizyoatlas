@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { readBrowserDraft, writeBrowserDraft, removeBrowserDraft } from "./browser-drafts";
 import {
   freshRegionalCourse,
   regionalDraftKey,
@@ -10,6 +11,7 @@ import {
 import type { RegionalCourseId } from "./regional-course-content";
 export function useRegionalCourse(id: RegionalCourseId) {
   const DRAFT_KEY = regionalDraftKey(id);
+  const RECOVERY_KEY = DRAFT_KEY + ":pending-account";
   const freshRegional = () => freshRegionalCourse(id);
   const parseRegional = (v: unknown) => {
     const p = parseRegionalCourse(v);
@@ -18,7 +20,7 @@ export function useRegionalCourse(id: RegionalCourseId) {
   function draft() {
     try {
       return (
-        parseRegional(JSON.parse(sessionStorage.getItem(DRAFT_KEY) ?? "null")) ?? freshRegional()
+        readBrowserDraft(DRAFT_KEY, parseRegional, mergeRegionalDraft) ?? freshRegional()
       );
     } catch {
       return freshRegional();
@@ -37,7 +39,7 @@ export function useRegionalCourse(id: RegionalCourseId) {
     pending = useRef<RegionalCourseProgress | null>(null),
     busy = useRef(false),
     alive = useRef(true),
-    importingDraft = useRef(false),
+    importingDraft = useRef<RegionalCourseProgress | null>(null),
     unsavedGuest = useRef(false),
     loadGeneration = useRef(0);
   async function refresh() {
@@ -70,7 +72,9 @@ export function useRegionalCourse(id: RegionalCourseId) {
       loadFailed.current = false;
       revision.current = stored.revision ?? 0;
       setProgress(stored);
-      const localDraft = draft();
+      let recovery: RegionalCourseProgress | null = null;
+      try { recovery = parseRegional(JSON.parse(sessionStorage.getItem(RECOVERY_KEY) ?? "null")); } catch {}
+      const localDraft = recovery ?? draft();
       setPendingDraft(hasRegionalWork(localDraft) ? localDraft : null);
       setError(
         body.warnings ? "Bazı eski ders kayıtları okunamadı. Okunabilen kayıtların açıldı." : "",
@@ -123,14 +127,12 @@ export function useRegionalCourse(id: RegionalCourseId) {
       }
       if (importingDraft.current) {
         // Remove the guest copy only after the account write succeeds.
-        try {
-          sessionStorage.removeItem(DRAFT_KEY);
-        } catch {}
-        importingDraft.current = false;
+        removeBrowserDraft(DRAFT_KEY, importingDraft.current, parseRegional);
+        importingDraft.current = null;
         setPendingDraft(null);
       }
       try {
-        sessionStorage.removeItem(DRAFT_KEY);
+        sessionStorage.removeItem(RECOVERY_KEY);
       } catch {}
       setError("");
       if (alive.current) setStatus("ready");
@@ -170,20 +172,20 @@ export function useRegionalCourse(id: RegionalCourseId) {
     setProgress(next);
     if (!authenticated.current) {
       try {
-        sessionStorage.setItem(DRAFT_KEY, JSON.stringify(next));
+        writeBrowserDraft(DRAFT_KEY, next);
         unsavedGuest.current = false;
         setError("");
         setStatus("guest");
       } catch {
         unsavedGuest.current = true;
-        setError("Taslak bu sekmede saklanamadı; açık sayfada korunuyor.");
+        setError("Taslak bu tarayıcıda saklanamadı; açık sayfada korunuyor. Sekmeyi kapatmadan yeniden dene.");
         setStatus("error");
       }
       return;
     }
     // Keep a recoverable draft if the panel closes during an account write.
     try {
-      sessionStorage.setItem(DRAFT_KEY, JSON.stringify(next));
+      sessionStorage.setItem(RECOVERY_KEY, JSON.stringify(next));
     } catch {}
     pending.current = next;
     void drain();
@@ -197,7 +199,7 @@ export function useRegionalCourse(id: RegionalCourseId) {
     importDraft: () => {
       if (!pendingDraft || !authenticated.current || loadFailed.current || status === "loading")
         return;
-      importingDraft.current = true;
+      importingDraft.current = pendingDraft;
       const merged = mergeRegionalDraft(progress, pendingDraft);
       save(merged);
       return merged;
@@ -209,8 +211,9 @@ export function useRegionalCourse(id: RegionalCourseId) {
       setProgress(conflictProgress.current);
       revision.current = conflictProgress.current.revision ?? 0;
       pending.current = null;
+      importingDraft.current = null;
       try {
-        sessionStorage.removeItem(DRAFT_KEY);
+        sessionStorage.removeItem(RECOVERY_KEY);
       } catch {}
       conflictProgress.current = null;
       setConflict(false);

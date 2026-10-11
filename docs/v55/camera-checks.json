@@ -1,0 +1,32 @@
+[
+  {
+    "file": "validate-mobile-controls.mjs",
+    "code": 0,
+    "output": "PASS: actual OrbitControls touch rotation, pinch zoom/pan, canceled gestures and finite camera math at four viewport sizes; software panel bounds. No physical device, browser pixels or GPU rendering tested.\n"
+  },
+  {
+    "file": "validate-anatomy-lab.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: 76 comparisons; actual React mode/side/pair/framing, clinical links/quiz, failure/retry, Canvas 2D calls, reload, removed section controls, legacy-link fallback and cleanup. Browser pixels and GPU are not tested.\n"
+  },
+  {
+    "file": "validate-muscle-comparison.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: all 42 muscles/groups on both sides, six presets, exact published facts and sources, distinct stable member colors, shared physical scale and full rotational framing; real source Canvas 2D drawing, controls, kind/mode switching, card callbacks and deep-link reload. Browser pixels and GPU are not tested.\n"
+  },
+  {
+    "file": "validate-study-workspace.mjs",
+    "code": 0,
+    "output": "PASS: 33 suggested pairs in both sides; independent centering with common physical scale, shared anatomical coordinates; study tabs, clinical comparisons, context and camera deep links.\n"
+  },
+  {
+    "file": "validate-workspace-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: app history state, deep-link fallback without leaving site, native anchors, replace controls, refresh/back/forward; actual Home Atlas → lab → left clinical comparison → quiz → lab → filtered Atlas and search return. GPU scene/DOM portals are stubbed.\n"
+  },
+  {
+    "file": "validate-muscle-comparison-history.mjs",
+    "code": 0,
+    "output": "react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nreact-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer\nPASS: actual Home muscle/group/Atlas entry points, prepared pairs, side/camera/framing URL persistence, source muscle/group cards on both sides, refresh and native back/forward, without adding entries for controls. GPU scene and DOM portals are stubbed.\n"
+  }
+]

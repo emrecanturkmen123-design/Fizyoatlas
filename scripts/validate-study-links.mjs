@@ -62,7 +62,7 @@ for(const key of tests){
  let route=parseWorkspaceRoute(app.location.hash);assert.equal(route.lesson,link.lesson);assert.equal(route.side,'left');
  if(link.lesson==='regional-course'){
   assert.equal(route.courseId,link.id);assert.equal(route.courseStep,'motion');assert.equal(route.courseMotion,link.stop);
-  const saved=parseRegionalCourse(JSON.parse(sessionStorage.getItem(regionalDraftKey(link.id))));assert(saved);assert.equal(saved.motionStop,link.stop);assert.equal(saved.side,'left');assert.equal(saved.checks.length,3);
+  const saved=parseRegionalCourse(JSON.parse(localStorage.getItem(regionalDraftKey(link.id))));assert(saved);assert.equal(saved.motionStop,link.stop);assert.equal(saved.side,'left');assert.equal(saved.checks.length,3);
  }else assert.equal(route.motion,link.id);
  const deepLink=app.location.hash;
  await act(async()=>buttons().find(b=>b.props['aria-label']==='Önceki bölüme dön').props.onClick());await settle();assert.equal(parseWorkspaceRoute(app.location.hash).muscle,key);
@@ -75,4 +75,4 @@ assert(scene().selected.length);assert(!scene().visible.includes('nervous'));
 await act(async()=>root.unmount());
 assert.equal(parseWorkspaceRoute('#bolge-dersi?kurs=hand-foundations&durak=999').courseMotion,undefined);
 assert.equal(parseWorkspaceRoute('#bolge-dersi?kurs=hand-foundations&durak=-1').courseMotion,undefined);
-console.log('PASS: all 40 muscle cards have learning paths; nine actual Home links preserve side, stop, refresh/back/forward; four source nerves, array hashes and unchanged previous chunks; honest inferior gluteal muscle fallback. GPU and visual device rendering are not tested.');
+console.log('PASS: all 49 muscle cards have learning paths; nine actual Home links preserve side, stop, refresh/back/forward; four source nerves, array hashes and unchanged previous chunks; honest inferior gluteal muscle fallback. GPU and visual device rendering are not tested.');

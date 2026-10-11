@@ -138,7 +138,7 @@ export default function RegionalCourse({
             : (exam[p.examIndex].visualKey ?? "");
   const context = useMemo(() => regionalContext(atlas, c, p.side), [atlas, c, p.side]);
   const motionState = step === "motion" ? regionalMotionState(c, p) : {},
-    moving = !!(motionState.shoulder || motionState.elbow || motionState.lower);
+    moving = !!(motionState.shoulder || motionState.elbow || motionState.lower || motionState.hand);
   const scene = useMemo<SceneState>(() => {
     const allowed = new Set(context.map((x) => x.id));
     return {
@@ -282,7 +282,7 @@ export default function RegionalCourse({
                       : "Hesabında kayıtlı"
                     : course.status === "error"
                       ? "Taslak açık sayfada · kayıt bekliyor"
-                      : "Bu sekmede taslak"}
+                      : "Bu tarayıcıda taslak"}
             </span>
             {!course.authenticated && (
               <a
@@ -291,7 +291,7 @@ export default function RegionalCourse({
                 }
                 target="_top"
               >
-                Kalıcı kayıt için giriş yap
+                Cihazlar arasında devam etmek için giriş yap
               </a>
             )}
           </div>

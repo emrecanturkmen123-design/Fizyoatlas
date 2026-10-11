@@ -11,10 +11,10 @@ export function createGaitRig(atlas:Atlas,geometries:Map<string,T.BufferGeometry
  const muscleMaterial=new T.MeshStandardMaterial({color:0x2496ae,roughness:.7,side:T.DoubleSide});
  const bones:{part:Part;mesh:T.Mesh}[]=[],muscles:{part:Part;mesh:T.Mesh;rest:Float32Array}[]=[];
  for(const part of atlas.parts){const source=geometries.get(part.id);if(!source)continue;
-  if(part.system==='skeletal'){const mesh=new T.Mesh(source,boneMaterial);mesh.matrixAutoUpdate=false;group.add(mesh);bones.push({part,mesh});}
+  if(part.system==='skeletal'){const mesh=new T.Mesh(source,boneMaterial);mesh.userData.partId=part.id;mesh.matrixAutoUpdate=false;group.add(mesh);bones.push({part,mesh});}
   else if(part.system==='muscular'&&GAIT_PHASES.some(p=>p.keys.some(k=>muscleKeyMatches(part.name,k)))){
    const g=source.clone();g.deleteAttribute('partIndex');g.setAttribute('normal',new T.BufferAttribute(new Float32Array(part.vertexCount*3),3));
-   const mesh=new T.Mesh(g,muscleMaterial);mesh.userData.partId=part.id;group.add(mesh);muscles.push({part,mesh,rest:new Float32Array(source.attributes.position.array)});
+   const mesh=new T.Mesh(g,muscleMaterial.clone());mesh.userData.partId=part.id;group.add(mesh);muscles.push({part,mesh,rest:new Float32Array(source.attributes.position.array)});
   }
  }
  const plane=new T.Mesh(new T.PlaneGeometry(1.25,1.85),new T.MeshBasicMaterial({color:0x2193b0,transparent:true,opacity:.09,side:T.DoubleSide,depthWrite:false}));plane.rotation.y=Math.PI/2;plane.position.y=.86;group.add(plane);
@@ -46,4 +46,4 @@ export function updateGaitRig(rig:GaitRig,state:GaitState){
  for(const side of ['right','left'] as const){const leg=pose.legs[side],marker=rig.contacts[side];marker.visible=leg.phase<60;marker.position.copy(leg.contact);marker.position.y=GAIT_GROUND+.001;}
  rig.key=key;
 }
-export function disposeGaitRig(rig:GaitRig){rig.group.removeFromParent();for(const {mesh} of rig.muscles)mesh.geometry.dispose();rig.boneMaterial.dispose();rig.muscleMaterial.dispose();rig.group.traverse(o=>{if(o instanceof T.Mesh&&!rig.bones.some(b=>b.mesh===o)&&!rig.muscles.some(m=>m.mesh===o)){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose());}if(o instanceof T.LineSegments){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose());}});rig.group.clear();}
+export function disposeGaitRig(rig:GaitRig){rig.group.removeFromParent();for(const {mesh} of rig.muscles){mesh.geometry.dispose();(mesh.material as T.Material).dispose();}rig.boneMaterial.dispose();rig.muscleMaterial.dispose();rig.group.traverse(o=>{if(o instanceof T.Mesh&&!rig.bones.some(b=>b.mesh===o)&&!rig.muscles.some(m=>m.mesh===o)){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose());}if(o instanceof T.LineSegments){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose());}});rig.group.clear();}

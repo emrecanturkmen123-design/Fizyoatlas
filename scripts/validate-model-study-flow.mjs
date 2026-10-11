@@ -42,7 +42,7 @@ const scene=()=>globalThis.sceneProps.state;
 const findQuestion=()=>root.root.findByType(FindingProjection).props.id;
 const pick=async id=>{await act(async()=>globalThis.sceneProps.onSelect(id));await settle();};
 const correctFinding=async(part)=>{const qid=findQuestion(),q=findingScene(atlas,qid);await pick(part??q.targetIds[0]);await click('Yanıtı onayla');assert(root.root.findAllByProps({role:'status'}).some(n=>text(n).includes('Doğru.')),qid);await click('Sonraki soru');};
-await mount(workspaceHash({lesson:'study',muscle:'soleus',side:'left'}));await click('Model üzerinde sına');
+await mount(workspaceHash({lesson:'study',muscle:'soleus',side:'left'}));const trigger=root.root.findAllByType('button').find(b=>b.props['data-slot']==='collapsible-trigger'&&text(b).startsWith('Çalış'));assert(trigger);await act(async()=>trigger.props.onClick({nativeEvent:new Event('click')}));await settle();await click('Model üzerinde sına');
 assert.equal(parseWorkspaceRoute(app.location.hash).quizFinding,'muscle:soleus');assert.equal(parseWorkspaceRoute(app.location.hash).side,'left');
 assert.equal(findQuestion(),'locate:muscle:soleus:left');assert(scene().hideNames);const q=findingScene(atlas,findQuestion()),wrong=q.candidateIds.find(id=>!q.targetIds.includes(id));assert(wrong);
 await pick(wrong);await click('Yanıtı onayla');assert(root.root.findAllByProps({role:'status'}).some(n=>text(n).includes('Bu yanıt doğru değil.')));
@@ -50,7 +50,7 @@ const deepLink=app.location.hash;await act(async()=>root.unmount());await act(as
 assert(root.root.findAllByProps({role:'status'}).some(n=>text(n).includes('Bu yanıt doğru değil.')),'submitted answer survives refresh');await click('Sonraki soru');
 assert(scene().selected.length&&scene().selected.every(id=>sideOf(atlas.parts.find(p=>p.id===id).name)==='left'),'action stage keeps the studied side');
 await act(async()=>root.root.findByType(QuizPanel).props.onClose());await settle();assert.equal(parseWorkspaceRoute(app.location.hash).muscle,'soleus');assert.equal(parseWorkspaceRoute(app.location.hash).side,'left');await act(async()=>root.unmount());
-await mount(workspaceHash({lesson:'study',tab:'nerves',nerve:'axillary',side:'left'}));await click('Sinir ve hedeflerini modelde sına');
+await mount(workspaceHash({lesson:'study',tab:'nerves',nerve:'axillary',side:'left'}));const nerveTrigger=root.root.findAllByType('button').find(b=>b.props['data-slot']==='collapsible-trigger'&&text(b).startsWith('Bu sinirle çalış'));assert(nerveTrigger);await act(async()=>nerveTrigger.props.onClick({nativeEvent:new Event('click')}));await settle();await click('Sinir ve hedeflerini modelde sına');
 assert.equal(findQuestion(),'locate:nerve:axillary:left');assert(scene().visible.includes('nervous'));await correctFinding();assert.equal(findQuestion(),'locate:target:axillary:left');
 const target=findingScene(atlas,findQuestion()),teres=target.targetIds.find(id=>matchesMuscle(atlas.parts.find(p=>p.id===id),'teres minor'));assert(teres);await correctFinding(teres);
 const action=questionDefinition('deltoid-action');const option=buttons().find(b=>text(b).includes(action.answer)&&typeof b.props.onClick==='function');assert(option);await act(async()=>option.props.onClick());await settle();await click('Yanıtı onayla');await click('Sonucu gör');

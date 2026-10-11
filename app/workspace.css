@@ -1,4 +1,6 @@
 /* Three stable workspaces. Controls live around the model, not over the lesson. */
+/* Tools and the body-ported detail Sheet must share the root stacking context. */
+.studio.workspace-layout{isolation:auto}
 .workspace-layout{background:#f3f6f8;color:#243a47}
 .workspace-layout::before{content:"";position:absolute;inset:0 0 auto;height:80px;background:#fff;border-bottom:1px solid #dce5e9;z-index:20}
 .workspace-layout .identity{top:23px;left:24px;z-index:26}
@@ -102,3 +104,32 @@ body:has(.workspace-layout) .detail-actions{display:flex;flex-direction:row;gap:
 @media(max-width:767px) and (min-height:501px){
  .workspace-layout[data-mobile-expanded=false] #atlas-content{height:51dvh;max-height:51dvh}
 }
+
+/* Keep visibility within reach without adding another card disclosure. */
+.detail-footer{flex-shrink:0;min-width:0}
+.context-control{min-width:0;flex-shrink:0}
+.context-control label{gap:12px;margin-bottom:5px}
+.context-control output{font-variant-numeric:tabular-nums;white-space:nowrap;color:#164f60}
+.context-hint{font-size:12px;line-height:1.4;color:#607582;margin:5px 0 0}
+.detail-footer .context-control{border-top:1px solid #e1e9ee;padding:10px 0 0}
+.detail-footer .detail-actions{padding-top:8px}
+@media(max-width:767px),(max-height:500px){.detail-footer .context-hint{display:none}.detail-footer .context-control{padding-top:6px}.detail-footer .context-control label{font-size:13px;margin-bottom:0}}
+
+/* Opening a model tool gives it the reading slot instead of covering a card. */
+.workspace-layout[data-model-tool] > :is(.study-panel,.learning-panel,.shoulder-panel,.search-panel,.movement-menu,.practice-menu){display:none!important}
+body:has(.workspace-layout[data-tools-replace-card=true]) .detail-sheet{display:none!important}
+.workspace-layout .model-popover .panel-heading{position:sticky;top:-18px;z-index:2;background:#fff;flex-shrink:0;padding:4px 0}
+.model-popover .panel-heading h2{margin:0;font-size:16px;line-height:1.4;font-weight:600;outline-offset:3px}
+.model-popover .panel-heading button{gap:6px;flex-shrink:0;min-height:40px}
+.model-popover .system-list{min-height:100px;flex-shrink:1}
+.tool-return-label{font-size:12px}
+.card-visibility{flex-shrink:0;min-width:0;border-block:1px solid #dce5e9;padding:10px 0}
+.card-visibility:empty{display:none}
+.card-visibility .context-control{padding:0}
+.card-visibility .context-control label{font-weight:600;font-size:14px;line-height:1.4}
+.context-control [data-slot=slider]{min-height:28px}
+.context-presets{display:flex;gap:6px;justify-content:space-between}
+.context-presets button{min-height:32px;padding:5px 7px;font-size:12px;white-space:normal}
+.context-presets button[aria-pressed=true]{background:#e4eff2;color:#164f60}
+.card-visibility .context-hint{margin-bottom:0}
+@media(max-width:767px),(max-height:500px){.card-visibility{padding:6px 0}.card-visibility .context-hint{display:none}.context-presets button{min-height:36px}.card-visibility .context-control label{font-size:13px}}

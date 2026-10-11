@@ -6,7 +6,7 @@ import {MODEL_FINDINGS,CONNECTIVE_FINDINGS,findingScene,findingChoice,findingIds
 import {reviewQuestions,quizPool,DEFAULT_QUIZ} from '../app/quiz-data.ts';
 import {questionDefinition} from '../app/learning-data.ts';
 const atlas=JSON.parse(fs.readFileSync('public/models/atlas.json'));
-assert.equal(MODEL_FINDINGS.length,CONNECTIVE_FINDINGS.length+MUSCLES.length*2+NERVES.length*4-2);
+assert.equal(MODEL_FINDINGS.length,CONNECTIVE_FINDINGS.length+MUSCLES.length*2+NERVES.length*2+NERVES.filter(n=>n.modelSurface!==false).length*2);
 assert.equal(new Set(MODEL_FINDINGS.map(q=>q.id)).size,MODEL_FINDINGS.length);
 for(const q of MODEL_FINDINGS){
  const scene=findingScene(atlas,q.id);assert(scene,q.id);assert(scene.targetIds.length&&scene.candidateIds.length);
@@ -29,6 +29,8 @@ assert.notEqual(deltoid.parts,findingScene({...atlas,parts:[...atlas.parts]},del
 assert.equal(MODEL_FINDINGS.filter(q=>q.task==='nerve').length,46);
 assert(!MODEL_FINDINGS.some(q=>q.id.startsWith('locate:nerve:inferior-gluteal:')));
 for(const n of NERVES)for(const side of ['left','right']){
+ assert.equal(n.modelSurface!==false,nerveParts(atlas,n,side).length>0,n.id+' source availability');
+ if(n.modelSurface===false)assert(!MODEL_FINDINGS.some(q=>q.id===`locate:nerve:${n.id}:${side}`));
  const ids=findingIds('nerve:'+n.id,side),locate=ids.filter(id=>id.startsWith('locate:'));assert(locate.length>=1);
  if(nerveParts(atlas,n,side).length)assert(ids.some(id=>id===`locate:nerve:${n.id}:${side}`));
  const target=findingScene(atlas,`locate:target:${n.id}:${side}`);assert.deepEqual(new Set(target.targetIds),new Set(targetParts(atlas,n,side).map(p=>p.id)));
@@ -51,4 +53,4 @@ for(const id of ['locate:muscle:soleus:left','locate:muscle:deltoid:right','loca
  }
  assert(reachable,id+' is reachable from actual source triangles');
 }
-console.log(`PASS: ${MODEL_FINDINGS.length} findings, 40 bilateral muscles, 23 bilateral nerve surfaces, all 24 target studies, valid multiple targets, filtered pools, and actual source-triangle selection. No GPU or browser pixels tested.`);
+console.log(`PASS: ${MODEL_FINDINGS.length} findings, 49 bilateral muscles, 23 bilateral nerve surfaces, all 27 target studies, valid multiple targets, filtered pools, and actual source-triangle selection. No GPU or browser pixels tested.`);

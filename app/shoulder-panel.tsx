@@ -1,3 +1,4 @@
+import MotionInterpretation from './motion-interpretation-view';
 import {CUFF,type CuffKey} from './shoulder-study';
 import {Disclosure} from './disclosure';
 import {MotionControls} from './motion-controls';
@@ -17,7 +18,7 @@ export default function ShoulderPanel({atlas,value,onChange,onMuscle,onStudy,onC
  <div className="movement-choices" aria-label="Omuz hareketi">{SHOULDER_MOVES.map(move=><Button key={move.id} variant={m.id===move.id?'default':'outline'} aria-pressed={m.id===move.id} onClick={()=>onChange({...value,id:move.id})}>{move.name}</Button>)}</div>
  <p className="movement-hint">{m.hint}</p>
  <div className="learning-options" aria-label="Görünüm">{(['skeleton','anatomical'] as const).map(mode=><Button key={mode} aria-pressed={!!value.motion&&(mode==='anatomical'?!!value.anatomicalMuscles:!value.anatomicalMuscles)} variant={value.motion&&(mode==='anatomical'?value.anatomicalMuscles:!value.anatomicalMuscles)?'default':'outline'} onClick={()=>onChange({...value,motion:true,anatomicalMuscles:mode==='anatomical',playing:false})}>{mode==='skeleton'?'İskelet':'Kaslı görünüm'}</Button>)}</div>
- {value.motion?<><div className="motion-readout"><span>{m.name}</span><output>{Math.round(angleFor(value))}°</output></div><MotionControls progress={value.progress??0} playing={value.playing} label="Hareket ilerlemesi" onChange={v=>onChange({...value,...v})}/></>:<p className="shoulder-note">Kas karşılaştırması · sabit referans pozu. Oynatmak için İskelet veya Kaslı görünüm seç.</p>}
+ {value.motion?<><div className="motion-readout"><span>{m.name}</span><output>{Math.round(angleFor(value))}°</output></div><MotionControls progress={value.progress??0} playing={value.playing} label="Hareket ilerlemesi" onChange={v=>onChange({...value,...v})}/><MotionInterpretation state={{shoulder:value}} onMuscle={key=>onMuscle(undefined,key)}/></>:<p className="shoulder-note">Kas karşılaştırması · sabit referans pozu. Oynatmak için İskelet veya Kaslı görünüm seç.</p>}
  <Disclosure title="Rotator manşet · kas, tendon ve tutunma">
  <p className="shoulder-note">{value.side==='right'?'Sağ':'Sol'} omuz · Kaslar kırmızı, kaynak tendon bölgeleri fildişi. Kaynak tendon gövdeleri kas–kemik bağlantısını gösterir; doku sınırları yaklaşıktır.</p>
  <label className="plane-toggle">Dört manşet kasını birlikte göster<Switch checked={value.cuff!==false} onCheckedChange={cuff=>onChange({...value,cuff})}/></label>

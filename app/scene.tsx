@@ -1,3 +1,6 @@
+import {applyMotionContextOpacity} from './motion-context-opacity';
+import {handBone} from './hand-motion';
+import {createHandRig,updateHandRig,disposeHandRig,type HandRig} from './hand-rig';
 import {connectionTraceRole,connectionTraceBones} from './connection-trace';
 import {createKneeTendonRig,updateKneeTendonRig,disposeKneeTendonRig,patellaMatrix,type KneeTendonRig} from './knee-tendon';
 import {requiredChunks} from './model-demand';
@@ -5,7 +8,8 @@ import {createGaitRig,updateGaitRig,disposeGaitRig,type GaitRig} from './gait-ri
 import {tendonContextParts} from './tendon-context';
 import {createAtlasRenderer,watchAtlasContext} from './webgl-startup';
 import {modelViewport,viewportUsable} from './model-viewport';
-import {frameModelBounds} from './model-framing';
+import {PANEL_LAYOUT_EVENT} from './panel-widths';
+import {frameModelBounds,posedSelectionBounds} from './model-framing';
 import {spineRegion,SPINE_REGIONS} from './spine';
 import {limbConfig,createLimbRig,updateLimbRig,disposeLimbRig,type LimbRig} from './limb-muscles';
 import {createShoulderRig,updateShoulderRig,disposeShoulderRig,type ShoulderRig} from './shoulder-muscles';
@@ -38,12 +42,13 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
  latest.current=state;select.current=onSelect;
  useEffect(()=>{
   const el=host.current!;let disposed=false,frame=0,dirty=true,ready=false,lastView='',lastReset=-1,lastIsolate='',layoutKey='',amount=0;
+  let handRig:HandRig|undefined,handRigKey='';
   let kneeTendon:KneeTendonRig|undefined,kneeTendonKey='';
   let gaitRig:GaitRig|undefined,gaitRigRevision=-1;
   let overlay:T.Group|undefined,overlayKey='';let muscleGroup:T.Group|undefined,muscleKey='';
   let limbRig:LimbRig|undefined,limbRigKey='';let shoulderRig:ShoulderRig|undefined,shoulderRigKey='';let anatomicalRig:MuscleRig|undefined;let anatomicalRigKey='';let geometryRevision=0;
   let attachmentGroup:T.Group|undefined,attachmentKey='';const attachmentGeometry=new Map<string,T.BufferGeometry>();
-  const armMeshes=new Map<number,T.Mesh>();let poseKey='';
+  const armMeshes=new Map<number,T.Mesh>();let poseKey='',motionOpacityKey='';
   let lastState:SceneState|null=null;let lastFocus=0;
   const contextOpacity={value:1},contextActive={value:0};
   const abort=new AbortController();
@@ -109,7 +114,7 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
     // GPU normalized signed-short normals keep the complete atlas compact in memory.
     g.setAttribute('normal',new T.BufferAttribute(new Int16Array(buffer,p.normals,p.vertexCount*3),3,true));g.setIndex(new T.BufferAttribute(new Uint32Array(buffer,p.indices,p.indexCount),1));
     g.boundingBox=bounds[i].clone();g.computeBoundingSphere();const pick=new T.Mesh(g);pick.matrixAutoUpdate=false;pickers[i]=pick;geometries.push(g);attachmentGeometry.set(p.id,g);attachmentKey='';
-    if(lowerSegment(p,{joint:'hip',side:'left'})||lowerSegment(p,{joint:'hip',side:'right'})||kneeSegment(p,{side:'left'})||kneeSegment(p,{side:'right'})||armSegment(p,'left')||armSegment(p,'right')||p.system==='skeletal'&&/^(left|right) (scapula|patella)$/i.test(p.name)){const arm=new T.Mesh(g,armMaterial);arm.matrixAutoUpdate=false;arm.visible=false;scene.add(arm);armMeshes.set(i,arm);poseKey='';}
+    if(lowerSegment(p,{joint:'hip',side:'left'})||lowerSegment(p,{joint:'hip',side:'right'})||kneeSegment(p,{side:'left'})||kneeSegment(p,{side:'right'})||armSegment(p,'left')||armSegment(p,'right')||p.system==='skeletal'&&/^(left|right) (scapula|patella)$/i.test(p.name)){const arm=new T.Mesh(g,armMaterial);arm.userData.partId=p.id;arm.matrixAutoUpdate=false;arm.visible=false;scene.add(arm);armMeshes.set(i,arm);poseKey='';}
     g.setAttribute('partIndex',new T.BufferAttribute(new Float32Array(p.vertexCount).fill(i),1));
     const list=groups.get(p.system)??[];list.push(g);groups.set(p.system,list);
    });
@@ -128,7 +133,7 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
    dirty=true;
   };
   scheduleLoads();
-  const availableViewport=()=>embedded?{left:16,right:el.clientWidth-16,top:16,bottom:el.clientHeight-16}:modelViewport(el.clientWidth,el.clientHeight,Array.from(document.querySelectorAll('.study-panel,.learning-panel,.shoulder-panel,.search-panel,.detail-sheet')).filter(p=>p.getClientRects().length>0).map(p=>p.getBoundingClientRect()),Math.max(0,...Array.from(document.querySelectorAll('.top-actions,.model-toolbar')).filter(p=>p.getClientRects().length>0).map(p=>p.getBoundingClientRect()).filter(p=>p.top<el.clientHeight*.4).map(p=>p.bottom)));
+  const availableViewport=()=>embedded?{left:16,right:el.clientWidth-16,top:16,bottom:el.clientHeight-16}:modelViewport(el.clientWidth,el.clientHeight,Array.from(document.querySelectorAll('.study-panel,.learning-panel,.shoulder-panel,.search-panel,.detail-sheet,.model-popover')).filter(p=>p.getClientRects().length>0).map(p=>p.getBoundingClientRect()),Math.max(0,...Array.from(document.querySelectorAll('.top-actions,.model-toolbar')).filter(p=>p.getClientRects().length>0).map(p=>p.getBoundingClientRect()).filter(p=>p.top<el.clientHeight*.4).map(p=>p.bottom)));
   const fit=(view:string,extent=0)=>{
    if(!viewportUsable(availableViewport()))return;
    if(latest.current.gait&&extent<.01){const w=el.clientWidth,h=el.clientHeight,{left,right,top,bottom}=availableViewport(),aw=right-left,ah=bottom-top;camera.setViewOffset(w,h,w/2-(left+right)/2,h/2-(top+bottom)/2,w,h);const distance=Math.max(1.65*w/aw/camera.aspect,1.95*h/ah)/(2*Math.tan(T.MathUtils.degToRad(camera.fov/2)));controls.target.set(0,.8,.4);const direction=view==='side'?new T.Vector3(-1,.03,0):view==='back'?new T.Vector3(0,.03,-1):view==='front'?new T.Vector3(0,.03,1):new T.Vector3(.5,.08,1).normalize();camera.position.copy(controls.target).addScaledVector(direction,distance);controls.update();dirty=true;return;}
@@ -143,6 +148,9 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
    controls.target.set(0,.85,0);camera.position.copy(controls.target).addScaledVector(direction,distance);controls.update();dirty=true;
   };
   const resize=()=>{if(!el.clientWidth||!el.clientHeight)return;layoutKey='';lastState=null;if((latest.current.focus??0)>0||latest.current.isolate)lastFocus=-1;renderer.setPixelRatio(startup.compatibility?1:Math.min(devicePixelRatio,el.clientWidth<768||el.clientHeight<600?1.5:2));camera.aspect=el.clientWidth/el.clientHeight;camera.updateProjectionMatrix();renderer.setSize(el.clientWidth,el.clientHeight);fit(latest.current.view,amount);};const observer=new ResizeObserver(resize);observer.observe(el);
+  let panelDirection:T.Vector3|null=null;
+  const reframePanels=()=>{if(embedded)return;const direction=camera.position.clone().sub(controls.target).normalize();fit(latest.current.view,amount);const distance=camera.position.distanceTo(controls.target);camera.position.copy(controls.target).addScaledVector(direction,distance);if((latest.current.focus??0)>0||latest.current.isolate){lastFocus=-1;panelDirection=direction;}controls.update();dirty=true;};
+  window.addEventListener(PANEL_LAYOUT_EVENT,reframePanels);
   const raycaster=new T.Raycaster(),pointer=new T.Vector2(),tap=new PointerTap(),worldBox=new T.Box3(),hitPoint=new T.Vector3();
   const down=(e:PointerEvent)=>{hover.hidden=true;tap.down(e.pointerId,e.clientX,e.clientY,e.pointerType==='touch'?12:5);};
   const move=(e:PointerEvent)=>{tap.move(e.pointerId,e.clientX,e.clientY);if(latest.current.hideNames||e.buttons||amount<.5||e.pointerType==='touch'){hover.hidden=true;return;}const rect=el.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,index=findTarget(x,y,12);hover.hidden=index<0;renderer.domElement.style.cursor=index<0?'grab':'pointer';if(index>=0){hover.textContent=atlas.parts[index].name;hover.style.left=`${Math.max(8,Math.min(x+14,el.clientWidth-260))}px`;hover.style.top=`${Math.max(8,Math.min(y+18,el.clientHeight-55))}px`;}};
@@ -150,6 +158,7 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
   let lastTap={id:'',time:0,x:0,y:0};
   const up=(e:PointerEvent)=>{
    const validTap=tap.up(e.pointerId,e.clientX,e.clientY);if(e.button!==0||!validTap||!ready)return;const rect=renderer.domElement.getBoundingClientRect();pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
+   if(latest.current.hand?.motion&&handRig){const hit=raycaster.intersectObjects(handRig.meshes.filter(m=>m.mesh.visible).map(m=>m.mesh),false)[0];if(hit)select.current(hit.object.userData.partId);return;}
    if(latest.current.gait){if(gaitRig){const hit=raycaster.intersectObjects(gaitRig.muscles.filter(m=>m.mesh.visible).map(m=>m.mesh),false)[0];if(hit)select.current(hit.object.userData.partId);}return;}
    if(latest.current.shoulder?.motion||latest.current.elbow?.motion||(latest.current.knee||latest.current.lower)?.motion){const group=anatomicalRig?.group.visible?anatomicalRig.group:shoulderRig?.group.visible?shoulderRig.group:limbRig?.group.visible?limbRig.group:undefined;if(kneeTendon?.mesh.visible&&latest.current.knee?.tendons){const hit=raycaster.intersectObject(kneeTendon.mesh,false)[0];if(hit){select.current(hit.object.userData.partId);return;}}if(group){const hit=raycaster.intersectObjects(group.children,false).find(h=>h.object.userData.partId);if(hit)select.current(hit.object.userData.partId);}return;}
    let nearest=Infinity,found=-1,nearestSelected=Infinity,selectedFound=-1;const hasSolid=atlas.parts.some((p,i)=>p.system!=='integumentary'&&data[i*4+3]>.5);
@@ -161,8 +170,11 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
   const clock=new T.Clock();let lastExtent=-1;
   const animate=()=>{
    if(disposed)return;frame=requestAnimationFrame(animate);if(contextBlocked||document.hidden)return;const dt=Math.min(clock.getDelta(),.05),s=latest.current;
-   const nextDemandKey=JSON.stringify([s.visible,s.selected,s.hidden,s.isolate,s.spine,s.gait&&[s.gait.muscles],s.shoulder&&[s.shoulder.side,s.shoulder.id,s.shoulder.motion,s.shoulder.anatomicalMuscles,s.shoulder.antagonists,s.shoulder.cuff,s.shoulder.tendons],s.elbow&&[s.elbow.side,s.elbow.id,s.elbow.motion,s.elbow.anatomicalMuscles,s.elbow.tendons],s.lower&&[s.lower.joint,s.lower.id,s.lower.side,s.lower.motion,s.lower.anatomicalMuscles,s.lower.antagonists,s.lower.achilles],s.knee&&[s.knee.side,s.knee.id,s.knee.motion,s.knee.anatomicalMuscles,s.knee.antagonists,s.knee.tendons]]);
+   const nextDemandKey=JSON.stringify([s.visible,s.selected,s.hidden,s.isolate,s.spine,s.hand&&[s.hand.side,s.hand.anatomicalMuscles,s.hand.tendons],s.gait&&[s.gait.muscles],s.shoulder&&[s.shoulder.side,s.shoulder.id,s.shoulder.motion,s.shoulder.anatomicalMuscles,s.shoulder.antagonists,s.shoulder.cuff,s.shoulder.tendons],s.elbow&&[s.elbow.side,s.elbow.id,s.elbow.motion,s.elbow.anatomicalMuscles,s.elbow.tendons],s.lower&&[s.lower.joint,s.lower.id,s.lower.side,s.lower.motion,s.lower.anatomicalMuscles,s.lower.antagonists,s.lower.achilles],s.knee&&[s.knee.side,s.knee.id,s.knee.motion,s.knee.anatomicalMuscles,s.knee.antagonists,s.knee.tendons]]);
    if(nextDemandKey!==demandKey){demandKey=nextDemandKey;scheduleLoads();}
+   const nextHandRigKey=s.hand?.motion?JSON.stringify([s.hand.side,s.hand.anatomicalMuscles,s.hand.tendons,geometryRevision]):'';
+   if(nextHandRigKey!==handRigKey){if(handRig)disposeHandRig(handRig);handRig=nextHandRigKey?createHandRig(atlas,attachmentGeometry,s.hand!):undefined;if(handRig)scene.add(handRig.group);handRigKey=nextHandRigKey;dirty=true;}
+   if(handRig&&s.hand){const before=handRig.key;updateHandRig(handRig,s.hand,s.selected);handRig.group.visible=s.explode<.01&&!s.isolate;if(before!==handRig.key)dirty=true;}
    const tendonKey=s.knee?.motion&&s.knee.tendons?s.knee.side+':'+geometryRevision:'';
    if(tendonKey!==kneeTendonKey){if(kneeTendon)disposeKneeTendonRig(kneeTendon);kneeTendon=tendonKey?createKneeTendonRig(atlas,attachmentGeometry,s.knee!):undefined;if(kneeTendon)scene.add(kneeTendon.mesh);kneeTendonKey=tendonKey;}
    if(kneeTendon&&s.knee){const before=kneeTendon.key;updateKneeTendonRig(kneeTendon,s.knee);if(before!==kneeTendon.key)dirty=true;}
@@ -180,15 +192,15 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
    const showAnatomical=anatomicalMode(s.elbow),nextRigKey=showAnatomical?s.elbow!.side+':'+!!s.elbow!.tendons+':'+geometryRevision:'';
    if(nextRigKey!==anatomicalRigKey){if(anatomicalRig)disposeMuscleRig(anatomicalRig);anatomicalRig=showAnatomical?createMuscleRig(atlas,attachmentGeometry,s.elbow!.side,!!s.elbow!.tendons):undefined;if(anatomicalRig)scene.add(anatomicalRig.group);anatomicalRigKey=nextRigKey;dirty=true;}
    if(anatomicalRig&&s.elbow){const before=anatomicalRig.angle,markersBefore=anatomicalRig.markersVisible;updateMuscleRig(anatomicalRig,s.elbow);anatomicalRig.group.visible=s.explode<.01&&!s.isolate;if(before!==anatomicalRig.angle||markersBefore!==anatomicalRig.markersVisible)dirty=true;}
-   const motion=!!s.gait||!!s.lower?.motion||!!s.shoulder?.motion||!!s.elbow?.motion||!!s.knee?.motion;const segmentFor=(p:typeof atlas.parts[number])=>s.knee?.motion&&s.knee.tendons&&p.name.toLowerCase()===s.knee.side+' patella'?4:s.lower?.motion?lowerSegment(p,s.lower):s.knee?.motion?kneeSegment(p,s.knee):s.elbow?.motion?elbowSegment(p,s.elbow):s.shoulder?.motion?motionSegment(p,s.shoulder):0;
-   const changed=!!lastState?.gait!==!!s.gait||lastState?.trace!==s.trace||lastState?.hideNames!==s.hideNames||lastState?.spine!==s.spine||lastState?.highlightedSystem!==s.highlightedSystem||lastState?.lower?.joint!==s.lower?.joint||lastState?.lower?.id!==s.lower?.id||lastState?.lower?.side!==s.lower?.side||lastState?.lower?.motion!==s.lower?.motion||lastState?.lower?.antagonists!==s.lower?.antagonists||lastState?.knee?.id!==s.knee?.id||lastState?.knee?.side!==s.knee?.side||lastState?.knee?.motion!==s.knee?.motion||lastState?.knee?.tendons!==s.knee?.tendons||lastState?.knee?.antagonists!==s.knee?.antagonists||lastState?.elbow?.motion!==s.elbow?.motion||lastState?.elbow?.id!==s.elbow?.id||lastState?.elbow?.side!==s.elbow?.side||lastState?.shoulder?.scapula!==s.shoulder?.scapula||lastState?.shoulder?.id!==s.shoulder?.id||lastState?.shoulder?.motion!==s.shoulder?.motion||lastState?.shoulder?.side!==s.shoulder?.side||lastState?.visible!==s.visible||lastState?.selected!==s.selected||lastState?.isolate!==s.isolate||lastState?.hidden!==s.hidden||lastState?.contextOpacity!==s.contextOpacity;
+   const motion=!!s.hand?.motion||!!s.gait||!!s.lower?.motion||!!s.shoulder?.motion||!!s.elbow?.motion||!!s.knee?.motion;const segmentFor=(p:typeof atlas.parts[number])=>s.hand?.motion?(handBone(p,s.hand.side)?5:0):s.knee?.motion&&s.knee.tendons&&p.name.toLowerCase()===s.knee.side+' patella'?4:s.lower?.motion?lowerSegment(p,s.lower):s.knee?.motion?kneeSegment(p,s.knee):s.elbow?.motion?elbowSegment(p,s.elbow):s.shoulder?.motion?motionSegment(p,s.shoulder):0;
+   const changed=lastState?.hand?.side!==s.hand?.side||lastState?.hand?.motion!==s.hand?.motion||lastState?.hand?.id!==s.hand?.id||!!lastState?.gait!==!!s.gait||lastState?.trace!==s.trace||lastState?.hideNames!==s.hideNames||lastState?.spine!==s.spine||lastState?.highlightedSystem!==s.highlightedSystem||lastState?.lower?.joint!==s.lower?.joint||lastState?.lower?.id!==s.lower?.id||lastState?.lower?.side!==s.lower?.side||lastState?.lower?.motion!==s.lower?.motion||lastState?.lower?.antagonists!==s.lower?.antagonists||lastState?.knee?.id!==s.knee?.id||lastState?.knee?.side!==s.knee?.side||lastState?.knee?.motion!==s.knee?.motion||lastState?.knee?.tendons!==s.knee?.tendons||lastState?.knee?.antagonists!==s.knee?.antagonists||lastState?.elbow?.motion!==s.elbow?.motion||lastState?.elbow?.id!==s.elbow?.id||lastState?.elbow?.side!==s.elbow?.side||lastState?.shoulder?.scapula!==s.shoulder?.scapula||lastState?.shoulder?.id!==s.shoulder?.id||lastState?.shoulder?.motion!==s.shoulder?.motion||lastState?.shoulder?.side!==s.shoulder?.side||lastState?.visible!==s.visible||lastState?.selected!==s.selected||lastState?.isolate!==s.isolate||lastState?.hidden!==s.hidden||lastState?.contextOpacity!==s.contextOpacity;
    const moving=Math.abs(amount-s.explode)>.0001;
    if(moving){amount=window.matchMedia('(prefers-reduced-motion: reduce)').matches?s.explode:T.MathUtils.damp(amount,s.explode,8,dt);dirty=true;}
    if(changed||moving||lastExtent<0){
     const roleIds=s.lower?.antagonists?new Set(lowerRoles(atlas,s.lower).antagonists):s.knee?.antagonists?new Set(kneeRoles(atlas,s.knee).antagonists):s.shoulder&&s.shoulder.antagonists!==false?new Set(shoulderRoles(atlas,SHOULDER_MOVES.find(m=>m.id===s.shoulder!.id)!,s.shoulder.side).antagonists):new Set<string>();
     const visible=new Set(s.visible),selection=new Set(s.selected),hidden=new Set(s.hidden??[]),tendonContext=new Set(tendonContextParts(atlas,s.selected));
     writeSelectionPalette(selectionColors,atlas,selectionPalette(atlas,s));selectionColorTexture.needsUpdate=true;
-    const layerFocus=!motion&&s.highlightedSystem&&s.visible.includes(s.highlightedSystem);contextOpacity.value=motion?1:layerFocus?.07:(s.contextOpacity??1);contextActive.value=(selection.size>0||layerFocus)&&!s.isolate&&contextOpacity.value<1?1:0;contextMeshes.forEach(m=>{m.visible=contextActive.value>0;});
+    const layerFocus=!motion&&s.highlightedSystem&&s.visible.includes(s.highlightedSystem);contextOpacity.value=layerFocus?.07:(s.contextOpacity??1);contextActive.value=(selection.size>0||layerFocus)&&!s.isolate&&contextOpacity.value<1?1:0;contextMeshes.forEach(m=>{m.visible=contextActive.value>0;});
     const traceBones=s.trace?connectionTraceBones(atlas,selection):new Set<string>(),traceActive=s.trace&&!motion&&traceBones.size>0;
     const visibleParts=atlas.parts.filter(p=>!hidden.has(p.id)&&(s.isolate?selection.has(p.id):visible.has(p.system)||selection.has(p.id)||tendonContext.has(p.id)));
     const nextLayoutKey=visibleParts.map(p=>p.id).join(',')+':'+camera.aspect.toFixed(3);
@@ -202,29 +214,31 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
      markerPositions.set(data[i*4+3]>.5?[c.x+dx,c.y+dy,c.z+dz]:[10000,10000,10000],i*3);const mesh=pickers[i];if(mesh){mesh.position.set(dx,dy,dz);mesh.updateMatrix();mesh.updateMatrixWorld(true);}
     });batches.forEach(b=>{const visible=b.indices.some(i=>data[i*4+3]>.5);b.mesh.visible=visible;b.ghost.visible=visible&&contextActive.value>0;});partTexture.needsUpdate=true;selectionTexture.needsUpdate=true;markerGeometry.attributes.position.needsUpdate=true;lastState=s;lastExtent=amount;dirty=true;
    }
-   const nextPoseKey=JSON.stringify(motion?(s.gait??s.lower??s.knee??s.elbow??s.shoulder):null);if(nextPoseKey!==poseKey||changed){const pose=motion&&!s.gait?(s.lower?lowerMatrices(atlas,s.lower):s.knee?kneeMatrices(atlas,s.knee):s.elbow?elbowMatrices(atlas,s.elbow):poseMatrices(atlas,s.shoulder!)):null;const hiddenMotion=new Set(s.hidden??[]);armMeshes.forEach((mesh,i)=>{const segment=motion?segmentFor(atlas.parts[i]):0;mesh.visible=!!segment&&!hiddenMotion.has(atlas.parts[i].id);if(pose&&segment){mesh.matrix.copy(segment===4?patellaMatrix(atlas,s.knee!):segment===1?pose.upper:segment===2?pose.lower:pose.scapula);mesh.updateMatrixWorld(true);}});poseKey=nextPoseKey;dirty=true;}
+   const nextPoseKey=JSON.stringify(motion?(s.hand??s.gait??s.lower??s.knee??s.elbow??s.shoulder):null);if(nextPoseKey!==poseKey||changed){const pose=motion&&!s.gait&&!s.hand?(s.lower?lowerMatrices(atlas,s.lower):s.knee?kneeMatrices(atlas,s.knee):s.elbow?elbowMatrices(atlas,s.elbow):poseMatrices(atlas,s.shoulder!)):null;const hiddenMotion=new Set(s.hidden??[]);armMeshes.forEach((mesh,i)=>{const segment=motion?segmentFor(atlas.parts[i]):0;mesh.visible=!!segment&&segment!==5&&!hiddenMotion.has(atlas.parts[i].id);if(pose&&segment){mesh.matrix.copy(segment===4?patellaMatrix(atlas,s.knee!):segment===1?pose.upper:segment===2?pose.lower:pose.scapula);mesh.updateMatrixWorld(true);}});poseKey=nextPoseKey;dirty=true;}
+   const nextMotionOpacityKey=JSON.stringify([motion,s.selected,s.contextOpacity,geometryRevision,handRigKey,gaitRigRevision,limbRigKey,shoulderRigKey,anatomicalRigKey,kneeTendonKey]);
+   if(nextMotionOpacityKey!==motionOpacityKey){if(applyMotionContextOpacity([handRig?.group,gaitRig?.group,limbRig?.group,shoulderRig?.group,anatomicalRig?.group,kneeTendon?.mesh,...armMeshes.values()],motion?new Set(s.selected):new Set(),motion?s.contextOpacity??1:1))dirty=true;motionOpacityKey=nextMotionOpacityKey;}
    if(s.view!==lastView||s.reset!==lastReset){fit(s.view,amount);if((s.focus??0)>0||s.isolate)lastFocus=-1;lastView=s.view;lastReset=s.reset;}
    if(moving&&!s.isolate)fit(amount>.5?'front':s.view,Math.max(0,(amount-.3)/.7));
    const isolateKey=s.isolate?s.selected.join(',')+':'+s.reset+':'+s.inspectorOpen+':'+camera.aspect:'';
    const focusRequested=(s.focus??0)!==lastFocus;
    if(isolateKey!==lastIsolate||(s.isolate&&moving)||(focusRequested&&!moving)){
     let focusApplied=true;
-    if(s.isolate||focusRequested){const box=new T.Box3(),focusIds=new Set([...s.selected,...(s.isolate?[]:tendonContextParts(atlas,s.selected).filter(id=>!s.hidden?.includes(id)))]);atlas.parts.forEach((p,i)=>{if(focusIds.has(p.id))box.union(bounds[i].clone().translate(new T.Vector3(data[i*4],data[i*4+1],data[i*4+2])));});
+    if(s.isolate||focusRequested){const focusIds=new Set([...s.selected,...(s.isolate?[]:tendonContextParts(atlas,s.selected).filter(id=>!s.hidden?.includes(id)))]),box=motion?posedSelectionBounds([handRig?.group,gaitRig?.group,limbRig?.group,shoulderRig?.group,anatomicalRig?.group,kneeTendon?.mesh],focusIds):new T.Box3();if(!motion)atlas.parts.forEach((p,i)=>{if(focusIds.has(p.id))box.union(bounds[i].clone().translate(new T.Vector3(data[i*4],data[i*4+1],data[i*4+2])));});
      if(!box.isEmpty()){
-      const direction=s.view==='back'?new T.Vector3(.2,.1,-1):s.view==='side'?new T.Vector3(1,.1,0):new T.Vector3(.2,.1,1);
+      const direction=panelDirection??(s.view==='back'?new T.Vector3(.2,.1,-1):s.view==='side'?new T.Vector3(1,.1,0):new T.Vector3(.2,.1,1));
       const framed=frameModelBounds(camera,box,availableViewport(),el.clientWidth,el.clientHeight,direction);
       focusApplied=!!framed;
-      if(framed){controls.maxDistance=Math.max(40,framed.distance*2);controls.target.copy(framed.center);controls.update();dirty=true;}
-     }
+      if(framed){panelDirection=null;controls.maxDistance=Math.max(40,framed.distance*2);controls.target.copy(framed.center);controls.update();dirty=true;}
+     }else if(motion){fit(s.view,amount);}
     }else if(lastIsolate){fit(s.view,amount);}
     // Keep a focus request pending while an expanded card covers the model.
     if(focusApplied){lastIsolate=isolateKey;lastFocus=s.focus??0;}
    }
-   controls.enableRotate=amount<.8;controls.mouseButtons.LEFT=amount<.8?T.MOUSE.ROTATE:T.MOUSE.PAN;controls.touches.ONE=amount<.8?T.TOUCH.ROTATE:T.TOUCH.PAN;ground.visible=platform.visible=ring.visible=innerRing.visible=amount<.5&&!s.isolate&&!s.lower?.motion&&!s.gait;markers.visible=amount>.75;controls.autoRotate=s.rotate&&!s.isolate&&amount<.4&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches;controls.autoRotateSpeed=.65;controls.update();if(controls.autoRotate)dirty=true;
+   controls.enableRotate=amount<.8;controls.mouseButtons.LEFT=amount<.8?T.MOUSE.ROTATE:T.MOUSE.PAN;controls.touches.ONE=amount<.8?T.TOUCH.ROTATE:T.TOUCH.PAN;ground.visible=platform.visible=ring.visible=innerRing.visible=amount<.5&&!s.isolate&&!s.lower?.motion&&!s.hand?.motion&&!s.gait;markers.visible=amount>.75;controls.autoRotate=s.rotate&&!s.isolate&&amount<.4&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches;controls.autoRotateSpeed=.65;controls.update();if(controls.autoRotate)dirty=true;
    if(dirty){renderer.render(scene,camera);targets=[];if(amount>.45){const hasSolid=atlas.parts.some((p,i)=>p.system!=='integumentary'&&data[i*4+3]>.5);atlas.parts.forEach((p,i)=>{if(data[i*4+3]<.5||(hasSolid&&p.system==='integumentary'))return;let left=Infinity,right=-Infinity,top=Infinity,bottom=-Infinity;for(let corner=0;corner<8;corner++){projected.set(p.bounds[(corner&1)?1:0][0]+data[i*4],p.bounds[(corner&2)?1:0][1]+data[i*4+1],p.bounds[(corner&4)?1:0][2]+data[i*4+2]).project(camera);const x=(projected.x+1)*el.clientWidth/2,y=(1-projected.y)*el.clientHeight/2;left=Math.min(left,x);right=Math.max(right,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}projected.copy(centers[i]).add(new T.Vector3(data[i*4],data[i*4+1],data[i*4+2])).project(camera);if(projected.z< -1||projected.z>1)return;targets.push({index:i,x:(projected.x+1)*el.clientWidth/2,y:(1-projected.y)*el.clientHeight/2,left,right,top,bottom});});}dirty=false;}
 
   };animate();
-  return()=>{disposed=true;recovery.dispose();abort.abort();cancelAnimationFrame(frame);observer.disconnect();renderer.domElement.removeEventListener('keydown',keyboard);controls.dispose();if(kneeTendon)disposeKneeTendonRig(kneeTendon);if(gaitRig)disposeGaitRig(gaitRig);if(limbRig)disposeLimbRig(limbRig);if(shoulderRig)disposeShoulderRig(shoulderRig);if(anatomicalRig)disposeMuscleRig(anatomicalRig);if(muscleGroup)disposeMuscleDemo(muscleGroup);if(attachmentGroup)disposeAttachments(attachmentGroup);if(overlay)disposeOverlay(overlay);geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());scene.traverse(o=>{if(o instanceof T.Mesh&&!geometries.includes(o.geometry)){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose());}});env.dispose();partTexture.dispose();selectionTexture.dispose();selectionColorTexture.dispose();markerGeometry.dispose();markerMaterial.dispose();hover.remove();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();};
+  return()=>{disposed=true;recovery.dispose();abort.abort();cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener(PANEL_LAYOUT_EVENT,reframePanels);renderer.domElement.removeEventListener('keydown',keyboard);controls.dispose();if(handRig)disposeHandRig(handRig);if(kneeTendon)disposeKneeTendonRig(kneeTendon);if(gaitRig)disposeGaitRig(gaitRig);if(limbRig)disposeLimbRig(limbRig);if(shoulderRig)disposeShoulderRig(shoulderRig);if(anatomicalRig)disposeMuscleRig(anatomicalRig);if(muscleGroup)disposeMuscleDemo(muscleGroup);if(attachmentGroup)disposeAttachments(attachmentGroup);if(overlay)disposeOverlay(overlay);geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());scene.traverse(o=>{if(o instanceof T.Mesh&&!geometries.includes(o.geometry)){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose());}});env.dispose();partTexture.dispose();selectionTexture.dispose();selectionColorTexture.dispose();markerGeometry.dispose();markerMaterial.dispose();hover.remove();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();};
  },[atlas,generation,compatibility,embedded]);
  return <div className="scene" ref={host}/>;
 }

@@ -1,3 +1,4 @@
+import {applyMotionContextOpacity} from '../app/motion-context-opacity.ts';
 import fs from 'node:fs';import assert from 'node:assert/strict';import * as T from 'three';
 import {createGaitModel,gaitPose,gaitPhase,gaitSupport,gaitContact,gaitSegment,GAIT_SAMPLES,GAIT_STRIDE} from '../app/gait-motion.ts';
 import {createGaitRig,updateGaitRig,disposeGaitRig} from '../app/gait-rig.ts';
@@ -23,4 +24,13 @@ for(let i=0;i<8;i++){const p=GAIT_SAMPLES[i];assert.equal(gaitPhase(p),i);update
 for(const side of ['right']){const offset=0;for(const [a,b,pivot] of [[0,9,'heel'],[30,59,'toe']]){const point=model.legs[side][pivot],pa=point.clone().applyMatrix4(gaitPose(model,(a-offset+100)%100).legs[side].foot),pb=point.clone().applyMatrix4(gaitPose(model,(b-offset+100)%100).legs[side].foot);assert(Math.abs(pa.x-pb.x)<1e-7&&Math.abs(pa.z-pb.z)<1e-7,'no stance pivot sliding');}}
 assert.equal(gaitPhase(100),0);assert.equal(gaitSupport(0),'Çift destek');assert.equal(gaitSupport(55),'Çift destek');assert.equal(gaitSupport(20),'Sağ tek destek');assert.equal(gaitSupport(80),'Sol tek destek');assert.equal(gaitContact(66),'Zeminden ayrı');
 assert.equal(atlas.parts.filter(p=>gaitSegment(p)).length,64);
-disposeGaitRig(rig);console.log('PASS: eight bilateral poses; 401 cycle samples; sole clearance; rigid bone lengths; connected hip/knee/ankle; phase and cycle continuity; optional muscles/plane; single/double support.');
+// Real source gait muscles must fade independently of the selected source mesh.
+const picked=rig.muscles.find(m=>m.mesh.visible),other=rig.muscles.find(m=>m!==picked&&m.mesh.visible);assert(picked&&other);
+assert.notEqual(picked.mesh.material,other.mesh.material,'source muscles have independent opacity');
+const poseBefore=picked.mesh.geometry.attributes.position.array.slice(),boneBefore=rig.bones[0].mesh.matrix.elements.slice();
+assert(applyMotionContextOpacity([rig.group],new Set([picked.part.id]),.2));
+assert.equal(picked.mesh.material.opacity,1);assert.equal(other.mesh.material.opacity,.2);assert.equal(other.mesh.material.depthWrite,false);
+assert.equal(rig.boneMaterial.opacity,.2);assert.deepEqual(picked.mesh.geometry.attributes.position.array,poseBefore);assert.deepEqual(rig.bones[0].mesh.matrix.elements,boneBefore);
+applyMotionContextOpacity([rig.group],new Set(),.2);assert(rig.muscles.every(m=>m.mesh.material.opacity===1&&!m.mesh.material.transparent&&m.mesh.material.depthWrite));assert.equal(rig.boneMaterial.opacity,1);
+let disposed=0;for(const m of rig.muscles)m.mesh.material.addEventListener('dispose',()=>disposed++);
+const count=rig.muscles.length;disposeGaitRig(rig);assert.equal(disposed,count,'individual muscle materials released');console.log('PASS: eight bilateral poses; 401 cycle samples; sole clearance; rigid bone lengths; connected hip/knee/ankle; phase and cycle continuity; optional muscles/plane; single/double support.');

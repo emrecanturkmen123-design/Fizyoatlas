@@ -1,3 +1,4 @@
+import {handPose,type HandMoveId} from './hand-motion';
 import type { Atlas, Part, SceneState } from "./anatomy";
 import { sideOf } from "./innervation";
 import { muscleKeyMatches } from "./education-data";
@@ -251,7 +252,7 @@ export function regionalContext(atlas: Atlas, c: RegionalCourseDefinition, side:
     const n = p.name.toLowerCase();
     if (
       upper
-        ? /\b(clavicle|scapula|humerus|radius|ulna|scaphoid|lunate|capitate|hamate|trapezium|trapezoid|triquetrum|pisiform|metacarpal)\b|phalanx.*(finger|thumb)/.test(
+        ? /\b(clavicle|scapula|humerus|radius|ulna|scaphoid|lunate|capitate|hamate|trapezium|trapezoid|triquetral|triquetrum|pisiform|metacarpal)\b|phalanx.*(finger|thumb)/.test(
             n,
           )
         : /\b(hip bone|femur|tibia|fibula|patella|talus|calcaneus|navicular|cuneiform|cuboid|metatarsal)\b|phalanx.*toe/.test(
@@ -288,12 +289,14 @@ export function regionalMotionState(
     };
   if (m.joint === "shoulder")
     return { shoulder: { ...base, id: m.id as "abduction", scapula: true } };
+  if (m.joint === "hand") return { hand: { ...base, id: m.id as HandMoveId, digit: "all", anatomicalMuscles: true, tendons: true } };
   if (m.joint === "elbow") return { elbow: { ...base, id: m.id as "flexion" } };
   if (m.joint === "hip" || m.joint === "ankle")
     return { lower: { ...base, joint: m.joint, id: m.id! } };
   return {};
 }
 export function regionalTransform(atlas: Atlas, state: Partial<SceneState>, part: Part) {
+  if (state.hand) return handPose(atlas,state.hand).matrices.get(part.id);
   const pose = state.shoulder
     ? poseMatrices(atlas, state.shoulder)
     : state.elbow

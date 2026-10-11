@@ -1,0 +1,13 @@
+.panel-resize-handle{position:fixed;z-index:59;width:18px;align-items:center;justify-content:center;cursor:col-resize;touch-action:none;user-select:none;border-radius:8px;outline-offset:1px}
+.panel-resize-handle>span{display:flex;align-items:center;justify-content:center;width:18px;min-height:44px;color:#617c88;background:#fff;border:1px solid #dce5e9;border-radius:7px}
+.panel-resize-handle:hover>span,.panel-resize-handle:focus-visible>span{color:#164f60;background:#e4eff2;border-color:#176b86}
+.panel-resize-handle:focus-visible{outline:2px solid #176b86}.resizing-workspace-panel,.resizing-workspace-panel *{cursor:col-resize!important;user-select:none!important}
+@media(min-width:768px) and (min-height:501px){
+ .workspace-layout>[data-resizable-panel=left],body:has(.workspace-layout) .detail-sheet[data-resizable-panel=right]{width:var(--panel-width)!important;max-width:var(--panel-width)!important}
+ .workspace-layout>[data-resizable-panel=left]{transition:none}
+ .workspace-layout:has(>[data-resizable-panel=left]) .restore-hidden{left:calc(44px + var(--active-panel-width,360px))}
+ .workspace-layout .model-toolbar,body:has(.detail-sheet) .workspace-layout .model-toolbar{left:var(--model-tools-center,50%)}
+ .workspace-layout .study-list button{padding-block:12px}
+}
+@media(min-width:768px) and (max-width:1100px){body:has(.detail-sheet) .workspace-layout>[data-resizable-panel=left]{display:none}}
+@media(max-width:767px),(max-height:500px){.panel-resize-handle{display:none!important}}

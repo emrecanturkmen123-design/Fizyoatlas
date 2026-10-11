@@ -1,3 +1,9 @@
+# Current Fizyo Atlas release
+
+The source includes the V59 panel layout and transparency fixes, integrated muscle cards, guided comparisons, hand/finger motions, motion explanations, adjustable panel widths and persistent guest drafts.
+
+Cloudflare live deployment: https://atlas.fizyoatlas.workers.dev. Build and deployment instructions, plus the current account-sign-in setup status, are documented in [CLOUDFLARE.md](CLOUDFLARE.md). The Sites build remains available separately.
+
 # Learning modules update
 
 - Optional illustrative scapular upward/downward rotation during shoulder flexion/abduction/adduction. 30-degree teaching excursion at 90 degrees GH display; not a normal rhythm ratio. Clavicle stationary; no full scapulothoracic kinematics.

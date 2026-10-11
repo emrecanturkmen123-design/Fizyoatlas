@@ -42,14 +42,14 @@ const change=async(label,value)=>{assert(select(label),label);await act(async()=
 const disclosure=async label=>{const trigger=root.root.findAllByType('button').find(b=>b.props['data-slot']==='collapsible-trigger'&&text(b).startsWith(label));assert(trigger,label);await act(async()=>trigger.props.onClick({nativeEvent:new Event('click')}));await settle();};
 const sameSide=(side,key)=>{assert(scene().selected.length);assert(scene().selected.every(id=>sideOf(atlas.parts.find(p=>p.id===id).name)===side));if(key)assert(scene().selected.every(id=>matchesMuscle(atlas.parts.find(p=>p.id===id),key)));};
 await mount(workspaceHash({lesson:'study',muscle:'soleus',side:'left'}));const initial=app.location.hash;sameSide('left','soleus');
-await click('Kasları karşılaştır');assert(root.root.findByType(Lab));let route=parseWorkspaceRoute(app.location.hash);
+await disclosure('Çalış');await click('Kasları karşılaştır');assert(root.root.findByType(Lab));let route=parseWorkspaceRoute(app.location.hash);
 assert.equal(route.labKind,'muscles');assert.equal(route.structure,'muscle:soleus');assert.equal(route.compare,'muscle:gastrocnemius');assert.equal(route.side,'left');assert.equal(app.entries.length,2);
-await change('Hazır kas çifti','calf');await disclosure('Kamera ve çevre yapılar');await change('Ortak kamera dönüşü','-75');await change('Ortak kamera eğimi','30');await click('Anatomik konum');
+await change('Hazır kas çifti','calf');assert(root.root.findByProps({'aria-label':'Ortak kamera ayarları'}));await change('Ortak kamera dönüşü','-75');await change('Ortak kamera eğimi','30');await click('Anatomik konum');
 const snapshot=app.location.hash;assert.equal(app.entries.length,2,'pair, framing and camera controls replace the current comparison');
 await click('Atlas kartını aç');route=parseWorkspaceRoute(app.location.hash);assert.equal(route.muscle,'gastrocnemius');assert.equal(route.side,'left');sameSide('left','gastrocnemius');
-await back();assert.equal(app.location.hash,snapshot,'comparison card back restores exact pair, side and camera');await disclosure('Kamera ve çevre yapılar');assert.equal(select('Ortak kamera dönüşü').props.value,-75);assert.equal(select('Hazır kas çifti').props.value,'calf');
+await back();assert.equal(app.location.hash,snapshot,'comparison card back restores exact pair, side and camera');assert(root.root.findByProps({'aria-label':'Ortak kamera ayarları'}));assert.equal(select('Ortak kamera dönüşü').props.value,-75);assert.equal(select('Hazır kas çifti').props.value,'calf');
 await act(async()=>app.history.forward());await settle();sameSide('left','gastrocnemius');await back();
-await act(async()=>root.unmount());await act(async()=>{root=create(React.createElement(Home));});await settle();assert.equal(app.location.hash,snapshot,'refresh retains the exact comparison URL');await disclosure('Kamera ve çevre yapılar');assert.equal(select('Ortak kamera eğimi').props.value,30);
+await act(async()=>root.unmount());await act(async()=>{root=create(React.createElement(Home));});await settle();assert.equal(app.location.hash,snapshot,'refresh retains the exact comparison URL');assert(root.root.findByProps({'aria-label':'Ortak kamera ayarları'}));assert.equal(select('Ortak kamera eğimi').props.value,30);
 await back();assert.equal(app.location.hash,initial);sameSide('left','soleus');await act(async()=>root.unmount());
 await mount(workspaceHash({lesson:'study',muscle:'quadriceps',side:'left'}));assert(select('Kas grubunun tarafı'));await click('Kasları karşılaştır');route=parseWorkspaceRoute(app.location.hash);
 assert.equal(route.structure,'muscle:quadriceps');assert.equal(route.compare,'muscle:hamstrings');assert.equal(route.side,'left');

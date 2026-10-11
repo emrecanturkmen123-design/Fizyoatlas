@@ -299,11 +299,11 @@ export default function KneeCourse({
                     : "Hesabında kayıtlı"
                 : course.status === "error"
                   ? "Taslak açık sayfada · Kayıt bekliyor"
-                  : "Bu sekmede taslak"}
+                  : "Bu tarayıcıda taslak"}
             </span>
             {!course.authenticated && (
               <a href={signInUrl("/#diz-dersi")} target="_top">
-                Kalıcı kayıt için giriş yap
+                Cihazlar arasında devam etmek için giriş yap
               </a>
             )}
           </div>
@@ -946,7 +946,7 @@ export default function KneeCourse({
             <p>
               {course.authenticated
                 ? "Ders adımın, seçimin, hareket durağın ve yanıtların hesabında saklanır."
-                : "Giriş yapmadan çalışabilirsin. Taslak bu sekmede korunur; sekme veya tarayıcı verileri kapatıldığında kaybolabilir. Kalıcı kayıt için giriş yap."}
+                : "Giriş yapmadan çalışabilirsin. Taslağın sekmeyi kapatsan da bu tarayıcıda korunur. Tarayıcı verilerini temizlersen silinir. Cihazlar arasında devam etmek için giriş yap."}
             </p>
             {restartConfirm ? (
               <div className="course-restart">

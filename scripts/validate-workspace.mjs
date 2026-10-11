@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';import React from 'react';import {renderToStaticMarkup as render} from 'react-dom/server';
 import AtlasIndex from '../app/atlas-index.tsx';import PracticeMenu from '../app/practice-menu.tsx';import MovementMenu from '../app/movement-menu.tsx';import Shoulder from '../app/shoulder-panel.tsx';import {EducationCard} from '../app/education.tsx';import {modelViewport} from '../app/model-viewport.ts';
 const noop=()=>{},html=(c,p)=>render(React.createElement(c,p));
-const movement=html(MovementMenu,{ready:true,onOpen:noop});assert.equal((movement.match(/<button/g)||[]).length,6);for(const removed of ['Kas kartları','Klinik vakalar','Çalışmalarım','Omurga'])assert(!movement.includes(removed));
+const movement=html(MovementMenu,{ready:true,onOpen:noop});assert.equal((movement.match(/<button/g)||[]).length,7);for(const removed of ['Kas kartları','Klinik vakalar','Çalışmalarım','Omurga'])assert(!movement.includes(removed));
 const practice=html(PracticeMenu,{ready:true,onOpen:noop});assert.equal((practice.match(/<button/g)||[]).length,3);
 const atlas=html(AtlasIndex,{ready:true,onMuscle:noop,onNerve:noop,onSpine:noop});assert(atlas.includes('Omurgayı incele'));assert(atlas.includes('Sinirler'));assert(atlas.includes('M. latissimus dorsi'));
 const card=html(EducationCard,{name:'soleus',system:'muscular'});assert(card.indexOf('Origo')<card.indexOf('Kaynaklar ve bilgi notları'));assert(card.includes('aria-expanded="false"')&&!card.includes('href="https://'),'bibliography is collapsed initially while the local printable page remains available');

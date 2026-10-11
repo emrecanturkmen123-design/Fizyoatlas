@@ -11,6 +11,7 @@ function entry(state:unknown):Entry|undefined{
 export function navigationIdentity(route:WorkspaceRoute){
  if(route.lesson==='lab')return 'lab';
  if(route.lesson==='study')return workspaceHash({lesson:'study',tab:route.tab,region:route.region,concept:route.concept,muscle:route.muscle,nerve:route.nerve,structure:route.structure});
+ if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(route.lesson)){const {motionMuscles,motionLayers,tendons,handDigit,...page}=route;return routeIdentity(page);}
  return routeIdentity(route);
 }
 export function parentWorkspaceRoute(route:WorkspaceRoute):WorkspaceRoute|undefined{
@@ -20,7 +21,10 @@ export function parentWorkspaceRoute(route:WorkspaceRoute):WorkspaceRoute|undefi
   return;
  }
  if(route.lesson==='lab'||route.lesson==='tendons'||route.lesson==='spine')return {lesson:'study'};
- if(['shoulder','elbow','knee','hip','ankle','gait'].includes(route.lesson))return {lesson:'movements'};
+ if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(route.lesson)){
+  if(route.muscle||route.concept){const {muscle,concept,isolate,attachment,trace,...movement}=route;return movement;}
+  return {lesson:'movements'};
+ }
  if(route.lesson==='knee-course'||route.lesson==='regional-course')return {lesson:'courses'};
  if(route.lesson==='movements'||route.lesson==='practice')return {lesson:'study'};
  return {lesson:'practice'};

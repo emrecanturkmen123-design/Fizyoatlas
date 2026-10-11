@@ -1,3 +1,4 @@
+import {handSoftParts} from './hand-motion';
 import type {Atlas,SceneState} from './anatomy';
 import {tendonContextParts} from './tendon-context';
 import {muscleKeyMatches} from './education-data';
@@ -8,14 +9,16 @@ import {cuffParts} from './shoulder-study';
 import {spineRegion} from './spine';
 export function requiredChunks(atlas:Atlas,s:SceneState){
  const selected=new Set(s.selected),hidden=new Set(s.hidden??[]),context=new Set(tendonContextParts(atlas,s.selected));
- const movement=!!s.gait||!!s.shoulder?.motion||!!s.elbow?.motion||!!s.lower?.motion||!!s.knee?.motion;
+ const movement=!!s.hand?.motion||!!s.gait||!!s.shoulder?.motion||!!s.elbow?.motion||!!s.lower?.motion||!!s.knee?.motion;
  const muscles=new Set(limbMuscleIds(atlas,s));
  if(s.shoulder?.anatomicalMuscles&&s.shoulder.cuff!==false)cuffParts(atlas,s.shoulder.side).filter(p=>p.system==='muscular').forEach(p=>muscles.add(p.id));
  if(s.shoulder?.anatomicalMuscles){const r=shoulderRoles(atlas,SHOULDER_MOVES.find(m=>m.id===s.shoulder!.id)!,s.shoulder.side);[...r.agonists,...(s.shoulder.antagonists!==false?r.antagonists:[])].forEach(id=>muscles.add(id));}
+ const handSoft=new Set(s.hand?handSoftParts(atlas,s.hand).filter(p=>p.system==='muscular'?s.hand!.anatomicalMuscles:s.hand!.tendons).map(p=>p.id):[]);
  const needed=atlas.parts.filter(p=>{
   if(hidden.has(p.id))return false;
   if(movement){
    if(p.system==='skeletal')return true;
+   if(s.hand)return handSoft.has(p.id);
    if(s.gait)return !!s.gait.muscles&&p.system==='muscular'&&GAIT_PHASES.some(phase=>phase.keys.some(k=>muscleKeyMatches(p.name,k)));
    if(s.elbow?.anatomicalMuscles&&p.system==='muscular'&&new RegExp('\\b'+s.elbow.side+'\\b','i').test(p.name)&&/biceps brachii|triceps brachii|brachialis|brachioradialis|anconeus|pronator|supinator/i.test(p.name))return true;
    if(muscles.has(p.id))return true;
