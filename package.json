@@ -10,7 +10,9 @@
     "build": "node scripts/build-full.mjs",
     "build:vercel": "vite build",
     "check": "tsc --noEmit",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "build:cloudflare": "node scripts/build-cloudflare.mjs",
+    "deploy:cloudflare": "npm run build:cloudflare && wrangler deploy --config wrangler.jsonc"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
@@ -23,6 +25,7 @@
     "drizzle-orm": "^0.45.2",
     "embla-carousel-react": "8.5.2",
     "input-otp": "1.4.2",
+    "jose": "^6.2.12",
     "lucide-react": "1.31.0",
     "react": "19.2.6",
     "react-day-picker": "9.8.1",

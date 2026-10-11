@@ -1,3 +1,4 @@
+import {signInUrl} from './auth-link';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Check, RotateCcw, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -286,7 +287,7 @@ export default function RegionalCourse({
             {!course.authenticated && (
               <a
                 href={
-                  "/signin-with-chatgpt?return_to=" + encodeURIComponent("/#bolge-dersi?kurs=" + id)
+                  signInUrl("/#bolge-dersi?kurs=" + id)
                 }
                 target="_top"
               >

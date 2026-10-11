@@ -1,3 +1,4 @@
+import {signInUrl} from './auth-link';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Check, CheckCircle2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -301,7 +302,7 @@ export default function KneeCourse({
                   : "Bu sekmede taslak"}
             </span>
             {!course.authenticated && (
-              <a href="/signin-with-chatgpt?return_to=%2F%23diz-dersi" target="_top">
+              <a href={signInUrl("/#diz-dersi")} target="_top">
                 Kalıcı kayıt için giriş yap
               </a>
             )}

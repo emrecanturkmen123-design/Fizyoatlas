@@ -1,3 +1,4 @@
+import {resolveIdentity,authResponse,type AuthEnv} from './auth';
 import {parseQuizSession} from '../app/quiz-session';
 import {parseNotebookEntry} from '../app/notebook-data';
 import {parseCourseRecord} from '../app/course-record';
@@ -5,14 +6,15 @@ import {parseCaseProgress} from '../app/case-progress';
 import {isFavoriteKey} from '../app/learning-data';
 import {questionDefinition} from '../app/learning-data';
 import {learningSnapshot,resetLearning,type Database} from './db';
-export interface Env {DB?:Database;ASSETS?:{fetch(request:Request):Promise<Response>}}
+export interface Env extends AuthEnv {DB?:Database;ASSETS?:{fetch(request:Request):Promise<Response>}}
 const json=(data:unknown,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'private, no-store','Vary':'Cookie','X-Content-Type-Options':'nosniff'}});
 function readRow(row:{payload:string;updated_at:number;revision:number}|undefined,parse:(value:unknown)=>unknown){if(!row)return null;try{const p=parse(JSON.parse(row.payload));return p?{...p as object,updatedAt:row.updated_at,revision:row.revision}:null;}catch{return null;}}
 function readRows(rows:{payload:string;updated_at:number;revision:number}[],parse:(value:unknown)=>unknown){const values=rows.map(row=>readRow(row,parse));const warnings=values.filter(v=>!v).length;if(warnings)console.error('Stored study records could not be decoded:',warnings);return {values:values.filter(v=>!!v),warnings};}
 export default {async fetch(request:Request,env:Env):Promise<Response>{const url=new URL(request.url);
+ const auth=await authResponse(request,env);if(auth)return auth;
  if(!url.pathname.startsWith('/api/')){if(!['GET','HEAD'].includes(request.method))return new Response('Method not allowed',{status:405});if(!env.ASSETS)return new Response('Atlas şu anda yüklenemiyor.',{status:503});return env.ASSETS.fetch(request);}
  if(!['/api/learning','/api/learning/favorite','/api/learning/answer','/api/learning/reset','/api/cases','/api/notebook','/api/courses','/api/quiz-sessions'].includes(url.pathname))return json({error:'Bölüm bulunamadı.'},404);
- const user=request.headers.get('oai-authenticated-user-id'),email=request.headers.get('oai-authenticated-user-email');
+ const identity=await resolveIdentity(request,env),user=identity?.id,email=identity?.email;
  if(!user||!email)return json({authenticated:false,favorites:[],answers:[]},401);
  if(!env.DB)return json({error:'Kayıt alanı şu anda kullanılamıyor.'},503);
  try{

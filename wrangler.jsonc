@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "atlas",
+  "account_id": "4c79d5dfcadd4ed21d85cdb6360f3c27",
+  "main": "dist/server/index.js",
+  "compatibility_date": "2026-10-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": {
+    "directory": "dist/client",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/auth/*", "/signin-with-chatgpt"],
+    "not_found_handling": "single-page-application"
+  },
+  "vars": { "AUTH_PROVIDER": "cloudflare" },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "fizyo-atlas-study",
+    "database_id": "118feb0e-4222-47ac-b743-7a9e97617b60",
+    "migrations_dir": "drizzle"
+  }],
+  "observability": {"enabled": true, "head_sampling_rate": 0.1}
+}

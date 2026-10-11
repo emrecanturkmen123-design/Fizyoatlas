@@ -1,3 +1,4 @@
+import {signInUrl,signInLabel} from './auth-link';
 import LearningReset from './learning-reset';
 import {Button} from '@/components/ui/button';
 import {CLINICAL_STRUCTURES} from './clinical-structures';
@@ -24,7 +25,7 @@ export default function LearningPanel({learning,onMuscle,onReview,onClose,favori
      </section></div>
    </>}
    {!favoritesOnly&&<LearningReset learning={learning}/>}
-   <div className="hub-account"><span>{!learning.canWork?'Kayıt bağlantısı bekleniyor':data.authenticated?'Hesabında kayıtlı':'Bu tarayıcıda kayıtlı'}</span><Disclosure title="Kayıt ve hesap bilgisi"><p>{data.authenticated?'Kayıtlar giriş yaptığın hesaba bağlıdır. Aynı hesabı paylaşan kişiler aynı kayıtları görür.':'Favoriler, yanıtlar ve vaka ilerlemesi bu tarayıcıda korunur. Tarayıcı verilerini silersen cihaz kayıtları da silinir.'}</p>{!data.authenticated&&<><a className="sign-in-link" href="/signin-with-chatgpt?return_to=%2F%23calismalarim" target="_top">Cihazlar arasında devam etmek için ChatGPT ile giriş yap</a><p>Cihaz kayıtları hesaba otomatik aktarılmaz.</p></>}<Button variant="outline" disabled={pending} onClick={()=>void learning.refresh()}>Kayıtları yenile</Button></Disclosure></div>
+   <div className="hub-account"><span>{!learning.canWork?'Kayıt bağlantısı bekleniyor':data.authenticated?'Hesabında kayıtlı':'Bu tarayıcıda kayıtlı'}</span><Disclosure title="Kayıt ve hesap bilgisi"><p>{data.authenticated?'Kayıtlar giriş yaptığın hesaba bağlıdır. Aynı hesabı paylaşan kişiler aynı kayıtları görür.':'Favoriler, yanıtlar ve vaka ilerlemesi bu tarayıcıda korunur. Tarayıcı verilerini silersen cihaz kayıtları da silinir.'}</p>{!data.authenticated&&<><a className="sign-in-link" href={signInUrl("/#calismalarim")} target="_top">Cihazlar arasında devam etmek için {signInLabel}</a><p>Cihaz kayıtları hesaba otomatik aktarılmaz.</p></>}<Button variant="outline" disabled={pending} onClick={()=>void learning.refresh()}>Kayıtları yenile</Button></Disclosure></div>
   </>}
  </section>;
 }
