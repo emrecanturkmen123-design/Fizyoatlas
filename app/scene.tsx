@@ -134,6 +134,12 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
   };
   scheduleLoads();
   const availableViewport=()=>embedded?{left:16,right:el.clientWidth-16,top:16,bottom:el.clientHeight-16}:modelViewport(el.clientWidth,el.clientHeight,Array.from(document.querySelectorAll('.study-panel,.learning-panel,.shoulder-panel,.search-panel,.detail-sheet,.model-popover')).filter(p=>p.getClientRects().length>0).map(p=>p.getBoundingClientRect()),Math.max(0,...Array.from(document.querySelectorAll('.top-actions,.model-toolbar')).filter(p=>p.getClientRects().length>0).map(p=>p.getBoundingClientRect()).filter(p=>p.top<el.clientHeight*.4).map(p=>p.bottom)));
+  const updateViewOffset=()=>{
+   const viewport=availableViewport();
+   if(!viewportUsable(viewport))return;
+   const w=el.clientWidth,h=el.clientHeight;
+   camera.setViewOffset(w,h,w/2-(viewport.left+viewport.right)/2,h/2-(viewport.top+viewport.bottom)/2,w,h);
+  };
   const fit=(view:string,extent=0)=>{
    if(!viewportUsable(availableViewport()))return;
    if(latest.current.gait&&extent<.01){const w=el.clientWidth,h=el.clientHeight,{left,right,top,bottom}=availableViewport(),aw=right-left,ah=bottom-top;camera.setViewOffset(w,h,w/2-(left+right)/2,h/2-(top+bottom)/2,w,h);const distance=Math.max(1.65*w/aw/camera.aspect,1.95*h/ah)/(2*Math.tan(T.MathUtils.degToRad(camera.fov/2)));controls.target.set(0,.8,.4);const direction=view==='side'?new T.Vector3(-1,.03,0):view==='back'?new T.Vector3(0,.03,-1):view==='front'?new T.Vector3(0,.03,1):new T.Vector3(.5,.08,1).normalize();camera.position.copy(controls.target).addScaledVector(direction,distance);controls.update();dirty=true;return;}
@@ -148,8 +154,8 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
    controls.target.set(0,.85,0);camera.position.copy(controls.target).addScaledVector(direction,distance);controls.update();dirty=true;
   };
   const resize=()=>{if(!el.clientWidth||!el.clientHeight)return;layoutKey='';lastState=null;if((latest.current.focus??0)>0||latest.current.isolate)lastFocus=-1;renderer.setPixelRatio(startup.compatibility?1:Math.min(devicePixelRatio,el.clientWidth<768||el.clientHeight<600?1.5:2));camera.aspect=el.clientWidth/el.clientHeight;camera.updateProjectionMatrix();renderer.setSize(el.clientWidth,el.clientHeight);fit(latest.current.view,amount);};const observer=new ResizeObserver(resize);observer.observe(el);
-  let panelDirection:T.Vector3|null=null;
-  const reframePanels=()=>{if(embedded)return;const direction=camera.position.clone().sub(controls.target).normalize();fit(latest.current.view,amount);const distance=camera.position.distanceTo(controls.target);camera.position.copy(controls.target).addScaledVector(direction,distance);if((latest.current.focus??0)>0||latest.current.isolate){lastFocus=-1;panelDirection=direction;}controls.update();dirty=true;};
+  // The panel changes where the model is drawn. Keep the user's orbit and zoom.
+  const reframePanels=()=>{if(embedded)return;updateViewOffset();dirty=true;};
   window.addEventListener(PANEL_LAYOUT_EVENT,reframePanels);
   const raycaster=new T.Raycaster(),pointer=new T.Vector2(),tap=new PointerTap(),worldBox=new T.Box3(),hitPoint=new T.Vector3();
   const down=(e:PointerEvent)=>{hover.hidden=true;tap.down(e.pointerId,e.clientX,e.clientY,e.pointerType==='touch'?12:5);};
@@ -204,7 +210,7 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
     const traceBones=s.trace?connectionTraceBones(atlas,selection):new Set<string>(),traceActive=s.trace&&!motion&&traceBones.size>0;
     const visibleParts=atlas.parts.filter(p=>!hidden.has(p.id)&&(s.isolate?selection.has(p.id):visible.has(p.system)||selection.has(p.id)||tendonContext.has(p.id)));
     const nextLayoutKey=visibleParts.map(p=>p.id).join(',')+':'+camera.aspect.toFixed(3);
-    if(nextLayoutKey!==layoutKey){const layout=createExplosionLayout(visibleParts,camera.aspect);packingWidth=layout.width;packingHeight=layout.height;atlas.parts.forEach((p,i)=>{const cell=layout.cells.get(p.id);offsets[i]=cell?new T.Vector3(cell.x,cell.y+.85,0):centers[i].clone();});layoutKey=nextLayoutKey;if(amount>.05&&!s.isolate)fit(s.view,Math.max(0,(amount-.3)/.7));}
+    if(nextLayoutKey!==layoutKey){const layout=createExplosionLayout(visibleParts,camera.aspect);packingWidth=layout.width;packingHeight=layout.height;atlas.parts.forEach((p,i)=>{const cell=layout.cells.get(p.id);offsets[i]=cell?new T.Vector3(cell.x,cell.y+.85,0):centers[i].clone();});layoutKey=nextLayoutKey;}
 
     atlas.parts.forEach((p,i)=>{
      const c=centers[i],destination=offsets[i];let dx=0,dy=0,dz=0;
@@ -223,14 +229,14 @@ export default function AnatomyScene({atlas,state,onSelect,onProgress,onError,co
    const focusRequested=(s.focus??0)!==lastFocus;
    if(isolateKey!==lastIsolate||(s.isolate&&moving)||(focusRequested&&!moving)){
     let focusApplied=true;
-    if(s.isolate||focusRequested){const focusIds=new Set([...s.selected,...(s.isolate?[]:tendonContextParts(atlas,s.selected).filter(id=>!s.hidden?.includes(id)))]),box=motion?posedSelectionBounds([handRig?.group,gaitRig?.group,limbRig?.group,shoulderRig?.group,anatomicalRig?.group,kneeTendon?.mesh],focusIds):new T.Box3();if(!motion)atlas.parts.forEach((p,i)=>{if(focusIds.has(p.id))box.union(bounds[i].clone().translate(new T.Vector3(data[i*4],data[i*4+1],data[i*4+2])));});
+    if(s.selected.length&&(s.isolate||focusRequested)){const focusIds=new Set([...s.selected,...(s.isolate?[]:tendonContextParts(atlas,s.selected).filter(id=>!s.hidden?.includes(id)))]),box=motion?posedSelectionBounds([handRig?.group,gaitRig?.group,limbRig?.group,shoulderRig?.group,anatomicalRig?.group,kneeTendon?.mesh],focusIds):new T.Box3();if(!motion)atlas.parts.forEach((p,i)=>{if(focusIds.has(p.id))box.union(bounds[i].clone().translate(new T.Vector3(data[i*4],data[i*4+1],data[i*4+2])));});
      if(!box.isEmpty()){
-      const direction=panelDirection??(s.view==='back'?new T.Vector3(.2,.1,-1):s.view==='side'?new T.Vector3(1,.1,0):new T.Vector3(.2,.1,1));
+      const direction=(s.view==='back'?new T.Vector3(.2,.1,-1):s.view==='side'?new T.Vector3(1,.1,0):new T.Vector3(.2,.1,1));
       const framed=frameModelBounds(camera,box,availableViewport(),el.clientWidth,el.clientHeight,direction);
       focusApplied=!!framed;
-      if(framed){panelDirection=null;controls.maxDistance=Math.max(40,framed.distance*2);controls.target.copy(framed.center);controls.update();dirty=true;}
+      if(framed){controls.maxDistance=Math.max(40,framed.distance*2);controls.target.copy(framed.center);controls.update();dirty=true;}
      }else if(motion){fit(s.view,amount);}
-    }else if(lastIsolate){fit(s.view,amount);}
+    }
     // Keep a focus request pending while an expanded card covers the model.
     if(focusApplied){lastIsolate=isolateKey;lastFocus=s.focus??0;}
    }

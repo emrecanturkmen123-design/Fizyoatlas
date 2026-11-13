@@ -87,7 +87,7 @@ for(const [lesson,motion,rowKey,Panel] of rows)for(const side of ['left','right'
  const deep=app.location.hash;
  await click('Modelde göster');assertPose(before,lesson);
  await act(async()=>root.root.findAllByProps({'data-test-sheet':true})[0].props.onOpenChange(false));await settle();
- assert.equal(pose(scene()).progress,before.progress);assert.equal(parseWorkspaceRoute(app.location.hash).concept,undefined);assert(root.root.findByType(Panel));
+ assert.equal(pose(scene()).progress,before.progress);assert.equal(scene().reset,beforeReset);assert.equal(scene().view,view);assert.equal(parseWorkspaceRoute(app.location.hash).concept,undefined);assert(root.root.findByType(Panel));
  assert(lesson==='gait'?scene().gait.muscles:pose(scene()).anatomicalMuscles,'muscle overlay stays visible on return');
  await act(async()=>app.history.forward());await settle();assert.equal(app.location.hash,deep);assertPose(before,lesson);assert.deepEqual(scene().selected,[id]);
  await act(async()=>root.unmount());await mount(deep);assertPose(before,lesson);assert.deepEqual(scene().selected,[id]);

@@ -2,6 +2,7 @@ export const SEARCH_RESULT_LIMIT=60;
 import {tendonParts} from './tendon-model';
 import {CLINICAL_STRUCTURES,clinicalStructure} from './clinical-structures';
 import type {Atlas,Concept} from './anatomy';
+import {ADDITIONAL_MUSCLE_BY_KEY} from './additional-muscle-data';
 import {MUSCLES,elementsFor} from './education-data';
 import {MUSCLE_GROUPS} from './attachments';
 import {NERVES,nerveParts} from './innervation';
@@ -15,7 +16,7 @@ export const ANATOMY_ALIASES:Record<string,string[]>={
 };
 function labels(name:string){const lower=normalizeSearch(name);return [lower,...Object.entries(ANATOMY_ALIASES).filter(([key])=>new RegExp('\\b'+normalizeSearch(key)+'\\b').test(lower)).flatMap(([,aliases])=>aliases.map(normalizeSearch)),/\bleft\b/.test(lower)?'sol':'',/\bright\b/.test(lower)?'sag':''];}
 export function buildSearchIndex(atlas:Atlas){const entries:{concept:Concept;text:string;terms:string[]}[]=[];const add=(concept:Concept,extra:string[]=[])=>{const terms=[...labels(concept.name),...extra.map(normalizeSearch)];entries.push({concept,text:terms.join(' '),terms});};
- for(const m of MUSCLES){const elements=elementsFor(atlas,[m.key]);add({id:'edu-'+m.key,name:m.name,elements},[m.key,m.tr,...labels(m.key)]);for(const side of ['left','right']){const ids=elements.filter(id=>atlas.parts.find(p=>p.id===id)?.name.toLowerCase().includes(side));if(ids.length)add({id:'edu-'+side+'-'+m.key,name:(side==='left'?'Left ':'Right ')+m.name,elements:ids},[m.tr,m.key,...labels(m.key)]);}}
+ for(const m of MUSCLES){const elements=elementsFor(atlas,[m.key]);const terms=[m.key,m.tr,...labels(m.key),...(ADDITIONAL_MUSCLE_BY_KEY.get(m.key)?.aliases??[])];add({id:'edu-'+m.key,name:m.name,elements},terms);for(const side of ['left','right']){const ids=elements.filter(id=>atlas.parts.find(p=>p.id===id)?.name.toLowerCase().includes(side));if(ids.length)add({id:'edu-'+side+'-'+m.key,name:(side==='left'?'Left ':'Right ')+m.name,elements:ids},terms);}}
  for(const [key,group] of Object.entries(MUSCLE_GROUPS))add({id:'edu-'+key,name:group.name,elements:elementsFor(atlas,group.keys)},[key,key==='quadriceps'?'kuadriseps':'hamstring']);
  for(const n of NERVES)add({id:'nerve:'+n.id,name:n.name,elements:nerveParts(atlas,n).map(p=>p.id)},n.aliases.flatMap(a=>[a,...labels(a)]));
  for(const c of atlas.concepts){const clinical=clinicalStructure(c.name);add(c,clinical?[clinical.name,...(clinical.aliases??[])]:[]);}

@@ -1,3 +1,4 @@
+import {ADDITIONAL_MUSCLE_BY_KEY} from './additional-muscle-data';
 import {HAND_MUSCLES} from './hand-muscle-data';
 export const STUDY_REGIONS={all:'Tüm bölgeler',shoulder:'Omuz ve gövde',elbow:'Dirsek, önkol ve el',hip:'Kalça',knee:'Diz ve uyluk',ankle:'Ayak bileği ve ayak',spine:'Omurga'} as const;
 const regions:Record<string,string[]>={
@@ -7,4 +8,4 @@ const regions:Record<string,string[]>={
  hip:['gluteus maximus','gluteus medius','gluteus minimus','iliacus','psoas major','adductor longus','adductor magnus','sartorius','tensor fasciae latae'],
  spine:['multifidus','erector spinae','rectus abdominis','external oblique','internal oblique','transversus abdominis']
 };
-export function muscleRegion(key:string){return (Object.entries(regions).find(([,keys])=>keys.includes(key))?.[0]??'knee') as Exclude<keyof typeof STUDY_REGIONS,'all'>;}
+export function muscleRegion(key:string){return (ADDITIONAL_MUSCLE_BY_KEY.get(key)?.region??Object.entries(regions).find(([,keys])=>keys.includes(key))?.[0]??'knee') as Exclude<keyof typeof STUDY_REGIONS,'all'>;}

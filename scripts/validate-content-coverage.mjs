@@ -1,9 +1,17 @@
 import assert from 'node:assert/strict';import fs from 'node:fs';import React from 'react';import {renderToStaticMarkup as render} from 'react-dom/server';
-import {MUSCLES} from '../app/education-data.ts';import {muscleReview} from '../app/muscle-review.ts';import {EducationCard} from '../app/education.tsx';import {NERVES,nerveParts,nervesForMuscle} from '../app/innervation.ts';import {structureCoverage,CoverageBadges,nerveLessons} from '../app/coverage.tsx';import NerveCard from '../app/nerve-card.tsx';import {Disclosure} from '../app/disclosure.tsx';import {motionStep,MotionControls} from '../app/motion-controls.tsx';
-const atlas=JSON.parse(fs.readFileSync('public/models/atlas.json')),noop=()=>{};
-assert.equal(MUSCLES.length,49);assert.equal(NERVES.length,27);
-for(const m of MUSCLES){const r=muscleReview(m.key);assert(r.roots&&r.rootSource.startsWith('https://'));assert(m.origin&&m.insertion&&m.nerve&&m.action);const html=render(React.createElement(EducationCard,{name:m.key,system:'muscular'}));for(const label of ['Origo','Insertio','İnnervasyon','Sinir kökü katkıları','Yaptırdığı hareketler'])assert(html.includes(label),m.key+label);}
-for(const m of MUSCLES)assert(nervesForMuscle(m.key).length,m.key+' has a source-linked motor nerve card');
+import {ADDITIONAL_MUSCLE_BY_KEY} from '../app/additional-muscle-data.ts';
+import {MUSCLES,elementsFor,muscleFor,withMuscleLayers} from '../app/education-data.ts';import {muscleReview} from '../app/muscle-review.ts';import {EducationCard} from '../app/education.tsx';import {NERVES,nerveParts,nervesForMuscle} from '../app/innervation.ts';import {structureCoverage,CoverageBadges,nerveLessons} from '../app/coverage.tsx';import NerveCard from '../app/nerve-card.tsx';import {Disclosure} from '../app/disclosure.tsx';import {motionStep,MotionControls} from '../app/motion-controls.tsx';
+const atlas=withMuscleLayers(JSON.parse(fs.readFileSync('public/models/atlas.json'))),noop=()=>{};
+assert.equal(MUSCLES.length,49+ADDITIONAL_MUSCLE_BY_KEY.size);assert.equal(NERVES.length,27);
+assert.equal(new Set(MUSCLES.map(m=>m.key)).size,MUSCLES.length);
+assert.equal(elementsFor(atlas,['levator scapulae']).length,2,'the two levator scapulae source surfaces are in the muscular layer');
+assert.equal(elementsFor(atlas,['trapezius']).length,6,'all trapezius regions resolve');
+assert.equal(elementsFor(atlas,['rectus abdominis']).length,0,'text card does not claim a 3D surface');
+assert.equal(muscleFor('Abductor digiti minimi of left hand')?.key,'abductor digiti minimi of hand');
+assert.equal(muscleFor('Abductor digiti minimi of left foot')?.key,'abductor digiti minimi of foot');
+assert.equal(muscleFor('Right extensor digitorum longus')?.key,'extensor digitorum longus');
+for(const m of MUSCLES){const r=muscleReview(m.key);assert(r.source.startsWith('https://'));if(!ADDITIONAL_MUSCLE_BY_KEY.has(m.key)||r.roots)assert(r.roots&&r.rootSource?.startsWith('https://'));assert(m.origin&&m.insertion&&m.nerve&&m.action);const html=render(React.createElement(EducationCard,{name:m.key,system:'muscular'}));for(const label of ['Origo','Insertio','İnnervasyon',...(r.roots?['Sinir kökü katkıları']:[]),'Yaptırdığı hareketler'])assert(html.includes(label),m.key+label);}
+for(const m of MUSCLES.filter(m=>!ADDITIONAL_MUSCLE_BY_KEY.has(m.key)))assert(nervesForMuscle(m.key).length,m.key+' has a source-linked motor nerve card');
 for(const name of ['left patellar ligament','right calcaneal tendon'])assert(structureCoverage(atlas,name,[]).lessons.length,'tendon coverage includes its real movement link');
 for(const key of ['subscapularis','teres major','pectoralis major','semitendinosus','semimembranosus','biceps femoris'])assert(nervesForMuscle(key).length,key);
 for(const id of ['ulnar','sciatic','superior-subscapular','inferior-subscapular','common-fibular','superficial-fibular'])for(const side of ['left','right'])assert(nerveParts(atlas,NERVES.find(n=>n.id===id),side).length,id+side);
@@ -12,4 +20,4 @@ const missing=structureCoverage(atlas,'',[],NERVES.find(n=>n.id==='inferior-glut
 assert(nerveLessons(NERVES.find(n=>n.id==='ulnar')).length>0);
 assert.equal(motionStep(95,10),100);assert.equal(motionStep(5,-10),0);assert.equal(motionStep(7,1,7),7);
 for(const progress of [0,100]){const controls=MotionControls({progress,onChange:noop,label:'Test'});const buttons=controls.props.children[1].props.children;assert.equal(buttons[0].props.disabled,progress===0);assert.equal(buttons[2].props.disabled,progress===100);let result;const active=MotionControls({progress,playing:false,onChange:v=>result=v,label:'Test'});active.props.children[1].props.children[1].props.onClick();assert.deepEqual(result,{progress:progress===100?0:progress,playing:true});}
-console.log('PASS: 49 standardized sourced muscle cards, 27 nerve cards, bilateral model coverage, missing-model state, nerve lessons, shared playback boundaries.');
+console.log(`PASS: ${MUSCLES.length} standardized sourced muscle cards, 27 nerve cards, bilateral model coverage, missing-model state, nerve lessons, shared playback boundaries.`);

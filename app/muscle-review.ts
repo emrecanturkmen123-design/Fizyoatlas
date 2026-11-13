@@ -1,3 +1,4 @@
+import {ADDITIONAL_MUSCLE_BY_KEY} from './additional-muscle-data';
 import {HAND_ROOTS} from './hand-muscle-data';
 // Individually cross-checked against UW Muscle Atlas on 2026-09-14.
 const uw='https://rad.uw.edu/muscle-atlas/';
@@ -13,7 +14,10 @@ supraspinatus:'UW kas atlası C4–C6 verir; UAMS suprascapular sinir tablosunda
 iliacus:'Kaynak iliopsoas kompleksini ele alır. Bazı atlaslar iliacus için L2–L3 verir; burada L2–L4 katkı aralığı kullanılır.'
 };
 export function muscleReview(key:string){
+ const additional=ADDITIONAL_MUSCLE_BY_KEY.get(key);
+ if(additional)return {roots:additional.roots,source:additional.source,rootSource:additional.roots?additional.source:undefined,note:additional.note,reviewed:'13 Kasım 2026',sourceLabel:'Kas anatomisi · UAMS'};
+
 const source=uw+(key==='biceps femoris'?'biceps-femoris-long-head':key.replace('fibularis','peroneus').replaceAll(' ','-'));
 const rootSource=key==='iliacus'?'https://www.ncbi.nlm.nih.gov/books/NBK531508/':['adductor longus','rectus femoris','vastus lateralis','vastus medialis','vastus intermedius'].includes(key)?'https://www.ncbi.nlm.nih.gov/books/NBK482445/':['semitendinosus','semimembranosus','biceps femoris'].includes(key)?'https://pmc.ncbi.nlm.nih.gov/articles/PMC4223289/':source;
-return {roots:roots[key],source,rootSource,note:notes[key],reviewed:key in HAND_ROOTS?'11 Ekim 2026':['gluteus minimus','tibialis posterior','fibularis longus','fibularis brevis','flexor carpi radialis','flexor carpi ulnaris','extensor carpi radialis longus','extensor carpi radialis brevis'].includes(key)?'30 Eylül 2026':'14 Eylül 2026'};
+return {roots:roots[key],source,rootSource,sourceLabel:'Kas anatomisi · University of Washington',note:notes[key],reviewed:key in HAND_ROOTS?'11 Ekim 2026':['gluteus minimus','tibialis posterior','fibularis longus','fibularis brevis','flexor carpi radialis','flexor carpi ulnaris','extensor carpi radialis longus','extensor carpi radialis brevis'].includes(key)?'30 Eylül 2026':'14 Eylül 2026'};
 }

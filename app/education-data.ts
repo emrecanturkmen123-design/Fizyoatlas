@@ -1,3 +1,4 @@
+import {ADDITIONAL_MUSCLES,ADDITIONAL_MUSCLE_BY_KEY} from './additional-muscle-data';
 import {HAND_MUSCLES} from './hand-muscle-data';
 import type {Atlas} from './anatomy';
 const upper='https://medicine.uams.edu/neuroscience/education/medical-school-courses/human-structure-module/anatomy-tables/muscle-tables/muscles-of-the-upper-limb/';
@@ -5,7 +6,8 @@ const lower='https://anatomy.ttuhscep.edu/anatomytables/muscles_lowerlimb.html';
 const un='https://medicine.uams.edu/neuroscience/education/medical-school-courses/human-structure-module/anatomy-tables/nerve-tables/nerves-of-the-upper-limb/';
 const ln='https://medicine.uams.edu/neuroscience/education/medical-school-courses/human-structure-module/anatomy-tables/nerve-tables/nerves-of-the-lower-limb/';
 const uw='https://rad.uw.edu/muscle-atlas/';
-export const MUSCLES=[
+type MuscleCard = {key:string;name:string;tr:string;origin:string;insertion:string;nerve:string;action:string;source:string;additionalSource?:string};
+export const MUSCLES:readonly MuscleCard[]=[
 {key:'gluteus maximus',name:'M. gluteus maximus',tr:'Büyük kalça kası · kalça',origin:'İliumun arka bölümü; sacrum ve coccyxin arka yüzü, lig. sacrotuberale.',insertion:'Tractus iliotibialis ve femur tuberositas gluteası.',nerve:'N. gluteus inferior · L5–S2',action:'Kalça ekstansiyonu ve dış rotasyonu; üst lifler abdüksiyona katkı verir.',source:uw+'gluteus-maximus'},
 {key:'iliacus',name:'M. iliacus',tr:'İliak kas · kalça',origin:'Fossa iliaca üst bölümü, crista iliaca iç dudağı ve komşu sakral/bağ tutunmaları.',insertion:'Femur trochanter minoru; iliopsoas tendonuna katılır.',nerve:'N. femoralis',action:'Uyluk ile gövdeyi birbirine yaklaştırır; kalça fleksiyonuna katılır.',source:uw+'iliacus'},
 {key:'adductor longus',name:'M. adductor longus',tr:'Uzun yaklaştırıcı · uyluk',origin:'Pubis gövdesinin symphysis pubica komşuluğundaki ön yüzü.',insertion:'Femur linea asperasının orta üçte biri.',nerve:'N. obturatorius · ön bölüm',action:'Kalça addüksiyonu ve fleksiyonuna katkı.',source:uw+'adductor-longus'},
@@ -48,6 +50,7 @@ export const MUSCLES=[
 {key:'extensor carpi radialis longus',name:'M. extensor carpi radialis longus',tr:'Uzun radial el bileği ekstansörü · önkol',origin:'Humerus lateral suprakondiler kenarı.',insertion:'2. metakarp tabanı.',nerve:'N. radialis',action:'El bileği ekstansiyonu ve radial deviasyon.',source:uw+'extensor-carpi-radialis-longus'},
 {key:'extensor carpi radialis brevis',name:'M. extensor carpi radialis brevis',tr:'Kısa radial el bileği ekstansörü · önkol',origin:'Humerus lateral epikondili.',insertion:'3. metakarp tabanı.',nerve:'N. radialis derin dalı',action:'El bileği ekstansiyonu ve radial deviasyon.',source:uw+'extensor-carpi-radialis-brevis'},
 ...HAND_MUSCLES,
+...ADDITIONAL_MUSCLES,
 ];
 export const CASES=[
 {id:'cuff',name:'Rotator manşet yırtığı',kind:'Ortopedik · tendon etkilenmesi',keys:['supraspinatus','infraspinatus','teres minor','subscapularis'],text:'Dört rotator manşet kası gösteriliyor. Yırtık bunların bir veya birkaçının tendonunu tutabilir; en sık supraspinatus tendonu etkilenir. İşaretlenen kasların tamamının her vakada yaralandığı anlamına gelmez.',source:'https://www.orthoinfo.org/diseases--conditions/rotator-cuff-tears/'},
@@ -55,6 +58,27 @@ export const CASES=[
 {id:'winging',name:'Uzun torasik sinir lezyonu',kind:'Nörolojik · periferik motor innervasyon',keys:['serratus anterior'],text:'N. thoracicus longus lezyonunda serratus anterior etkilenebilir ve medial skapular kanatlanma görülebilir. Bu bağlantı, tüm skapular kanatlanmaların aynı sinir lezyonundan kaynaklandığı anlamına gelmez.',source:un},
 {id:'footdrop',name:'Derin fibular sinir lezyonu',kind:'Nörolojik · düşük ayak bağlantısı',keys:['tibialis anterior','extensor hallucis longus','extensor digitorum longus','fibularis tertius','peroneus tertius'],text:'Bacağın anterior kompartmanındaki motor hedefler gösteriliyor. Derin fibular sinir hasarı dorsifleksörleri etkileyerek düşük ayağa yol açabilir. Düşük ayak bir bulgudur; bu ekran tüm olası nedenleri veya sinirin tüm hedeflerini kapsamaz.',source:ln},
 ];
-export function muscleKeyMatches(name:string,key:string){if(key==='extensor digitorum'&&/extensor digitorum (?:longus|brevis)/i.test(name))return false;return new RegExp('\\b'+key+'\\b','i').test(name);}
-export function muscleFor(name:string){if(/tendon|ligament|tutunma|çapraz|talofibular|kalkaneofibular/i.test(name))return undefined;return MUSCLES.find(m=>muscleKeyMatches(name,m.key)||name.toLowerCase().includes(m.name.toLowerCase()));}
+function muscleName(name:string) {
+ return name.toLowerCase().replace(/\b(?:left|right)\s+/g,'').replace(/[().]/g,' ').replace(/\s+/g,' ').trim();
+}
+
+export function muscleKeyMatches(name:string,key:string){
+ const normalized=muscleName(name);
+ if(key==='extensor digitorum'&&/extensor digitorum (?:longus|brevis)/.test(normalized))return false;
+ const extra=ADDITIONAL_MUSCLE_BY_KEY.get(key);
+ const names=[key,...(extra?.aliases??[])];
+ if(extra)names.push(muscleName(extra.name));
+ return names.some(label=>(' '+normalized+' ').includes(' '+label+' '));
+}
+export function muscleFor(name:string){if(/tendon|ligament|tutunma|çapraz|talofibular|kalkaneofibular/i.test(name))return undefined;return MUSCLES.find(m=>muscleKeyMatches(name,m.key)||muscleName(name)===muscleName(m.name));}
+// These two existing BodyParts3D muscle surfaces are classified as skeletal
+// in the packaged catalog. Correct their layer while retaining their source IDs.
+export function withMuscleLayers(atlas:Atlas):Atlas {
+ return {...atlas,parts:atlas.parts.map(part=>
+  (part.id==='FJ1532'||part.id==='FJ1532M')&&part.system==='skeletal'&&/levator scapulae$/i.test(part.name)
+   ? {...part,system:'muscular'}
+   : part
+ )};
+}
+
 export function elementsFor(atlas:Atlas,keys:string[]){return atlas.parts.filter(p=>p.system==='muscular'&&keys.some(k=>muscleKeyMatches(p.name,k))).map(p=>p.id);}
