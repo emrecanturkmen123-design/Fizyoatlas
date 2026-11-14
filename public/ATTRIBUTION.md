@@ -133,3 +133,7 @@ Adaptations: requested-object library loading with embedded scripts disabled, ev
 Four named source objects, `Lateral pectoral nerve.l/.r` and `Medial pectoral nerve.l/.r`, were evaluated from the Z-Anatomy archive with embedded script execution disabled. Attribution: Gauthier Kervyn / Z-Anatomy and BodyParts3D / The Database Center for Life Science, **CC BY-SA 4.0**. Source: https://github.com/Z-Anatomy/Models-of-human-anatomy .
 
 Archive SHA256: `e029688545627bd0214b269e1063143abb580aad72b2c2445d6d8a9a0d9da736`. Existing uniform registration is unchanged and checked against six bone envelopes (RMS 4.7805 mm). Mesh array hashes and adaptations are in `public/models/pectoral-nerves-source.json`; the importer is `scripts/import-pectoral-nerves.py`. No existing geometry was replaced. Inferior gluteal nerve objects are absent from this source; its card highlights real target muscle geometry and explicitly states that the nerve itself is unavailable.
+
+## Dermatom map
+
+`clinical/dermatom-map.png` contains the front and back views cropped from [Dermatomes labeled](https://commons.wikimedia.org/wiki/File:Dermatomes_labeled,_female-male_front-back_3d-shaded.svg) by Goran tek-en, based on work by Mikael Häggström. The adapted image is distributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).

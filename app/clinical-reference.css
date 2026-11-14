@@ -1,0 +1,65 @@
+[data-slot="dialog-content"].clinical-reference {
+  width: min(46rem, calc(100% - 1rem));
+  max-width: none;
+  max-height: calc(100dvh - 1rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.75rem);
+}
+
+.clinical-reference-header,
+.clinical-reference-tabs {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.clinical-reference-header { justify-content: space-between; }
+.clinical-reference-header h2 { margin: 0; font-size: 1.25rem; }
+.clinical-reference-header p { margin: .25rem 0 0; }
+.clinical-reference-tabs { flex-wrap: wrap; }
+.clinical-reference :is(button,select) { min-height: 2.75rem; }
+.clinical-reference-fields,
+.clinical-reference-map {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.clinical-reference-fields label { display: grid; gap: .25rem; font-weight: 600; }
+.clinical-reference-fields select {
+  width: 100%;
+  border: 1px solid var(--input);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: .5rem;
+  color: var(--foreground);
+  font: inherit;
+  font-weight: 400;
+}
+
+.clinical-reference-card {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 1rem;
+}
+
+.clinical-reference-card h3 { margin: 0; font-size: 1.125rem; }
+.clinical-reference-card dt { margin-top: .65rem; font-weight: 600; }
+.clinical-reference-card dd { margin: .15rem 0 .65rem; line-height: 1.55; }
+.clinical-reference-meta { margin: 0 0 .3rem; color: var(--muted-foreground); }
+.clinical-reference-map .clinical-reference-fields { grid-template-columns: 1fr; }
+.clinical-reference-map figure { margin: 0; min-width: 0; }
+.clinical-reference-map img { width: 100%; height: auto; display: block; }
+.clinical-reference-map figcaption { margin-top: .5rem; color: var(--muted-foreground); font-size: .82rem; }
+.clinical-reference-sources { margin-top: .8rem; }
+.clinical-reference-sources summary { cursor: pointer; font-weight: 600; }
+.clinical-reference-sources ul { margin: .4rem 0 0; padding-left: 1rem; list-style: disc; }
+.clinical-reference a { text-decoration: underline; }
+
+@media (max-width: 38rem) {
+  .clinical-reference-fields, .clinical-reference-map { grid-template-columns: 1fr; }
+}

@@ -5,6 +5,7 @@ import {MUSCLE_GROUPS} from './attachments';
 import {NERVES,nerveParts,type Nerve} from './innervation';
 import {CLINICAL_STRUCTURES,geometryLabel} from './clinical-structures';
 import {STUDY_REGIONS,muscleRegion} from './study-map';
+import ClinicalReference from './clinical-reference';
 import type {Atlas} from './anatomy';
 type Tab='muscles'|'nerves'|'connective';
 export default function AtlasIndex({ready,atlas,selectedKey,activeTab,onTabChange,region:controlledRegion,onRegionChange,onStructure,onMuscle,onNerve,onSpine,onLab}:{onLab?:()=>void;ready:boolean;atlas?:Atlas;selectedKey?:string;activeTab?:Tab;onTabChange?:(tab:Tab)=>void;region?:string;onRegionChange?:(region:string)=>void;onStructure?:(key:string)=>void;onMuscle:(name:string,keys:string[])=>void;onNerve:(nerve:Nerve)=>void;onSpine:()=>void}){
@@ -21,6 +22,7 @@ export default function AtlasIndex({ready,atlas,selectedKey,activeTab,onTabChang
  return <section id="atlas-content" tabIndex={-1} className="study-panel glass" aria-label="Atlas yapıları">
   <div className="panel-heading"><strong>Atlas</strong><span className="quiet-count">{total} {tab==='muscles'?'kas':tab==='nerves'?'sinir':'yapı'}</span></div>
   <label className="atlas-region">Bölge<select aria-label="Atlas bölgesi" value={region} onChange={e=>setRegion(e.target.value)}>{Object.entries(STUDY_REGIONS).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>
+  <ClinicalReference/>
   {onLab&&<Button variant="outline" onClick={onLab}>Karşılaştırma</Button>}
   <div className="index-tabs" aria-label="Yapı türü">{(['muscles','nerves','connective'] as Tab[]).map((id,i)=><Button key={id} variant={tab===id?'default':'ghost'} aria-label={id==='connective'?'Bağ, tendon, menisküs ve destek dokuları':undefined} aria-pressed={tab===id} onClick={()=>setTab(id)}>{['Kaslar','Sinirler','Bağ / tendon'][i]}</Button>)}</div>
   {(region==='all'||region==='spine')&&<Button className="spine-entry" variant="outline" disabled={!ready} onClick={onSpine}>Omurgayı incele <span aria-hidden="true">→</span></Button>}
