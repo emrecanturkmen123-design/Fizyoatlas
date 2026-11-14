@@ -1,0 +1,749 @@
+{
+  "sources": {
+    "shoulder": [
+      "Omuz özel testleri · sistematik derleme",
+      "https://pubmed.ncbi.nlm.nih.gov/28122541/"
+    ],
+    "biceps": [
+      "Biseps ve labrum testleri · sistematik derleme",
+      "https://bjsm.bmj.com/content/46/14/964"
+    ],
+    "instability": [
+      "Omuz muayenesi · klinik derleme",
+      "https://pubmed.ncbi.nlm.nih.gov/29443643/"
+    ],
+    "elbow": [
+      "Lateral dirsek ağrısı · APTA klinik kılavuzu",
+      "https://www.apta.org/patient-care/evidence-based-practice-resources/cpgs/lateral-elbow-pain-and-muscle-function-impairments"
+    ],
+    "cts": [
+      "Karpal tünel sendromu · JOSPT 2026",
+      "https://pubmed.ncbi.nlm.nih.gov/41919928/"
+    ],
+    "finkelstein": [
+      "Finkelstein ve Eichhoff karşılaştırması",
+      "https://pubmed.ncbi.nlm.nih.gov/30154628/"
+    ],
+    "neck": [
+      "Servikal radikülopati · sistematik derleme",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC13088722/"
+    ],
+    "lumbar": [
+      "Lomber nörodinamik testler · tanısal doğruluk",
+      "https://pubmed.ncbi.nlm.nih.gov/29253501/"
+    ],
+    "hip": [
+      "Kalça muayenesi · sistematik derleme",
+      "https://pubmed.ncbi.nlm.nih.gov/40692936/"
+    ],
+    "si": [
+      "Sakroiliak provokasyon kümeleri · sistematik derleme",
+      "https://pubmed.ncbi.nlm.nih.gov/34210160/"
+    ],
+    "adams": [
+      "Adölesan skolyoz taraması · USPSTF",
+      "https://jamanetwork.com/journals/jama/fullarticle/2668355"
+    ],
+    "thomas": [
+      "Modifiye Thomas ve pelvis kontrolü",
+      "https://pubmed.ncbi.nlm.nih.gov/27602291/"
+    ],
+    "ober": [
+      "Ober testinde anatomik katkılar",
+      "https://pubmed.ncbi.nlm.nih.gov/26755689/"
+    ],
+    "trendelenburg": [
+      "Trendelenburg · pelvis ve gövde hizası",
+      "https://pubmed.ncbi.nlm.nih.gov/32526604/"
+    ],
+    "knee": [
+      "Diz muayenesi · AAFP",
+      "https://www.aafp.org/afp/2018/1101/p576"
+    ],
+    "acl": [
+      "ÖÇB testleri · sistematik derleme",
+      "https://pubmed.ncbi.nlm.nih.gov/35150292/"
+    ],
+    "meniscus": [
+      "Akut izole menisküs patolojisi · AAOS",
+      "https://www.aaos.org/quality/quality-programs/acute-isolated-meniscal-pathology/"
+    ],
+    "apley": [
+      "Menisküs muayene testleri · derleme",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC2796951/"
+    ],
+    "clarke": [
+      "Clarke bulgusunun tanısal değeri",
+      "https://pubmed.ncbi.nlm.nih.gov/18345345/"
+    ],
+    "ankle": [
+      "Ayak bileği özel testleri · sistematik derleme",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC9109591/"
+    ],
+    "achilles": [
+      "Aşil tendonu muayenesi · sistematik derleme",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC4264655/"
+    ],
+    "dvt": [
+      "Venöz tromboemboli · NICE NG158",
+      "https://www.nice.org.uk/guidance/ng158/chapter/recommendations"
+    ],
+    "homans": [
+      "DVT muayenesinde Homans bulgusu · BMJ",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC1126050/"
+    ],
+    "isncsci": [
+      "ASIA · ISNCSCI muayene kaynakları",
+      "https://asia-spinalinjury.org/isncsci-resources/"
+    ],
+    "map": [
+      "Goran tek-en · Wikimedia Commons · CC BY-SA 4.0",
+      "https://commons.wikimedia.org/wiki/File:Dermatomes_labeled,_female-male_front-back_3d-shaded.svg"
+    ],
+    "map_variability": [
+      "Dermatom haritalarında örtüşme ve bireysel değişkenlik",
+      "https://pubmed.ncbi.nlm.nih.gov/18470936/"
+    ]
+  },
+  "tests": [
+    {
+      "id": "neer",
+      "title": "Neer",
+      "region": "Omuz",
+      "focus": "Subakromiyal bölge",
+      "position": "Skapula stabilize edilirken kol pasif olarak öne kaldırılır.",
+      "finding": "Kişinin tanıdığı ön-yan omuz ağrısı.",
+      "meaning": "Subakromiyal ağrı değerlendirmesine katkı verir. Ağrının kaynağı diğer bulgularla yorumlanır.",
+      "sources": [
+        "shoulder"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "hawkins",
+      "title": "Hawkins–Kennedy",
+      "region": "Omuz",
+      "focus": "Subakromiyal bölge",
+      "position": "Omuz ve dirsek fleksiyondayken omuz pasif iç rotasyona alınır.",
+      "finding": "Tanıdık ön-yan omuz ağrısının ortaya çıkması.",
+      "meaning": "Pozitif yanıt tek başına hangi tendonun etkilendiğini göstermez.",
+      "sources": [
+        "shoulder"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "jobe",
+      "title": "Jobe / Empty Can",
+      "region": "Omuz",
+      "focus": "Supraspinatus ve rotator manşet",
+      "position": "Kol skapula düzleminde kaldırılır. Başparmak aşağı bakarken yükseltilmiş pozisyon dirence karşı korunur.",
+      "finding": "Ağrı veya karşı tarafa göre kuvvet azalması. Bunlar ayrı kaydedilir.",
+      "meaning": "Ağrıya bağlı performans kaybı ile gerçek kuvvet kaybını diğer muayene bulgularıyla ayır.",
+      "sources": [
+        "shoulder"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "drop_arm",
+      "title": "Drop Arm / Düşen Kol",
+      "region": "Omuz",
+      "focus": "Rotator manşet işlevi",
+      "position": "Abdüksiyondaki kolun kontrollü biçimde indirilmesi istenir.",
+      "finding": "Kolun kontrolsüz düşmesi veya kontrollü indirilememesi.",
+      "meaning": "Belirgin manşet işlev kaybını düşündürebilir. Yırtığın varlığı ve boyutu diğer bulgularla değerlendirilir.",
+      "sources": [
+        "shoulder"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "speed",
+      "title": "Speed",
+      "region": "Omuz",
+      "focus": "Biseps uzun başı ve bisipital oluk",
+      "position": "Dirsek düz, önkol supinasyondayken omuz fleksiyonu direnç altında değerlendirilir.",
+      "finding": "Bisipital oluk çevresinde tanıdık ağrının ortaya çıkması.",
+      "meaning": "Ağrının yeri kaydedilir. Bulgudan tek başına SLAP veya biseps tendinopatisi sonucu çıkarılmaz.",
+      "sources": [
+        "biceps",
+        "instability"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "yergason",
+      "title": "Yergason",
+      "region": "Omuz",
+      "focus": "Biseps uzun başı ve bisipital oluk",
+      "position": "Dirsek gövdeye yakın ve fleksiyondayken önkol supinasyonu dirence karşı değerlendirilir.",
+      "finding": "Bisipital oluk çevresinde tanıdık ağrı. Hissedilen atlama ayrı kaydedilir.",
+      "meaning": "Speed ile aynı hareket değildir. Bulguyu öykü ve diğer omuz testleriyle birlikte yorumla.",
+      "sources": [
+        "biceps",
+        "instability"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "apprehension",
+      "title": "Apprehension / Endişe",
+      "region": "Omuz",
+      "focus": "Anterior glenohumeral instabilite",
+      "position": "Klinisyen omuzu kontrollü biçimde abdüksiyon ve dış rotasyona alır.",
+      "finding": "Omuz çıkacakmış hissi veya belirgin endişe.",
+      "meaning": "Ağrı tek başına aynı pozitiflik ölçütünü karşılamaz.",
+      "sources": [
+        "instability"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "cozen",
+      "title": "Cozen",
+      "region": "Dirsek",
+      "focus": "Ortak ekstansör tendon bölgesi",
+      "position": "El bileği ekstansiyonu dirence karşı değerlendirilir.",
+      "finding": "Lateral epikondil çevresindeki tanıdık ağrının ortaya çıkması.",
+      "meaning": "Lateral dirsek ağrısı öyküsü ve palpasyonla birlikte yorumlanır.",
+      "sources": [
+        "elbow"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "mill",
+      "title": "Mill",
+      "region": "Dirsek",
+      "focus": "Ortak ekstansör tendon bölgesi",
+      "position": "Önkol pronasyonda ve el bileği fleksiyondayken dirsek kontrollü olarak düzleştirilir.",
+      "finding": "Lateral epikondil civarında tanıdık ağrının ortaya çıkması.",
+      "meaning": "Pasif germe yanıtı kaydedilir. Cozen dirençli bir manevradır.",
+      "sources": [
+        "elbow"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "phalen",
+      "title": "Phalen",
+      "region": "El bileği",
+      "focus": "Karpal tünelde median sinir",
+      "position": "El bileği fleksiyon pozisyonunda tutulurken semptomlar gözlenir.",
+      "finding": "Median sinir dağılımında tanıdık uyuşma veya karıncalanma.",
+      "meaning": "Dağılımı, öyküyü ve diğer muayene bulgularını birlikte değerlendir.",
+      "sources": [
+        "cts"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "tinel",
+      "title": "Tinel · Karpal tünel",
+      "region": "El bileği",
+      "focus": "Karpal tünelde median sinir",
+      "position": "Median sinirin karpal tünel üzerindeki hattına hafif perküsyon uygulanır.",
+      "finding": "Median dağılım boyunca yayılan karıncalanma.",
+      "meaning": "Yalnızca perküsyon yapılan noktadaki hassasiyet farklı bir gözlemdir.",
+      "sources": [
+        "cts"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "finkelstein",
+      "title": "Finkelstein",
+      "region": "El bileği",
+      "focus": "Birinci dorsal tendon kompartmanı",
+      "position": "Klinisyen başparmağı kontrollü tutarak el bileğini ulnar yöne alır.",
+      "finding": "Radial stiloid çevresinde tanıdık ağrı.",
+      "meaning": "Başparmağı avuç içine kapatarak yapılan Eichhoff manevrasından ayır.",
+      "sources": [
+        "finkelstein"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "spurling",
+      "title": "Spurling",
+      "region": "Omurga ve pelvis",
+      "focus": "Servikal radiküler belirtiler",
+      "position": "Klinisyen, uygun güvenlik taramasından sonra boynu kontrollü olarak semptom tarafına alır. Kullanılan varyant kaydedilir.",
+      "finding": "Kola yayılan tanıdık radiküler belirtinin ortaya çıkması.",
+      "meaning": "Lokal boyun ağrısını ayrı kaydet. Motor ve duyu muayenesi olası seviye değerlendirmesine katkı verir.",
+      "sources": [
+        "neck"
+      ],
+      "tag": "Servikal provokasyon",
+      "levels": [
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "T1"
+      ]
+    },
+    {
+      "id": "slr",
+      "title": "Düz Bacak Kaldırma / Lasègue",
+      "region": "Omurga ve pelvis",
+      "focus": "Lumbosakral radiküler belirtiler",
+      "position": "Sırtüstü yatışta diz düz tutulup bacak pasif olarak kaldırılır.",
+      "finding": "Bacağa yayılan tanıdık semptom. Başlangıç açısı ve dağılım kaydedilir.",
+      "meaning": "Arka uyluk gerilimi ayrı kaydedilir. Açı veya ağrı tek başına disk hernisini ya da kök düzeyini belirlemez.",
+      "sources": [
+        "lumbar"
+      ],
+      "tag": "Nörodinamik değerlendirme",
+      "levels": [
+        "L4",
+        "L5",
+        "S1"
+      ]
+    },
+    {
+      "id": "femoral_stretch",
+      "title": "Femoral Sinir Germe",
+      "region": "Omurga ve pelvis",
+      "focus": "Üst lomber radiküler belirtiler",
+      "position": "Yüzüstü yatışta diz kontrollü bükülür. Kullanılan varyant ve kalça pozisyonu kaydedilir.",
+      "finding": "Ön uylukta kişinin tanıdığı yayılan semptom.",
+      "meaning": "Yerel kuadriseps gerilimini ve diz ağrısını ayır. Duyu ve kas işlevi ile birlikte yorumlanır.",
+      "sources": [
+        "lumbar"
+      ],
+      "tag": "Nörodinamik değerlendirme",
+      "levels": [
+        "L2",
+        "L3",
+        "L4"
+      ]
+    },
+    {
+      "id": "faber",
+      "title": "FABER / Patrick",
+      "region": "Omurga ve pelvis",
+      "focus": "Kalça ve sakroiliak bölge",
+      "position": "Kalça fleksiyon, abdüksiyon ve dış rotasyona alınır. Pelvis kontrol edilir.",
+      "finding": "Tanıdık ağrı veya asimetrik hareket kısıtlılığı.",
+      "meaning": "Kasık ve posterior pelvis ağrısı ayrı kaydedilir. Tek başına sakroiliak ağrı kaynağını belirlemez.",
+      "sources": [
+        "hip",
+        "si"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "gaenslen",
+      "title": "Gaenslen",
+      "region": "Omurga ve pelvis",
+      "focus": "Sakroiliak ağrı provokasyonu",
+      "position": "Kalçalardan biri fleksiyon, diğeri ekstansiyon yönünde konumlandırılır.",
+      "finding": "Posterior pelviste tanıdık ağrının tekrar ortaya çıkması.",
+      "meaning": "Diğer sakroiliak provokasyon bulgularıyla birlikte değerlendirilir.",
+      "sources": [
+        "si"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "adams",
+      "title": "Adams Öne Eğilme",
+      "region": "Omurga ve pelvis",
+      "focus": "Gövde asimetrisi / skolyoz taraması",
+      "position": "Ayakta öne eğilme sırasında gövde arkadan gözlenir.",
+      "finding": "Kaburga belirginliği veya lomber asimetri.",
+      "meaning": "Tarama bulgusudur. Eğriliğin yapısı, büyüklüğü veya tanısı için ek değerlendirme gerekir.",
+      "sources": [
+        "adams"
+      ],
+      "tag": "Tarama",
+      "levels": []
+    },
+    {
+      "id": "thomas",
+      "title": "Thomas / Modifiye Thomas",
+      "region": "Kalça",
+      "focus": "Kalça ekstansiyonu ve fleksör uzunluğu",
+      "position": "Bir kalça gövdeye alınırken pelvis kontrol edilir. Modifiye yöntemde test uyluğu ve diz açısı ayrı gözlenir.",
+      "finding": "Test uyluğunun konumu kalça ekstansiyonu kısıtını düşündürür. Diz açısı, rectus femoris katkısını değerlendirmeye yardım eder.",
+      "meaning": "Kullanılan varyantı ve pelvis konumunu kaydet. Tek gözlemden hangi kasın kısa olduğu çıkarılmaz.",
+      "sources": [
+        "thomas"
+      ],
+      "tag": "Kısalık ve Mobilite",
+      "levels": []
+    },
+    {
+      "id": "ober",
+      "title": "Ober",
+      "region": "Kalça",
+      "focus": "Pasif kalça addüksiyonu",
+      "position": "Yan yatışta pelvis sabit tutulur ve üst bacak kontrollü olarak addüksiyona bırakılır.",
+      "finding": "Kalça addüksiyonunun kısıtlı kalması.",
+      "meaning": "Kısıtlılık tek başına IT bandı veya TFL kısalığını göstermez.",
+      "sources": [
+        "ober"
+      ],
+      "tag": "Kısalık ve Mobilite",
+      "levels": []
+    },
+    {
+      "id": "trendelenburg",
+      "title": "Trendelenburg",
+      "region": "Kalça",
+      "focus": "Tek ayak destekte pelvis kontrolü",
+      "position": "Tek ayak desteğinde karşı pelvis ve gövde hizası gözlenir.",
+      "finding": "Destek almayan tarafta pelvisin aşağı düşmesi. Gövde eğilmesi ayrıca kaydedilir.",
+      "meaning": "Sonucu ağrı, denge ve kalça abdüktör işleviyle değerlendir. Tek bir kasın zayıflığını göstermez.",
+      "sources": [
+        "trendelenburg"
+      ],
+      "tag": "Fonksiyonel Gözlem",
+      "levels": []
+    },
+    {
+      "id": "lachman",
+      "title": "Lachman",
+      "region": "Diz",
+      "focus": "Ön çapraz bağ · ÖÇB",
+      "position": "Diz hafif fleksiyondayken femur stabilize edilir, tibianın öne hareketi değerlendirilir.",
+      "finding": "Karşı tarafa göre artmış anterior hareket veya yumuşak son his.",
+      "meaning": "ÖÇB kuşkusu, öykü ve diğer bulgularla birlikte değerlendirilir.",
+      "sources": [
+        "knee",
+        "acl"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "knee_anterior",
+      "title": "Diz Ön Çekmece",
+      "region": "Diz",
+      "focus": "Ön çapraz bağ · ÖÇB",
+      "position": "Diz yaklaşık 90° fleksiyondayken tibianın öne hareketi değerlendirilir.",
+      "finding": "Artmış anterior tibial hareket veya yumuşak son his.",
+      "meaning": "Başlangıçta tibianın posteriora çökmüş olup olmadığını kontrol et. Ağrı ve kas korunması sonucu etkileyebilir.",
+      "sources": [
+        "knee",
+        "acl"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "knee_posterior",
+      "title": "Arka Çekmece",
+      "region": "Diz",
+      "focus": "Arka çapraz bağ · AÇB",
+      "position": "Fleksiyondaki dizde tibianın başlangıç hizası ve arkaya hareketi değerlendirilir.",
+      "finding": "Karşı tarafa göre artmış posterior tibial hareket.",
+      "meaning": "Posterior Sag ve diğer muayene bulgularıyla birlikte yorumlanır.",
+      "sources": [
+        "knee"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "posterior_sag",
+      "title": "Posterior Sag",
+      "region": "Diz",
+      "focus": "Arka çapraz bağ · AÇB",
+      "position": "Kalça ve diz fleksiyondayken tibianın yerçekimi altındaki başlangıç konumu gözlenir.",
+      "finding": "Tibianın femura göre posteriora çökmesi.",
+      "meaning": "Arka Çekmece’de uygulanan kuvvet yerine istirahat hizası gözlenir.",
+      "sources": [
+        "knee"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "valgus",
+      "title": "Valgus Stres",
+      "region": "Diz",
+      "focus": "Medial kollateral bağ · MCL",
+      "position": "Diz hafif fleksiyonda ve ekstansiyona yakın ayrı konumlarda valgus yönünde değerlendirilir.",
+      "finding": "Medial ağrı veya karşı tarafa göre medial açılma.",
+      "meaning": "Ağrı ve gevşekliği ayrı kaydet. Ekstansiyondaki açılma daha geniş yaralanma değerlendirmesi gerektirebilir.",
+      "sources": [
+        "knee"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "varus",
+      "title": "Varus Stres",
+      "region": "Diz",
+      "focus": "Lateral kollateral bağ · LCL",
+      "position": "Diz hafif fleksiyonda ve ekstansiyona yakın ayrı konumlarda varus yönünde değerlendirilir.",
+      "finding": "Lateral ağrı veya karşı tarafa göre lateral açılma.",
+      "meaning": "Ağrı ve gevşekliği ayrı kaydet. Posterolateral yapıların katkısını da göz önünde bulundur.",
+      "sources": [
+        "knee"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "mcmurray",
+      "title": "McMurray",
+      "region": "Diz",
+      "focus": "Medial ve lateral menisküs",
+      "position": "Diz fleksiyondan ekstansiyona doğru giderken tibial rotasyon ve ilgili eklem hattı değerlendirilir.",
+      "finding": "Eklem hattında tanıdık ağrı veya palpabl mekanik klik.",
+      "meaning": "Tek başına klik kesin yırtık anlamına gelmez. Eklem hattı hassasiyeti ve öyküyle birlikte yorumlanır.",
+      "sources": [
+        "meniscus",
+        "knee"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "apley",
+      "title": "Apley Kompresyon",
+      "region": "Diz",
+      "focus": "Menisküs belirtileri",
+      "position": "Yüzüstü ve diz fleksiyondayken tibia kompresyon altında kontrollü döndürülür.",
+      "finding": "Eklem hattında tanıdık ağrı.",
+      "meaning": "Provokasyon bulgusudur. Tek başına menisküs yırtığını belirlemez.",
+      "sources": [
+        "apley"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "clarke",
+      "title": "Clarke",
+      "region": "Diz",
+      "focus": "Patellofemoral bölge",
+      "position": "Patella bölgesinde elle temas varken kuadriseps kasılması değerlendirilir.",
+      "finding": "Tanıdık retropatellar ağrı.",
+      "meaning": "Tanısal değeri düşüktür. Krepitasyon tek başına patellofemoral ağrıyı veya kıkırdak hasarını göstermez.",
+      "sources": [
+        "clarke"
+      ],
+      "tag": "Yorum sınırı",
+      "levels": []
+    },
+    {
+      "id": "ankle_anterior",
+      "title": "Ayak Bileği Ön Çekmece",
+      "region": "Ayak bileği",
+      "focus": "Anterior talofibular bağ · ATFL",
+      "position": "Distal bacak stabilize edilir, talusun öne hareketi değerlendirilir.",
+      "finding": "Karşı tarafa göre artmış anterior translasyon veya değişen son his.",
+      "meaning": "Ağrı, şişlik, muayene zamanı ve kas korunmasını dikkate al.",
+      "sources": [
+        "ankle"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "talar_tilt",
+      "title": "Talar Tilt",
+      "region": "Ayak bileği",
+      "focus": "Lateral bağlar · özellikle CFL",
+      "position": "Ayak bileğinin konumu kaydedilir ve talusun inversiyon yönündeki eğimi değerlendirilir.",
+      "finding": "Karşı tarafa göre artmış inversiyon açılması.",
+      "meaning": "Ayak bileği konumu hangi bağların gerildiğini etkiler.",
+      "sources": [
+        "ankle"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "thompson",
+      "title": "Thompson / Baldır Sıkma",
+      "region": "Ayak bileği",
+      "focus": "Aşil tendonu bütünlüğü",
+      "position": "Ayak serbestken baldır sıkıldığında ayak bileği hareketi gözlenir.",
+      "finding": "Plantar fleksiyonun olmaması veya karşı tarafa göre belirgin azalması.",
+      "meaning": "Aşil rüptürü şüphesinde diğer bulgular ve uygun klinik değerlendirme ile birlikte yorumlanır.",
+      "sources": [
+        "achilles"
+      ],
+      "tag": "Özel test",
+      "levels": []
+    },
+    {
+      "id": "homans",
+      "title": "Homans · DVT Şüphesi",
+      "region": "Alt bacak",
+      "focus": "Derin ven trombozu güvenlik değerlendirmesi",
+      "position": "",
+      "finding": "Baldır ağrısına dayanarak DVT doğrulanamaz veya dışlanamaz.",
+      "meaning": "DVT şüphesi varsa egzersizi durdur ve acil klinik değerlendirmeye yönlendir. Uygun klinik yolda Wells değerlendirmesi, D-dimer ve ven ultrasonu kullanılır.",
+      "sources": [
+        "dvt",
+        "homans"
+      ],
+      "tag": "Güvenlik",
+      "levels": []
+    }
+  ],
+  "levels": [
+    {
+      "id": "C2",
+      "sensory": "Oksipital çıkıntının en az 1 cm laterali.",
+      "motor": ""
+    },
+    {
+      "id": "C3",
+      "sensory": "Klavikula ortası hizasında supraklavikular çukur.",
+      "motor": ""
+    },
+    {
+      "id": "C4",
+      "sensory": "Akromiyoklavikular eklem üzeri.",
+      "motor": ""
+    },
+    {
+      "id": "C5",
+      "sensory": "Dirsek ön çukurunun radial yanı, dirseğin hemen proksimali.",
+      "motor": "Dirsek fleksiyonu"
+    },
+    {
+      "id": "C6",
+      "sensory": "El başparmağı proksimal falanksının sırtı.",
+      "motor": "El bileği ekstansiyonu"
+    },
+    {
+      "id": "C7",
+      "sensory": "Orta parmak proksimal falanksının sırtı.",
+      "motor": "Dirsek ekstansiyonu"
+    },
+    {
+      "id": "C8",
+      "sensory": "Küçük parmak proksimal falanksının sırtı.",
+      "motor": "Orta parmak distal interfalangeal eklem fleksiyonu"
+    },
+    {
+      "id": "T1",
+      "sensory": "Dirsek ön çukurunun ulnar yanı, medial epikondilin hemen proksimali.",
+      "motor": "Küçük parmak abdüksiyonu"
+    },
+    {
+      "id": "T2",
+      "sensory": "Aksilla çukurunun tepesi.",
+      "motor": ""
+    },
+    {
+      "id": "T3",
+      "sensory": "Midklavikular hatta üçüncü interkostal aralık.",
+      "motor": ""
+    },
+    {
+      "id": "T4",
+      "sensory": "Midklavikular hatta dördüncü interkostal aralık.",
+      "motor": ""
+    },
+    {
+      "id": "T5",
+      "sensory": "Midklavikular hatta beşinci interkostal aralık.",
+      "motor": ""
+    },
+    {
+      "id": "T6",
+      "sensory": "Midklavikular hatta ksifoid seviyesi.",
+      "motor": ""
+    },
+    {
+      "id": "T7",
+      "sensory": "Midklavikular hatta ksifoid ile göbek arasının üstten ilk dörtte biri.",
+      "motor": ""
+    },
+    {
+      "id": "T8",
+      "sensory": "Midklavikular hatta ksifoid ile göbek arasının ortası.",
+      "motor": ""
+    },
+    {
+      "id": "T9",
+      "sensory": "Midklavikular hatta ksifoidden göbeğe doğru dörtte üç nokta.",
+      "motor": ""
+    },
+    {
+      "id": "T10",
+      "sensory": "Midklavikular hatta göbek seviyesi.",
+      "motor": ""
+    },
+    {
+      "id": "T11",
+      "sensory": "Midklavikular hatta göbek ve inguinal bağ arasının ortası.",
+      "motor": ""
+    },
+    {
+      "id": "T12",
+      "sensory": "İnguinal bağın orta noktası, midklavikular hat hizası.",
+      "motor": ""
+    },
+    {
+      "id": "L1",
+      "sensory": "T12 ve L2 anahtar duyu noktalarının ortası.",
+      "motor": ""
+    },
+    {
+      "id": "L2",
+      "sensory": "İnguinal bağ ortası ile medial femoral kondil arasındaki hattın orta noktası.",
+      "motor": "Kalça fleksiyonu"
+    },
+    {
+      "id": "L3",
+      "sensory": "Dizin üzerinde, medial femoral kondil.",
+      "motor": "Diz ekstansiyonu"
+    },
+    {
+      "id": "L4",
+      "sensory": "Medial malleol üzeri.",
+      "motor": "Ayak bileği dorsifleksiyonu"
+    },
+    {
+      "id": "L5",
+      "sensory": "Ayak sırtında üçüncü metatarsofalangeal eklem.",
+      "motor": "Ayak başparmağı ekstansiyonu"
+    },
+    {
+      "id": "S1",
+      "sensory": "Kalkaneusun lateral yüzü.",
+      "motor": "Ayak bileği plantar fleksiyonu"
+    },
+    {
+      "id": "S2",
+      "sensory": "Popliteal çukurun ortası.",
+      "motor": ""
+    },
+    {
+      "id": "S3",
+      "sensory": "Tuber ischiadicum üzeri veya infragluteal kıvrım.",
+      "motor": ""
+    },
+    {
+      "id": "S4–5",
+      "sensory": "Perianal bölgede mukokutanöz birleşimin 1 cm’den az laterali.",
+      "motor": ""
+    }
+  ]
+}
