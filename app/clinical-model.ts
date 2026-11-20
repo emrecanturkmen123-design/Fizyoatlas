@@ -28,6 +28,7 @@ export function rootGroup(id: string) {
 export type ClinicalMode = 'tests' | 'dermatomes' | 'myotomes';
 export const clinicalTestLayers = {
   anatomy: 'Kas ve iskelet',
+  target: 'Hedef yapı ve kemikler',
   skeleton: 'İskelet',
   surface: 'Vücut yüzeyi',
 } as const;
@@ -46,7 +47,7 @@ export type ClinicalSelection = {
   focus: number;
 };
 export const defaultClinical: ClinicalSelection = {
-  mode: 'tests', region: 'Omuz', testId: 'neer', testLayer: 'anatomy', levelId: 'C6', side: 'left', view: 'front', focus: 0,
+  mode: 'tests', region: '', testId: '', testLayer: 'anatomy', levelId: 'C6', side: 'left', view: 'front', focus: 0,
 };
 
 const motorMuscles: Record<string, RegExp> = {
@@ -90,16 +91,6 @@ export function motorNerve(part:Part, levelId:string) {
   return extra?.nerve ?? muscleFor(part.name)?.nerve.split(' · ')[0];
 }
 
-const regionParts: Record<string, RegExp> = {
-  Omuz: /^(scapula|clavicle|humerus)$/,
-  Dirsek: /^(humerus|ulna|radius)$/,
-  'El bileği': /^(radius|ulna|scaphoid|lunate)$/,
-  'Omurga ve pelvis': /^(sacrum|hip bone|ilium)$/,
-  Kalça: /^(hip bone|ilium|femur)$/,
-  Diz: /^(femur|tibia|patella|fibula)$/,
-  'Ayak bileği': /^(tibia|fibula|talus|calcaneus)$/,
-  'Alt bacak': /^(tibia|fibula)$/,
-};
 const testParts: Record<string, RegExp> = {
   neer: /supraspinatus$|supraspinatus tendon$/, hawkins: /supraspinatus$|supraspinatus tendon$/,
   jobe: /supraspinatus$|supraspinatus tendon$/, drop_arm: /supraspinatus$|infraspinatus$/,
@@ -147,9 +138,7 @@ export function clinicalParts(atlas: Atlas, selection: ClinicalSelection) {
   }
   const pattern = testParts[selection.testId];
   const targets = pattern ? matches(pattern, atlas.parts) : [];
-  if (targets.length) return targets;
-  const region = regionParts[selection.region];
-  return region ? matches(region, atlas.parts.filter(part => part.system === 'skeletal')) : [];
+  return targets;
 }
 
 const normalizePins = (pins: typeof landmarks.tests): Landmark[] => pins.map(pin => ({
@@ -157,6 +146,39 @@ const normalizePins = (pins: typeof landmarks.tests): Landmark[] => pins.map(pin
 }));
 const testPins = normalizePins(landmarks.tests);
 const dermatomePins = normalizePins(landmarks.dermatomes);
+
+const focusedRegions: Record<string,string> = {
+  faber:'Kalça', gaenslen:'Kalça', femoral_stretch:'Kalça', slr:'Kalça',
+};
+
+function testFocusPin(selection:ClinicalSelection):Landmark|undefined {
+  if(selection.testId==='spurling'){
+    const side=selection.side;
+    return {id:selection.region,side,position:[side==='left'?.035:-.035,1.46,-.064],normal:[0,0,-1]};
+  }
+  const region=focusedRegions[selection.testId]??selection.region;
+  return testPins.find(pin=>pin.id===region&&pin.side===selection.side);
+}
+
+export function updateClinicalTests(atlas:Atlas|null, current:ClinicalSelection, change:Partial<ClinicalSelection>):ClinicalSelection {
+  const next={...current,...change};
+  if(change.region!==undefined){
+    const regionChanged=change.region!==current.region;
+    if(regionChanged){next.testId='';next.testLayer='anatomy';}
+    if(!next.region){next.focus=0;return next;}
+  }
+  if(change.testId!==undefined){
+    const test=tests.find(test=>test.id===change.testId&&test.region===next.region);
+    next.testId=test?.id??'';
+    next.testLayer=atlas&&test&&clinicalParts(atlas,next).length?'target':'anatomy';
+  }
+  if((change.region!==undefined||change.testId!==undefined||change.side!==undefined)&&next.region){
+    const pin=testFocusPin(next);
+    if(pin)next.view=pin.normal[2]<0?'back':'front';
+    next.focus=current.focus+1;
+  }
+  return next;
+}
 
 function defaultAreaPin(id:string,side:ClinicalSide):Landmark|undefined {
   const sensoryPoint=dermatomePins.find(pin=>pin.id===id&&pin.side===side);
@@ -179,13 +201,13 @@ export function clinicalPresentation(atlas: Atlas, selection: ClinicalSelection)
   const focusPin=selection.mode==='dermatomes'
     ? selection.areaPin?.id===active&&selection.areaPin.side===selection.side
       ? selection.areaPin : defaultAreaPin(active,selection.side)
-    : pins.find(pin=>pin.id===active&&pin.side===selection.side);
+    : selection.mode==='tests'?testFocusPin(selection):undefined;
   return {
     parts, pins, active, mode: selection.mode, testLayer, side: selection.side,
     visible: selection.mode === 'dermatomes' || testLayer === 'surface' ? clinicalSkin
-      : testLayer === 'skeleton' ? clinicalBones : clinicalMuscles,
+      : testLayer === 'skeleton'||testLayer==='target' ? clinicalBones : clinicalMuscles,
     contextOpacity: selection.mode === 'myotomes' ? .17
-      : testLayer === 'surface' ? .86 : testLayer === 'anatomy' ? .58 : parts.length ? .26 : 1,
+      : testLayer === 'surface' ? .86 : testLayer === 'target' && parts.length ? .28 : 1,
     focusPin,
   };
 }

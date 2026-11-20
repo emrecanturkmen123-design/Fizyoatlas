@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { clinicalTestLayers, levels, motorLevelAvailable, motorNerve, regions, rootGroup, rootGroups, sensoryLevels, tests, type ClinicalSelection, type ClinicalTestLayer } from './clinical-model';
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import type { SelectionMember } from './selection-palette';
 import type { Part } from './anatomy';
 import reference from './clinical-reference.json';
@@ -34,13 +34,17 @@ type Props = {
 
 export default function ClinicalReference({value, onChange, onClose, parts, muscles, hasPin, onPickLevel}: Props) {
   const { mode, region, side, levelId, testId } = value;
+  const panel = useRef<HTMLElement>(null);
+  useEffect(()=>{
+    if(mode==='tests'&&panel.current)panel.current.scrollTop=0;
+  },[mode,region,testId]);
   const visibleTests = tests.filter(test => test.region === region);
-  const test = visibleTests.find(test => test.id === testId) ?? visibleTests[0];
+  const test = visibleTests.find(test => test.id === testId);
   const level = sensoryLevels.find(level => level.id === levelId)!;
   const rootColor = rootGroup(levelId)?.color;
   const availableLevels = mode === 'dermatomes' ? sensoryLevels : motorLevels;
   const visualTarget = hasPin || parts.length > 0;
-  return <section id="atlas-content" className="study-panel glass clinical-reference" data-clinical-mode={mode} aria-label="Klinik Atlas" tabIndex={-1}>
+  return <section ref={panel} id="atlas-content" className="study-panel glass clinical-reference" data-clinical-mode={mode} aria-label="Klinik Atlas" tabIndex={-1}>
     <div className="panel-heading">
       <strong>Klinik Atlas</strong>
       <Button variant="ghost" onClick={onClose}>← Atlas</Button>
@@ -48,41 +52,62 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
     <div className="clinical-reference-views" aria-label="Klinik Atlas bölümleri">
       {modes.map(([id, label]) => <Button key={id} aria-pressed={mode === id} variant={mode === id ? 'default' : 'outline'} onClick={() => onChange({mode:id})}>{label}</Button>)}
     </div>
-    {mode !== 'myotomes' && <p className="clinical-reference-hint">{mode === 'tests' ? 'Testleri açmak için modeldeki bölge işaretine dokun.' : 'Duyu alanını seçmek için modeldeki renkli bölgeye dokun.'}</p>}
-    <div className="clinical-reference-views">
+    {mode === 'dermatomes' && <p className="clinical-reference-hint">Duyu alanını seçmek için modeldeki renkli bölgeye dokun.</p>}
+    {mode !== 'tests' && <div className="clinical-reference-views">
       <Button aria-pressed={side === 'left'} variant="outline" onClick={() => onChange({side:'left'})}>Sol</Button>
       <Button aria-pressed={side === 'right'} variant="outline" onClick={() => onChange({side:'right'})}>Sağ</Button>
       <Button aria-pressed={value.view === 'front'} variant="ghost" onClick={() => onChange({view:'front',focus:0})}>Ön</Button>
       <Button aria-pressed={value.view === 'back'} variant="ghost" onClick={() => onChange({view:'back',focus:0})}>Arka</Button>
-    </div>
-    {mode === 'tests' ? <>
-      <label className="atlas-region">Model katmanı
-        <select value={value.testLayer ?? 'anatomy'} onChange={event => onChange({testLayer:event.target.value as ClinicalTestLayer})}>
-          {Object.entries(clinicalTestLayers).map(([id,label]) => <option key={id} value={id}>{label}</option>)}
-        </select>
-      </label>
-      <label className="atlas-region">Bölge
-        <select value={region} onChange={event => onChange({region:event.target.value})}>
-          {regions.map(region => <option key={region}>{region}</option>)}
-        </select>
-      </label>
-      <label className="atlas-region">Test
-        <select value={test.id} onChange={event => onChange({testId:event.target.value})}>
-          {visibleTests.map(test => <option key={test.id} value={test.id}>{test.title}</option>)}
-        </select>
-      </label>
-    </> : null}
-    {visualTarget && <Button variant="outline" onClick={() => onChange({focus:value.focus+1})}>Modelde yakından göster</Button>}
-    <article className="clinical-reference-card" aria-live="polite">
-      {mode === 'tests' ? <>
-        <p className="clinical-reference-hint">{test.tag}</p>
+    </div>}
+    {mode === 'tests' ? <div className="clinical-test-flow">
+      {!region ? <>
+        <h3>Hangi bölgeyi incelemek istiyorsun?</h3>
+        <p className="clinical-reference-hint">Modeldeki işarete dokun veya aşağıdan bölgeyi seç.</p>
+        <div className="clinical-region-grid">
+          {regions.map(region => <Button key={region} variant="outline" onClick={() => onChange({region})}>{region}</Button>)}
+        </div>
+      </> : <>
+        <div className="clinical-test-navigation">
+          <Button variant="ghost" onClick={() => onChange({region:'', view:'front', focus:0})}>← Bölgeler</Button>
+          {test && <Button variant="ghost" onClick={() => onChange({testId:''})}>Testleri göster</Button>}
+        </div>
+        {!test && <>
+          <h3>{region} testleri</h3>
+          <div className="clinical-test-list">
+            {visibleTests.map(test => <Button key={test.id} variant="outline" onClick={() => onChange({testId:test.id})}>{test.title}</Button>)}
+          </div>
+        </>}
+        <details className="clinical-model-settings">
+          <summary>Model görünümü</summary>
+          <div className="clinical-reference-views" aria-label="Model yönü ve tarafı">
+            <Button aria-pressed={side === 'left'} variant="outline" onClick={() => onChange({side:'left'})}>Sol</Button>
+            <Button aria-pressed={side === 'right'} variant="outline" onClick={() => onChange({side:'right'})}>Sağ</Button>
+            <Button aria-pressed={value.view === 'front'} variant="ghost" onClick={() => onChange({view:'front',focus:0})}>Ön</Button>
+            <Button aria-pressed={value.view === 'back'} variant="ghost" onClick={() => onChange({view:'back',focus:0})}>Arka</Button>
+            {visualTarget && <Button variant="outline" onClick={() => onChange({focus:value.focus+1})}>Yakın göster</Button>}
+          </div>
+          <label className="atlas-region">Model katmanı
+            <select value={value.testLayer ?? 'anatomy'} onChange={event => onChange({testLayer:event.target.value as ClinicalTestLayer})}>
+              {Object.entries(clinicalTestLayers).filter(([id])=>id!=='target'||parts.length>0).map(([id,label]) => <option key={id} value={id}>{label}</option>)}
+            </select>
+          </label>
+        </details>
+      </>}
+    </div> : visualTarget && <Button variant="outline" onClick={() => onChange({focus:value.focus+1})}>Modelde yakından göster</Button>}
+    {(mode !== 'tests' || test) && <article className="clinical-reference-card" aria-live="polite">
+      {mode === 'tests' && test ? <>
+        <p className="clinical-reference-hint">{region} · {test.tag}</p>
         <h3>{test.title}</h3>
-        <dl>
-          <dt>Değerlendirilen yapı veya işlev</dt><dd>{test.focus}</dd>
-          {test.position && <><dt>Uygulama</dt><dd>{test.position}</dd></>}
-          <dt>Aranan bulgu</dt><dd>{test.finding}</dd>
-          <dt>Klinik yorum</dt><dd>{test.meaning}</dd>
+        <p className="clinical-test-focus">{test.focus}</p>
+        <p className="clinical-reference-hint">{parts.length > 0 ? 'Model, testle ilişkili anatomik yapıyı vurgular.' : 'Model, testin uygulandığı bölgeyi gösterir.'}</p>
+        <dl className="clinical-test-steps">
+          {test.position && <div><dt>Uygulama</dt><dd>{test.position}</dd></div>}
+          <div><dt>Beklenen bulgu</dt><dd>{test.finding}</dd></div>
         </dl>
+        <details className="clinical-reference-sources">
+          <summary>Klinik yorum</summary>
+          <p>{test.meaning}</p>
+        </details>
         {test.levels.length > 0 && <div className="clinical-reference-views" aria-label="İlgili sinir kökleri">
           {test.levels.map(id => <Button key={id} variant="outline" onClick={() => onPickLevel(id)}>{id} dermatomu</Button>)}
         </div>}
@@ -108,8 +133,8 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
           })}</ul>
         </div>}
       </div>}
-      <Sources ids={mode === 'tests' ? test.sources : mode==='myotomes'?['isncsci','uw_motor','thoracic_motor','abdominal_motor','lumbar_motor']:['isncsci','map_variability','trigeminal']} />
-    </article>
+      <Sources ids={test && mode === 'tests' ? test.sources : mode==='myotomes'?['isncsci','uw_motor','thoracic_motor','abdominal_motor','lumbar_motor']:['isncsci','map_variability','trigeminal']} />
+    </article>}
     {mode !== 'tests' && <div className="clinical-root-picker" aria-label="Sinir kökleri">
       {rootGroups.map(group => {
         const groupLevels = availableLevels.filter(level => level.id.startsWith(group.prefix));

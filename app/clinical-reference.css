@@ -110,3 +110,65 @@
 
 .clinical-model-label-overview { padding: 0 .18rem; font-size: .65rem; background: #ffffffe3; box-shadow: none; }
 .clinical-model-label-overview::before { content: none; }
+
+.clinical-test-flow {
+  display: grid;
+  gap: .65rem;
+}
+.clinical-test-flow h3 {
+  margin: .35rem 0 0;
+  font-size: 1rem;
+}
+.clinical-region-grid,
+.clinical-test-list {
+  display: grid;
+  gap: .35rem;
+}
+.clinical-region-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.clinical-region-grid button,
+.clinical-test-list button {
+  justify-content: flex-start;
+  min-height: 40px;
+  height: auto;
+  padding: .45rem .65rem;
+  text-align: left;
+  white-space: normal;
+  background: #f7fafb;
+}
+.clinical-region-grid button:hover,
+.clinical-test-list button:hover { background: #e7f1f4; }
+.clinical-test-navigation { display: flex; flex-wrap: wrap; gap: .25rem; }
+.clinical-test-navigation button { padding-inline: .45rem; }
+.clinical-model-settings {
+  padding: .55rem 0;
+  border-block: 1px solid var(--border);
+}
+.clinical-model-settings summary { cursor: pointer; font-size: .83rem; }
+.clinical-model-settings[open] > :is(div,label) { margin-top: .55rem; }
+.clinical-test-focus { margin: .25rem 0 .8rem; color: #17546b; font-weight: 650; }
+.clinical-test-steps { display: grid; gap: .55rem; margin: 0; }
+.clinical-test-steps > div {
+  padding: .65rem;
+  border: 1px solid #dbe7eb;
+  border-radius: .45rem;
+  background: #f5f9fa;
+}
+.clinical-test-steps dt { margin: 0; color: #17546b; }
+.clinical-test-steps dd { margin-bottom: 0; }
+.clinical-model-label.clinical-region-marker {
+  z-index: 2;
+  pointer-events: auto;
+  min-height: 28px;
+  padding: .25rem .5rem;
+  background: #fffffff7;
+  color: #17546b;
+  border: 1px solid #6a9caa;
+}
+.clinical-model-label.clinical-region-marker:hover,
+.clinical-model-label.clinical-region-marker:focus-visible { background: #e4f1f5; }
+@media (max-width: 767px) {
+  .workspace-layout .study-panel.clinical-reference[data-clinical-mode=tests] {
+    height: min(36dvh, calc(100dvh - 230px - var(--mobile-top) - var(--mobile-bottom)));
+  }
+  .workspace-layout .clinical-region-marker { min-height: 30px; }
+}
