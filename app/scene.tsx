@@ -33,7 +33,8 @@ import {createExplosionLayout} from './explosion-layout';
 import {decodeModelResponse} from './model-download';
 import {PointerTap} from './pointer-tap';
 import {SYSTEMS,type Atlas,type SceneState} from './anatomy';
-import { rootGroup, rootGroups, type Landmark } from './clinical-model';
+import { dermatomeAt, dermatomeShader, makeDermatomeTextures, surfaceLevels } from './dermatome-surface';
+import { dermAreaLabels, rootGroup, type Landmark } from './clinical-model';
 import {selectionPalette} from './selection-palette';
 import {writeSelectionPalette,applySelectionPalette} from './selection-color-shader';
 interface Props {embedded?:boolean;compatibility?:boolean;atlas:Atlas;state:SceneState;onSelect:(id:string,focus?:boolean)=>void;onClinicalPick?:(pin:Landmark)=>void;onProgress:(n:number)=>void;onError:(s:string)=>void}
@@ -85,8 +86,13 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
   const pinGeometry=new T.SphereGeometry(.009,12,8);geometries.push(pinGeometry);
   const pinMaterial=new T.MeshBasicMaterial({color:0x146d81,toneMapped:false});
   const activePinMaterial=new T.MeshBasicMaterial({color:0xe96630,toneMapped:false});
-  const rootMaterials = new Map(rootGroups.map(group => [group.prefix, new T.MeshBasicMaterial({color:group.color,toneMapped:false})]));
-  materials.push(pinMaterial,activePinMaterial,...rootMaterials.values());
+  materials.push(pinMaterial,activePinMaterial);
+  const neutralDermTexture=new T.DataTexture(new Uint8Array(4),1,1,T.RGBAFormat);
+  neutralDermTexture.needsUpdate=true;
+  let dermTextures:ReturnType<typeof makeDermatomeTextures>|undefined;
+  const dermEnabled={value:0},dermActive={value:0},dermSide={value:0};
+  const dermMask={value:neutralDermTexture},dermPalette={value:neutralDermTexture};
+  const skinIndex=atlas.parts.findIndex(part=>part.system==='integumentary');
   let clinicalPins: {pin:Landmark;mesh:T.Mesh;normal:T.Vector3}[]=[];
   let lastClinical:SceneState['clinical'];
   const pinDirection=new T.Vector3(),pinScreen=new T.Vector3();
@@ -101,8 +107,7 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
    }
    clinicalPins.forEach(({pin,mesh})=>{
     const active=pin.id===clinical?.active&&pin.side===clinical?.side;
-    const group=clinical?.mode==='dermatomes'?rootGroup(pin.id):undefined;
-    mesh.material=group?rootMaterials.get(group.prefix)!:active?activePinMaterial:pinMaterial;
+    mesh.material=active?activePinMaterial:pinMaterial;
     mesh.scale.setScalar(active?1.85:1);
    });
    lastClinical=clinical;dirty=true;
@@ -121,19 +126,25 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
   const clinicalLabels=document.createElement('div');
   clinicalLabels.setAttribute('aria-hidden','true');
   el.appendChild(clinicalLabels);
-  type ModelLabel={element:HTMLSpanElement;anchor:T.Vector3;pin?:Landmark};
+  type ModelLabel={element:HTMLSpanElement;anchor:T.Vector3;normal?:T.Vector3};
   let modelLabels:ModelLabel[]=[];
   const buildLabels=(s:SceneState)=>{
    clinicalLabels.replaceChildren();modelLabels=[];
-   const add=(name:string,color:string,anchor:T.Vector3,pin?:Landmark)=>{
+   const add=(name:string,color:string,anchor:T.Vector3, normal?:number[], overview=false)=>{
     const element=document.createElement('span');
-    element.className='clinical-model-label';element.hidden=true;element.textContent=name;
+    element.className=overview?'clinical-model-label clinical-model-label-overview':'clinical-model-label';element.hidden=true;element.textContent=name;
     element.style.setProperty('--label-color',color);clinicalLabels.appendChild(element);
-    modelLabels.push({element,anchor,pin});
+    modelLabels.push({element,anchor,normal:normal?new T.Vector3().fromArray(normal):undefined});
    };
    const point=s.clinical?.focusPin;
    if(s.clinical?.mode==='dermatomes'&&point){
-    add(point.id+' · '+(point.side==='left'?'Sol':'Sağ'),rootGroup(point.id)!.color,new T.Vector3().fromArray(point.position),point);
+    add(point.id+' · '+(point.side==='left'?'Sol':'Sağ'),rootGroup(point.id)!.color,new T.Vector3().fromArray(point.position),point.normal);
+    for(const area of dermAreaLabels){
+     if(area.id===point.id)continue;
+     const [x,y,z]=area.position;
+     const anchor=new T.Vector3(s.clinical.side==='left'?x:-x,y,z);
+     add(area.id,rootGroup(area.id)!.color,anchor,area.normal,true);
+    }
    }
    if(s.clinical?.mode==='myotomes'){
     for(const member of selectionPalette(atlas,s).members){
@@ -147,18 +158,19 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
    if(!modelLabels.length)return;
    const area=availableViewport();
    const occupied:{left:number;right:number;top:number;bottom:number}[]=[];
-   for(const {element,anchor,pin} of modelLabels){
+   for(const {element,anchor,normal} of modelLabels){
     labelPoint.copy(anchor).project(camera);
     const x=(labelPoint.x+1)*el.clientWidth/2,y=(1-labelPoint.y)*el.clientHeight/2;
     const inView=ready&&Math.abs(labelPoint.z)<1&&x>=area.left&&x<=area.right&&y>=area.top&&y<=area.bottom;
-    const visiblePin=!pin||clinicalPins.some(candidate=>candidate.pin===pin&&candidate.mesh.visible);
+    const visiblePin=!normal||pinDirection.copy(camera.position).sub(anchor).normalize().dot(normal)>.12;
     element.hidden=!inView||!visiblePin;
     if(element.hidden)continue;
-    const width=element.offsetWidth,height=element.offsetHeight,offset=14;
-    const placements=[
-     {left:x+offset,right:x+offset+width,align:'right'},
-     {left:x-offset-width,right:x-offset,align:'left'},
-    ];
+    const overview=element.classList.contains('clinical-model-label-overview');
+    if(overview&&el.clientWidth<560){element.hidden=true;continue;}
+    const width=element.offsetWidth,height=element.offsetHeight,offset=overview?0:14;
+    const placements=overview
+     ? [{left:x-width/2,right:x+width/2,align:'right'}]
+     : [{left:x+offset,right:x+offset+width,align:'right'},{left:x-offset-width,right:x-offset,align:'left'}];
     const top=y-height/2,bottom=y+height/2;
     const place=placements.find(p=>p.left>=area.left&&p.right<=area.right&&top>=area.top&&bottom<=area.bottom
      &&!occupied.some(box=>p.right+4>box.left&&p.left<box.right+4&&bottom+4>box.top&&top<box.bottom+4));
@@ -179,7 +191,7 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
   };
   const materialFor=(system:string,ghost=false)=>{
    const m=new T.MeshStandardMaterial({color:SYSTEMS.find(s=>s.id===system)?.color??'#aebbb8',metalness:.08,roughness:.53,side:T.DoubleSide,transparent:ghost||system==='integumentary',opacity:system==='integumentary'?.1:1,depthWrite:!ghost&&system!=='integumentary'});
-   m.customProgramCacheKey=()=>ghost?'atlas-ghost':'atlas-solid';
+   m.customProgramCacheKey=()=>[ghost?'atlas-ghost':'atlas-solid',system==='integumentary'?'skin':'other'].join('-');
    m.onBeforeCompile=shader=>{
     shader.uniforms.contextOpacity=contextOpacity;shader.uniforms.contextActive=contextActive;
     shader.uniforms.partState={value:partTexture};shader.uniforms.selectionState={value:selectionTexture};shader.uniforms.stateWidth={value:width};
@@ -188,6 +200,13 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
     shader.fragmentShader='uniform float contextOpacity; uniform float contextActive; varying float partVisible; varying float partSelected; varying float partAntagonist; varying float partFocused; varying float partRegion;\n'+shader.fragmentShader;
     shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif (partVisible < 0.5) discard;'+(ghost?'\nif (contextActive < 0.5 || max(partSelected, partFocused) > 0.5) discard;':'\nif (contextActive > 0.5 && max(partSelected, partFocused) < 0.5) discard;'));
     shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>','#include <color_fragment>\ndiffuseColor.rgb = mix(diffuseColor.rgb, mix(vec3(0.12, 0.65, 0.82), vec3(0.95, 0.38, 0.12), partAntagonist), partSelected * 0.85);\nif (abs(partRegion - 1.0) < 0.1) diffuseColor.rgb = vec3(0.08866,0.49102,1.00000);\nif (abs(partRegion - 2.0) < 0.1) diffuseColor.rgb = vec3(0.45079,0.29614,1.00000);\nif (abs(partRegion - 3.0) < 0.1) diffuseColor.rgb = vec3(0.12214,0.68669,0.35640);\nif (abs(partRegion - 4.0) < 0.1) diffuseColor.rgb = vec3(1.00000,0.54572,0.10702);\nif (abs(partRegion - 11.0) < 0.1) diffuseColor.rgb = vec3(0.72,0.19,0.12);\nif (abs(partRegion - 12.0) < 0.1) diffuseColor.rgb = vec3(0.02,0.55,0.48);\nif (abs(partRegion - 13.0) < 0.1) diffuseColor.rgb = vec3(0.9,0.60,0.15);\nif (abs(partRegion - 5.0) < 0.1) diffuseColor.rgb = vec3(1.00000,0.19807,0.28315);'+(ghost?'\ndiffuseColor.a *= contextOpacity;':''));
+    if(system==='integumentary'){
+     Object.assign(shader.uniforms,{dermEnabled,dermActive,dermSide,dermMask,dermPalette});
+     shader.vertexShader='varying vec3 dermPosition;\n'+shader.vertexShader;
+     shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\ndermPosition = position;');
+     shader.fragmentShader='varying vec3 dermPosition; uniform float dermEnabled; uniform float dermActive; uniform float dermSide; uniform sampler2D dermMask; uniform sampler2D dermPalette;\n'+shader.fragmentShader;
+     shader.fragmentShader=shader.fragmentShader.replace('#include <roughnessmap_fragment>','if (dermEnabled > 0.5) {'+dermatomeShader+'}\n#include <roughnessmap_fragment>');
+    }
     applySelectionPalette(shader,selectionColorTexture);
    };materials.push(m);return m;
   };
@@ -241,12 +260,29 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
   const reframePanels=()=>{if(embedded)return;const direction=camera.position.clone().sub(controls.target).normalize();fit(latest.current.view,amount);const distance=camera.position.distanceTo(controls.target);camera.position.copy(controls.target).addScaledVector(direction,distance);if((latest.current.focus??0)>0||latest.current.isolate){lastFocus=-1;panelDirection=direction;}controls.update();dirty=true;};
   window.addEventListener(PANEL_LAYOUT_EVENT,reframePanels);
   const raycaster=new T.Raycaster(),pointer=new T.Vector2(),tap=new PointerTap(),worldBox=new T.Box3(),hitPoint=new T.Vector3();
+  const dermPick=(x:number,y:number)=>{
+   const skin=pickers[skinIndex];
+   if(!skin||!ready)return;
+   const rect=renderer.domElement.getBoundingClientRect();
+   pointer.set(x/rect.width*2-1,1-y/rect.height*2);
+   raycaster.setFromCamera(pointer,camera);
+   const intersection=raycaster.intersectObject(skin,false)[0];
+   if(!intersection)return;
+   const point=intersection.point;
+   const normal=intersection.face?.normal ?? new T.Vector3(0,0,1);
+   return {id:dermatomeAt(point.x,point.y,point.z),side:point.x>=0?'left':'right',position:point.toArray(),normal:normal.toArray()} as Landmark;
+  };
   const down=(e:PointerEvent)=>{hover.hidden=true;tap.down(e.pointerId,e.clientX,e.clientY,e.pointerType==='touch'?12:5);};
-  const move=(e:PointerEvent)=>{tap.move(e.pointerId,e.clientX,e.clientY);if(latest.current.clinical&&!e.buttons&&e.pointerType!=='touch'){const rect=el.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,pin=clinicalTarget(x,y,13);hover.hidden=!pin;renderer.domElement.style.cursor=pin?'pointer':'grab';if(pin){hover.textContent=pin.id+' · '+(pin.side==='left'?'Sol':'Sağ');hover.style.left=`${Math.max(8,Math.min(x+14,el.clientWidth-160))}px`;hover.style.top=`${Math.max(8,Math.min(y+18,el.clientHeight-55))}px`;}return;}if(latest.current.hideNames||e.buttons||amount<.5||e.pointerType==='touch'){hover.hidden=true;return;}const rect=el.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,index=findTarget(x,y,12);hover.hidden=index<0;renderer.domElement.style.cursor=index<0?'grab':'pointer';if(index>=0){hover.textContent=atlas.parts[index].name;hover.style.left=`${Math.max(8,Math.min(x+14,el.clientWidth-260))}px`;hover.style.top=`${Math.max(8,Math.min(y+18,el.clientHeight-55))}px`;}};
+  const move=(e:PointerEvent)=>{tap.move(e.pointerId,e.clientX,e.clientY);if(latest.current.clinical&&!e.buttons&&e.pointerType!=='touch'){const rect=el.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,pin=latest.current.clinical.mode==='dermatomes'?dermPick(x,y):clinicalTarget(x,y,13);hover.hidden=!pin;renderer.domElement.style.cursor=pin?'pointer':'grab';if(pin){hover.textContent=pin.id+' · '+(pin.side==='left'?'Sol':'Sağ');hover.style.left=`${Math.max(8,Math.min(x+14,el.clientWidth-160))}px`;hover.style.top=`${Math.max(8,Math.min(y+18,el.clientHeight-55))}px`;}return;}if(latest.current.hideNames||e.buttons||amount<.5||e.pointerType==='touch'){hover.hidden=true;return;}const rect=el.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,index=findTarget(x,y,12);hover.hidden=index<0;renderer.domElement.style.cursor=index<0?'grab':'pointer';if(index>=0){hover.textContent=atlas.parts[index].name;hover.style.left=`${Math.max(8,Math.min(x+14,el.clientWidth-260))}px`;hover.style.top=`${Math.max(8,Math.min(y+18,el.clientHeight-55))}px`;}};
   const cancel=(e:PointerEvent)=>tap.cancel(e.pointerId);
   let lastTap={id:'',time:0,x:0,y:0};
   const up=(e:PointerEvent)=>{
    const validTap=tap.up(e.pointerId,e.clientX,e.clientY);if(e.button!==0||!validTap||!ready)return;const rect=renderer.domElement.getBoundingClientRect();pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
+   if(latest.current.clinical?.mode==='dermatomes'){
+    const pin=dermPick(e.clientX-rect.left,e.clientY-rect.top);
+    if(pin){hover.hidden=true;pickClinical.current?.(pin);}
+    return;
+   }
    if(latest.current.clinical?.pins.length){const pin=clinicalTarget(e.clientX-rect.left,e.clientY-rect.top,e.pointerType==='touch'?17:13);if(pin){hover.hidden=true;pickClinical.current?.(pin);}return;}
    if(latest.current.hand?.motion&&handRig){const hit=raycaster.intersectObjects(handRig.meshes.filter(m=>m.mesh.visible).map(m=>m.mesh),false)[0];if(hit)select.current(hit.object.userData.partId);return;}
    if(latest.current.gait){if(gaitRig){const hit=raycaster.intersectObjects(gaitRig.muscles.filter(m=>m.mesh.visible).map(m=>m.mesh),false)[0];if(hit)select.current(hit.object.userData.partId);}return;}
@@ -260,7 +296,27 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
   const clock=new T.Clock();let lastExtent=-1;
   const animate=()=>{
    if(disposed)return;frame=requestAnimationFrame(animate);if(contextBlocked||document.hidden)return;const dt=Math.min(clock.getDelta(),.05),s=latest.current;
-   if(s.clinical!==lastClinical){refreshClinical(s.clinical);buildLabels(s);}
+   if(s.clinical!==lastClinical){
+    const dermatome=s.clinical?.mode==='dermatomes';
+    if(dermatome&&!dermTextures){
+     dermTextures=makeDermatomeTextures();
+     dermMask.value=dermTextures.mask;dermPalette.value=dermTextures.palette;
+    }
+    dermEnabled.value=dermatome?1:0;
+    dermActive.value=dermatome?surfaceLevels.indexOf(s.clinical!.active)+1:0;
+    dermSide.value=s.clinical?.side==='left'?1:-1;
+    if(s.clinical?.testLayer!==lastClinical?.testLayer||s.clinical?.mode!==lastClinical?.mode){
+     const opacity=dermatome?1:s.clinical?.testLayer==='surface'?.55:.1;
+     const skinMaterial=mats.get('integumentary')!;
+     skinMaterial.opacity=opacity;
+     skinMaterial.depthWrite=!!dermatome;
+     skinMaterial.transparent=!dermatome;
+     skinMaterial.side=dermatome?T.FrontSide:T.DoubleSide;
+     skinMaterial.needsUpdate=true;
+     ghostMats.get('integumentary')!.opacity=opacity;
+    }
+    refreshClinical(s.clinical);buildLabels(s);
+   }
    const nextDemandKey=JSON.stringify([s.visible,s.selected,s.hidden,s.isolate,s.spine,s.hand&&[s.hand.side,s.hand.anatomicalMuscles,s.hand.tendons],s.gait&&[s.gait.muscles],s.shoulder&&[s.shoulder.side,s.shoulder.id,s.shoulder.motion,s.shoulder.anatomicalMuscles,s.shoulder.antagonists,s.shoulder.cuff,s.shoulder.tendons],s.elbow&&[s.elbow.side,s.elbow.id,s.elbow.motion,s.elbow.anatomicalMuscles,s.elbow.tendons],s.lower&&[s.lower.joint,s.lower.id,s.lower.side,s.lower.motion,s.lower.anatomicalMuscles,s.lower.antagonists,s.lower.achilles],s.knee&&[s.knee.side,s.knee.id,s.knee.motion,s.knee.anatomicalMuscles,s.knee.antagonists,s.knee.tendons]]);
    if(nextDemandKey!==demandKey){demandKey=nextDemandKey;scheduleLoads();}
    const nextHandRigKey=s.hand?.motion?JSON.stringify([s.hand.side,s.hand.anatomicalMuscles,s.hand.tendons,geometryRevision]):'';
@@ -331,7 +387,7 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
    if(dirty){camera.updateMatrixWorld();clinicalPins.forEach(({mesh,normal})=>{mesh.visible=pinDirection.copy(camera.position).sub(mesh.position).normalize().dot(normal)>.15;});showLabels();renderer.render(scene,camera);targets=[];if(amount>.45){const hasSolid=atlas.parts.some((p,i)=>p.system!=='integumentary'&&data[i*4+3]>.5);atlas.parts.forEach((p,i)=>{if(data[i*4+3]<.5||(hasSolid&&p.system==='integumentary'))return;let left=Infinity,right=-Infinity,top=Infinity,bottom=-Infinity;for(let corner=0;corner<8;corner++){projected.set(p.bounds[(corner&1)?1:0][0]+data[i*4],p.bounds[(corner&2)?1:0][1]+data[i*4+1],p.bounds[(corner&4)?1:0][2]+data[i*4+2]).project(camera);const x=(projected.x+1)*el.clientWidth/2,y=(1-projected.y)*el.clientHeight/2;left=Math.min(left,x);right=Math.max(right,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}projected.copy(centers[i]).add(new T.Vector3(data[i*4],data[i*4+1],data[i*4+2])).project(camera);if(projected.z< -1||projected.z>1)return;targets.push({index:i,x:(projected.x+1)*el.clientWidth/2,y:(1-projected.y)*el.clientHeight/2,left,right,top,bottom});});}dirty=false;}
 
   };animate();
-  return()=>{disposed=true;recovery.dispose();abort.abort();cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener(PANEL_LAYOUT_EVENT,reframePanels);renderer.domElement.removeEventListener('keydown',keyboard);controls.dispose();if(handRig)disposeHandRig(handRig);if(kneeTendon)disposeKneeTendonRig(kneeTendon);if(gaitRig)disposeGaitRig(gaitRig);if(limbRig)disposeLimbRig(limbRig);if(shoulderRig)disposeShoulderRig(shoulderRig);if(anatomicalRig)disposeMuscleRig(anatomicalRig);if(muscleGroup)disposeMuscleDemo(muscleGroup);if(attachmentGroup)disposeAttachments(attachmentGroup);if(overlay)disposeOverlay(overlay);geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());scene.traverse(o=>{if(o instanceof T.Mesh&&!geometries.includes(o.geometry)){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose());}});env.dispose();partTexture.dispose();selectionTexture.dispose();selectionColorTexture.dispose();markerGeometry.dispose();markerMaterial.dispose();hover.remove();clinicalLabels.remove();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();};
+  return()=>{disposed=true;recovery.dispose();abort.abort();cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener(PANEL_LAYOUT_EVENT,reframePanels);renderer.domElement.removeEventListener('keydown',keyboard);controls.dispose();if(handRig)disposeHandRig(handRig);if(kneeTendon)disposeKneeTendonRig(kneeTendon);if(gaitRig)disposeGaitRig(gaitRig);if(limbRig)disposeLimbRig(limbRig);if(shoulderRig)disposeShoulderRig(shoulderRig);if(anatomicalRig)disposeMuscleRig(anatomicalRig);if(muscleGroup)disposeMuscleDemo(muscleGroup);if(attachmentGroup)disposeAttachments(attachmentGroup);if(overlay)disposeOverlay(overlay);geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());scene.traverse(o=>{if(o instanceof T.Mesh&&!geometries.includes(o.geometry)){o.geometry.dispose();const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose());}});env.dispose();partTexture.dispose();selectionTexture.dispose();selectionColorTexture.dispose();markerGeometry.dispose();markerMaterial.dispose();neutralDermTexture.dispose();dermTextures?.mask.dispose();dermTextures?.palette.dispose();hover.remove();clinicalLabels.remove();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();};
  },[atlas,generation,compatibility,embedded]);
  return <div className="scene" ref={host}/>;
 }

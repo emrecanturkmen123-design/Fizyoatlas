@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { levels, regions, rootGroup, rootGroups, tests, type ClinicalSelection } from './clinical-model';
+import { clinicalTestLayers, levels, motorLevelAvailable, motorNerve, regions, rootGroup, rootGroups, sensoryLevels, tests, type ClinicalSelection, type ClinicalTestLayer } from './clinical-model';
 import type { CSSProperties } from 'react';
 import type { SelectionMember } from './selection-palette';
 import type { Part } from './anatomy';
@@ -10,7 +10,7 @@ const sources: Record<string, string[]> = reference.sources;
 const modes = [
   ['tests', 'Klinik testler'], ['dermatomes', 'Dermatom'], ['myotomes', 'Miyotom'],
 ] as const;
-const motorLevels = levels.filter(level => level.motor);
+const motorLevels = levels.filter(level => motorLevelAvailable(level.id));
 
 function Sources({ ids }: { ids: string[] }) {
   return <details className="clinical-reference-sources">
@@ -36,9 +36,9 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
   const { mode, region, side, levelId, testId } = value;
   const visibleTests = tests.filter(test => test.region === region);
   const test = visibleTests.find(test => test.id === testId) ?? visibleTests[0];
-  const level = levels.find(level => level.id === levelId)!;
+  const level = sensoryLevels.find(level => level.id === levelId)!;
   const rootColor = rootGroup(levelId)?.color;
-  const availableLevels = mode === 'dermatomes' ? levels : motorLevels;
+  const availableLevels = mode === 'dermatomes' ? sensoryLevels : motorLevels;
   const visualTarget = hasPin || parts.length > 0;
   return <section id="atlas-content" className="study-panel glass clinical-reference" data-clinical-mode={mode} aria-label="Klinik Atlas" tabIndex={-1}>
     <div className="panel-heading">
@@ -48,7 +48,7 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
     <div className="clinical-reference-views" aria-label="Klinik Atlas bölümleri">
       {modes.map(([id, label]) => <Button key={id} aria-pressed={mode === id} variant={mode === id ? 'default' : 'outline'} onClick={() => onChange({mode:id})}>{label}</Button>)}
     </div>
-    {mode !== 'myotomes' && <p className="clinical-reference-hint">{mode === 'tests' ? 'Testleri açmak için modeldeki bölge işaretine dokun.' : 'Duyu noktasını seçmek için modeldeki işarete dokun.'}</p>}
+    {mode !== 'myotomes' && <p className="clinical-reference-hint">{mode === 'tests' ? 'Testleri açmak için modeldeki bölge işaretine dokun.' : 'Duyu alanını seçmek için modeldeki renkli bölgeye dokun.'}</p>}
     <div className="clinical-reference-views">
       <Button aria-pressed={side === 'left'} variant="outline" onClick={() => onChange({side:'left'})}>Sol</Button>
       <Button aria-pressed={side === 'right'} variant="outline" onClick={() => onChange({side:'right'})}>Sağ</Button>
@@ -56,6 +56,11 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
       <Button aria-pressed={value.view === 'back'} variant="ghost" onClick={() => onChange({view:'back',focus:0})}>Arka</Button>
     </div>
     {mode === 'tests' ? <>
+      <label className="atlas-region">Model katmanı
+        <select value={value.testLayer ?? 'anatomy'} onChange={event => onChange({testLayer:event.target.value as ClinicalTestLayer})}>
+          {Object.entries(clinicalTestLayers).map(([id,label]) => <option key={id} value={id}>{label}</option>)}
+        </select>
+      </label>
       <label className="atlas-region">Bölge
         <select value={region} onChange={event => onChange({region:event.target.value})}>
           {regions.map(region => <option key={region}>{region}</option>)}
@@ -85,19 +90,25 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
         <div className="clinical-root-heading">
           <span className="clinical-root-badge">{levelId}</span>
           <div><p>{rootGroup(levelId)?.name} · {side === 'left' ? 'Sol' : 'Sağ'}</p>
-            <h3>{mode === 'dermatomes' ? 'Anahtar duyu noktası' : level.motor}</h3>
+            <h3>{mode === 'dermatomes' ? (levelId.startsWith('V')?'Yüzün duyu alanı':'Anahtar duyu noktası') : (level.motor||'İlişkili kaslar')}</h3>
           </div>
         </div>
         {mode === 'dermatomes' && <p>{level.sensory}</p>}
-        {mode === 'dermatomes' && !hasPin && <p>Bu duyu noktası modelde işaretlenmemiştir.</p>}
+        {mode === 'dermatomes' && <p className="clinical-reference-hint">Alanlar şematiktir. Komşu köklerin duyu alanları örtüşebilir.</p>}
+        {mode === 'myotomes' && !level.motor && <p>Bu düzey için ISNCSCI anahtar motor testi tanımlamaz.</p>}
         {mode === 'myotomes' && muscles.length > 0 && <div className="clinical-muscle-key">
-          <p>Modelde vurgulanan örnek kaslar</p>
-          <ul>{muscles.map(muscle => <li key={muscle.key}>
-            <span className="clinical-color-dot" style={{backgroundColor:muscle.color}} aria-hidden="true" />{muscle.name}
-          </li>)}</ul>
+          <p>Kas ve periferik sinir eşleşmeleri</p>
+          <ul>{muscles.map(muscle => {
+            const part=parts.find(part=>muscle.ids.includes(part.id));
+            const nerve=part&&motorNerve(part,levelId);
+            return <li key={muscle.key}>
+              <span className="clinical-color-dot" style={{backgroundColor:muscle.color}} aria-hidden="true" />
+              <span>{muscle.name}{nerve&&<small className="clinical-nerve-name">{nerve}</small>}</span>
+            </li>;
+          })}</ul>
         </div>}
       </div>}
-      <Sources ids={mode === 'tests' ? test.sources : ['isncsci']} />
+      <Sources ids={mode === 'tests' ? test.sources : mode==='myotomes'?['isncsci','uw_motor','thoracic_motor','abdominal_motor','lumbar_motor']:['isncsci','map_variability','trigeminal']} />
     </article>
     {mode !== 'tests' && <div className="clinical-root-picker" aria-label="Sinir kökleri">
       {rootGroups.map(group => {
