@@ -24,7 +24,7 @@ export function selectionPalette(atlas:Atlas,state:SceneState){
   if(!member){member={key,name:muscle?.name??p.name.replace(/^(left|right)\s+/i,''),color:muscleSelectionColor(key),ids:[]};grouped.set(key,member);}
   member.ids.push(p.id);
  }
- if(grouped.size<2){
+ if(grouped.size<2&&state.clinical?.mode!=='myotomes'){
   if(state.attachments)for(const p of atlas.parts)if(selected.has(p.id)&&p.system==='skeletal')partColors.set(p.id,SYSTEMS.find(s=>s.id==='skeletal')!.color);
   return {members,partColors};
  }

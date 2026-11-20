@@ -4,6 +4,17 @@ import landmarks from './clinical-landmarks.json';
 
 export const { tests, levels } = reference;
 export const regions = [...new Set(tests.map(test => test.region))];
+export const rootGroups = [
+  { prefix: 'C', name: 'Servikal', color: '#14749a' },
+  { prefix: 'T', name: 'Torakal', color: '#197b65' },
+  { prefix: 'L', name: 'Lomber', color: '#774db4' },
+  { prefix: 'S', name: 'Sakral', color: '#9d5917' },
+] as const;
+
+export function rootGroup(id: string) {
+  return rootGroups.find(group => id.startsWith(group.prefix));
+}
+
 export type ClinicalMode = 'tests' | 'dermatomes' | 'myotomes';
 export type ClinicalSide = 'left' | 'right';
 export type Landmark = { id: string; side: ClinicalSide; position: number[]; normal: number[] };
@@ -100,7 +111,7 @@ export function clinicalPresentation(atlas: Atlas, selection: ClinicalSelection)
   const pins = selection.mode === 'tests' ? testPins : selection.mode === 'dermatomes' ? dermatomePins : [];
   const active = selection.mode === 'tests' ? selection.region : selection.levelId;
   return {
-    parts, pins, active, side: selection.side,
+    parts, pins, active, mode: selection.mode, side: selection.side,
     visible: selection.mode === 'dermatomes' ? clinicalSkin : selection.mode === 'myotomes' ? clinicalMuscles : clinicalBones,
     focusPin: pins.find(pin => pin.id === active && pin.side === selection.side),
   };
