@@ -14,3 +14,94 @@
 .clinical-reference-sources a { text-decoration: underline; }
 .clinical-reference figure { margin: .5rem 0; }
 .clinical-reference figcaption { font-size: .75rem; margin-top: .35rem; }
+
+.clinical-root-picker {
+  display: grid;
+  gap: .3rem;
+  padding: .5rem 0;
+}
+.clinical-root-group {
+  border-left: 2px solid var(--root-color);
+  padding-left: .55rem;
+}
+.clinical-root-group > p {
+  margin: 0 0 .25rem;
+  color: var(--root-color);
+  font-size: .72rem;
+  font-weight: 650;
+}
+.clinical-root-choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(2.25rem, 1fr));
+  gap: .25rem;
+  padding-bottom: .2rem;
+}
+.clinical-root-choices button {
+  min-width: 0;
+  min-height: 32px;
+  height: auto;
+  padding: .25rem .12rem;
+  color: var(--root-color);
+  background: color-mix(in srgb, var(--root-color) 7%, white);
+  font-size: .75rem;
+  font-variant-numeric: tabular-nums;
+}
+.clinical-root-choices button[aria-pressed=true] {
+  color: white;
+  background: var(--root-color);
+}
+.clinical-root-detail {
+  padding: .75rem;
+  border: 1px solid color-mix(in srgb, var(--root-color) 22%, white);
+  border-radius: .7rem;
+  background: color-mix(in srgb, var(--root-color) 5%, white);
+}
+.clinical-root-detail > p { margin: .6rem 0 0; line-height: 1.5; }
+.clinical-root-heading { display: flex; align-items: center; gap: .6rem; }
+.clinical-root-heading p { margin: 0 0 .1rem; color: var(--root-color); font-size: .72rem; font-weight: 600; }
+.clinical-root-badge {
+  padding: .3rem .45rem;
+  border-radius: .4rem;
+  background: var(--root-color);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.clinical-muscle-key { margin-top: .65rem; }
+.clinical-muscle-key p { margin: 0 0 .3rem; font-size: .75rem; color: var(--muted-foreground); }
+.clinical-muscle-key ul { display: grid; gap: .25rem; margin: 0; padding: 0; list-style: none; }
+.clinical-muscle-key li { display: flex; align-items: baseline; gap: .4rem; overflow-wrap: anywhere; }
+.clinical-color-dot { width: .55rem; height: .55rem; flex: 0 0 .55rem; border-radius: 50%; }
+.clinical-model-label {
+  position: absolute;
+  margin: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  padding: .22rem .45rem;
+  border: 1px solid var(--label-color);
+  border-radius: .35rem;
+  background: #fffffff5;
+  color: var(--label-color);
+  box-shadow: 0 2px 7px #17263522;
+  font-size: .72rem;
+  font-weight: 650;
+  line-height: 1.3;
+  transform: translateY(-50%);
+}
+.clinical-model-label::before {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 12px;
+  border-top: 1px solid var(--label-color);
+  content: '';
+}
+.clinical-model-label[data-align=left] { transform: translate(-100%, -50%); }
+.clinical-model-label[data-align=left]::before { left: 100%; right: auto; }
+.clinical-model-label[hidden] { display: none; }
+
+@media (max-width: 767px) {
+  .clinical-root-picker { gap: .5rem; }
+  .clinical-root-choices { grid-template-columns: repeat(auto-fill, minmax(2.4rem, 1fr)); }
+  .clinical-root-choices button { min-height: 38px; }
+}

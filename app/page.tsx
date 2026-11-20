@@ -296,14 +296,23 @@ export default function Home(){
  const clinicalModel=useMemo(()=>panel==='clinical'&&atlas?clinicalPresentation(atlas,clinical):undefined,[atlas,clinical,panel]);
  const clinicalScene=useMemo<SceneState|undefined>(()=>clinicalModel?{
   ...initial, visible:clinicalModel.visible, selected:clinicalModel.parts.map(part=>part.id),
-  contextOpacity:clinicalModel.parts.length?.26:1, hideNames:clinical.mode!=='myotomes',
+  contextOpacity:clinical.mode==='myotomes'?.17:clinicalModel.parts.length?.26:1, hideNames:clinical.mode!=='myotomes',
   view:clinical.view, reset:state.reset+1000000, focus:clinical.focus, clinical:clinicalModel,
  }:undefined,[clinicalModel,clinical.mode,clinical.view,clinical.focus,state.reset]);
+ const clinicalLegend=useMemo(()=>atlas&&clinicalScene?.clinical?.mode==='myotomes'?selectionPalette(atlas,clinicalScene).members:[],[atlas,clinicalScene]);
  const changeClinical=(change:Partial<ClinicalSelection>)=>{
   if(change.view||change.mode)setState(s=>({...s,reset:s.reset+1}));
   setClinical(current=>{
    const next={...current,...change};
-   if(change.mode&&change.mode!==current.mode)next.focus=0;
+   if(change.side&&change.side!==current.side&&current.focus>0)next.focus=current.focus+1;
+   if(change.mode&&change.mode!==current.mode&&change.focus===undefined){
+    next.focus=0;
+    if(change.mode==='dermatomes'&&atlas){
+     const point=clinicalPresentation(atlas,next).focusPin;
+     next.view=point&&point.normal[2]<0?'back':'front';
+     if(point&&Math.abs(point.normal[2])<.5)next.focus=current.focus+1;
+    }
+   }
    if(change.region&&!clinicalTests.some(test=>test.region===change.region&&test.id===next.testId))
     next.testId=clinicalTests.find(test=>test.region===change.region)!.id;
    if(next.mode==='myotomes'&&!clinicalLevels.some(level=>level.id===next.levelId&&level.motor))next.levelId='C6';
@@ -312,10 +321,10 @@ export default function Home(){
  };
  const pickClinicalPin=(pin:Landmark)=>changeClinical(clinical.mode==='tests'?{region:pin.id,side:pin.side}:{levelId:pin.id,side:pin.side});
  const pickClinicalLevel=(levelId:string)=>{
-  if(clinical.mode==='myotomes'){changeClinical({levelId});return;}
+  if(clinical.mode==='myotomes'){changeClinical({levelId,focus:clinical.focus+1});return;}
   const point=atlas&&clinicalPresentation(atlas,{...clinical,mode:'dermatomes',levelId}).focusPin;
   const view=point&&point.normal[2]<0?'back':'front';
-  changeClinical({mode:'dermatomes',levelId,view,focus:0});
+  changeClinical({mode:'dermatomes',levelId,view,focus:point&&Math.abs(point.normal[2])<.5?clinical.focus+1:0});
  };
  const readerOnly=['lab','notebook','learning','tendons','knee-course','courses','regional-course'].includes(panel??'');
  const saveCurrent=()=>{if(notebookDraft){openStudyMode('notebook');return;}setNotebookDraft({id:newNotebookId(),title:chosen?.name??({shoulder:'Omuz',elbow:'Dirsek',knee:'Diz',hip:'Kalça',ankle:'Ayak bileği',hand:'El ve parmaklar',gait:'Yürüyüş'} as Record<string,string>)[currentRoute.lesson]+' · '+Math.round(currentRoute.progress??0)+'%',note:'',collection:'',hash:routeHash,updatedAt:0,archived:false});openStudyMode('notebook');};
@@ -348,7 +357,7 @@ export default function Home(){
   <nav className="top-actions" aria-label="Ana bölümler"><Button variant="ghost" className="workspace-back" onClick={goBack} disabled={!canGoBack} aria-label="Önceki bölüme dön" title="Önceki bölüme dön"><ArrowLeft size={18}/><span>Geri</span></Button>{([{id:'atlas',label:'Atlas'},{id:'movements',label:'Hareketler'},{id:'practice',label:'Kendini sına'}] as const).map(item=><a key={item.id} {...navProps(item.id)} href={item.id==='atlas'?'#atlas':item.id==='movements'?'#hareketler':'#sinama'} onClick={e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();navigateWorkspace(item.id);}}>{item.label}</a>)}</nav>
   <div className="workspace-utilities"><Button variant="ghost" className="share-button" onClick={()=>void shareLink()} aria-label="Bu çalışmanın bağlantısını kopyala"><Share2 size={17}/><span>Paylaş</span></Button>{shareStatus&&<span className="share-status" role="status">{shareStatus}</span>}<Button variant="outline" onClick={()=>openPanel('search')} aria-label="Yapı ara"><Search size={17}/><span>Yapı ara</span><kbd>/</kbd></Button><Button variant="ghost" className="icon-button" aria-label="Kaynaklar ve hakkında" onClick={()=>setAbout(true)}><Info size={18}/></Button></div>
   {panel==='shoulder'&&state.shoulder&&<Suspense fallback={<section className="study-panel glass" role="status">Çalışma ekranı yükleniyor…</section>}><ShoulderPanel key={state.shoulder!.side+state.shoulder!.id} atlas={atlas} value={state.shoulder} onStudy={openShoulderStudy} onCase={()=>{setShoulderCase({...state.shoulder!,playing:false});showStudySelection([]);setPanel('cases');}} onChange={changeShoulder} onAdvance={()=>setState(s=>s.shoulder?.playing?{...s,shoulder:advancePlayback(s.shoulder)}:s)} onClose={closeShoulder} onMuscle={(id,key)=>{if(id)choosePart(id);else selectMovementMuscle(key);}}/></Suspense>}
-  {panel==='clinical'&&clinicalModel&&<ClinicalReference value={clinical} parts={clinicalModel.parts} hasPin={!!clinicalModel.focusPin} onChange={changeClinical} onPickLevel={pickClinicalLevel} onClose={()=>setPanel('study')}/>}
+  {panel==='clinical'&&clinicalModel&&<ClinicalReference value={clinical} parts={clinicalModel.parts} muscles={clinicalLegend} hasPin={!!clinicalModel.focusPin} onChange={changeClinical} onPickLevel={pickClinicalLevel} onClose={()=>setPanel('study')}/>}
   {(panel==='study'||panel===null&&workspace==='atlas')&&<AtlasIndex onClinical={atlas?()=>{setDetails(false);setToolsOpen(null);setPanel('clinical');}:undefined} onLab={()=>openLab(atlasTab==='muscles'?'muscle:quadriceps':undefined)} atlas={atlas??undefined} region={atlasRegion} onRegionChange={region=>{setAtlasRegion(region);setDetails(false);}} selectedKey={connective?.key??nerveSelection?.nerve.id??muscleFor(chosen?.name??'')?.key??muscleGroupFor(chosen?.name??'')?.key} activeTab={atlasTab} onTabChange={tab=>{setAtlasTab(tab);setDetails(false);}} onStructure={key=>openConnective(key)} ready={!!atlas} onMuscle={selectEducation} onNerve={n=>openNerve(n,undefined)} onSpine={()=>openSpine()}/>}
   {toolsOpen==='layers'&&  <section id="model-layers" style={toolLayout.style} className="layers-panel glass model-popover" aria-label="Katmanlar">
    <ModelToolHeader title="Katmanlar" closeLabel="Katmanları kapat" onClose={closeModelTool} returnToCard={details}/>
