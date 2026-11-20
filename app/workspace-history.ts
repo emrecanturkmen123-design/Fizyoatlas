@@ -20,7 +20,7 @@ export function parentWorkspaceRoute(route:WorkspaceRoute):WorkspaceRoute|undefi
   if(route.tab&&route.tab!=='muscles'||route.region&&route.region!=='all')return {lesson:'study'};
   return;
  }
- if(route.lesson==='lab'||route.lesson==='tendons'||route.lesson==='spine')return {lesson:'study'};
+ if(route.lesson==='lab'||route.lesson==='tendons'||route.lesson==='spine'||route.lesson==='clinical')return {lesson:'study'};
  if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(route.lesson)){
   if(route.muscle||route.concept){const {muscle,concept,isolate,attachment,trace,...movement}=route;return movement;}
   return {lesson:'movements'};

@@ -105,3 +105,8 @@
   .clinical-root-choices { grid-template-columns: repeat(auto-fill, minmax(2.4rem, 1fr)); }
   .clinical-root-choices button { min-height: 38px; }
 }
+
+.clinical-nerve-name { display: block; color: var(--muted-foreground); font-size: .73rem; line-height: 1.45; }
+
+.clinical-model-label-overview { padding: 0 .18rem; font-size: .65rem; background: #ffffffe3; box-shadow: none; }
+.clinical-model-label-overview::before { content: none; }

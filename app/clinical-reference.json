@@ -1,5 +1,10 @@
 {
   "sources": {
+    "uw_motor": ["UW Muscle Atlas · kas innervasyonu", "https://rad.uw.edu/muscle-atlas/"],
+    "thoracic_motor": ["Göğüs duvarı ve diyafram innervasyonu", "https://www.ncbi.nlm.nih.gov/books/NBK526023/"],
+    "lumbar_motor": ["Psoas major · lomber kökler", "https://www.ncbi.nlm.nih.gov/books/NBK535418/"],
+    "abdominal_motor": ["Karın duvarı anatomisi", "https://www.ncbi.nlm.nih.gov/books/NBK551649/"],
+    "trigeminal": ["Trigeminal sinirin duyu dalları", "https://www.ncbi.nlm.nih.gov/books/NBK554486/"],
     "shoulder": [
       "Omuz özel testleri · sistematik derleme",
       "https://pubmed.ncbi.nlm.nih.gov/28122541/"
