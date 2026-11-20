@@ -124,19 +124,28 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
    return found;
   };
   const clinicalLabels=document.createElement('div');
-  clinicalLabels.setAttribute('aria-hidden','true');
   el.appendChild(clinicalLabels);
-  type ModelLabel={element:HTMLSpanElement;anchor:T.Vector3;normal?:T.Vector3};
+  type ModelLabel={element:HTMLElement;anchor:T.Vector3;normal?:T.Vector3};
   let modelLabels:ModelLabel[]=[];
   const buildLabels=(s:SceneState)=>{
    clinicalLabels.replaceChildren();modelLabels=[];
-   const add=(name:string,color:string,anchor:T.Vector3, normal?:number[], overview=false)=>{
-    const element=document.createElement('span');
-    element.className=overview?'clinical-model-label clinical-model-label-overview':'clinical-model-label';element.hidden=true;element.textContent=name;
+   const add=(name:string,color:string,anchor:T.Vector3, normal?:number[], overview=false, regionPin?:Landmark)=>{
+    const element=document.createElement(regionPin?'button':'span');
+    if(regionPin){
+     (element as HTMLButtonElement).type='button';
+     element.classList.add('clinical-region-marker');
+     element.addEventListener('click',()=>pickClinical.current?.(regionPin));
+    }else element.setAttribute('aria-hidden','true');
+    element.classList.add('clinical-model-label');if(overview)element.classList.add('clinical-model-label-overview');element.hidden=true;element.textContent=name;
     element.style.setProperty('--label-color',color);clinicalLabels.appendChild(element);
     modelLabels.push({element,anchor,normal:normal?new T.Vector3().fromArray(normal):undefined});
    };
    const point=s.clinical?.focusPin;
+   if(s.clinical?.mode==='tests'&&!s.clinical.active){
+    for(const pin of s.clinical.pins){
+     if(pin.side===s.clinical.side)add(pin.id,'#17546b',new T.Vector3().fromArray(pin.position),pin.normal,false,pin);
+    }
+   }
    if(s.clinical?.mode==='dermatomes'&&point){
     add(point.id+' · '+(point.side==='left'?'Sol':'Sağ'),rootGroup(point.id)!.color,new T.Vector3().fromArray(point.position),point.normal);
     for(const area of dermAreaLabels){
@@ -277,13 +286,14 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
   const cancel=(e:PointerEvent)=>tap.cancel(e.pointerId);
   let lastTap={id:'',time:0,x:0,y:0};
   const up=(e:PointerEvent)=>{
-   const validTap=tap.up(e.pointerId,e.clientX,e.clientY);if(e.button!==0||!validTap||!ready)return;const rect=renderer.domElement.getBoundingClientRect();pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
+   const validTap=tap.up(e.pointerId,e.clientX,e.clientY);if(e.button!==0||!validTap)return;const rect=renderer.domElement.getBoundingClientRect();
+   if(latest.current.clinical?.mode==='tests'){const pin=clinicalTarget(e.clientX-rect.left,e.clientY-rect.top,e.pointerType==='touch'?19:14);if(pin){hover.hidden=true;pickClinical.current?.(pin);}return;}
+   if(!ready)return;pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
    if(latest.current.clinical?.mode==='dermatomes'){
     const pin=dermPick(e.clientX-rect.left,e.clientY-rect.top);
     if(pin){hover.hidden=true;pickClinical.current?.(pin);}
     return;
    }
-   if(latest.current.clinical?.pins.length){const pin=clinicalTarget(e.clientX-rect.left,e.clientY-rect.top,e.pointerType==='touch'?17:13);if(pin){hover.hidden=true;pickClinical.current?.(pin);}return;}
    if(latest.current.hand?.motion&&handRig){const hit=raycaster.intersectObjects(handRig.meshes.filter(m=>m.mesh.visible).map(m=>m.mesh),false)[0];if(hit)select.current(hit.object.userData.partId);return;}
    if(latest.current.gait){if(gaitRig){const hit=raycaster.intersectObjects(gaitRig.muscles.filter(m=>m.mesh.visible).map(m=>m.mesh),false)[0];if(hit)select.current(hit.object.userData.partId);}return;}
    if(latest.current.shoulder?.motion||latest.current.elbow?.motion||(latest.current.knee||latest.current.lower)?.motion){const group=anatomicalRig?.group.visible?anatomicalRig.group:shoulderRig?.group.visible?shoulderRig.group:limbRig?.group.visible?limbRig.group:undefined;if(kneeTendon?.mesh.visible&&latest.current.knee?.tendons){const hit=raycaster.intersectObject(kneeTendon.mesh,false)[0];if(hit){select.current(hit.object.userData.partId);return;}}if(group){const hit=raycaster.intersectObjects(group.children,false).find(h=>h.object.userData.partId);if(hit)select.current(hit.object.userData.partId);}return;}

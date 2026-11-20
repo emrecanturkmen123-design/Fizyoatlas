@@ -41,7 +41,7 @@ import {CLINICAL_STRUCTURES,clinicalStructure} from './clinical-structures';
 import type {Exercise} from './case-exercises';
 import AtlasIndex from './atlas-index';
 import ClinicalReference from './clinical-reference';
-import { clinicalParts, clinicalPresentation, defaultClinical, levels as clinicalLevels, motorLevelAvailable, tests as clinicalTests, type ClinicalSelection, type Landmark } from './clinical-model';
+import { clinicalParts, clinicalPresentation, defaultClinical, levels as clinicalLevels, motorLevelAvailable, updateClinicalTests, type ClinicalSelection, type Landmark } from './clinical-model';
 import PracticeMenu from './practice-menu';
 import {Disclosure} from './disclosure';
 
@@ -309,6 +309,7 @@ export default function Home(){
   if(change.view||change.mode)setState(s=>({...s,reset:s.reset+1}));
   setClinical(current=>{
    const next={...current,...change};
+   if(next.mode==='tests')return updateClinicalTests(atlas,current,change);
    if(change.side&&change.side!==current.side&&current.focus>0)next.focus=current.focus+1;
    if(change.mode&&change.mode!==current.mode&&change.focus===undefined){
     next.focus=0;
@@ -318,8 +319,6 @@ export default function Home(){
      if(point&&Math.abs(point.normal[2])<.5)next.focus=current.focus+1;
     }
    }
-   if(change.region&&!clinicalTests.some(test=>test.region===change.region&&test.id===next.testId))
-    next.testId=clinicalTests.find(test=>test.region===change.region)!.id;
    if(next.mode==='myotomes'&&!motorLevelAvailable(next.levelId))next.levelId='C6';
    return next;
   });
@@ -363,7 +362,7 @@ export default function Home(){
   <div className="workspace-utilities"><Button variant="ghost" className="share-button" onClick={()=>void shareLink()} aria-label="Bu çalışmanın bağlantısını kopyala"><Share2 size={17}/><span>Paylaş</span></Button>{shareStatus&&<span className="share-status" role="status">{shareStatus}</span>}<Button variant="outline" onClick={()=>openPanel('search')} aria-label="Yapı ara"><Search size={17}/><span>Yapı ara</span><kbd>/</kbd></Button><Button variant="ghost" className="icon-button" aria-label="Kaynaklar ve hakkında" onClick={()=>setAbout(true)}><Info size={18}/></Button></div>
   {panel==='shoulder'&&state.shoulder&&<Suspense fallback={<section className="study-panel glass" role="status">Çalışma ekranı yükleniyor…</section>}><ShoulderPanel key={state.shoulder!.side+state.shoulder!.id} atlas={atlas} value={state.shoulder} onStudy={openShoulderStudy} onCase={()=>{setShoulderCase({...state.shoulder!,playing:false});showStudySelection([]);setPanel('cases');}} onChange={changeShoulder} onAdvance={()=>setState(s=>s.shoulder?.playing?{...s,shoulder:advancePlayback(s.shoulder)}:s)} onClose={closeShoulder} onMuscle={(id,key)=>{if(id)choosePart(id);else selectMovementMuscle(key);}}/></Suspense>}
   {panel==='clinical'&&clinicalModel&&<ClinicalReference value={clinical} parts={clinicalModel.parts} muscles={clinicalLegend} hasPin={!!clinicalModel.focusPin} onChange={changeClinical} onPickLevel={pickClinicalLevel} onClose={()=>setPanel('study')}/>}
-  {(panel==='study'||panel===null&&workspace==='atlas')&&<AtlasIndex onClinical={atlas?()=>{setDetails(false);setToolsOpen(null);setPanel('clinical');}:undefined} onLab={()=>openLab(atlasTab==='muscles'?'muscle:quadriceps':undefined)} atlas={atlas??undefined} region={atlasRegion} onRegionChange={region=>{setAtlasRegion(region);setDetails(false);}} selectedKey={connective?.key??nerveSelection?.nerve.id??muscleFor(chosen?.name??'')?.key??muscleGroupFor(chosen?.name??'')?.key} activeTab={atlasTab} onTabChange={tab=>{setAtlasTab(tab);setDetails(false);}} onStructure={key=>openConnective(key)} ready={!!atlas} onMuscle={selectEducation} onNerve={n=>openNerve(n,undefined)} onSpine={()=>openSpine()}/>}
+  {(panel==='study'||panel===null&&workspace==='atlas')&&<AtlasIndex onClinical={atlas?()=>{setDetails(false);setToolsOpen(null);setClinical(defaultClinical);setPanel('clinical');}:undefined} onLab={()=>openLab(atlasTab==='muscles'?'muscle:quadriceps':undefined)} atlas={atlas??undefined} region={atlasRegion} onRegionChange={region=>{setAtlasRegion(region);setDetails(false);}} selectedKey={connective?.key??nerveSelection?.nerve.id??muscleFor(chosen?.name??'')?.key??muscleGroupFor(chosen?.name??'')?.key} activeTab={atlasTab} onTabChange={tab=>{setAtlasTab(tab);setDetails(false);}} onStructure={key=>openConnective(key)} ready={!!atlas} onMuscle={selectEducation} onNerve={n=>openNerve(n,undefined)} onSpine={()=>openSpine()}/>}
   {toolsOpen==='layers'&&  <section id="model-layers" style={toolLayout.style} className="layers-panel glass model-popover" aria-label="Katmanlar">
    <ModelToolHeader title="Katmanlar" closeLabel="Katmanları kapat" onClose={closeModelTool} returnToCard={details}/>
    <div className="layer-presets"><Button variant="ghost" aria-pressed={activeSistemler.every(x=>state.visible.includes(x.id))} onClick={()=>showLayers(activeSistemler.map(x=>x.id))}>Tümü</Button><Button variant="ghost" aria-pressed={state.visible.length===1&&state.visible[0]==='skeletal'} onClick={()=>showLayers(['skeletal'])}>İskelet</Button><Button variant="ghost" aria-pressed={state.visible.length===6&&['cardiac','respiratory','digestive','urinary','endocrine','reproductive'].every(id=>state.visible.includes(id as SystemId))} onClick={()=>showLayers(['cardiac','respiratory','digestive','urinary','endocrine','reproductive'])}>Organlar</Button></div>
