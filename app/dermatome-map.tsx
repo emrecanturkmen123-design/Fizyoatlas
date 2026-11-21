@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState, type MouseEvent, type PointerEvent 
 import { Minus, Plus, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { ClinicalSide } from './clinical-model';
-import regions from './dermatome-map-regions.json';
+import regions from './dermatome-map-regions.json' with { type: 'json' };
 
 export type MapView = 'front' | 'back';
 type Framing = MapView | 'both';

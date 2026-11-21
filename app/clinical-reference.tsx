@@ -2,16 +2,15 @@ import { Button } from '@/components/ui/button';
 import { clinicalTestLayers, levels, regions, rootGroup, rootGroups, sensoryLevels, tests, type ClinicalSelection, type ClinicalTestLayer } from './clinical-model';
 import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import type { MyotomeMuscle } from './myotome-muscles';
+import { MUSCLES } from './education-data';
+import { NERVES } from './innervation';
 import type { Part } from './anatomy';
-import reference from './clinical-reference.json';
+import reference from './clinical-reference.json' with { type: 'json' };
+import ClinicalNavigation, { ClinicalLink } from './clinical-navigation';
 import ClinicalTestIllustration from './clinical-test-illustration';
 import './clinical-reference.css';
 
 const sources: Record<string, string[]> = reference.sources;
-const modes = [
-  ['tests', 'Klinik testler'], ['dermatomes', 'Dermatom'], ['myotomes', 'Miyotom'],
-] as const;
-
 function Sources({ ids }: { ids: string[] }) {
   return <details className="clinical-reference-sources">
     <summary>Kaynaklar</summary>
@@ -25,7 +24,6 @@ function Sources({ ids }: { ids: string[] }) {
 type Props = {
   value: ClinicalSelection;
   onChange: (value: Partial<ClinicalSelection>) => void;
-  onClose: () => void;
   parts: Part[];
   muscles: MyotomeMuscle[];
   hasPin: boolean;
@@ -35,7 +33,7 @@ type Props = {
   onPickLevel: (id: string) => void;
 };
 
-export default function ClinicalReference({value, onChange, onClose, parts, muscles, hasPin, dermatome3D, onDermatomeView, dermatomeMap, onPickLevel}: Props) {
+export default function ClinicalReference({value, onChange, parts, muscles, hasPin, dermatome3D, onDermatomeView, dermatomeMap, onPickLevel}: Props) {
   const { mode, region, side, levelId, testId } = value;
   const panel = useRef<HTMLElement>(null);
   useEffect(()=>{
@@ -53,15 +51,13 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
   useEffect(() => {
     if (mode === 'myotomes' && activeMuscle) muscleDetail.current?.scrollIntoView({ block: 'nearest' });
   }, [mode, activeMuscle?.key]);
+  const relatedTests = tests.filter(item=>item.levels.some(id=>id===levelId));
   const visualTarget = hasPin || parts.length > 0;
   return <section ref={panel} id="atlas-content" className="study-panel glass clinical-reference" data-clinical-mode={mode} aria-label="Klinik Atlas" tabIndex={-1}>
     <div className="panel-heading">
       <strong>Klinik Atlas</strong>
-      <Button variant="ghost" onClick={onClose}>← Atlas</Button>
     </div>
-    <div className="clinical-reference-views" aria-label="Klinik Atlas bölümleri">
-      {modes.map(([id, label]) => <Button key={id} aria-pressed={mode === id} variant={mode === id ? 'default' : 'outline'} onClick={() => onChange({mode:id})}>{label}</Button>)}
-    </div>
+    <ClinicalNavigation active={mode} level={mode==='tests'?undefined:levelId} side={side}/>
     {mode === 'dermatomes' && <>
       <div className="clinical-reference-views" role="group" aria-label="Dermatom görünümü">
         <Button variant={dermatome3D ? 'outline' : 'default'} aria-pressed={!dermatome3D} onClick={() => onDermatomeView?.(false)}>Harita</Button>
@@ -116,7 +112,7 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
         <p className="clinical-reference-hint">{region} · {test.tag}</p>
         <h3>{test.title}</h3>
         <p className="clinical-test-focus">{test.focus}</p>
-        <ClinicalTestIllustration testId={test.id} title={test.title} />
+        <ClinicalTestIllustration key={test.id} testId={test.id} title={test.title} />
         <p className="clinical-reference-hint">{parts.length > 0 ? 'Model, testle ilişkili anatomik yapıyı vurgular.' : 'Model, testin uygulandığı bölgeyi gösterir.'}</p>
         <dl className="clinical-test-steps">
           {test.position && <div><dt>Uygulama</dt><dd>{test.position}</dd></div>}
@@ -130,7 +126,10 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
           <p>{test.meaning}</p>
         </details>
         {test.levels.length > 0 && <div className="clinical-reference-views" aria-label="İlgili sinir kökleri">
-          {test.levels.map(id => <Button key={id} variant="outline" onClick={() => onPickLevel(id)}>{id} dermatomu</Button>)}
+          {test.levels.flatMap(id => [
+            <ClinicalLink key={id+'-duyu'} route={{lesson:'clinical',clinicalMode:'dermatomes',clinicalLevel:id,side}}>{id} dermatomu</ClinicalLink>,
+            <ClinicalLink key={id+'-motor'} route={{lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:id,side}}>{id} miyotomu</ClinicalLink>,
+          ])}
         </div>}
       </> : <div className="clinical-root-detail" style={{'--root-color': rootColor} as CSSProperties}>
         <div className="clinical-root-heading">
@@ -141,15 +140,32 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
         </div>
         {mode === 'dermatomes' && <p>{level.sensory}</p>}
         {mode === 'dermatomes' && <p className="clinical-reference-hint">Alanlar şematiktir. Komşu köklerin duyu alanları örtüşebilir.</p>}
+        {levels.some(entry=>entry.id===levelId) && <div className="clinical-root-links">
+          <p><strong>{mode==='myotomes'?'Duyu noktası':'Anahtar hareket'}</strong> · {mode==='myotomes'?level.sensory:level.motor||'ISNCSCI anahtar motor testi tanımlamaz.'}</p>
+          <div className="clinical-reference-views">
+            <ClinicalLink route={{lesson:'clinical',clinicalMode:mode==='myotomes'?'dermatomes':'myotomes',clinicalLevel:levelId,side}}>{mode==='myotomes'?'Duyu haritasında göster':'Kasları ve sinirleri göster'}</ClinicalLink>
+            {levelId==='L5'&&<ClinicalLink route={{lesson:'neuro-compare'}}>L5 ve fibularis karşılaştırması</ClinicalLink>}
+          </div>
+          {relatedTests.length>0&&<details className="clinical-related-muscles">
+            <summary>İlişkili klinik testler</summary>
+            <div className="clinical-reference-views">{relatedTests.map(item=>
+              <ClinicalLink key={item.id} route={{lesson:'clinical',clinicalMode:'tests',clinicalTest:item.id,side}}>{item.title}</ClinicalLink>)}</div>
+          </details>}
+        </div>}
         {mode === 'myotomes' && !level.motor && <p>Bu düzey için ISNCSCI anahtar motor testi tanımlamaz.</p>}
         {mode === 'myotomes' && <div className="clinical-muscle-key">
           {activeMuscle && <div className="clinical-innervation" ref={muscleDetail} aria-label="Seçili kasın innervasyonu">
             <h4>{activeMuscle.name}</h4>
             <dl>
-              {activeMuscle.innervation.map(entry => <div key={entry.nerve}>
-                <dt>{entry.nerve}</dt><dd>{entry.roots}</dd>
-              </div>)}
+              {activeMuscle.innervation.map(entry => {
+                const nerve = NERVES.find(item=>item.name===entry.nerve);
+                return <div key={entry.nerve}>
+                  <dt>{entry.nerve}</dt><dd>{entry.roots}</dd>
+                  {nerve&&<ClinicalLink route={{lesson:'study',nerve:nerve.id,side}}>Siniri modelde göster</ClinicalLink>}
+                </div>;
+              })}
             </dl>
+            {MUSCLES.some(item=>item.key===activeMuscle.key)&&<ClinicalLink route={{lesson:'study',muscle:activeMuscle.key,side}}>Atlas kas kartı</ClinicalLink>}
             {activeMuscle.note && <p>{activeMuscle.note}</p>}
             <Button variant="outline" size="sm" onClick={() => onChange({motorMuscleKey:undefined})}>Kök görünümüne dön</Button>
           </div>}

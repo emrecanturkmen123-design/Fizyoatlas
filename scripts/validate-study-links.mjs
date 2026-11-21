@@ -75,4 +75,4 @@ assert(scene().selected.length);assert(!scene().visible.includes('nervous'));
 await act(async()=>root.unmount());
 assert.equal(parseWorkspaceRoute('#bolge-dersi?kurs=hand-foundations&durak=999').courseMotion,undefined);
 assert.equal(parseWorkspaceRoute('#bolge-dersi?kurs=hand-foundations&durak=-1').courseMotion,undefined);
-console.log('PASS: all 49 muscle cards have learning paths; nine actual Home links preserve side, stop, refresh/back/forward; four source nerves, array hashes and unchanged previous chunks; honest inferior gluteal muscle fallback. GPU and visual device rendering are not tested.');
+console.log('PASS: all muscle cards have learning paths; nine actual Home links preserve side, stop, refresh/back/forward; four source nerves, array hashes and unchanged previous chunks; honest inferior gluteal muscle fallback. GPU and visual device rendering are not tested.');

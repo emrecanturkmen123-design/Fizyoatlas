@@ -1,9 +1,9 @@
 import type { Atlas, Part, SystemId, View } from './anatomy';
-import reference from './clinical-reference.json';
+import reference from './clinical-reference.json' with { type: 'json' };
 import { myotomeMuscles } from './myotome-muscles';
-import landmarks from './clinical-landmarks.json';
-export { default as dermAreaLabels } from './dermatome-labels.json';
-import dermAreaLabels from './dermatome-labels.json';
+import landmarks from './clinical-landmarks.json' with { type: 'json' };
+export { default as dermAreaLabels } from './dermatome-labels.json' with { type: 'json' };
+import dermAreaLabels from './dermatome-labels.json' with { type: 'json' };
 
 export const { tests, levels } = reference;
 export const sensoryLevels = [...levels,

@@ -1,4 +1,4 @@
-import { useId, type CSSProperties } from 'react';
+import { useEffect, useId, useState, type CSSProperties } from 'react';
 import { Maximize2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -18,13 +18,43 @@ const closeupViewBoxes: Record<string, string> = {
   femoral_stretch: '18 34 282 146',
 };
 
-function ClinicalDiagram({ testId }: { testId: string }) {
+const stepTitles = ['Pozisyon', 'El yerleşimi', 'Manevra', 'Pozitiflik'] as const;
+
+const testSteps: Record<string, readonly [string, string, string, string]> = {
+  lachman: [
+    'Sırtüstü yatışta diz yaklaşık 20–30° fleksiyonda, kaslar gevşek.',
+    'Bir el distal femuru sabitler. Diğer el proksimal tibiayı arkadan kavrar.',
+    'Femur sabit kalırken tibia öne çekilir. Ok, tibianın hareket yönünü gösterir.',
+    'Karşı tarafa göre artmış öne kayma veya yumuşak son his, ÖÇB yaralanması olasılığını destekler.',
+  ],
+  hawkins: [
+    'Otururken omuz ve dirseği yaklaşık 90° fleksiyonda konumlandır.',
+    'Bir elle dirseği destekle. Diğer elle distal önkolu tut.',
+    'Önkolu aşağı yönlendirerek omuzda pasif iç rotasyon oluştur.',
+    'Kişinin tanıdığı ön-yan omuz ağrısının ortaya çıkması subakromiyal ağrı olasılığını destekler.',
+  ],
+  thompson: [
+    'Yüzüstü yatışta ayak, masanın kenarından serbestçe sarkar.',
+    'Klinisyenin elleri baldır kas kütlesine yerleşir.',
+    'Baldır sıkılır. Mavi ok, sağlam Aşil tendonu ile beklenen plantar fleksiyon yönünü gösterir.',
+    'Baldır sıkıldığında plantar fleksiyonun gerçekleşmemesi Aşil tendonu rüptürü şüphesini destekler.',
+  ],
+};
+
+function ClinicalDiagram({ testId, step }: { testId: string; step?: number }) {
   const id = useId();
   const illustration = clinicalTestIllustrations[testId];
-  const hasHands = illustration.drawing.some(item => item.kind === 'hand');
-  const hasArrows = illustration.drawing.some(item => item.kind === 'arrow');
-  const hasResistance = illustration.drawing.some(item => item.kind === 'resistance');
-  const hasGhost = illustration.drawing.some(item => item.kind === 'ghost');
+  const drawing = illustration.drawing.filter(item=>{
+    if(step===undefined)return true;
+    if(item.kind==='hand')return step>=1;
+    if(item.kind==='arrow'||item.kind==='resistance'||item.kind==='ghost')return step>=2;
+    if(item.kind==='label'||item.kind==='target')return step===3;
+    return true;
+  });
+  const hasHands = drawing.some(item => item.kind === 'hand');
+  const hasArrows = drawing.some(item => item.kind === 'arrow');
+  const hasResistance = drawing.some(item => item.kind === 'resistance');
+  const hasGhost = drawing.some(item => item.kind === 'ghost');
 
   return (
       <div className="clinical-test-illustration-art">
@@ -46,7 +76,7 @@ function ClinicalDiagram({ testId }: { testId: string }) {
             ))}
           </defs>
           <g style={{ '--diagram-skin': `url(#${id}-skin)`, '--diagram-hand': `url(#${id}-hand)` } as CSSProperties}>
-          {illustration.drawing.map((item, index) => {
+          {drawing.map((item, index) => {
             if (item.kind === 'limb') {
               return <g key={index} className="clinical-diagram-limb">
                 <path d={item.path} strokeWidth={item.width + 2.6} />
@@ -67,6 +97,8 @@ function ClinicalDiagram({ testId }: { testId: string }) {
             if ('path' in item) {
               return <path key={index}
                 className={'clinical-diagram-' + item.kind}
+                data-motion={step===2 && (item.kind==='arrow'||item.kind==='resistance') || undefined}
+                pathLength={step===2 && (item.kind==='arrow'||item.kind==='resistance') ? 1 : undefined}
                 d={item.path}
                 markerEnd={item.kind === 'arrow' || item.kind === 'resistance' ? `url(#${id}-${item.kind})` : undefined} />;
             }
@@ -111,6 +143,33 @@ function ClinicalDiagram({ testId }: { testId: string }) {
   );
 }
 
+function ClinicalSteps({ testId, steps }: { testId: string; steps: typeof testSteps[string] }) {
+  const [step,setStep] = useState(0);
+  const [playing,setPlaying] = useState(false);
+  useEffect(()=>{
+    if(!playing)return;
+    const timer=window.setTimeout(()=>{
+      if(step===stepTitles.length-1){setPlaying(false);return;}
+      setStep(step+1);
+    },3600);
+    return ()=>window.clearTimeout(timer);
+  },[playing,step]);
+
+  return <div className="clinical-animation">
+    <ClinicalDiagram key={step} testId={testId} step={step}/>
+    <div className="clinical-animation-steps" role="group" aria-label="İllüstrasyon adımları">
+      {stepTitles.map((title,index)=><Button key={title} size="sm" variant={index===step?'default':'outline'}
+        aria-pressed={index===step} onClick={()=>{setPlaying(false);setStep(index);}}>{title}</Button>)}
+    </div>
+    <p role="status"><strong>{stepTitles[step]}</strong> · {steps[step]}</p>
+    <Button size="sm" variant="outline" onClick={()=>{
+      if(playing){setPlaying(false);return;}
+      if(step===stepTitles.length-1)setStep(0);
+      setPlaying(true);
+    }}>{playing?'Duraklat':'Adımları oynat'}</Button>
+  </div>;
+}
+
 export default function ClinicalTestIllustration({ testId, title }: Props) {
   const illustration = clinicalTestIllustrations[testId];
   if (!illustration) return null;
@@ -124,8 +183,8 @@ export default function ClinicalTestIllustration({ testId, title }: Props) {
             <Maximize2 size={14} /> Büyüt
           </DialogTrigger>
         </div>
-        <ClinicalDiagram testId={testId} />
-        <figcaption>{illustration.caption}</figcaption>
+        {testSteps[testId]?<ClinicalSteps testId={testId} steps={testSteps[testId]}/>:<ClinicalDiagram testId={testId} />}
+        {!testSteps[testId]&&<figcaption>{illustration.caption}</figcaption>}
       </figure>
       <DialogContent className="clinical-test-illustration-dialog" showCloseButton={false}>
         <DialogClose render={<Button className="clinical-test-illustration-close" variant="ghost" size="icon-sm" aria-label="Kapat" />}>
@@ -133,8 +192,8 @@ export default function ClinicalTestIllustration({ testId, title }: Props) {
         </DialogClose>
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{illustration.view}</DialogDescription>
-        <ClinicalDiagram testId={testId} />
-        <p>{illustration.caption}</p>
+        {testSteps[testId]?<ClinicalSteps testId={testId} steps={testSteps[testId]}/>:<ClinicalDiagram testId={testId} />}
+        {!testSteps[testId]&&<p>{illustration.caption}</p>}
       </DialogContent>
     </Dialog>
   );

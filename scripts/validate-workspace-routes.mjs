@@ -11,6 +11,12 @@ const samples=[
  {lesson:'cases',caseId:'ankle-sprain',mode:'exam'},
  {lesson:'quiz',quizMuscle:'biceps brachii'},
  {lesson:'practice'},
+ {lesson:'clinical',clinicalMode:'dermatomes',clinicalLevel:'L5',side:'right'},
+ {lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:'C5',clinicalMuscle:'biceps brachii',side:'left'},
+ {lesson:'clinical',clinicalMode:'tests',clinicalTest:'lachman'},
+ {lesson:'neuro-compare'},
+ {lesson:'neuro-exam'},
+ {lesson:'foot-drop-case'},
  {lesson:'study',concept:'FMA_24474'},
  {lesson:'study',structure:'biceps long head tendon',side:'left',attachment:'origin'},
  {lesson:'study',structure:'patellar ligament',side:'left',attachment:'both'},
@@ -22,6 +28,7 @@ const samples=[
  {lesson:'tendons',compare:'biceps-ends',structure:'biceps long head tendon',side:'left'}
 ];
 for(const route of samples){const parsed=parseWorkspaceRoute(workspaceHash(route));for(const [key,value]of Object.entries(route))assert.equal(parsed[key],value,workspaceHash(route));}
+assert.equal(workspaceHash(parseWorkspaceRoute('#klinik-atlas')),'#klinik-testler');
 assert.equal(parseWorkspaceRoute('#latissimus').muscle,'latissimus dorsi');
 assert.equal(parseWorkspaceRoute('#kaslar').lesson,'study');
 assert.equal(parseWorkspaceRoute('#yuruyus?konum=200').progress,100);
