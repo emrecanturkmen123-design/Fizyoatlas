@@ -1,6 +1,7 @@
+import {CASES_KEY as LOCAL_KEY} from './study-storage-keys';
 import {useEffect,useRef,useState} from 'react';
 import {parseCaseProgress,progressKey,type CaseProgress} from './case-progress';
-const LOCAL_KEY='fizyo-atlas-cases-v1';
+
 function localRecords(){const next:Record<string,CaseProgress>={};try{for(const raw of JSON.parse(localStorage.getItem(LOCAL_KEY)??'[]')){const p=parseCaseProgress(raw);if(p)next[progressKey(p)]=p;}}catch{}return next;}
 export function useCaseProgress(){
  const [records,setRecords]=useState<Record<string,CaseProgress>>({}),[status,setStatus]=useState<'loading'|'guest'|'ready'|'saving'|'error'>('loading'),[error,setError]=useState(''),[conflict,setConflict]=useState(false);

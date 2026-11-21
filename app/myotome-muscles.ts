@@ -36,7 +36,6 @@ const addedMuscles: Record<string, { name: string; innervation: Innervation[]; n
     ],
     note: 'C8 anahtar motor muayenesinde orta parmağın distal fleksiyonu değerlendirilir.',
   },
-  'psoas major': { name: 'M. psoas major', innervation: [{ nerve: 'Lomber spinal sinirlerin ön dalları', roots: 'L1–L4' }] },
   diaphragm: { name: 'Diyafram', innervation: [{ nerve: 'N. phrenicus', roots: 'C3–C5' }] },
   'external oblique': {
     name: 'M. obliquus externus abdominis',
@@ -89,7 +88,7 @@ function myotomePart(part: Part) {
   };
   const muscle = muscleFor(part.name);
   if (!muscle) return;
-  const { roots, note } = muscleReview(muscle.key);
+  const { motorRoots:roots, note } = muscleReview(muscle.key);
   if (!roots) return;
   const nerve = muscle.nerve.replace(/ · [CTLS]\d+(?:[–-][CTLS]\d+)?$/, '');
   return { key: muscle.key, name: muscle.name, innervation: [{ nerve, roots }], note };

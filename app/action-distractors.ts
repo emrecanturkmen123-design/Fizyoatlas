@@ -2,6 +2,12 @@ import {HAND_ACTION_DISTRACTORS} from './hand-muscle-data';
 // Deliberately incompatible functions, rather than other muscles' partially
 // overlapping action summaries. This keeps each function question single-answer.
 export const ACTION_DISTRACTORS:Record<string,string[]>={...HAND_ACTION_DISTRACTORS,
+ 'psoas major':['Diz ekstansiyonu.','Ayak eversiyonu.','Dirsek fleksiyonu.'],
+ piriformis:['Dirsek ekstansiyonu.','Ayak dorsifleksiyonu.','Skapula protraksiyonu.'],
+ 'tensor fasciae latae':['Önkol pronasyonu.','Skapula retraksiyonu.','Ayak başparmağı ekstansiyonu.'],
+ trapezius:['Kalça fleksiyonu.','Ayak inversiyonu.','Dirsek fleksiyonu.'],
+ 'rhomboid major':['Omuz ekleminde aktif dış rotasyon.','Ayak inversiyonu.','Diz ekstansiyonu.'],
+ popliteus:['Dirsek fleksiyonu.','Dizde terminal ekstansiyonun başlıca üreticisi.','Ayak plantar fleksiyonu.'],
  'gluteus minimus':['Kalça addüksiyonu ve dış rotasyonu.','Diz ekstansiyonu.','Ayak bileği plantar fleksiyonu.'],
  'extensor hallucis longus':['Ayak başparmağı fleksiyonu.','Ayak bileği plantar fleksiyonu.','Diz ekstansiyonu.'],
  'tibialis posterior':['Ayak eversiyonu ve dorsifleksiyon.','Diz ekstansiyonu.','Kalça abdüksiyonu.'],

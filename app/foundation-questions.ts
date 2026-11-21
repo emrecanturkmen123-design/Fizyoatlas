@@ -1,3 +1,4 @@
+import {clinicalLearningQuestions} from './clinical-learning-questions';
 import type {Region} from './case-schema';
 const base='https://openstax.org/books/anatomy-and-physiology-2e/pages/';
 const spine=base+'7-3-the-vertebral-column',joints=base+'9-6-anatomy-of-selected-synovial-joints',nerves=base+'13-4-the-peripheral-nervous-system',tissue=base+'12-2-nervous-tissue',limb=base+'8-4-bones-of-the-lower-limb';
@@ -40,4 +41,4 @@ const groups:{region:Region;displayName:string;muscleKey:string;source:string;fa
  ['Eklem kıkırdağı ile labrum için doğru ayrım hangisidir?','Eklem yüzeyini örten kıkırdak ile kenar yapısı farklıdır','İkisi aynı tendonun adıdır','Labrum femur kemiğinin tamamıdır','Eklem kıkırdağı bir motor sinirdir','Labrum kenardaki fibrokartilaj yapıdır; eklem yüzeyi kıkırdağından ayrıdır.'],
  ]},
 ];
-export const FOUNDATION_QUESTIONS=groups.flatMap(g=>g.facts.map((f,i)=>({id:`foundation:${g.region}:${i}`,region:g.region,displayName:g.displayName,muscleKey:g.muscleKey,prompt:f[0],answer:f[1],options:f.slice(1,5),explanation:f[5],source:g.region==='neuro'&&(i===0||i===8)?tissue:g.region==='hip'&&(i===3||i===4)?limb:g.source,topic:g.region==='hip'&&i>=5&&i<=8?'action' as const:g.region==='neuro'?'nerve' as const:'name' as const})));
+export const FOUNDATION_QUESTIONS=[...groups.flatMap(g=>g.facts.map((f,i)=>({id:`foundation:${g.region}:${i}`,region:g.region,displayName:g.displayName,muscleKey:g.muscleKey,prompt:f[0],answer:f[1],options:f.slice(1,5),explanation:f[5],source:g.region==='neuro'&&(i===0||i===8)?tissue:g.region==='hip'&&(i===3||i===4)?limb:g.source,topic:g.region==='hip'&&i>=5&&i<=8?'action' as const:g.region==='neuro'?'nerve' as const:'name' as const}))),...clinicalLearningQuestions];

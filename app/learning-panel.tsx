@@ -1,3 +1,4 @@
+import StudyBackupPanel from './study-backup-panel';
 import {signInUrl,signInLabel} from './auth-link';
 import LearningReset from './learning-reset';
 import {Button} from '@/components/ui/button';
@@ -24,7 +25,7 @@ export default function LearningPanel({learning,onMuscle,onReview,onClose,favori
       {regions.length>0&&<Disclosure title="Bölgelere göre sonuçlar"><table className="quiz-breakdown"><caption>Bölgelere göre son yanıtlar</caption><thead><tr><th scope="col">Bölge</th><th scope="col">Doğru / Çalışılan</th><th scope="col">Bugün tekrar</th></tr></thead><tbody>{regions.map(x=><tr key={x.key}><th scope="row">{x.label}</th><td>{x.correct} / {x.total}</td><td>{x.due}</td></tr>)}</tbody></table></Disclosure>}
      </section></div>
    </>}
-   {!favoritesOnly&&<LearningReset learning={learning}/>}
+   {!favoritesOnly&&<><LearningReset learning={learning}/>{!data.authenticated&&<StudyBackupPanel/>}</>}
    <div className="hub-account"><span>{!learning.canWork?'Kayıt bağlantısı bekleniyor':data.authenticated?'Hesabında kayıtlı':'Bu tarayıcıda kayıtlı'}</span><Disclosure title="Kayıt ve hesap bilgisi"><p>{data.authenticated?'Kayıtlar giriş yaptığın hesaba bağlıdır. Aynı hesabı paylaşan kişiler aynı kayıtları görür.':'Favoriler, yanıtlar ve vaka ilerlemesi bu tarayıcıda korunur. Tarayıcı verilerini silersen cihaz kayıtları da silinir.'}</p>{!data.authenticated&&<><a className="sign-in-link" href={signInUrl("/#calismalarim")} target="_top">Cihazlar arasında devam etmek için {signInLabel}</a><p>Cihaz kayıtları hesaba otomatik aktarılmaz.</p></>}<Button variant="outline" disabled={pending} onClick={()=>void learning.refresh()}>Kayıtları yenile</Button></Disclosure></div>
   </>}
  </section>;
