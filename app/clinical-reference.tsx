@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { clinicalTestLayers, levels, motorLevelAvailable, motorNerve, regions, rootGroup, rootGroups, sensoryLevels, tests, type ClinicalSelection, type ClinicalTestLayer } from './clinical-model';
-import { useEffect, useRef, type CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import type { SelectionMember } from './selection-palette';
 import type { Part } from './anatomy';
 import reference from './clinical-reference.json';
@@ -30,10 +30,13 @@ type Props = {
   parts: Part[];
   muscles: SelectionMember[];
   hasPin: boolean;
+  dermatome3D?: boolean;
+  onDermatomeView?: (useModel: boolean) => void;
+  dermatomeMap?: ReactNode;
   onPickLevel: (id: string) => void;
 };
 
-export default function ClinicalReference({value, onChange, onClose, parts, muscles, hasPin, onPickLevel}: Props) {
+export default function ClinicalReference({value, onChange, onClose, parts, muscles, hasPin, dermatome3D, onDermatomeView, dermatomeMap, onPickLevel}: Props) {
   const { mode, region, side, levelId, testId } = value;
   const panel = useRef<HTMLElement>(null);
   useEffect(()=>{
@@ -53,12 +56,19 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
     <div className="clinical-reference-views" aria-label="Klinik Atlas bölümleri">
       {modes.map(([id, label]) => <Button key={id} aria-pressed={mode === id} variant={mode === id ? 'default' : 'outline'} onClick={() => onChange({mode:id})}>{label}</Button>)}
     </div>
-    {mode === 'dermatomes' && <p className="clinical-reference-hint">Duyu alanını seçmek için modeldeki renkli bölgeye dokun.</p>}
+    {mode === 'dermatomes' && <>
+      <div className="clinical-reference-views" role="group" aria-label="Dermatom görünümü">
+        <Button variant={dermatome3D ? 'outline' : 'default'} aria-pressed={!dermatome3D} onClick={() => onDermatomeView?.(false)}>Harita</Button>
+        <Button variant={dermatome3D ? 'default' : 'outline'} aria-pressed={!!dermatome3D} onClick={() => onDermatomeView?.(true)}>3D model</Button>
+      </div>
+      <p className="clinical-reference-hint">Duyu alanını seçmek için renkli bölgeye dokun.</p>
+      {dermatomeMap}
+    </>}
     {mode !== 'tests' && <div className="clinical-reference-views">
       <Button aria-pressed={side === 'left'} variant="outline" onClick={() => onChange({side:'left'})}>Sol</Button>
       <Button aria-pressed={side === 'right'} variant="outline" onClick={() => onChange({side:'right'})}>Sağ</Button>
-      <Button aria-pressed={value.view === 'front'} variant="ghost" onClick={() => onChange({view:'front',focus:0})}>Ön</Button>
-      <Button aria-pressed={value.view === 'back'} variant="ghost" onClick={() => onChange({view:'back',focus:0})}>Arka</Button>
+      {(mode === 'myotomes' || dermatome3D) && <><Button aria-pressed={value.view === 'front'} variant="ghost" onClick={() => onChange({view:'front',focus:0})}>Ön</Button>
+      <Button aria-pressed={value.view === 'back'} variant="ghost" onClick={() => onChange({view:'back',focus:0})}>Arka</Button></>}
     </div>}
     {mode === 'tests' ? <div className="clinical-test-flow">
       {!region ? <>
@@ -94,7 +104,7 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
           </label>
         </details>
       </>}
-    </div> : visualTarget && <Button variant="outline" onClick={() => onChange({focus:value.focus+1})}>Modelde yakından göster</Button>}
+    </div> : visualTarget && (mode === 'myotomes' || dermatome3D) && <Button variant="outline" onClick={() => onChange({focus:value.focus+1})}>Modelde yakından göster</Button>}
     {(mode !== 'tests' || test) && <article className="clinical-reference-card" aria-live="polite">
       {mode === 'tests' && test ? <>
         <p className="clinical-reference-hint">{region} · {test.tag}</p>
@@ -135,7 +145,7 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
           })}</ul>
         </div>}
       </div>}
-      <Sources ids={test && mode === 'tests' ? test.sources : mode==='myotomes'?['isncsci','uw_motor','thoracic_motor','abdominal_motor','lumbar_motor']:['isncsci','map_variability','trigeminal']} />
+      <Sources ids={test && mode === 'tests' ? test.sources : mode==='myotomes'?['isncsci','uw_motor','thoracic_motor','abdominal_motor','lumbar_motor']:['isncsci','map_variability','trigeminal','map']} />
     </article>}
     {mode !== 'tests' && <div className="clinical-root-picker" aria-label="Sinir kökleri">
       {rootGroups.map(group => {
@@ -149,15 +159,5 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
         </div>;
       })}
     </div>}
-    {mode === 'dermatomes' && <details className="clinical-reference-sources">
-      <summary>Dermatom alan haritası</summary>
-      <figure>
-        <img src="/clinical/dermatom-map.png" loading="lazy" width="665" height="704" alt="Önden ve arkadan görünümde yaklaşık dermatom alanları" />
-        <figcaption>Komşu alanlar örtüşebilir. <a href={sources.map[1]} target="_blank" rel="noreferrer">Goran tek-en</a>{' · '}
-          <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a> (kırpılmış).
-        </figcaption>
-      </figure>
-      <Sources ids={['map_variability']} />
-    </details>}
   </section>;
 }
