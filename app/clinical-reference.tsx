@@ -4,6 +4,7 @@ import { useEffect, useRef, type CSSProperties } from 'react';
 import type { SelectionMember } from './selection-palette';
 import type { Part } from './anatomy';
 import reference from './clinical-reference.json';
+import ClinicalTestIllustration from './clinical-test-illustration';
 import './clinical-reference.css';
 
 const sources: Record<string, string[]> = reference.sources;
@@ -99,6 +100,7 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
         <p className="clinical-reference-hint">{region} · {test.tag}</p>
         <h3>{test.title}</h3>
         <p className="clinical-test-focus">{test.focus}</p>
+        <ClinicalTestIllustration testId={test.id} />
         <p className="clinical-reference-hint">{parts.length > 0 ? 'Model, testle ilişkili anatomik yapıyı vurgular.' : 'Model, testin uygulandığı bölgeyi gösterir.'}</p>
         <dl className="clinical-test-steps">
           {test.position && <div><dt>Uygulama</dt><dd>{test.position}</dd></div>}

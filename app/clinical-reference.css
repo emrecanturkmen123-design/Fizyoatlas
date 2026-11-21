@@ -172,3 +172,116 @@
   }
   .workspace-layout .clinical-region-marker { min-height: 30px; }
 }
+
+.clinical-reference .clinical-test-illustration {
+  margin: .6rem 0 .9rem;
+  border: 1px solid #c8dcdf;
+  border-radius: .6rem;
+  overflow: hidden;
+}
+.clinical-test-illustration-art {
+  background: #edf5f4;
+  color: #213e49;
+  padding: .55rem .55rem .45rem;
+}
+.clinical-test-illustration-view {
+  font-size: .75rem;
+  font-weight: 650;
+}
+.clinical-test-illustration svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 18rem;
+}
+.clinical-test-illustration-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem .85rem;
+  padding-inline: .1rem;
+  font-size: .75rem;
+}
+.clinical-test-illustration-legend span {
+  display: inline-flex;
+  gap: .25rem;
+  align-items: center;
+}
+.clinical-test-illustration-legend span::before {
+  content: '';
+  width: .65rem;
+  height: .65rem;
+}
+.clinical-test-illustration-legend [data-key=hand]::before {
+  background: #76a6c8;
+  border: 1px solid #315a77;
+  border-radius: 50%;
+}
+.clinical-test-illustration-legend [data-key=arrow]::before {
+  background: #176654;
+  clip-path: polygon(0 38%, 60% 38%, 60% 10%, 100% 50%, 60% 90%, 60% 62%, 0 62%);
+}
+.clinical-reference .clinical-test-illustration figcaption {
+  margin: 0;
+  padding: .55rem .65rem;
+  border-top: 1px solid #d6e3e4;
+  font-size: .84rem;
+  line-height: 1.45;
+}
+.clinical-diagram-shape {
+  fill: #e7b59c;
+  stroke: #6c534f;
+  stroke-width: 1.35;
+  stroke-linejoin: round;
+}
+.clinical-diagram-limb {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.clinical-diagram-limb path:first-child { stroke: #6c534f; }
+.clinical-diagram-limb path:last-child { stroke: #e7b59c; }
+.clinical-diagram-detail,
+.clinical-diagram-ghost,
+.clinical-diagram-arrow,
+.clinical-diagram-hand-seams {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.clinical-diagram-detail {
+  stroke: #627484;
+  stroke-width: 1.45;
+}
+.clinical-diagram-ghost {
+  stroke: #6d818b;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+.clinical-diagram-arrow {
+  stroke: #176654;
+  stroke-width: 2.6;
+}
+.clinical-diagram-arrowhead { fill: #176654; }
+.clinical-diagram-hand {
+  fill: #76a6c8;
+  stroke: #315a77;
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+.clinical-diagram-hand-seams {
+  stroke: #315a77;
+  stroke-width: 1.15;
+}
+.clinical-diagram-target circle:first-child {
+  fill: #fff2cb;
+  fill-opacity: .7;
+  stroke: #a45928;
+  stroke-width: 1.2;
+}
+.clinical-diagram-target circle:last-child { fill: #a45928; }
+.clinical-diagram-warning {
+  fill: #e5a35b;
+  fill-opacity: .52;
+  stroke: #9c5526;
+  stroke-width: 1.35;
+}
