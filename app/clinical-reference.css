@@ -175,30 +175,50 @@
 
 .clinical-reference .clinical-test-illustration {
   margin: .6rem 0 .9rem;
-  border: 1px solid #c8dcdf;
-  border-radius: .6rem;
+  background: #fff;
+  border: 1px solid #cedcde;
+  border-radius: .65rem;
   overflow: hidden;
 }
 .clinical-test-illustration-art {
-  background: #edf5f4;
+  background: linear-gradient(180deg, #f7f9f8, #edf3f1);
   color: #213e49;
-  padding: .55rem .55rem .45rem;
+  padding: .3rem .6rem .6rem;
 }
+.clinical-test-illustration-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .4rem;
+  padding: .35rem .45rem .25rem .65rem;
+  border-bottom: 1px solid #e0e8e6;
+}
+.clinical-test-illustration-header button { min-height: 32px; white-space: nowrap; }
+.clinical-test-illustration-dialog {
+  width: min(700px, calc(100% - 1.25rem));
+  max-width: none !important;
+  max-height: calc(100dvh - 1.25rem);
+  overflow: auto;
+}
+.clinical-test-illustration-dialog > :is(h2,p) { margin: 0; }
+.clinical-test-illustration-dialog .clinical-test-illustration-art { border-radius: .55rem; }
 .clinical-test-illustration-view {
   font-size: .75rem;
   font-weight: 650;
 }
-.clinical-test-illustration svg {
+.clinical-test-illustration-art svg {
   display: block;
   width: 100%;
   height: auto;
   max-height: 18rem;
 }
+.clinical-test-illustration-dialog svg { max-height: min(55dvh, 420px); }
 .clinical-test-illustration-legend {
   display: flex;
   flex-wrap: wrap;
   gap: .25rem .85rem;
-  padding-inline: .1rem;
+  padding: .45rem .1rem 0;
+  color: #344d55;
   font-size: .75rem;
 }
 .clinical-test-illustration-legend span {
@@ -220,6 +240,14 @@
   background: #176654;
   clip-path: polygon(0 38%, 60% 38%, 60% 10%, 100% 50%, 60% 90%, 60% 62%, 0 62%);
 }
+.clinical-test-illustration-legend [data-key=resistance]::before {
+  background: #a05224;
+  clip-path: polygon(0 38%, 60% 38%, 60% 10%, 100% 50%, 60% 90%, 60% 62%, 0 62%);
+}
+.clinical-test-illustration-legend [data-key=ghost]::before {
+  height: 0;
+  border-top: 2px dashed #6d818b;
+}
 .clinical-reference .clinical-test-illustration figcaption {
   margin: 0;
   padding: .55rem .65rem;
@@ -228,9 +256,9 @@
   line-height: 1.45;
 }
 .clinical-diagram-shape {
-  fill: #e7b59c;
-  stroke: #6c534f;
-  stroke-width: 1.35;
+  fill: var(--diagram-skin, #efbea4);
+  stroke: #835c53;
+  stroke-width: 1.15;
   stroke-linejoin: round;
 }
 .clinical-diagram-limb {
@@ -238,11 +266,12 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.clinical-diagram-limb path:first-child { stroke: #6c534f; }
-.clinical-diagram-limb path:last-child { stroke: #e7b59c; }
+.clinical-diagram-limb path:first-child { stroke: #835c53; }
+.clinical-diagram-limb path:last-child { stroke: var(--diagram-skin, #efbea4); }
 .clinical-diagram-detail,
 .clinical-diagram-ghost,
 .clinical-diagram-arrow,
+.clinical-diagram-resistance,
 .clinical-diagram-hand-seams {
   fill: none;
   stroke-linecap: round;
@@ -261,9 +290,22 @@
   stroke: #176654;
   stroke-width: 2.6;
 }
-.clinical-diagram-arrowhead { fill: #176654; }
+.clinical-diagram-arrowhead-arrow { fill: #176654; }
+.clinical-diagram-resistance { stroke: #a05224; stroke-width: 2.6; }
+.clinical-diagram-arrowhead-resistance { fill: #a05224; }
+.clinical-diagram-surface { fill: #a4b4bb; stroke: #677e88; stroke-width: 1; }
+.clinical-diagram-label path { fill: none; stroke: #4f6269; stroke-width: .85; }
+.clinical-diagram-label circle { fill: #4f6269; }
+.clinical-diagram-label text {
+  fill: #223a44;
+  stroke: #f4f8f6;
+  stroke-width: 2.75px;
+  paint-order: stroke;
+  font-size: 10.7px;
+  font-weight: 700;
+}
 .clinical-diagram-hand {
-  fill: #76a6c8;
+  fill: var(--diagram-hand, #76a6c8);
   stroke: #315a77;
   stroke-width: 1.4;
   stroke-linejoin: round;
@@ -370,3 +412,36 @@
   .dermatome-map-mobile .dermatome-map-art { height: clamp(265px, 48dvh, 530px); }
   .dermatome-map-mobile .dermatome-map-views button { font-size: .82rem; }
 }
+
+.dermatome-map-status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .3rem .85rem;
+}
+.dermatome-map-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+.dermatome-map-zoom button { min-width: 36px; }
+.dermatome-map-zoom output {
+  text-align: center;
+  min-width: 3rem;
+  font-size: .84rem;
+  font-variant-numeric: tabular-nums;
+}
+.dermatome-map-art { overflow: hidden; }
+.dermatome-map-art[data-zoomed=true] svg {
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+.dermatome-map-art[data-zoomed=true] svg:active,
+.dermatome-map-art[data-zoomed=true] svg:active .dermatome-map-area { cursor: grabbing; }
+
+body:has(.clinical-test-illustration-dialog) [data-slot=dialog-overlay] { z-index: 90; }
+.clinical-test-illustration-dialog { z-index: 91 !important; }
+.clinical-test-illustration-close { position: absolute; top: .35rem; right: .35rem; }
+.dermatome-map-art:focus-visible { outline: 2px solid #376777; outline-offset: 1px; }
