@@ -1,24 +1,34 @@
+import type {ClinicalMode} from './clinical-model';
 import {HAND_DIGITS,type HandDigit} from './hand-motion';
 import {isRegionalCourseId,regionalCourse,type RegionalCourseId} from './regional-course-content';
 import {LESSON_HASHES,type Lesson} from './lesson-routes';
 import {isKneeCourseStep,type KneeCourseStep} from './knee-course-data';
 import {MOVEMENT_LAYER_OPTIONS} from './movement-options';
 export interface WorkspaceRoute {
- lesson:Lesson|'practice'|'clinical';courseId?:RegionalCourseId;courseStep?:KneeCourseStep;courseMotion?:number;tab?:'muscles'|'nerves'|'connective';region?:string;
+ lesson:Lesson|'practice'|'clinical'|'neuro-compare'|'neuro-exam'|'foot-drop-case';clinicalMode?:ClinicalMode;clinicalLevel?:string;clinicalTest?:string;clinicalMuscle?:string;courseId?:RegionalCourseId;courseStep?:KneeCourseStep;courseMotion?:number;tab?:'muscles'|'nerves'|'connective';region?:string;
  concept?:string;muscle?:string;nerve?:string;nerveFocus?:'targets';structure?:string;side?:'left'|'right';motion?:string;
  handDigit?:HandDigit|'all';progress?:number;motionMuscles?:true;motionLayers?:string[];caseId?:string;mode?:'learn'|'exam';quizMuscle?:string;quizTendon?:string;quizFinding?:string;compare?:string;
  attachment?:'both'|'origin'|'insertion';isolate?:true;tendons?:true;trace?:true;learningView?:'favorites';labMode?:'compare'|'clinical';labKind?:'muscles';labFrame?:'centered'|'aligned';labContext?:boolean;clinicalPair?:string;yaw?:number;pitch?:number;zoom?:number;
 }
-const hashes:Record<WorkspaceRoute['lesson'],string>={clinical:'klinik-atlas',hand:'el-parmak',courses:'ogren','regional-course':'bolge-dersi','knee-course':'diz-dersi',notebook:'defter',lab:'inceleme',tendons:'tendonlar',study:'atlas',practice:'sinama',movements:'hareketler',shoulder:'omuz',elbow:'dirsek',hip:'kalca',ankle:'ayak-bilegi',knee:'diz',gait:'yuruyus',cases:'vakalar',quiz:'test',learning:'calismalarim',spine:'omurga',latissimus:'latissimus'};
+const hashes:Record<WorkspaceRoute['lesson'],string>={clinical:'klinik-testler','neuro-compare':'norolojik-karsilastirma','neuro-exam':'norolojik-uygulama','foot-drop-case':'ayak-dusmesi-vakasi',hand:'el-parmak',courses:'ogren','regional-course':'bolge-dersi','knee-course':'diz-dersi',notebook:'defter',lab:'inceleme',tendons:'tendonlar',study:'atlas',practice:'sinama',movements:'hareketler',shoulder:'omuz',elbow:'dirsek',hip:'kalca',ankle:'ayak-bilegi',knee:'diz',gait:'yuruyus',cases:'vakalar',quiz:'test',learning:'calismalarim',spine:'omurga',latissimus:'latissimus'};
+export const clinicalHashes:Record<ClinicalMode,string>={tests:'klinik-testler',dermatomes:'dermatom',myotomes:'miyotom'};
 export function parseWorkspaceRoute(hash:string):WorkspaceRoute {
  const [base,query='']=hash.replace(/^#/,'').split('?'),params=new URLSearchParams(query);
- const lesson=base==='atlas'?'study':base==='sinama'?'practice':base===hashes.clinical?'clinical':LESSON_HASHES['#'+base]??'study';
+ const clinicalMode=base==='klinik-atlas'?'tests':(Object.keys(clinicalHashes) as ClinicalMode[]).find(mode=>clinicalHashes[mode]===base);
+ const lesson=clinicalMode?'clinical':base==='atlas'?'study':base==='sinama'?'practice':base===hashes['neuro-compare']?'neuro-compare':base===hashes['neuro-exam']?'neuro-exam':base===hashes['foot-drop-case']?'foot-drop-case':LESSON_HASHES['#'+base]??'study';
  const route:WorkspaceRoute={lesson};
+ if(clinicalMode){
+  route.clinicalMode=clinicalMode;
+  for(const [field,param] of [['clinicalLevel','kok'],['clinicalTest','test'],['clinicalMuscle','kas']] as const){
+   const value=params.get(param);if(value&&value.length<=120)route[field]=value;
+  }
+ }
  const courseStep=params.get('adim');if((lesson==='knee-course'||lesson==='regional-course')&&isKneeCourseStep(courseStep))route.courseStep=courseStep;
  const courseId=params.get('kurs');if(lesson==='regional-course'){if(isRegionalCourseId(courseId))route.courseId=courseId;else return {lesson:'courses'};}
  const stop=params.get('durak');if(lesson==='regional-course'&&route.courseId&&stop!==null&&/^\d+$/.test(stop)&&Number(stop)<regionalCourse(route.courseId)!.motions.length)route.courseMotion=Number(stop);
  const tab=params.get('tur');if(tab==='muscles'||tab==='nerves'||tab==='connective')route.tab=tab;
  for(const [field,param] of Object.entries({region:'bolge',concept:'secim',muscle:'kas',nerve:'sinir',structure:'yapi',motion:'hareket',caseId:'vaka',quizMuscle:'calis',quizTendon:'tendon',quizFinding:'bul',compare:'karsilastir'})){
+  if(lesson==='clinical'&&field==='muscle')continue;
   const value=params.get(param);if(value&&value.length<=120)(route as unknown as Record<string,unknown>)[field]=value;
  }
  const side=params.get('taraf');if(side==='sol'||side==='left')route.side='left';if(side==='sag'||side==='right')route.side='right';
@@ -59,6 +69,12 @@ export function workspaceHash(route:WorkspaceRoute){
   if(field==='progress'){if(!value)continue;value=Math.round(Number(value));}
   p.set(param,String(value));
  }
- return '#'+hashes[route.lesson]+(p.size?'?'+p.toString():'');
+ if(route.lesson==='clinical'){
+  if(route.clinicalLevel)p.set('kok',route.clinicalLevel);
+  if(route.clinicalTest)p.set('test',route.clinicalTest);
+  if(route.clinicalMuscle)p.set('kas',route.clinicalMuscle);
+ }
+ const base=route.lesson==='clinical'?clinicalHashes[route.clinicalMode??'tests']:hashes[route.lesson];
+ return '#'+base+(p.size?'?'+p.toString():'');
 }
 export function routeIdentity(route:WorkspaceRoute){const {progress,yaw,pitch,zoom,...identity}=route;return workspaceHash(identity);}

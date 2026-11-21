@@ -42,7 +42,7 @@ for(const group of ['muscles','nerves','connective']){
 // Actual source triangles, including small nerves, must remain selectable in
 // an anonymous projection; no target identity is given to the picking code.
 const cache=new Map(),mesh=p=>{if(!cache.has(p.chunk)){const b=fs.readFileSync('public'+atlas.chunks[p.chunk].url);cache.set(p.chunk,b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength));}const b=cache.get(p.chunk);return {part:p,positions:new Float32Array(b,p.positions,p.vertexCount*3),indices:new Uint32Array(b,p.indices,p.indexCount)};};
-for(const id of ['locate:muscle:soleus:left','locate:muscle:deltoid:right','locate:nerve:femoral:left','locate:nerve:oculomotor-superior:right','locate:target:axillary:right']){
+for(const id of ['locate:muscle:soleus:left','locate:muscle:extensor hallucis longus:right','locate:muscle:deltoid:right','locate:nerve:femoral:left','locate:nerve:oculomotor-superior:right','locate:target:axillary:right']){
  const scene=findingScene(atlas,id),meshes=scene.parts.map(mesh);let reachable=false;
  for(const view of ['front','back','side']){
   const triangles=projectFinding(meshes,view,600,420,scene.candidateIds);assert(triangles.length);assert(triangles.every(t=>t.p.flat().every(Number.isFinite)));
@@ -53,4 +53,4 @@ for(const id of ['locate:muscle:soleus:left','locate:muscle:deltoid:right','loca
  }
  assert(reachable,id+' is reachable from actual source triangles');
 }
-console.log(`PASS: ${MODEL_FINDINGS.length} findings, 49 bilateral muscles, 23 bilateral nerve surfaces, all 27 target studies, valid multiple targets, filtered pools, and actual source-triangle selection. No GPU or browser pixels tested.`);
+console.log(`PASS: ${MODEL_FINDINGS.length} findings, ${MUSCLES.length} bilateral muscles, 23 bilateral nerve surfaces, all 27 target studies, valid multiple targets, filtered pools, and actual source-triangle selection. No GPU or browser pixels tested.`);

@@ -468,3 +468,54 @@ body:has(.clinical-test-illustration-dialog) [data-slot=dialog-overlay] { z-inde
 .clinical-related-muscles[open] > button { margin: .45rem 0; }
 
 .dermatome-map-zoom-hint { display: block; margin-bottom: .2rem; }
+
+.clinical-navigation {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  flex-shrink:0;
+  gap:4px;
+}
+.clinical-navigation a {
+  min-height:38px;
+  padding:6px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  font-size:.84rem;
+  line-height:1.2;
+  text-decoration:none;
+  border-radius:8px;
+  color:#23414f;
+}
+.clinical-navigation a:hover { background:#e3eef1; }
+.clinical-navigation a[aria-current=page] { background:#124f61;color:#fff; }
+.clinical-root-links { display:grid;gap:8px;margin:.7rem 0; }
+.clinical-reference-views :is(a,button) { max-width:100%;white-space:normal;height:auto;min-height:36px; }
+.clinical-innervation a { max-width:100%; }
+.clinical-animation { display:grid;justify-items:start;gap:.45rem; }
+.clinical-animation .clinical-test-illustration-art { width:100%; }
+.clinical-animation-steps { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:4px; }
+.clinical-animation p { font-size:.83rem;line-height:1.45;margin:0; }
+.clinical-animation [data-motion=true] { stroke-dasharray:1;animation:clinical-motion .85s ease-out both; }
+@keyframes clinical-motion { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
+@media(prefers-reduced-motion:reduce) {
+  .clinical-animation [data-motion=true] { animation:none; }
+}
+.workspace-layout .neuro-study { display:block;overflow:auto;position:absolute; }
+.neuro-study > * + * { margin-top:14px; }
+.neuro-study h2 { font-size:1.45rem;font-weight:700; }
+.neuro-study h3 { font-size:1rem;font-weight:650; }
+.neuro-study .clinical-navigation { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.neuro-comparison { width:100%;font-size:.85rem;table-layout:fixed; }
+.neuro-comparison :is(th,td) { padding:.7rem .5rem;text-align:left;vertical-align:top;border-bottom:1px solid #dbe5e7;overflow-wrap:anywhere; }
+.neuro-comparison thead { background:#edf4f6; }
+.neuro-findings { padding-inline-start:1.4rem; }
+.neuro-findings li + li { margin-top:.6rem; }
+.neuro-question { display:grid;gap:8px; }
+.workspace-layout .lesson-links > a { display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:14px;gap:5px;min-height:72px;height:auto;white-space:normal; }
+@media(max-width:480px) {
+  .neuro-study .clinical-navigation { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .neuro-comparison { font-size:.78rem; }
+  .neuro-comparison :is(th,td) { padding:.55rem .3rem; }
+  .workspace-layout .top-actions a { min-width:0;padding-inline:5px;text-align:center;line-height:1.15; }
+}

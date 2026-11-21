@@ -9,6 +9,7 @@ function entry(state:unknown):Entry|undefined{
 }
 // A camera or a selector is an adjustment to the current page, not another page.
 export function navigationIdentity(route:WorkspaceRoute){
+ if(route.lesson==='clinical')return workspaceHash({lesson:'clinical',clinicalMode:route.clinicalMode,region:route.region,clinicalTest:route.clinicalTest});
  if(route.lesson==='lab')return 'lab';
  if(route.lesson==='study')return workspaceHash({lesson:'study',tab:route.tab,region:route.region,concept:route.concept,muscle:route.muscle,nerve:route.nerve,structure:route.structure});
  if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(route.lesson)){const {motionMuscles,motionLayers,tendons,handDigit,...page}=route;return routeIdentity(page);}
@@ -20,6 +21,13 @@ export function parentWorkspaceRoute(route:WorkspaceRoute):WorkspaceRoute|undefi
   if(route.tab&&route.tab!=='muscles'||route.region&&route.region!=='all')return {lesson:'study'};
   return;
  }
+ if(route.lesson==='clinical'){
+  if(route.clinicalTest)return {lesson:'clinical',clinicalMode:'tests',region:route.region};
+  if(route.region)return {lesson:'clinical',clinicalMode:'tests'};
+  if(route.clinicalMode&&route.clinicalMode!=='tests')return {lesson:'clinical'};
+ }
+ if(route.lesson==='foot-drop-case')return {lesson:'neuro-compare'};
+ if(route.lesson==='neuro-compare')return {lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:'L5'};
  if(route.lesson==='lab'||route.lesson==='tendons'||route.lesson==='spine'||route.lesson==='clinical')return {lesson:'study'};
  if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(route.lesson)){
   if(route.muscle||route.concept){const {muscle,concept,isolate,attachment,trace,...movement}=route;return movement;}

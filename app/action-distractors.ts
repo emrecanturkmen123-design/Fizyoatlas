@@ -3,6 +3,7 @@ import {HAND_ACTION_DISTRACTORS} from './hand-muscle-data';
 // overlapping action summaries. This keeps each function question single-answer.
 export const ACTION_DISTRACTORS:Record<string,string[]>={...HAND_ACTION_DISTRACTORS,
  'gluteus minimus':['Kalça addüksiyonu ve dış rotasyonu.','Diz ekstansiyonu.','Ayak bileği plantar fleksiyonu.'],
+ 'extensor hallucis longus':['Ayak başparmağı fleksiyonu.','Ayak bileği plantar fleksiyonu.','Diz ekstansiyonu.'],
  'tibialis posterior':['Ayak eversiyonu ve dorsifleksiyon.','Diz ekstansiyonu.','Kalça abdüksiyonu.'],
  'fibularis longus':['Ayak inversiyonu ve dorsifleksiyon.','Diz fleksiyonu.','Kalça ekstansiyonu.'],
  'fibularis brevis':['Ayak inversiyonu ve dorsifleksiyon.','Diz ekstansiyonu.','Kalça abdüksiyonu.'],

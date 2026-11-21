@@ -12,7 +12,7 @@ export const LOWER_MOVES=[
  {joint:'hip',id:'adduction',name:'Addüksiyon',max:35,plane:'Frontal',axis:'Anteroposterior',keys:['adductor longus'],opposite:'abduction',hint:'Yana açılmış bacağı orta hatta geri getir.'},
  {joint:'hip',id:'internal',name:'İç rotasyon',max:30,plane:'Transversal',axis:'Longitudinal',keys:['gluteus medius','gluteus minimus'],opposite:'external',hint:'Femuru içe döndür. Gluteus medius ve minimusun ön lifleri katkı verir; bu, tüm liflerin tek görevi değildir.'},
  {joint:'hip',id:'external',name:'Dış rotasyon',max:30,plane:'Transversal',axis:'Longitudinal',keys:['gluteus maximus'],opposite:'internal',hint:'Femuru dışa döndür. Gösterim, yaklaşık düşey uzun eksen çevresindedir.'},
- {joint:'ankle',id:'dorsiflexion',name:'Dorsifleksiyon',max:20,plane:'Sagittal',axis:'Mediolateral',keys:['tibialis anterior'],opposite:'plantarflexion',hint:'Ayak sırtını bacağa yaklaştır.'},
+ {joint:'ankle',id:'dorsiflexion',name:'Dorsifleksiyon',max:20,plane:'Sagittal',axis:'Mediolateral',keys:['tibialis anterior','extensor hallucis longus'],opposite:'plantarflexion',hint:'Ayak sırtını bacağa yaklaştır.'},
  {joint:'ankle',id:'plantarflexion',name:'Plantar fleksiyon',max:40,plane:'Sagittal',axis:'Mediolateral',keys:['gastrocnemius','soleus','tibialis posterior','fibularis longus','fibularis brevis'],opposite:'dorsiflexion',hint:'Ayağı aşağı yönlendir. Gastrocnemius ve soleus başlıca kuvveti sağlar; tibialis posterior ve fibularis kasları katkı verir. İnversiyon ve eversiyon burada gösterilmez.'}
 ] as const;
 export function lowerMove(s:Pick<LowerState,'joint'|'id'>){const m=LOWER_MOVES.find(m=>m.joint===s.joint&&m.id===s.id);if(!m)throw new Error('Unknown lower limb movement');return m;}

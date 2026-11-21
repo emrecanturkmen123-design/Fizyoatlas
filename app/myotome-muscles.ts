@@ -36,7 +36,6 @@ const addedMuscles: Record<string, { name: string; innervation: Innervation[]; n
     ],
     note: 'C8 anahtar motor muayenesinde orta parmağın distal fleksiyonu değerlendirilir.',
   },
-  'extensor hallucis longus': { name: 'M. extensor hallucis longus', innervation: [{ nerve: 'N. fibularis profundus', roots: 'L4–S1' }] },
   'psoas major': { name: 'M. psoas major', innervation: [{ nerve: 'Lomber spinal sinirlerin ön dalları', roots: 'L1–L4' }] },
   diaphragm: { name: 'Diyafram', innervation: [{ nerve: 'N. phrenicus', roots: 'C3–C5' }] },
   'external oblique': {
@@ -71,6 +70,10 @@ function includesRoot(roots: string, level: string) {
     const last = rootOrder.indexOf(match[2] ?? match[1]);
     return first >= 0 && indices.some(index => index >= first && index <= last);
   });
+}
+
+export function innervationRoots(roots: string) {
+  return [...rootOrder.slice(0, -2), 'S4–5'].filter(level => includesRoot(roots, level));
 }
 
 function myotomePart(part: Part) {
