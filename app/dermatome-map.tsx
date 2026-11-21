@@ -34,11 +34,35 @@ function viewport(frame: Framing, step: number, aspect: number) {
   return { width, height, x: (box.width - width) / 2, y: (mapHeight - height) / 2 };
 }
 
-function constrain(frame: Framing, camera: Camera, aspect: number): Camera {
-  const box = viewport(frame, camera.step, aspect);
-  const x = Math.max(0, box.x);
-  const y = Math.max(0, box.y);
+function constrain(frame: Framing, camera: Camera): Camera {
+  if (camera.step === 0) return initialCamera;
+  // Allow panning to the edge, while keeping the camera center over the artwork.
+  const x = framing[frame].width / 2;
+  const y = mapHeight / 2;
   return { ...camera, x: clamp(camera.x, -x, x), y: clamp(camera.y, -y, y) };
+}
+
+type ZoomAnchor = { x: number; y: number };
+const center: ZoomAnchor = { x: .5, y: .5 };
+
+function zoomAt(frame: Framing, camera: Camera, aspect: number, delta: number, target: ZoomAnchor): Camera {
+  const current = constrain(frame, camera);
+  const step = clamp(current.step + delta, 0, zoomLevels.length - 1);
+  if (step === current.step) return current;
+  const previous = viewport(frame, current.step, aspect);
+  const next = viewport(frame, step, aspect);
+  return constrain(frame, {
+    step,
+    x: current.x + (target.x - .5) * (previous.width - next.width),
+    y: current.y + (target.y - .5) * (previous.height - next.height),
+  });
+}
+
+function zoomAnchor(bounds: DOMRect, clientX: number, clientY: number): ZoomAnchor {
+  return {
+    x: clamp((clientX - bounds.left) / bounds.width, 0, 1),
+    y: clamp((clientY - bounds.top) / bounds.height, 0, 1),
+  };
 }
 
 type Drag = { pointer: number; x: number; y: number; scale: number; camera: Camera; moved: boolean };
@@ -62,6 +86,7 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
   const [frame, setFrame] = useState<Framing>(initialFrame);
   const [camera, setCamera] = useState(initialCamera);
   const dragStart = useRef<Drag | null>(null);
+  const lastTarget = useRef<ZoomAnchor>(center);
   const art = useRef<HTMLDivElement>(null);
   const [aspect, setAspect] = useState(0);
   useEffect(() => {
@@ -76,7 +101,7 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
   }, []);
 
   const zoom = zoomLevels[camera.step];
-  const shownCamera = constrain(frame, camera, aspect);
+  const shownCamera = constrain(frame, camera);
   const window = viewport(frame, camera.step, aspect);
   const windowX = framing[frame].x + window.x + shownCamera.x;
   const windowY = window.y + shownCamera.y;
@@ -89,12 +114,39 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
     ? selection
     : null;
 
+  useEffect(() => {
+    const element = art.current;
+    if (!element) return;
+    let previous = -Infinity;
+    let previousDirection = 0;
+    const wheel = (event: WheelEvent) => {
+      if (!event.deltaY || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      event.preventDefault();
+      const direction = event.deltaY < 0 ? 1 : -1;
+      if (direction === previousDirection && event.timeStamp - previous < 100) return;
+      previous = event.timeStamp;
+      previousDirection = direction;
+      const target = zoomAnchor(element.getBoundingClientRect(), event.clientX, event.clientY);
+      lastTarget.current = target;
+      setCamera(current => zoomAt(frame, current, aspect, direction, target));
+    };
+    element.addEventListener('wheel', wheel, { passive: false });
+    return () => element.removeEventListener('wheel', wheel);
+  }, [frame, aspect]);
+
   const changeZoom = (delta: number) => {
-    setCamera(current => constrain(frame, { ...current, step: clamp(current.step + delta, 0, zoomLevels.length - 1) }, aspect));
+    const target = lastTarget.current;
+    setCamera(current => zoomAt(frame, current, aspect, delta, target));
+  };
+
+  const resetZoom = () => {
+    lastTarget.current = center;
+    setCamera(initialCamera);
   };
   const startDrag = (event: PointerEvent<SVGSVGElement>) => {
     if (!event.isPrimary || event.button !== 0) return;
     dragStart.current = null;
+    lastTarget.current = zoomAnchor(event.currentTarget.getBoundingClientRect(), event.clientX, event.clientY);
     if (zoom === 1) return;
     const matrix = event.currentTarget.getScreenCTM();
     if (!matrix?.a) return;
@@ -108,9 +160,10 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
     if (!start.moved) {
       if (Math.hypot(dx, dy) < 5) return;
       start.moved = true;
+      lastTarget.current = center;
       event.currentTarget.setPointerCapture(event.pointerId);
     }
-    setCamera(constrain(frame, { ...start.camera, x: start.camera.x - dx / start.scale, y: start.camera.y - dy / start.scale }, aspect));
+    setCamera(constrain(frame, { ...start.camera, x: start.camera.x - dx / start.scale, y: start.camera.y - dy / start.scale }));
   };
 
   return (
@@ -119,14 +172,14 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
         <h2>Dermatom haritası</h2>
         <div className="dermatome-map-views" aria-label="Harita açısı">
           {(['both', ...views] as const).map(view => (
-            <Button key={view} variant={frame === view ? 'default' : 'outline'} aria-pressed={frame === view} onClick={() => { if (frame !== view) { setFrame(view); setCamera(initialCamera); } }}>
+            <Button key={view} variant={frame === view ? 'default' : 'outline'} aria-pressed={frame === view} onClick={() => { if (frame !== view) { setFrame(view); resetZoom(); } }}>
               {labels[view]}
             </Button>
           ))}
         </div>
       </div>
       <div ref={art} className="dermatome-map-art" data-zoomed={zoom > 1}
-        aria-label="Dermatom haritası. Yakınlaştırdıktan sonra sürükle veya ok tuşlarını kullan."
+        aria-label="Dermatom haritası. Bir noktaya dokunup + veya − kullan ya da fare tekerleğini çevir."
         role="region" tabIndex={zoom > 1 ? 0 : undefined}
         onKeyDown={event => {
           if (zoom === 1) return;
@@ -134,7 +187,7 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
           const move = moves[event.key];
           if (!move) return;
           event.preventDefault();
-          setCamera(constrain(frame, { ...shownCamera, x: shownCamera.x + move[0] * 30, y: shownCamera.y + move[1] * 30 }, aspect));
+          setCamera(constrain(frame, { ...shownCamera, x: shownCamera.x + move[0] * 30, y: shownCamera.y + move[1] * 30 }));
         }}>
         <svg viewBox={`${windowX} ${windowY} ${window.width} ${window.height}`} aria-hidden="true"
           onPointerDown={startDrag} onPointerMove={moveDrag} onPointerCancel={() => { dragStart.current = null; }}>
@@ -187,7 +240,7 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
           <output aria-label="Yakınlaştırma düzeyi">{Math.round(zoom * 100)}%</output>
           <Button type="button" variant="outline" size="icon-sm" onClick={() => changeZoom(1)} disabled={camera.step === zoomLevels.length - 1}
             aria-label="Yakınlaştır" title="Yakınlaştır"><Plus size={17} /></Button>
-          <Button type="button" variant="ghost" size="icon-sm" onClick={() => setCamera(initialCamera)} disabled={!camera.step}
+          <Button type="button" variant="ghost" size="icon-sm" onClick={resetZoom} disabled={!camera.step}
             aria-label="Yakınlaştırmayı sıfırla" title="Yakınlaştırmayı sıfırla"><RotateCcw size={16} /></Button>
         </div>
         <div className="dermatome-map-selection" aria-live="polite">
@@ -205,6 +258,7 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
         </div>
       </div>
       <figcaption>
+        <span className="dermatome-map-zoom-hint">Bir noktaya dokun, ardından + veya − kullan. Fare tekerleği imlecin olduğu yeri yakınlaştırır.</span>
         <a href={source} target="_blank" rel="noreferrer">Goran tek-en</a>
         {' · '}
         <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a>

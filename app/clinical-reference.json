@@ -1,5 +1,9 @@
 {
   "sources": {
+    "cervical_motor": ["Derin boyun ve sırt kaslarının innervasyonu", "https://www.ncbi.nlm.nih.gov/books/NBK537074/"],
+    "pelvic_motor": ["Levator ani · sakral kökler", "https://www.ncbi.nlm.nih.gov/books/NBK556078/"],
+    "anal_motor": ["Anal üçgen · alt rektal sinir", "https://www.ncbi.nlm.nih.gov/books/NBK557585/"],
+    "coccygeus_motor": ["Coccygeus · S4 ve S5", "https://teachmeanatomy.info/encyclopaedia/c/coccygeus/"],
     "uw_motor": ["UW Muscle Atlas · kas innervasyonu", "https://rad.uw.edu/muscle-atlas/"],
     "thoracic_motor": ["Göğüs duvarı ve diyafram innervasyonu", "https://www.ncbi.nlm.nih.gov/books/NBK526023/"],
     "lumbar_motor": ["Psoas major · lomber kökler", "https://www.ncbi.nlm.nih.gov/books/NBK535418/"],
@@ -118,6 +122,7 @@
       "focus": "Subakromiyal bölge",
       "position": "Skapula stabilize edilirken kol pasif olarak öne kaldırılır.",
       "finding": "Kişinin tanıdığı ön-yan omuz ağrısı.",
+      "positiveMeaning": "Kişinin tanıdığı ön-yan omuz ağrısı ortaya çıkıyorsa subakromiyal ağrı olasılığını destekler.",
       "meaning": "Subakromiyal ağrı değerlendirmesine katkı verir. Ağrının kaynağı diğer bulgularla yorumlanır.",
       "sources": [
         "shoulder"
@@ -132,6 +137,7 @@
       "focus": "Subakromiyal bölge",
       "position": "Omuz ve dirsek fleksiyondayken omuz pasif iç rotasyona alınır.",
       "finding": "Tanıdık ön-yan omuz ağrısının ortaya çıkması.",
+      "positiveMeaning": "Tanıdık ön-yan omuz ağrısını yeniden oluşturması subakromiyal ağrı olasılığını destekler.",
       "meaning": "Pozitif yanıt tek başına hangi tendonun etkilendiğini göstermez.",
       "sources": [
         "shoulder"
@@ -146,6 +152,7 @@
       "focus": "Supraspinatus ve rotator manşet",
       "position": "Kol skapula düzleminde kaldırılır. Başparmak aşağı bakarken yükseltilmiş pozisyon dirence karşı korunur.",
       "finding": "Ağrı veya karşı tarafa göre kuvvet azalması. Bunlar ayrı kaydedilir.",
+      "positiveMeaning": "Karşı tarafa göre belirgin güç kaybı supraspinatus veya rotator manşet işlev bozukluğunu düşündürür. Ağrı ile güç kaybı ayrı yorumlanır.",
       "meaning": "Ağrıya bağlı performans kaybı ile gerçek kuvvet kaybını diğer muayene bulgularıyla ayır.",
       "sources": [
         "shoulder"
@@ -160,6 +167,7 @@
       "focus": "Rotator manşet işlevi",
       "position": "Abdüksiyondaki kolun kontrollü biçimde indirilmesi istenir.",
       "finding": "Kolun kontrolsüz düşmesi veya kontrollü indirilememesi.",
+      "positiveMeaning": "Kolun kontrollü indirilememesi belirgin rotator manşet işlev kaybını ve yırtık olasılığını düşündürür.",
       "meaning": "Belirgin manşet işlev kaybını düşündürebilir. Yırtığın varlığı ve boyutu diğer bulgularla değerlendirilir.",
       "sources": [
         "shoulder"
@@ -174,6 +182,7 @@
       "focus": "Biseps uzun başı ve bisipital oluk",
       "position": "Dirsek düz, önkol supinasyondayken omuz fleksiyonu direnç altında değerlendirilir.",
       "finding": "Bisipital oluk çevresinde tanıdık ağrının ortaya çıkması.",
+      "positiveMeaning": "Bisipital oluktaki tanıdık ağrı, uzun baş biseps tendonunun omuz ağrısına katkısını düşündürür.",
       "meaning": "Ağrının yeri kaydedilir. Bulgudan tek başına SLAP veya biseps tendinopatisi sonucu çıkarılmaz.",
       "sources": [
         "biceps",
@@ -189,6 +198,7 @@
       "focus": "Biseps uzun başı ve bisipital oluk",
       "position": "Dirsek gövdeye yakın ve fleksiyondayken önkol supinasyonu dirence karşı değerlendirilir.",
       "finding": "Bisipital oluk çevresinde tanıdık ağrı. Hissedilen atlama ayrı kaydedilir.",
+      "positiveMeaning": "Dirençli supinasyonda bisipital oluk ağrısı uzun baş biseps tendonunun semptomlara katkısını düşündürür. Olukta hissedilen atlama tendon instabilitesi açısından ayrıca değerlendirilir.",
       "meaning": "Speed ile aynı hareket değildir. Bulguyu öykü ve diğer omuz testleriyle birlikte yorumla.",
       "sources": [
         "biceps",
@@ -204,6 +214,7 @@
       "focus": "Anterior glenohumeral instabilite",
       "position": "Klinisyen omuzu kontrollü biçimde abdüksiyon ve dış rotasyona alır.",
       "finding": "Omuz çıkacakmış hissi veya belirgin endişe.",
+      "positiveMeaning": "Omuzun çıkacakmış gibi hissedilmesi anterior glenohumeral instabiliteyi düşündürür.",
       "meaning": "Ağrı tek başına aynı pozitiflik ölçütünü karşılamaz.",
       "sources": [
         "instability"
@@ -218,6 +229,7 @@
       "focus": "Ortak ekstansör tendon bölgesi",
       "position": "El bileği ekstansiyonu dirence karşı değerlendirilir.",
       "finding": "Lateral epikondil çevresindeki tanıdık ağrının ortaya çıkması.",
+      "positiveMeaning": "Dirençli el bileği ekstansiyonunda tanıdık dış dirsek ağrısı lateral dirsek tendinopatisi olasılığını destekler.",
       "meaning": "Lateral dirsek ağrısı öyküsü ve palpasyonla birlikte yorumlanır.",
       "sources": [
         "elbow"
@@ -232,6 +244,7 @@
       "focus": "Ortak ekstansör tendon bölgesi",
       "position": "Önkol pronasyonda ve el bileği fleksiyondayken dirsek kontrollü olarak düzleştirilir.",
       "finding": "Lateral epikondil civarında tanıdık ağrının ortaya çıkması.",
+      "positiveMeaning": "Pasif germe sırasında tanıdık dış dirsek ağrısı lateral dirsek tendinopatisiyle uyumludur.",
       "meaning": "Pasif germe yanıtı kaydedilir. Cozen dirençli bir manevradır.",
       "sources": [
         "elbow"
@@ -246,6 +259,7 @@
       "focus": "Karpal tünelde median sinir",
       "position": "El bileği fleksiyon pozisyonunda tutulurken semptomlar gözlenir.",
       "finding": "Median sinir dağılımında tanıdık uyuşma veya karıncalanma.",
+      "positiveMeaning": "Median sinir dağılımında tekrarlanan uyuşma veya karıncalanma karpal tünel sendromu olasılığını destekler.",
       "meaning": "Dağılımı, öyküyü ve diğer muayene bulgularını birlikte değerlendir.",
       "sources": [
         "cts"
@@ -260,6 +274,7 @@
       "focus": "Karpal tünelde median sinir",
       "position": "Median sinirin karpal tünel üzerindeki hattına hafif perküsyon uygulanır.",
       "finding": "Median dağılım boyunca yayılan karıncalanma.",
+      "positiveMeaning": "Perküsyonla elin median sinir dağılımına yayılan karıncalanma, karpal tünelde median sinir irritasyonuyla uyumludur.",
       "meaning": "Yalnızca perküsyon yapılan noktadaki hassasiyet farklı bir gözlemdir.",
       "sources": [
         "cts"
@@ -274,6 +289,7 @@
       "focus": "Birinci dorsal tendon kompartmanı",
       "position": "Klinisyen başparmağı kontrollü tutarak el bileğini ulnar yöne alır.",
       "finding": "Radial stiloid çevresinde tanıdık ağrı.",
+      "positiveMeaning": "Radial stiloid çevresinde tanıdık ağrı, birinci dorsal kompartıman tendonlarının tutulumu ve de Quervain tenosinoviti olasılığını destekler.",
       "meaning": "Başparmağı avuç içine kapatarak yapılan Eichhoff manevrasından ayır.",
       "sources": [
         "finkelstein"
@@ -288,6 +304,7 @@
       "focus": "Servikal radiküler belirtiler",
       "position": "Klinisyen, uygun güvenlik taramasından sonra boynu kontrollü olarak semptom tarafına alır. Kullanılan varyant kaydedilir.",
       "finding": "Kola yayılan tanıdık radiküler belirtinin ortaya çıkması.",
+      "positiveMeaning": "Kola yayılan tanıdık radiküler semptom servikal radikülopati olasılığını destekler.",
       "meaning": "Lokal boyun ağrısını ayrı kaydet. Motor ve duyu muayenesi olası seviye değerlendirmesine katkı verir.",
       "sources": [
         "neck"
@@ -308,6 +325,7 @@
       "focus": "Lumbosakral radiküler belirtiler",
       "position": "Sırtüstü yatışta diz düz tutulup bacak pasif olarak kaldırılır.",
       "finding": "Bacağa yayılan tanıdık semptom. Başlangıç açısı ve dağılım kaydedilir.",
+      "positiveMeaning": "Bacağa yayılan tanıdık semptom lumbosakral sinir kökü irritasyonu veya nöral mekanosensitiviteyi düşündürür.",
       "meaning": "Arka uyluk gerilimi ayrı kaydedilir. Açı veya ağrı tek başına disk hernisini ya da kök düzeyini belirlemez.",
       "sources": [
         "lumbar"
@@ -326,6 +344,7 @@
       "focus": "Üst lomber radiküler belirtiler",
       "position": "Yüzüstü yatışta diz kontrollü bükülür. Kullanılan varyant ve kalça pozisyonu kaydedilir.",
       "finding": "Ön uylukta kişinin tanıdığı yayılan semptom.",
+      "positiveMeaning": "Ön uyluğa yayılan tanıdık semptom femoral sinir hattı veya üst lomber köklerin mekanosensitivitesini düşündürür.",
       "meaning": "Yerel kuadriseps gerilimini ve diz ağrısını ayır. Duyu ve kas işlevi ile birlikte yorumlanır.",
       "sources": [
         "lumbar"
@@ -344,6 +363,7 @@
       "focus": "Kalça ve sakroiliak bölge",
       "position": "Kalça fleksiyon, abdüksiyon ve dış rotasyona alınır. Pelvis kontrol edilir.",
       "finding": "Tanıdık ağrı veya asimetrik hareket kısıtlılığı.",
+      "positiveMeaning": "Kasıkta yeniden oluşan ağrı kalça kaynaklı, arka pelviste oluşan ağrı sakroiliak bölge kaynaklı semptom olasılığını düşündürür.",
       "meaning": "Kasık ve posterior pelvis ağrısı ayrı kaydedilir. Tek başına sakroiliak ağrı kaynağını belirlemez.",
       "sources": [
         "hip",
@@ -359,6 +379,7 @@
       "focus": "Sakroiliak ağrı provokasyonu",
       "position": "Kalçalardan biri fleksiyon, diğeri ekstansiyon yönünde konumlandırılır.",
       "finding": "Posterior pelviste tanıdık ağrının tekrar ortaya çıkması.",
+      "positiveMeaning": "Arka pelviste tanıdık ağrının yeniden oluşması sakroiliak eklemle ilişkili ağrı olasılığını destekler. Diğer provokasyon testleriyle birlikte değerlendirilir.",
       "meaning": "Diğer sakroiliak provokasyon bulgularıyla birlikte değerlendirilir.",
       "sources": [
         "si"
@@ -373,6 +394,7 @@
       "focus": "Gövde asimetrisi / skolyoz taraması",
       "position": "Ayakta öne eğilme sırasında gövde arkadan gözlenir.",
       "finding": "Kaburga belirginliği veya lomber asimetri.",
+      "positiveMeaning": "Kaburga çıkıntısı veya beldeki asimetri gövde rotasyonunu ve skolyoz olasılığını düşündüren bir tarama bulgusudur.",
       "meaning": "Tarama bulgusudur. Eğriliğin yapısı, büyüklüğü veya tanısı için ek değerlendirme gerekir.",
       "sources": [
         "adams"
@@ -387,6 +409,7 @@
       "focus": "Kalça ekstansiyonu ve fleksör uzunluğu",
       "position": "Bir kalça gövdeye alınırken pelvis kontrol edilir. Modifiye yöntemde test uyluğu ve diz açısı ayrı gözlenir.",
       "finding": "Test uyluğunun konumu kalça ekstansiyonu kısıtını düşündürür. Diz açısı, rectus femoris katkısını değerlendirmeye yardım eder.",
+      "positiveMeaning": "Test uyluğunun yukarıda kalması kalça ekstansiyonu kısıtlılığını düşündürür. Modifiye testte dizin açılması rectus femoris katkısı açısından ayrıca değerlendirilir.",
       "meaning": "Kullanılan varyantı ve pelvis konumunu kaydet. Tek gözlemden hangi kasın kısa olduğu çıkarılmaz.",
       "sources": [
         "thomas"
@@ -401,6 +424,7 @@
       "focus": "Pasif kalça addüksiyonu",
       "position": "Yan yatışta pelvis sabit tutulur ve üst bacak kontrollü olarak addüksiyona bırakılır.",
       "finding": "Kalça addüksiyonunun kısıtlı kalması.",
+      "positiveMeaning": "Üstteki bacağın yeterince addüksiyona inmemesi kalça addüksiyonu kısıtlılığını düşündürür.",
       "meaning": "Kısıtlılık tek başına IT bandı veya TFL kısalığını göstermez.",
       "sources": [
         "ober"
@@ -415,6 +439,7 @@
       "focus": "Tek ayak destekte pelvis kontrolü",
       "position": "Tek ayak desteğinde karşı pelvis ve gövde hizası gözlenir.",
       "finding": "Destek almayan tarafta pelvisin aşağı düşmesi. Gövde eğilmesi ayrıca kaydedilir.",
+      "positiveMeaning": "Destek almayan tarafın düşmesi, yük taşıyan kalçada abdüktörlerin işlevi veya tek ayak duruş kontrolünün yetersiz olabileceğini düşündürür.",
       "meaning": "Sonucu ağrı, denge ve kalça abdüktör işleviyle değerlendir. Tek bir kasın zayıflığını göstermez.",
       "sources": [
         "trendelenburg"
@@ -429,6 +454,7 @@
       "focus": "Ön çapraz bağ · ÖÇB",
       "position": "Diz hafif fleksiyondayken femur stabilize edilir, tibianın öne hareketi değerlendirilir.",
       "finding": "Karşı tarafa göre artmış anterior hareket veya yumuşak son his.",
+      "positiveMeaning": "Artmış anterior tibial hareket veya yumuşak son his ön çapraz bağ yetersizliği ya da yaralanması olasılığını destekler.",
       "meaning": "ÖÇB kuşkusu, öykü ve diğer bulgularla birlikte değerlendirilir.",
       "sources": [
         "knee",
@@ -444,6 +470,7 @@
       "focus": "Ön çapraz bağ · ÖÇB",
       "position": "Diz yaklaşık 90° fleksiyondayken tibianın öne hareketi değerlendirilir.",
       "finding": "Artmış anterior tibial hareket veya yumuşak son his.",
+      "positiveMeaning": "Artmış anterior tibial hareket ön çapraz bağ yetersizliğiyle uyumludur.",
       "meaning": "Başlangıçta tibianın posteriora çökmüş olup olmadığını kontrol et. Ağrı ve kas korunması sonucu etkileyebilir.",
       "sources": [
         "knee",
@@ -459,6 +486,7 @@
       "focus": "Arka çapraz bağ · AÇB",
       "position": "Fleksiyondaki dizde tibianın başlangıç hizası ve arkaya hareketi değerlendirilir.",
       "finding": "Karşı tarafa göre artmış posterior tibial hareket.",
+      "positiveMeaning": "Artmış posterior tibial hareket arka çapraz bağ yetersizliğini düşündürür.",
       "meaning": "Posterior Sag ve diğer muayene bulgularıyla birlikte yorumlanır.",
       "sources": [
         "knee"
@@ -473,6 +501,7 @@
       "focus": "Arka çapraz bağ · AÇB",
       "position": "Kalça ve diz fleksiyondayken tibianın yerçekimi altındaki başlangıç konumu gözlenir.",
       "finding": "Tibianın femura göre posteriora çökmesi.",
+      "positiveMeaning": "Tibianın dinlenmede femura göre arkaya çökmesi arka çapraz bağ yetersizliğini düşündürür.",
       "meaning": "Arka Çekmece’de uygulanan kuvvet yerine istirahat hizası gözlenir.",
       "sources": [
         "knee"
@@ -487,6 +516,7 @@
       "focus": "Medial kollateral bağ · MCL",
       "position": "Diz hafif fleksiyonda ve ekstansiyona yakın ayrı konumlarda valgus yönünde değerlendirilir.",
       "finding": "Medial ağrı veya karşı tarafa göre medial açılma.",
+      "positiveMeaning": "Karşı tarafa göre medial eklem aralığında artmış açılma medial kollateral bağ yetersizliğini düşündürür. Ağrı ve gevşeklik ayrı değerlendirilir.",
       "meaning": "Ağrı ve gevşekliği ayrı kaydet. Ekstansiyondaki açılma daha geniş yaralanma değerlendirmesi gerektirebilir.",
       "sources": [
         "knee"
@@ -501,6 +531,7 @@
       "focus": "Lateral kollateral bağ · LCL",
       "position": "Diz hafif fleksiyonda ve ekstansiyona yakın ayrı konumlarda varus yönünde değerlendirilir.",
       "finding": "Lateral ağrı veya karşı tarafa göre lateral açılma.",
+      "positiveMeaning": "Karşı tarafa göre lateral eklem aralığında artmış açılma lateral kollateral bağ yetersizliğini düşündürür. Posterolateral yapılar da değerlendirmeye alınır.",
       "meaning": "Ağrı ve gevşekliği ayrı kaydet. Posterolateral yapıların katkısını da göz önünde bulundur.",
       "sources": [
         "knee"
@@ -515,6 +546,7 @@
       "focus": "Medial ve lateral menisküs",
       "position": "Diz fleksiyondan ekstansiyona doğru giderken tibial rotasyon ve ilgili eklem hattı değerlendirilir.",
       "finding": "Eklem hattında tanıdık ağrı veya palpabl mekanik klik.",
+      "positiveMeaning": "Tanıdık eklem hattı ağrısı veya palpabl mekanik klik, ilgili menisküs lezyonu olasılığını destekleyebilir.",
       "meaning": "Tek başına klik kesin yırtık anlamına gelmez. Eklem hattı hassasiyeti ve öyküyle birlikte yorumlanır.",
       "sources": [
         "meniscus",
@@ -530,6 +562,7 @@
       "focus": "Menisküs belirtileri",
       "position": "Yüzüstü ve diz fleksiyondayken tibia kompresyon altında kontrollü döndürülür.",
       "finding": "Eklem hattında tanıdık ağrı.",
+      "positiveMeaning": "Kompresyon ve rotasyonla oluşan tanıdık eklem hattı ağrısı menisküs kaynaklı semptom olasılığını destekleyebilir.",
       "meaning": "Provokasyon bulgusudur. Tek başına menisküs yırtığını belirlemez.",
       "sources": [
         "apley"
@@ -544,6 +577,7 @@
       "focus": "Patellofemoral bölge",
       "position": "Patella bölgesinde elle temas varken kuadriseps kasılması değerlendirilir.",
       "finding": "Tanıdık retropatellar ağrı.",
+      "positiveMeaning": "Tanıdık retropatellar ağrı patellofemoral yüklenmeye duyarlılığı düşündürebilir. Testin tanısal değeri düşüktür.",
       "meaning": "Tanısal değeri düşüktür. Krepitasyon tek başına patellofemoral ağrıyı veya kıkırdak hasarını göstermez.",
       "sources": [
         "clarke"
@@ -558,6 +592,7 @@
       "focus": "Anterior talofibular bağ · ATFL",
       "position": "Distal bacak stabilize edilir, talusun öne hareketi değerlendirilir.",
       "finding": "Karşı tarafa göre artmış anterior translasyon veya değişen son his.",
+      "positiveMeaning": "Artmış anterior translasyon veya yumuşak son his anterior talofibular bağ (ATFL) yetersizliğini düşündürür.",
       "meaning": "Ağrı, şişlik, muayene zamanı ve kas korunmasını dikkate al.",
       "sources": [
         "ankle"
@@ -572,6 +607,7 @@
       "focus": "Lateral bağlar · özellikle CFL",
       "position": "Ayak bileğinin konumu kaydedilir ve talusun inversiyon yönündeki eğimi değerlendirilir.",
       "finding": "Karşı tarafa göre artmış inversiyon açılması.",
+      "positiveMeaning": "Artmış inversiyon açılması lateral bağ gevşekliğini düşündürür. Ayak bileğinin test pozisyonu hangi bağın daha çok yüklendiğini etkiler.",
       "meaning": "Ayak bileği konumu hangi bağların gerildiğini etkiler.",
       "sources": [
         "ankle"
@@ -586,6 +622,7 @@
       "focus": "Aşil tendonu bütünlüğü",
       "position": "Ayak serbestken baldır sıkıldığında ayak bileği hareketi gözlenir.",
       "finding": "Plantar fleksiyonun olmaması veya karşı tarafa göre belirgin azalması.",
+      "positiveMeaning": "Baldır sıkıldığında plantar fleksiyon yoksa veya karşı tarafa göre belirgin azsa Aşil tendonu rüptürü olasılığı artar.",
       "meaning": "Aşil rüptürü şüphesinde diğer bulgular ve uygun klinik değerlendirme ile birlikte yorumlanır.",
       "sources": [
         "achilles"

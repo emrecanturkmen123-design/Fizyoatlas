@@ -1,7 +1,6 @@
 import type { Atlas, Part, SystemId, View } from './anatomy';
 import reference from './clinical-reference.json';
-import { muscleFor } from './education-data';
-import { muscleReview } from './muscle-review';
+import { myotomeMuscles } from './myotome-muscles';
 import landmarks from './clinical-landmarks.json';
 export { default as dermAreaLabels } from './dermatome-labels.json';
 import dermAreaLabels from './dermatome-labels.json';
@@ -42,6 +41,8 @@ export type ClinicalSelection = {
   testLayer?: ClinicalTestLayer;
   levelId: string;
   areaPin?: Landmark;
+  motorMuscleKey?: string;
+  showRelatedMotorMuscles?: boolean;
   side: ClinicalSide;
   view: View;
   focus: number;
@@ -49,47 +50,6 @@ export type ClinicalSelection = {
 export const defaultClinical: ClinicalSelection = {
   mode: 'tests', region: '', testId: '', testLayer: 'anatomy', levelId: 'C6', side: 'left', view: 'front', focus: 0,
 };
-
-const motorMuscles: Record<string, RegExp> = {
-  C5: /biceps brachii|^brachialis$/,
-  C6: /extensor carpi radialis (brevis|longus)$/,
-  C7: /triceps brachii$/,
-  C8: /flexor digitorum profundus$/,
-  T1: /abductor digiti minimi of (left|right) hand$/,
-  L2: /iliacus$|psoas major$/,
-  L3: /rectus femoris$|vastus (intermedius|lateralis|medialis)$/,
-  L4: /tibialis anterior$/,
-  L5: /extensor hallucis longus$/,
-  S1: /gastrocnemius$|soleus$/,
-};
-const rootOrder = levels.map(level=>level.id);
-
-function rootIncluded(description: string, id: string) {
-  for (const match of description.matchAll(/([CTLS]\d+)(?:[–-]([CTLS]\d+))?/g)) {
-    const index = rootOrder.indexOf(id);
-    const first = rootOrder.indexOf(match[1]), last = rootOrder.indexOf(match[2] ?? match[1]);
-    if (first >= 0 && index >= first && index <= last) return true;
-  }
-  return false;
-}
-
-const thoracicLevels = Array.from({length:11},(_,index)=>'T'+(index+1));
-const additionalMotor = [
-  {roots:['C3','C4','C5'], muscles:/^diaphragm$/, nerve:'N. phrenicus'},
-  {roots:thoracicLevels, muscles:/intercostal muscle$/, nerve:'Nn. intercostales'},
-  {roots:['T7','T8','T9','T10','T11','T12'], muscles:/external oblique$/, nerve:'Nn. thoracoabdominales · N. subcostalis'},
-  {roots:['L1','L2','L3','L4'], muscles:/psoas major$/, nerve:'Lomber spinal sinirlerin ön dalları'},
-  {roots:['C8','T1'], muscles:/abductor digiti minimi of (left|right) hand$/, nerve:'N. ulnaris · derin dal'},
-];
-
-export function motorLevelAvailable(id:string) {
-  return !!motorMuscles[id] || ['C3','C4','L1','S2'].includes(id) || /^T(?:[2-9]|1[0-2])$/.test(id);
-}
-
-export function motorNerve(part:Part, levelId:string) {
-  const extra=additionalMotor.find(entry=>entry.roots.includes(levelId)&&entry.muscles.test(part.name.toLowerCase()));
-  return extra?.nerve ?? muscleFor(part.name)?.nerve.split(' · ')[0];
-}
 
 const testParts: Record<string, RegExp> = {
   neer: /supraspinatus$|supraspinatus tendon$/, hawkins: /supraspinatus$|supraspinatus tendon$/,
@@ -118,24 +78,11 @@ function partSide(name: string) {
 }
 
 export function clinicalParts(atlas: Atlas, selection: ClinicalSelection) {
-  if (selection.mode === 'dermatomes') return [];
+  if (selection.mode !== 'tests') return [];
   const matches = (pattern: RegExp, parts: Part[]) => parts.filter(part => {
     const name = part.name.toLowerCase(), side = partSide(name);
     return (!side || side === selection.side) && pattern.test(name.replace(/^(left|right) /, ''));
   });
-  if (selection.mode === 'myotomes') {
-    const pattern = motorMuscles[selection.levelId];
-    return atlas.parts.filter(part=>{
-      if(part.system!=='muscular')return false;
-      const name=part.name.toLowerCase(),side=partSide(name);
-      if(side&&side!==selection.side)return false;
-      if(pattern?.test(name.replace(/^(left|right) /,'')))return true;
-      if(additionalMotor.some(entry=>entry.roots.includes(selection.levelId)&&entry.muscles.test(name)))return true;
-      const muscle=muscleFor(part.name);
-      const roots=muscle&&muscleReview(muscle.key).roots;
-      return !!roots&&rootIncluded(roots,selection.levelId);
-    });
-  }
   const pattern = testParts[selection.testId];
   const targets = pattern ? matches(pattern, atlas.parts) : [];
   return targets;
@@ -194,7 +141,12 @@ const clinicalBones: SystemId[] = ['skeletal'];
 const clinicalMuscles: SystemId[] = ['skeletal', 'muscular'];
 
 export function clinicalPresentation(atlas: Atlas, selection: ClinicalSelection) {
-  const parts = clinicalParts(atlas, selection);
+  const muscles = selection.mode === 'myotomes' ? myotomeMuscles(atlas, selection.levelId, selection.side) : [];
+  const selectedMuscle = muscles.find(muscle => muscle.key === selection.motorMuscleKey);
+  const showPrimaryOnly = !selection.showRelatedMotorMuscles && muscles.some(muscle => muscle.primary);
+  const parts = selection.mode === 'myotomes'
+    ? (selectedMuscle ? [selectedMuscle] : muscles.filter(muscle => !showPrimaryOnly || muscle.primary)).flatMap(muscle => muscle.parts)
+    : clinicalParts(atlas, selection);
   const pins = selection.mode === 'tests' ? testPins : [];
   const active = selection.mode === 'tests' ? selection.region : selection.levelId;
   const testLayer = selection.mode === 'tests' ? selection.testLayer ?? 'anatomy' : undefined;
@@ -203,10 +155,10 @@ export function clinicalPresentation(atlas: Atlas, selection: ClinicalSelection)
       ? selection.areaPin : defaultAreaPin(active,selection.side)
     : selection.mode==='tests'?testFocusPin(selection):undefined;
   return {
-    parts, pins, active, mode: selection.mode, testLayer, side: selection.side,
+    parts, muscles, pins, active, mode: selection.mode, testLayer, side: selection.side,
     visible: selection.mode === 'dermatomes' || testLayer === 'surface' ? clinicalSkin
       : testLayer === 'skeleton'||testLayer==='target' ? clinicalBones : clinicalMuscles,
-    contextOpacity: selection.mode === 'myotomes' ? .17
+    contextOpacity: selection.mode === 'myotomes' ? .09
       : testLayer === 'surface' ? .86 : testLayer === 'target' && parts.length ? .28 : 1,
     focusPin,
   };
