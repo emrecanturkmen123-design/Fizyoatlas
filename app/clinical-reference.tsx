@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { clinicalTestLayers, levels, motorLevelAvailable, motorNerve, regions, rootGroup, rootGroups, sensoryLevels, tests, type ClinicalSelection, type ClinicalTestLayer } from './clinical-model';
+import { clinicalTestLayers, levels, regions, rootGroup, rootGroups, sensoryLevels, tests, type ClinicalSelection, type ClinicalTestLayer } from './clinical-model';
 import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
-import type { SelectionMember } from './selection-palette';
+import type { MyotomeMuscle } from './myotome-muscles';
 import type { Part } from './anatomy';
 import reference from './clinical-reference.json';
 import ClinicalTestIllustration from './clinical-test-illustration';
@@ -11,7 +11,6 @@ const sources: Record<string, string[]> = reference.sources;
 const modes = [
   ['tests', 'Klinik testler'], ['dermatomes', 'Dermatom'], ['myotomes', 'Miyotom'],
 ] as const;
-const motorLevels = levels.filter(level => motorLevelAvailable(level.id));
 
 function Sources({ ids }: { ids: string[] }) {
   return <details className="clinical-reference-sources">
@@ -28,7 +27,7 @@ type Props = {
   onChange: (value: Partial<ClinicalSelection>) => void;
   onClose: () => void;
   parts: Part[];
-  muscles: SelectionMember[];
+  muscles: MyotomeMuscle[];
   hasPin: boolean;
   dermatome3D?: boolean;
   onDermatomeView?: (useModel: boolean) => void;
@@ -46,7 +45,14 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
   const test = visibleTests.find(test => test.id === testId);
   const level = sensoryLevels.find(level => level.id === levelId)!;
   const rootColor = rootGroup(levelId)?.color;
-  const availableLevels = mode === 'dermatomes' ? sensoryLevels : motorLevels;
+  const availableLevels = mode === 'dermatomes' ? sensoryLevels : levels;
+  const activeMuscle = muscles.find(muscle => muscle.key === value.motorMuscleKey);
+  const primaryMuscles = muscles.filter(muscle => muscle.primary);
+  const relatedMuscles = muscles.filter(muscle => !muscle.primary);
+  const muscleDetail = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (mode === 'myotomes' && activeMuscle) muscleDetail.current?.scrollIntoView({ block: 'nearest' });
+  }, [mode, activeMuscle?.key]);
   const visualTarget = hasPin || parts.length > 0;
   return <section ref={panel} id="atlas-content" className="study-panel glass clinical-reference" data-clinical-mode={mode} aria-label="Klinik Atlas" tabIndex={-1}>
     <div className="panel-heading">
@@ -114,7 +120,10 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
         <p className="clinical-reference-hint">{parts.length > 0 ? 'Model, testle ilişkili anatomik yapıyı vurgular.' : 'Model, testin uygulandığı bölgeyi gösterir.'}</p>
         <dl className="clinical-test-steps">
           {test.position && <div><dt>Uygulama</dt><dd>{test.position}</dd></div>}
-          <div><dt>Beklenen bulgu</dt><dd>{test.finding}</dd></div>
+          {test.positiveMeaning ? <>
+            <div><dt>Test pozitifse neyi düşündürür?</dt><dd>{test.positiveMeaning}</dd></div>
+            <div><dt>Pozitiflik kriteri</dt><dd>{test.finding}</dd></div>
+          </> : <div><dt>DVT şüphesinde</dt><dd>{test.finding}</dd></div>}
         </dl>
         <details className="clinical-reference-sources">
           <summary>Klinik yorum</summary>
@@ -133,19 +142,32 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
         {mode === 'dermatomes' && <p>{level.sensory}</p>}
         {mode === 'dermatomes' && <p className="clinical-reference-hint">Alanlar şematiktir. Komşu köklerin duyu alanları örtüşebilir.</p>}
         {mode === 'myotomes' && !level.motor && <p>Bu düzey için ISNCSCI anahtar motor testi tanımlamaz.</p>}
-        {mode === 'myotomes' && muscles.length > 0 && <div className="clinical-muscle-key">
-          <p>Kas ve periferik sinir eşleşmeleri</p>
-          <ul>{muscles.map(muscle => {
-            const part=parts.find(part=>muscle.ids.includes(part.id));
-            const nerve=part&&motorNerve(part,levelId);
-            return <li key={muscle.key}>
-              <span className="clinical-color-dot" style={{backgroundColor:muscle.color}} aria-hidden="true" />
-              <span>{muscle.name}{nerve&&<small className="clinical-nerve-name">{nerve}</small>}</span>
-            </li>;
-          })}</ul>
+        {mode === 'myotomes' && <div className="clinical-muscle-key">
+          {activeMuscle && <div className="clinical-innervation" ref={muscleDetail} aria-label="Seçili kasın innervasyonu">
+            <h4>{activeMuscle.name}</h4>
+            <dl>
+              {activeMuscle.innervation.map(entry => <div key={entry.nerve}>
+                <dt>{entry.nerve}</dt><dd>{entry.roots}</dd>
+              </div>)}
+            </dl>
+            {activeMuscle.note && <p>{activeMuscle.note}</p>}
+            <Button variant="outline" size="sm" onClick={() => onChange({motorMuscleKey:undefined})}>Kök görünümüne dön</Button>
+          </div>}
+          {primaryMuscles.length > 0 && <MyotomeMuscleList title="Anahtar kaslar" muscles={primaryMuscles}
+            active={activeMuscle?.key} onPick={key => onChange({motorMuscleKey:key,focus:value.focus+1})}/>}
+          {relatedMuscles.length > 0 && (primaryMuscles.length ? <details className="clinical-related-muscles">
+            <summary>Diğer ilişkili kaslar ({relatedMuscles.length})</summary>
+            <Button variant="outline" aria-pressed={!!value.showRelatedMotorMuscles}
+              onClick={() => onChange({showRelatedMotorMuscles:!value.showRelatedMotorMuscles,motorMuscleKey:undefined})}>
+              {value.showRelatedMotorMuscles ? 'Yalnızca anahtar kasları göster' : 'İlişkili kasları modelde göster'}
+            </Button>
+            <MyotomeMuscleList muscles={relatedMuscles} active={activeMuscle?.key}
+              onPick={key => onChange({motorMuscleKey:key,focus:value.focus+1})}/>
+          </details> : <MyotomeMuscleList title="İlişkili kaslar" muscles={relatedMuscles} active={activeMuscle?.key}
+            onPick={key => onChange({motorMuscleKey:key,focus:value.focus+1})}/>)}
         </div>}
       </div>}
-      <Sources ids={test && mode === 'tests' ? test.sources : mode==='myotomes'?['isncsci','uw_motor','thoracic_motor','abdominal_motor','lumbar_motor']:['isncsci','map_variability','trigeminal','map']} />
+      <Sources ids={test && mode === 'tests' ? test.sources : mode==='myotomes'?['isncsci','uw_motor','thoracic_motor','abdominal_motor','lumbar_motor','cervical_motor','pelvic_motor','anal_motor','coccygeus_motor']:['isncsci','map_variability','trigeminal','map']} />
     </article>}
     {mode !== 'tests' && <div className="clinical-root-picker" aria-label="Sinir kökleri">
       {rootGroups.map(group => {
@@ -160,4 +182,19 @@ export default function ClinicalReference({value, onChange, onClose, parts, musc
       })}
     </div>}
   </section>;
+}
+
+function MyotomeMuscleList({ title, muscles, active, onPick }: {
+  title?: string;
+  muscles: MyotomeMuscle[];
+  active?: string;
+  onPick: (key: string) => void;
+}) {
+  return <div className="clinical-myotome-muscles">
+    {title && <h4>{title}</h4>}
+    <ul>{muscles.map(muscle => <li key={muscle.key}>
+      <Button variant={active === muscle.key ? 'default' : 'outline'} aria-pressed={active === muscle.key}
+        onClick={() => onPick(muscle.key)}>{muscle.name}</Button>
+    </li>)}</ul>
+  </div>;
 }

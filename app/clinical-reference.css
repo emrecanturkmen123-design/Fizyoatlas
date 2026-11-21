@@ -445,3 +445,26 @@ body:has(.clinical-test-illustration-dialog) [data-slot=dialog-overlay] { z-inde
 .clinical-test-illustration-dialog { z-index: 91 !important; }
 .clinical-test-illustration-close { position: absolute; top: .35rem; right: .35rem; }
 .dermatome-map-art:focus-visible { outline: 2px solid #376777; outline-offset: 1px; }
+
+.clinical-innervation {
+  margin-block: .65rem;
+  padding: .7rem;
+  border: 1px solid #c5dce1;
+  border-radius: .55rem;
+  background: #edf5f6;
+}
+.clinical-innervation h4,
+.clinical-myotome-muscles h4 { margin: 0 0 .4rem; font-size: .9rem; font-weight: 650; }
+.clinical-innervation dl { display: grid; gap: .35rem; margin-block: .45rem; }
+.clinical-innervation dt,
+.clinical-innervation dd { margin: 0; }
+.clinical-innervation dd { color: #235c6c; font-weight: 700; }
+.clinical-innervation > p { margin: .4rem 0; }
+.clinical-myotome-muscles ul { display: grid; gap: .3rem; }
+.clinical-myotome-muscles li { display: block; }
+.clinical-myotome-muscles button { width: 100%; height: auto; white-space: normal; text-align: left; justify-content: flex-start; }
+.clinical-related-muscles { margin-top: .65rem; }
+.clinical-related-muscles summary { cursor: pointer; }
+.clinical-related-muscles[open] > button { margin: .45rem 0; }
+
+.dermatome-map-zoom-hint { display: block; margin-bottom: .2rem; }

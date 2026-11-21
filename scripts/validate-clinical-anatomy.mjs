@@ -27,3 +27,17 @@ assert(mapRegions.front.some(area => area.levels.length > 1), 'Missing anterior 
 assert(mapRegions.back.some(area => area.levels.length > 1), 'Missing posterior overlap areas');
 assert(contours.every(area => /^m/i.test(area.path) && area.offset.every(Number.isFinite)));
 console.log(`PASS: ${contours.length} registered front/back contours cover all ${sensoryIds.length} dermatomes and trigeminal areas.`);
+
+const { myotomeMuscles } = await import('../app/myotome-muscles.ts');
+for (const side of ['left', 'right']) {
+  for (const level of levels) {
+    const muscles = myotomeMuscles(atlas, level.id, side);
+    assert(muscles.length > 0, `Missing modeled muscles for ${level.id} (${side})`);
+    assert.equal(muscles.some(muscle => muscle.primary), Boolean(level.motor), level.id);
+    assert(muscles.every(muscle => muscle.innervation.every(entry => entry.nerve && entry.roots)), level.id);
+  }
+  const biceps = myotomeMuscles(atlas, 'C5', side).find(muscle => muscle.key === 'biceps brachii');
+  assert.deepEqual(biceps.innervation, [{ nerve: 'N. musculocutaneus', roots: 'C5–C6' }]);
+}
+assert(tests.every(test => test.id === 'homans' ? !test.positiveMeaning : Boolean(test.positiveMeaning)));
+console.log('PASS: both sides of all 28 motor levels, C5 biceps innervation, and clinical test interpretations.');
