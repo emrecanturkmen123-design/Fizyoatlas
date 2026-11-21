@@ -7,3 +7,14 @@ const search=buildSearchIndex(atlas);for(const query of ['öçb','aşil tendonu'
 for(const fit of Object.values(meta.localRegistration))assert(fit.envelopeRmsMm<6,'registration residual too large');
 const footprints=meta.parts.filter(p=>p.sourceSelection.includes('footprint'));assert.equal(footprints.length,6);assert(footprints.every(p=>p.name.includes('insertion surface')));
 console.log('PASS: 16 clinical surfaces + 2 Achilles + 2 extracted patellar surfaces, 10 modelled structures, Turkish search aliases, direct case targets, explicit footprint limits, local envelope residual <6 mm.');
+
+const { clinicalTestIllustrations } = await import('../app/clinical-test-illustration-data.ts');
+const { tests } = JSON.parse(fs.readFileSync('app/clinical-reference.json', 'utf8'));
+assert.deepEqual(Object.keys(clinicalTestIllustrations).sort(), tests.map(test => test.id).sort());
+
+for (const test of tests) {
+  const illustration = clinicalTestIllustrations[test.id];
+  assert(illustration.caption.trim() && illustration.drawing.length > 0, test.id);
+}
+assert(!clinicalTestIllustrations.homans.drawing.some(item => item.kind === 'hand' || item.kind === 'arrow'));
+console.log(`PASS: ${tests.length} test-specific illustrations, including the Homans safety card.`);
