@@ -26,7 +26,8 @@ export function parentWorkspaceRoute(route:WorkspaceRoute):WorkspaceRoute|undefi
   if(route.region)return {lesson:'clinical',clinicalMode:'tests'};
   if(route.clinicalMode&&route.clinicalMode!=='tests')return {lesson:'clinical'};
  }
- if(route.lesson==='foot-drop-case')return {lesson:'neuro-compare'};
+ if(route.lesson==='foot-drop-case'||route.lesson==='ulnar-case')return {lesson:'neuro-compare',compare:route.lesson==='ulnar-case'?'c8-t1':undefined};
+ if(route.lesson==='measures'||route.lesson==='reflexes')return {lesson:'clinical'};
  if(route.lesson==='neuro-compare')return {lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:'L5'};
  if(route.lesson==='lab'||route.lesson==='tendons'||route.lesson==='spine'||route.lesson==='clinical')return {lesson:'study'};
  if(['shoulder','elbow','knee','hip','ankle','gait','hand'].includes(route.lesson)){

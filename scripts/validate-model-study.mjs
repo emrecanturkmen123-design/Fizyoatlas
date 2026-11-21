@@ -53,4 +53,4 @@ for(const id of ['locate:muscle:soleus:left','locate:muscle:extensor hallucis lo
  }
  assert(reachable,id+' is reachable from actual source triangles');
 }
-console.log(`PASS: ${MODEL_FINDINGS.length} findings, ${MUSCLES.length} bilateral muscles, 23 bilateral nerve surfaces, all 27 target studies, valid multiple targets, filtered pools, and actual source-triangle selection. No GPU or browser pixels tested.`);
+console.log(`PASS: ${MODEL_FINDINGS.length} findings, ${MUSCLES.length} bilateral muscles, 23 bilateral nerve surfaces, all ${NERVES.length} target studies, valid multiple targets, filtered pools, and actual source-triangle selection. No GPU or browser pixels tested.`);

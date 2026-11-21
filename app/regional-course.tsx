@@ -1,3 +1,4 @@
+import {ClinicalLink} from './clinical-navigation';
 import {signInUrl} from './auth-link';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Check, RotateCcw, CheckCircle2 } from "lucide-react";
@@ -377,6 +378,14 @@ export default function RegionalCourse({
                         {KNEE_COURSE_STEPS.find((x) => x.id === s)?.title}
                       </Button>
                     ))}
+                  </div>
+                  <div className="course-review-actions">
+                    {id==='shoulder-foundations'&&<ClinicalLink route={{lesson:'osce',compare:'omuz'}}>Vakada uygula</ClinicalLink>}
+                    {id==='ankle-foundations'&&<ClinicalLink route={{lesson:'osce',compare:'ayak'}}>Vakada uygula</ClinicalLink>}
+                    {id==='elbow-foundations'&&<ClinicalLink route={{lesson:'cases',caseId:'lateral-elbow'}}>Vakada uygula</ClinicalLink>}
+                    {id==='hand-foundations'&&<ClinicalLink route={{lesson:'cases',caseId:'carpal-tunnel'}}>Vakada uygula</ClinicalLink>}
+                    {id==='hip-foundations'&&<Button variant="outline" onClick={()=>go('case')}>Vakada uygula</Button>}
+                    <ClinicalLink route={{lesson:'learning'}}>Yanlışlarını tekrar et</ClinicalLink>
                   </div>
                   <div className="course-result-list">
                     {exam.map((q, i) => (

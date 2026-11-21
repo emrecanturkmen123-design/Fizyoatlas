@@ -1,3 +1,4 @@
+import {KNEE_DRAFT_KEY as DRAFT_KEY} from './study-storage-keys';
 import { useEffect, useRef, useState } from "react";
 import { readBrowserDraft, writeBrowserDraft, removeBrowserDraft } from "./browser-drafts";
 import {
@@ -7,7 +8,7 @@ import {
   mergeKneeCourseDraft,
   type KneeCourseProgress,
 } from "./knee-course-data";
-const DRAFT_KEY = "atlas-knee-course-draft";
+
 function draft() {
   try {
     return (

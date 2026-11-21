@@ -4,6 +4,10 @@ const base='https://medicine.uams.edu/neuroscience/education/medical-school-cour
 export type Side='left'|'right'|undefined;
 export interface Nerve {id:string;name:string;aliases:string[];muscles:string[];source:string;note?:string;indirect?:boolean;modelSurface?:false}
 export const NERVES:Nerve[]=[
+{id:'lumbar-ventral-rami',name:'Lomber spinal sinirlerin ön dalları',aliases:['anterior rami of lumbar spinal nerves'],modelSurface:false,muscles:['psoas major'],source:'https://rad.uw.edu/muscle-atlas/psoas'},
+{id:'piriformis-nerve',name:'N. musculi piriformis',aliases:['nerve to piriformis'],modelSurface:false,muscles:['piriformis'],source:'https://rad.uw.edu/muscle-atlas/piriformis'},
+{id:'accessory',name:'N. accessorius (XI)',aliases:['accessory nerve'],modelSurface:false,muscles:['trapezius'],source:'https://rad.uw.edu/muscle-atlas/trapezius',note:'Trapezius için motor innervasyon gösterilir. C3–C4 üzerinden duyu ve proprioseptif katkı olabilir.'},
+{id:'dorsal-scapular',name:'N. dorsalis scapulae',aliases:['dorsal scapular nerve'],modelSurface:false,muscles:['rhomboid major'],source:'https://rad.uw.edu/muscle-atlas/rhomboid-major-and-minor'},
 {id:'superior-subscapular',name:'N. subscapularis superior',aliases:['superior subscapular nerve','upper subscapular nerve'],muscles:['subscapularis'],note:'Subscapularisin üst bölümüne motor katkı verir; alt subscapular sinir de bu kasa katılır.',source:base+'nerves-of-the-upper-limb/'},
 {id:'inferior-subscapular',name:'N. subscapularis inferior',aliases:['inferior subscapular nerve','lower subscapular nerve'],muscles:['subscapularis','teres major'],source:base+'nerves-of-the-upper-limb/'},
 {id:'lateral-pectoral',name:'N. pectoralis lateralis',aliases:['lateral pectoral nerve'],muscles:['pectoralis major'],source:base+'nerves-of-the-upper-limb/'},

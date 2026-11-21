@@ -34,7 +34,7 @@ export const NERVE_FINDINGS:ModelFinding[]=NERVES.flatMap(n=>sides.flatMap(side=
   prompt:`${side==='right'?'Sağ':'Sol'} tarafta ${n.name} sinirini modelde bul.`,answer:n.name,options:nerveNames,explanation:nerveExplanation,source:n.source,rationales:rationale(nerveNames,n.name,nerveExplanation)},target];
 }));
 export function modelMuscleView(key:string):View{
- return /gluteus|hamstring|semitendinosus|semimembranosus|biceps femoris|gastrocnemius|soleus|tibialis posterior|triceps|anconeus|infraspinatus|teres|latissimus/.test(key)?'back':'front';
+ return /trapezius|rhomboid|piriformis|popliteus|gluteus|hamstring|semitendinosus|semimembranosus|biceps femoris|gastrocnemius|soleus|tibialis posterior|triceps|anconeus|infraspinatus|teres|latissimus/.test(key)?'back':'front';
 }
 export function localStudyBones(atlas:Atlas,parts:Part[],side:'right'|'left'){
  if(!parts.length)return [];

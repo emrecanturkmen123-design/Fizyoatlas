@@ -1,9 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
-import type { Atlas } from './anatomy';
 import ClinicalNavigation, { ClinicalLink } from './clinical-navigation';
-import FindingProjection from './finding-projection';
-import { findingScene } from './model-finding';
+import { upperLimbSource } from './clinical-learning-questions';
 
 const footDropSource = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC6637663/';
 const comparison = [
@@ -21,9 +19,34 @@ function StudyPanel({ title, children }: { title: string; children: ReactNode })
   </section>;
 }
 
-export function NeurologyComparison() {
+const upperComparison = [
+  ['Medial önkol duyusu','Etkilenebilir','Genellikle korunur'],
+  ['Küçük parmak ve yüzük parmağının ulnar yarısı','Duyu değişikliği olabilir','Duyu değişikliği olabilir'],
+  ['Başparmak abdüksiyonu ve opozisyonu','Median sinirle çalışan bu kaslarda zayıflık eşlik edebilir','İzole ulnar nöropatide genellikle korunur'],
+  ['İnterosseöz kaslar','Zayıflayabilir','Zayıflayabilir'],
+];
+
+export function NeurologyComparison({ variant }: { variant?:string }) {
+  const upper=variant==='c8-t1';
   return <StudyPanel title="Nörolojik karşılaştırma">
-    <ClinicalNavigation active="compare" level="L5"/>
+    <ClinicalNavigation active="compare" level={upper?'C8':'L5'}/>
+    <div className="clinical-reference-views">
+      <ClinicalLink route={{lesson:'neuro-compare'}}>L5 ve fibular sinir</ClinicalLink>
+      <ClinicalLink route={{lesson:'neuro-compare',compare:'c8-t1'}}>C8–T1 ve ulnar sinir</ClinicalLink>
+    </div>
+    {upper?<><h3>C8–T1 kökleri ve dirsek düzeyinde ulnar sinir</h3>
+      <table className="neuro-comparison">
+        <thead><tr><th scope="col">Muayene</th><th scope="col">C8–T1 kökleri</th><th scope="col">Ulnar sinir</th></tr></thead>
+        <tbody>{upperComparison.map(([test,root,nerve])=><tr key={test}><th scope="row">{test}</th><td>{root}</td><td>{nerve}</td></tr>)}</tbody>
+      </table>
+      <p>İnnervasyon varyasyonları bulunabilir. Duyu ve motor bulgular birlikte değerlendirilir.</p>
+      <div className="clinical-reference-views">
+        <ClinicalLink route={{lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:'T1'}}>T1 miyotomu</ClinicalLink>
+        <ClinicalLink route={{lesson:'study',nerve:'ulnar'}}>Ulnar sinir kartı</ClinicalLink>
+        <ClinicalLink route={{lesson:'ulnar-case'}}>El uyuşması vakasını çöz</ClinicalLink>
+      </div>
+      <a className="source-link" href={upperLimbSource} target="_blank" rel="noreferrer">Karşılaştırmanın kaynağı ↗</a>
+    </>:<>
     <h3>Ayak düşmesinde L5 kökü ve fibular sinir</h3>
     <p>Ayak sırtındaki duyu değişikliği ve dorsifleksiyon zayıflığı iki tabloda da görülebilir. İnversiyon ve kalça abdüksiyonu, bulgunun yerini ayırt etmeye yardımcı olur.</p>
     <table className="neuro-comparison">
@@ -38,75 +61,8 @@ export function NeurologyComparison() {
       <ClinicalLink route={{lesson:'foot-drop-case'}}>Ayak düşmesi vakasını çöz</ClinicalLink>
     </div>
     <a className="source-link" href={footDropSource} target="_blank" rel="noreferrer">Kaynak · The Interdisciplinary Management of Foot Drop ↗</a>
+    </>}
   </StudyPanel>;
-}
-
-const exams = [
-  {
-    key: 'biceps brachii', root: 'C5',
-    nerves: ['N. radialis', 'N. musculocutaneus', 'N. medianus'],
-    nerve: 'N. musculocutaneus',
-    motions: ['Dirsek ekstansiyonu', 'El bileği ekstansiyonu', 'Dirsek fleksiyonu'],
-    motion: 'Dirsek fleksiyonu',
-    explanation: 'Biceps brachii dirsek fleksiyonuna ve önkol supinasyonuna katkı verir. Dirsek fleksiyonu C5 anahtar motor değerlendirmesidir.',
-  },
-  {
-    key: 'tibialis anterior', root: 'L4',
-    nerves: ['N. fibularis profundus', 'N. tibialis', 'N. fibularis superficialis'],
-    nerve: 'N. fibularis profundus',
-    motions: ['Ayak bileği plantar fleksiyonu', 'Ayak bileği dorsifleksiyonu', 'Ayak bileği eversiyonu'],
-    motion: 'Ayak bileği dorsifleksiyonu',
-    explanation: 'Tibialis anterior dorsifleksiyona ve inversiyona katkı verir. Ayak bileği dorsifleksiyonu L4 anahtar motor değerlendirmesidir.',
-  },
-  {
-    key: 'extensor hallucis longus', root: 'L5',
-    nerves: ['N. femoralis', 'N. fibularis superficialis', 'N. fibularis profundus'],
-    nerve: 'N. fibularis profundus',
-    motions: ['Ayak başparmağı ekstansiyonu', 'Ayak başparmağı fleksiyonu', 'Diz ekstansiyonu'],
-    motion: 'Ayak başparmağı ekstansiyonu',
-    explanation: 'Extensor hallucis longus ayak başparmağını ekstansiyona getirir. Başparmak ekstansiyonu L5 anahtar motor değerlendirmesidir.',
-  },
-];
-
-export function NeurologyExam({ atlas }: { atlas: Atlas }) {
-  const [index,setIndex] = useState(0);
-  const [score,setScore] = useState(0);
-  const available = exams.filter(exam => findingScene(atlas, 'locate:muscle:'+exam.key+':right'));
-  const exam = available[index];
-  return <StudyPanel title="Nörolojik uygulama">
-    {exam ? <ExamRound key={index} atlas={atlas} exam={exam} index={index} total={available.length} onAdvance={points=>{setScore(score+points);setIndex(index+1);}}/>:
-      available.length?<><p role="status"><strong>{score} / {available.length * 3}</strong> doğru seçim</p><Button onClick={()=>{setIndex(0);setScore(0);}}>Yeniden çöz</Button></>:<p>Modelde bu alıştırma için gereken kaslar bulunamadı.</p>}
-    <div className="clinical-reference-views"><ClinicalLink route={{lesson:'practice'}}>Kendini sına</ClinicalLink></div>
-  </StudyPanel>;
-}
-
-function ExamRound({ atlas, exam, index, total, onAdvance }: { atlas: Atlas; exam: typeof exams[number]; index: number; total: number; onAdvance: (points:number)=>void }) {
-  const [part,setPart] = useState('');
-  const [nerve,setNerve] = useState('');
-  const [motion,setMotion] = useState('');
-  const findingId = 'locate:muscle:'+exam.key+':right';
-  const scene = findingScene(atlas,findingId)!;
-  const found = scene.targetIds.includes(part);
-  return <>
-    <p className="clinical-reference-hint">Kas {index+1} / {total}</p>
-    <h3>Modelde {scene.question.displayName} kasını seç</h3>
-    <FindingProjection atlas={atlas} id={findingId} disabled={!!part} selectedId={part} onPick={setPart}/>
-    {part&&<p role="status">{found?'Kas seçimi doğru.':'Seçilen yüzey hedef kasla eşleşmedi.'} {scene.question.explanation}</p>}
-    {part&&<div className="neuro-question">
-      <h3>Kası hangi periferik sinir innerve eder?</h3>
-      <div className="clinical-reference-views">{exam.nerves.map(option=><Button variant="outline" key={option} disabled={!!nerve} onClick={()=>setNerve(option)}>{option}</Button>)}</div>
-      {nerve&&<p role="status">{nerve===exam.nerve?'Doğru.':'Doğru yanıt'} {exam.nerve}.</p>}
-    </div>}
-    {nerve&&<div className="neuro-question">
-      <h3>Bu kası hangi hareketle değerlendirirsin?</h3>
-      <div className="clinical-reference-views">{exam.motions.map(option=><Button variant="outline" key={option} disabled={!!motion} onClick={()=>setMotion(option)}>{option}</Button>)}</div>
-      {motion&&<p role="status">{motion===exam.motion?'Doğru.':`Doğru yanıt ${exam.motion.toLocaleLowerCase('tr')}.`} {exam.explanation}</p>}
-    </div>}
-    {motion&&<div className="clinical-reference-views">
-      <ClinicalLink route={{lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:exam.root,clinicalMuscle:exam.key,side:'right'}}>İlgili miyotomu incele</ClinicalLink>
-      <Button onClick={()=>onAdvance(Number(found)+Number(nerve===exam.nerve)+Number(motion===exam.motion))}>{index+1===total?'Sonucu göster':'Sonraki kas'}</Button>
-    </div>}
-  </>;
 }
 
 const hypotheses = ['L5 radikülopatisi','N. fibularis communis nöropatisi'];

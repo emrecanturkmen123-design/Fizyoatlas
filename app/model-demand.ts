@@ -32,5 +32,6 @@ export function requiredChunks(atlas:Atlas,s:SceneState){
   if(s.spine)return p.system==='skeletal'&&!!spineRegion(p);
   return s.isolate?selected.has(p.id):s.visible.includes(p.system)||selected.has(p.id)||context.has(p.id);
  });
- return [...new Set(needed.map(p=>p.chunk))];
+ const focus=needed.filter(p=>selected.has(p.id)||muscles.has(p.id)).map(p=>p.chunk);
+ return [...new Set([...focus,...needed.map(p=>p.chunk)])];
 }

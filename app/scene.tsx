@@ -288,7 +288,7 @@ export default function AnatomyScene({atlas,state,onSelect,onClinicalPick,onProg
   const up=(e:PointerEvent)=>{
    const validTap=tap.up(e.pointerId,e.clientX,e.clientY);if(e.button!==0||!validTap)return;const rect=renderer.domElement.getBoundingClientRect();
    if(latest.current.clinical?.mode==='tests'){const pin=clinicalTarget(e.clientX-rect.left,e.clientY-rect.top,e.pointerType==='touch'?19:14);if(pin){hover.hidden=true;pickClinical.current?.(pin);}return;}
-   if(!ready)return;pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
+   if(!loadedChunks.size)return;pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
    if(latest.current.clinical?.mode==='dermatomes'){
     const pin=dermPick(e.clientX-rect.left,e.clientY-rect.top);
     if(pin){hover.hidden=true;pickClinical.current?.(pin);}

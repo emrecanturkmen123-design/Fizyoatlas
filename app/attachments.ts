@@ -7,6 +7,7 @@ const p=(bone:string,label:string,at:Spec['at'],midline=false):Spec=>({bone,labe
 // Fractions are approximate regional seeds in each bone envelope. X runs medial→lateral
 // on paired bones, Y inferior→superior, Z posterior→anterior. Never clinical landmarks.
 export const ATTACHMENTS:Record<string,{origin:Spec[];insertion:Spec[];note?:string}>={
+ 'extensor hallucis longus':{origin:[p('fibula','Fibula ön yüzü',[.5,.43,.88])],insertion:[p('distal phalanx of {side} big toe','Distal falanks tabanı · dorsal yüz',[.5,.9,.18])],note:'Fibula ve distal falanks üzerindeki işaretler yaklaşık kemik bölgeleridir. Membrana interossea kemik üzerinde işaretlenmez.'},
  'calcaneal tendon':{origin:[],insertion:[p('calcaneus','Aşil · calcaneusun arka yüzü',[.5,.55,0])],note:'Yalnız kemik insertiosu işaretlenir. Proksimal uç gastrocnemius–soleus kompleksine devam eder; ayrı bir kemik origosu değildir.'},
  'quadriceps tendon':{origin:[],insertion:[p('patella','Quadriceps tendonu · patellanın üst bölgesi',[.5,.95,.6])],note:'Yalnız patelladaki distal kemik bağlantısı yaklaşık işaretlenir. Proksimal uç dört quadriceps kasına devam eder; ayrı bir kemik origosu değildir.'},
  'patellar ligament':{origin:[p('patella','Patella · alt kutup bölgesi',[.5,0,.6])],insertion:[p('tibia','Tuberositas tibiae bölgesi',[.52,.88,.99])],note:'İki kemik bağlantısı yaklaşık bölge işaretleridir. Tendonun geniş tutunma alanını veya gerilimini ölçmez; hareket görünümündeki patella gösterimi şematiktir.'},

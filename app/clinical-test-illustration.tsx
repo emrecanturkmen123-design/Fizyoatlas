@@ -33,6 +33,36 @@ const testSteps: Record<string, readonly [string, string, string, string]> = {
     'Önkolu aşağı yönlendirerek omuzda pasif iç rotasyon oluştur.',
     'Kişinin tanıdığı ön-yan omuz ağrısının ortaya çıkması subakromiyal ağrı olasılığını destekler.',
   ],
+  spurling: [
+    'Kişi oturur. Baş ve boyun, semptom tarafına kontrollü biçimde konumlandırılır.',
+    'Klinisyen bir eliyle başı kontrol eder ve uygulamayı semptom yanıtına göre yönetir.',
+    'Gösterilen varyantta hafif aksiyel kompresyon uygulanır.',
+    'Kola yayılan tanıdık radiküler semptom pozitifliği destekler. Yalnız yerel boyun ağrısı yeterli değildir.',
+  ],
+  slr: [
+    'Kişi sırtüstü yatar. Test edilen diz ekstansiyonda kalır.',
+    'Klinisyen bacağı topuk veya distal bacaktan destekler.',
+    'Diz bükülmeden kalça pasif fleksiyona getirilir. Semptomun yeri ve başladığı açı kaydedilir.',
+    'Bacağa yayılan tanıdık semptom nöral mekanosensitivite ile uyumlu olabilir. Sadece arka uyluk gerilmesi farklı bir bulgudur.',
+  ],
+  thomas: [
+    'Kişi sırtüstü, masanın kenarına yakın konumlanır.',
+    'Karşı diz göğse doğru tutulur. Pelvisin konumu izlenir.',
+    'Test edilen uyluk serbest bırakılır. Uyluk hizası ve diz fleksiyonu ayrı ayrı gözlenir.',
+    'Pelvis kontrol altında iken uyluğun yükselmesi kalça ekstansiyon kısıtını düşündürür. Diz açısı ayrıca yorumlanır.',
+  ],
+  phalen: [
+    'Kişi önkollarını kendisi için rahat bir konuma getirir.',
+    'El sırtları birleştirilir ve her iki bilek fleksiyona getirilir.',
+    'Bilekler bu konumda 60 saniyeye kadar tutulur. Tanıdık uyuşma veya karıncalanma izlenir.',
+    'Median sinir duyu alanında tanıdık parestezi karpal tünel olasılığını destekleyebilir.',
+  ],
+  ankle_anterior: [
+    'Ayak rahat ve hafif plantar fleksiyondadır.',
+    'Bir el distal tibia ve fibulayı sabitler. Diğer el topuğu kavrar.',
+    'Topuk öne çekilir. Karşı tarafla hareket miktarı ve son his karşılaştırılır.',
+    'Artmış öne hareket veya yumuşak son his lateral bağ, özellikle ATFL, tutulumuyla uyumlu olabilir.',
+  ],
   thompson: [
     'Yüzüstü yatışta ayak, masanın kenarından serbestçe sarkar.',
     'Klinisyenin elleri baldır kas kütlesine yerleşir.',

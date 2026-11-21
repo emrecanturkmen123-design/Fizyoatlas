@@ -1,3 +1,4 @@
+import {ClinicalLink} from './clinical-navigation';
 import {signInUrl} from './auth-link';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Check, CheckCircle2, RotateCcw } from "lucide-react";
@@ -400,6 +401,11 @@ export default function KneeCourse({
                         {KNEE_COURSE_STEPS.find((x) => x.id === s)?.title}
                       </Button>
                     ))}
+                  </div>
+                  <div className="course-review-actions">
+                    <ClinicalLink route={{lesson:'clinical',clinicalMode:'tests',clinicalTest:'lachman'}}>Lachman’ı incele</ClinicalLink>
+                    <ClinicalLink route={{lesson:'osce',compare:'diz'}}>Vakada uygula</ClinicalLink>
+                    <ClinicalLink route={{lesson:'learning'}}>Yanlışlarını tekrar et</ClinicalLink>
                   </div>
                   <div className="course-result-list">
                     {examQs.map((q, i) => (

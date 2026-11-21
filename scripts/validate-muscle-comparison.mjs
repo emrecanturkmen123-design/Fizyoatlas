@@ -11,7 +11,7 @@ import {cameraPoint} from '../app/anatomy-lab-geometry.ts';
 import {sideOf} from '../app/innervation.ts';
 import {parseWorkspaceRoute,workspaceHash} from '../app/workspace-route.ts';
 const atlas=JSON.parse(fs.readFileSync('public/models/atlas.json')),parts=new Map(atlas.parts.map(p=>[p.id,p]));
-assert.equal(MUSCLE_COMPARISON_ITEMS.length,51);assert.equal(new Set(MUSCLE_COMPARISON_ITEMS.map(x=>x.key)).size,51);assert.equal(MUSCLE_COMPARISON_PAIRS.length,6);
+assert.equal(MUSCLE_COMPARISON_ITEMS.length,MUSCLES.length+2);assert.equal(new Set(MUSCLE_COMPARISON_ITEMS.map(x=>x.key)).size,MUSCLE_COMPARISON_ITEMS.length);assert.equal(MUSCLE_COMPARISON_PAIRS.length,6);
 for(const item of MUSCLE_COMPARISON_ITEMS){
  assert(muscleComparisonItem(suggestedMuscleComparison(item.key)));assert.notEqual(suggestedMuscleComparison(item.key),item.key);
  for(const side of ['right','left']){

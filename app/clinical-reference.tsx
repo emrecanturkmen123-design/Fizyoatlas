@@ -7,8 +7,8 @@ import { NERVES } from './innervation';
 import type { Part } from './anatomy';
 import reference from './clinical-reference.json' with { type: 'json' };
 import ClinicalNavigation, { ClinicalLink } from './clinical-navigation';
+import { clinicalTestPagePath } from './study-page';
 import ClinicalTestIllustration from './clinical-test-illustration';
-import './clinical-reference.css';
 
 const sources: Record<string, string[]> = reference.sources;
 function Sources({ ids }: { ids: string[] }) {
@@ -112,6 +112,11 @@ export default function ClinicalReference({value, onChange, parts, muscles, hasP
         <p className="clinical-reference-hint">{region} · {test.tag}</p>
         <h3>{test.title}</h3>
         <p className="clinical-test-focus">{test.focus}</p>
+        <div className="clinical-reference-views">
+          <a className="source-link" href={clinicalTestPagePath(test.id)} target="_blank" rel="noreferrer">Test bilgi sayfası ↗</a>
+          {test.id==='lachman'&&<ClinicalLink route={{lesson:'osce',compare:'diz'}}>İstasyonda uygula</ClinicalLink>}
+          {test.id==='hawkins'&&<ClinicalLink route={{lesson:'osce',compare:'omuz'}}>İstasyonda uygula</ClinicalLink>}
+        </div>
         <ClinicalTestIllustration key={test.id} testId={test.id} title={test.title} />
         <p className="clinical-reference-hint">{parts.length > 0 ? 'Model, testle ilişkili anatomik yapıyı vurgular.' : 'Model, testin uygulandığı bölgeyi gösterir.'}</p>
         <dl className="clinical-test-steps">
@@ -144,6 +149,8 @@ export default function ClinicalReference({value, onChange, parts, muscles, hasP
           <p><strong>{mode==='myotomes'?'Duyu noktası':'Anahtar hareket'}</strong> · {mode==='myotomes'?level.sensory:level.motor||'ISNCSCI anahtar motor testi tanımlamaz.'}</p>
           <div className="clinical-reference-views">
             <ClinicalLink route={{lesson:'clinical',clinicalMode:mode==='myotomes'?'dermatomes':'myotomes',clinicalLevel:levelId,side}}>{mode==='myotomes'?'Duyu haritasında göster':'Kasları ve sinirleri göster'}</ClinicalLink>
+            {['C5','C6','C7','L4','S1'].includes(levelId)&&<ClinicalLink route={{lesson:'reflexes',compare:levelId}}>İlgili refleks</ClinicalLink>}
+            {['C8','T1'].includes(levelId)&&<ClinicalLink route={{lesson:'neuro-compare',compare:'c8-t1'}}>C8–T1 ve ulnar sinir</ClinicalLink>}
             {levelId==='L5'&&<ClinicalLink route={{lesson:'neuro-compare'}}>L5 ve fibularis karşılaştırması</ClinicalLink>}
           </div>
           {relatedTests.length>0&&<details className="clinical-related-muscles">

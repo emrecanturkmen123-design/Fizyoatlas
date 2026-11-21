@@ -1,7 +1,8 @@
 import { useEffect, useId, useRef, useState, type MouseEvent, type PointerEvent } from 'react';
 import { Minus, Plus, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import type { ClinicalSide } from './clinical-model';
+import { sensoryLevels, levels, type ClinicalSide } from './clinical-model';
+import { ClinicalLink } from './clinical-navigation';
 import regions from './dermatome-map-regions.json' with { type: 'json' };
 
 export type MapView = 'front' | 'back';
@@ -178,6 +179,11 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
           ))}
         </div>
       </div>
+      <div className="dermatome-mobile-root">
+        <p><strong>{level} · {side==='left'?'Sol':'Sağ'}</strong> {sensoryLevels.find(item=>item.id===level)?.sensory}</p>
+        {levels.some(item=>item.id===level)&&<ClinicalLink route={{lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:level,side}}>Miyotoma geç</ClinicalLink>}
+      </div>
+      <div className="dermatome-map-canvas">
       <div ref={art} className="dermatome-map-art" data-zoomed={zoom > 1}
         aria-label="Dermatom haritası. Bir noktaya dokunup + veya − kullan ya da fare tekerleğini çevir."
         role="region" tabIndex={zoom > 1 ? 0 : undefined}
@@ -233,7 +239,6 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
           </g>
         </svg>
       </div>
-      <div className="dermatome-map-status">
         <div className="dermatome-map-zoom" role="group" aria-label="Harita yakınlaştırma">
           <Button type="button" variant="outline" size="icon-sm" onClick={() => changeZoom(-1)} disabled={!camera.step}
             aria-label="Uzaklaştır" title="Uzaklaştır"><Minus size={17} /></Button>
@@ -243,6 +248,8 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
           <Button type="button" variant="ghost" size="icon-sm" onClick={resetZoom} disabled={!camera.step}
             aria-label="Yakınlaştırmayı sıfırla" title="Yakınlaştırmayı sıfırla"><RotateCcw size={16} /></Button>
         </div>
+      </div>
+      <div className="dermatome-map-status">
         <div className="dermatome-map-selection" aria-live="polite">
           {overlap ? (
             <div className="dermatome-map-overlap">
