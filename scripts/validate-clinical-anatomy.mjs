@@ -9,7 +9,7 @@ const footprints=meta.parts.filter(p=>p.sourceSelection.includes('footprint'));a
 console.log('PASS: 16 clinical surfaces + 2 Achilles + 2 extracted patellar surfaces, 10 modelled structures, Turkish search aliases, direct case targets, explicit footprint limits, local envelope residual <6 mm.');
 
 const { clinicalTestIllustrations } = await import('../app/clinical-test-illustration-data.ts');
-const { tests } = JSON.parse(fs.readFileSync('app/clinical-reference.json', 'utf8'));
+const { tests, levels } = JSON.parse(fs.readFileSync('app/clinical-reference.json', 'utf8'));
 assert.deepEqual(Object.keys(clinicalTestIllustrations).sort(), tests.map(test => test.id).sort());
 
 for (const test of tests) {
@@ -18,3 +18,12 @@ for (const test of tests) {
 }
 assert(!clinicalTestIllustrations.homans.drawing.some(item => item.kind === 'hand' || item.kind === 'arrow'));
 console.log(`PASS: ${tests.length} test-specific illustrations, including the Homans safety card.`);
+
+const sensoryIds = [...levels.map(level => level.id), 'V1', 'V2', 'V3'];
+const mapRegions = JSON.parse(fs.readFileSync('app/dermatome-map-regions.json', 'utf8'));
+const contours = [...mapRegions.front, ...mapRegions.back];
+assert.deepEqual([...new Set(contours.flatMap(area => area.levels))].sort(), sensoryIds.sort());
+assert(mapRegions.front.some(area => area.levels.length > 1), 'Missing anterior overlap areas');
+assert(mapRegions.back.some(area => area.levels.length > 1), 'Missing posterior overlap areas');
+assert(contours.every(area => /^m/i.test(area.path) && area.offset.every(Number.isFinite)));
+console.log(`PASS: ${contours.length} registered front/back contours cover all ${sensoryIds.length} dermatomes and trigeminal areas.`);
