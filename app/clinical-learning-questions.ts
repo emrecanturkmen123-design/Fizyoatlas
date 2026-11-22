@@ -1,4 +1,6 @@
 import type { Region } from './case-schema';
+import {lachmanTechnique} from './lachman-practice-data';
+import {sensoryPointQuestions,reflexDrillQuestions} from './neuro-drill-data';
 
 const isncsci = 'https://asia-spinalinjury.org/wp-content/uploads/2019/10/ASIA-ISCOS-Worksheet_10.2019_PRINT-Page-1-2.pdf';
 const uw = 'https://rad.uw.edu/muscle-atlas/';
@@ -46,7 +48,7 @@ export const stations = [
     source:'https://www.aafp.org/pubs/afp/issues/2018/1101/p576.html',
   },
   {
-    id:'ayak',title:'Ayak düşmesi · L5 ve fibular sinir',region:'ankle' as Region,key:'extensor hallucis longus',
+    id:'ayak',title:'Alt ekstremite · Motor muayene',region:'ankle' as Region,key:'extensor hallucis longus',
     finding:'locate:muscle:extensor hallucis longus:right',testId:undefined,
     scenario:'Kurgusal vaka. Kişinin sağ ayağı yürürken yere takılıyor. Ayak bileği dorsifleksiyonu ve eversiyonu zayıf.',
     questions:[
@@ -75,6 +77,9 @@ export const motorQuestionId = (root: string, kind: 'nerve' | 'motion') => 'foun
 export const stationQuestionId = (id: string, index: number) => 'foundation:station-'+id+':'+index;
 
 export const clinicalLearningQuestions = [
+  ...sensoryPointQuestions,
+  ...reflexDrillQuestions,
+  ...lachmanTechnique,
   ...motorChecks.flatMap(m=>(['nerve','motion'] as const).map(kind=>({
     ...m[kind],id:motorQuestionId(m.root,kind),prompt:m.key+' · '+m[kind].prompt,
     muscleKey:m.key,displayName:m.root+' nörolojik değerlendirme',region:'neuro' as Region,

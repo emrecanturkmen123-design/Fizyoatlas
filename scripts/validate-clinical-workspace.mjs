@@ -10,6 +10,10 @@ import {CASES_KEY,LEARNING_KEY,KNEE_DRAFT_KEY} from '../app/study-storage-keys.t
 import {freshProgress} from '../app/case-progress.ts';
 import {freshKneeCourse} from '../app/knee-course-data.ts';
 
+import {sensoryPointQuestions,reflexDrillQuestions} from '../app/neuro-drill-data.ts';
+import {lachmanDirectionSpots,lachmanTechnique} from '../app/lachman-practice-data.ts';
+import {stationSteps} from '../app/osce-practice.tsx';
+
 const atlas=JSON.parse(fs.readFileSync('public/models/atlas.json'));
 assert.equal(workspaceSearch('Lachman',[])[0].route.clinicalTest,'lachman');
 assert.equal(workspaceSearch('Spurling',[])[0].route.clinicalTest,'spurling');
@@ -17,11 +21,11 @@ assert.equal(workspaceSearch('TUG',[])[0].route.compare,'tug');
 const l5=workspaceSearch('L5',[]);
 for(const pick of ['dermatomes','myotomes'])assert(l5.some(x=>x.route.clinicalMode===pick&&x.route.clinicalLevel==='L5'));
 assert(l5.some(x=>x.route.lesson==='cases'&&x.route.caseId==='foot-drop'));
-assert(l5.some(x=>x.route.lesson==='neuro-compare'));
+assert(l5.some(x=>x.route.lesson==='lab'&&x.route.labMode==='neuro'));
 assert.deepEqual(parseWorkspaceRoute('#ayak-dusmesi-vakasi'),{lesson:'cases',caseId:'foot-drop'});
 assert.deepEqual(parseWorkspaceRoute('#ulnar-vaka?mod=exam'),{lesson:'cases',caseId:'ulnar-hand',mode:'exam'});
 assert(workspaceSearch('küçük parmak',[]).some(x=>x.route?.caseId==='ulnar-hand'));
-for(const route of [{lesson:'osce',compare:'diz'},{lesson:'reflexes',compare:'L4'},{lesson:'measures',compare:'tug'},{lesson:'cases',caseId:'ulnar-hand'},{lesson:'neuro-compare',compare:'c8-t1'}]){
+for(const route of [{lesson:'osce',compare:'diz'},{lesson:'reflexes',compare:'L4'},{lesson:'measures',compare:'tug'},{lesson:'cases',caseId:'ulnar-hand'},{lesson:'lab',labMode:'neuro',compare:'c8-t1'}]){
   assert.deepEqual(parseWorkspaceRoute(workspaceHash(route)),route);
 }
 for(const motor of motorChecks){
@@ -31,6 +35,14 @@ for(const motor of motorChecks){
     assert.equal(saved.answer,motor[kind].answer);
     assert.equal(new Set(saved.options).size,4);
   }
+}
+assert.deepEqual(parseWorkspaceRoute('#norolojik-karsilastirma?karsilastir=c8-t1'),{lesson:'lab',labMode:'neuro',compare:'c8-t1'});
+assert.deepEqual(parseWorkspaceRoute('#norolojik-karsilastirma'),{lesson:'lab',labMode:'neuro',compare:'l5-fibular'});
+assert.equal(lachmanDirectionSpots.find(spot=>spot.id===lachmanTechnique[2].answer)?.symbol,'↗');
+assert.deepEqual(stationSteps(atlas,stations[0]).map(step=>step.group),['Anatomi','Uygulama','Uygulama','Uygulama','Yorum']);
+for(const q of [...sensoryPointQuestions,...reflexDrillQuestions,...lachmanTechnique]){
+  const saved=questionDefinition(q.id);assert(saved,q.id);
+  assert.equal(saved.answer,q.answer);assert(saved.options.includes(saved.answer));
 }
 for(const station of stations){
   assert(findingScene(atlas,station.finding)?.targetIds.length,station.id+' uses source geometry');

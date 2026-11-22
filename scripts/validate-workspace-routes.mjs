@@ -14,7 +14,7 @@ const samples=[
  {lesson:'clinical',clinicalMode:'dermatomes',clinicalLevel:'L5',side:'right'},
  {lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:'C5',clinicalMuscle:'biceps brachii',side:'left'},
  {lesson:'clinical',clinicalMode:'tests',clinicalTest:'lachman'},
- {lesson:'neuro-compare'},
+ {lesson:'lab',labMode:'neuro',compare:'l5-fibular'},
  {lesson:'neuro-exam'},
  {lesson:'cases',caseId:'foot-drop'},
  {lesson:'study',concept:'FMA_24474'},

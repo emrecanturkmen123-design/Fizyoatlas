@@ -1,4 +1,5 @@
 import ComparisonGuide from './comparison-guide';
+import NeurologyComparison,{neuroPair} from './neurology-study';
 import MuscleComparisonInfo from './muscle-comparison-info';
 import ComparisonCamera from './comparison-camera';
 import {MUSCLE_COMPARISON_ITEMS,MUSCLE_COMPARISON_PAIRS,muscleComparisonSelection,muscleComparisonPalette,suggestedMuscleComparison} from './muscle-comparison';
@@ -38,15 +39,17 @@ export default function AnatomyLab({atlas,initialStructure,initialRoute={},onRou
  const initialCatalog=initialKind==='muscles'?MUSCLE_COMPARISON_ITEMS:CLINICAL_STRUCTURES;
  const start=initialCatalog.some(s=>s.key===initialKey)?initialKey!:initialKind==='muscles'?'muscle:quadriceps':'quadriceps tendon';
  const suggest=(key:string)=>key.startsWith('muscle:')?suggestedMuscleComparison(key):suggestedComparison(key);
- const [mode,setMode]=useState<'compare'|'clinical'>(initialRoute.labMode==='clinical'?'clinical':'compare'),[left,setLeft]=useState(start),[right,setRight]=useState(initialRoute.compare&&initialRoute.compare!==start&&initialCatalog.some(s=>s.key===initialRoute.compare)?initialRoute.compare:suggest(start));
+ const [mode,setMode]=useState<NonNullable<WorkspaceRoute['labMode']>>(initialRoute.labMode??'compare'),[left,setLeft]=useState(start),[right,setRight]=useState(initialRoute.compare&&initialRoute.compare!==start&&initialCatalog.some(s=>s.key===initialRoute.compare)?initialRoute.compare:suggest(start));
  const [framing,setFraming]=useState<'centered'|'aligned'>(initialRoute.labFrame??'centered'),[side,setSide]=useState<'right'|'left'>(initialRoute.side??'right');
  const [pair,setPair]=useState(TENDON_COMPARISONS.some(p=>p.id===initialRoute.clinicalPair)?initialRoute.clinicalPair!:comparisonFor(start)??'knee-chain');
+ const [neurologyPair,setNeurologyPair]=useState(neuroPair(initialRoute.compare));
  const [yaw,setYaw]=useState(initialRoute.yaw??0),[pitch,setPitch]=useState(initialRoute.pitch??0),[zoom,setZoom]=useState(initialRoute.zoom??1),[context,setContext]=useState(initialRoute.labContext??true),[meshes,setMeshes]=useState<LabMesh[]>([]),[error,setError]=useState(''),[loading,setLoading]=useState(true),[retry,setRetry]=useState(0);
  const routeChange=useRef(onRouteChange);routeChange.current=onRouteChange;
- useEffect(()=>{routeChange.current?.({structure:left,compare:right,side,labMode:mode,labFrame:framing,labContext:context,clinicalPair:pair,yaw,pitch,zoom,labKind:kind==='muscles'?'muscles':undefined});},[left,right,side,mode,framing,context,pair,yaw,pitch,zoom,kind]);
+ useEffect(()=>{routeChange.current?.(mode==='neuro'?{labMode:mode,compare:neurologyPair}:
+  {structure:left,compare:right,side,labMode:mode,labFrame:framing,labContext:context,clinicalPair:pair,yaw,pitch,zoom,labKind:kind==='muscles'?'muscles':undefined});},[left,right,side,mode,framing,context,pair,yaw,pitch,zoom,kind,neurologyPair]);
  const a=useMemo(()=>kind==='muscles'?muscleComparisonSelection(atlas,left,side):connectiveSelection(atlas,left,side),[atlas,left,side,kind]),b=useMemo(()=>kind==='muscles'?muscleComparisonSelection(atlas,right,side):connectiveSelection(atlas,right,side),[atlas,right,side,kind]);
  const colors=useMemo(()=>kind==='muscles'?muscleComparisonPalette(atlas,a.selected,b.selected):undefined,[atlas,a,b,kind]);
- const selected=useMemo(()=>mode==='clinical'?[]:atlas.parts.filter(p=>[...a.selected,...b.selected,...(context?[...a.context,...b.context]:[])].includes(p.id)),[atlas,a,b,context,mode]);
+ const selected=useMemo(()=>mode!=='compare'?[]:atlas.parts.filter(p=>[...a.selected,...b.selected,...(context?[...a.context,...b.context]:[])].includes(p.id)),[atlas,a,b,context,mode]);
  useEffect(()=>{let active=true;setLoading(true);setError('');Promise.all([...new Set(selected.map(p=>p.chunk))].map(async index=>[index,await loadChunk(atlas,index)] as const)).then(values=>{if(!active)return;const buffers=new Map(values);setMeshes(selected.map(part=>({part,positions:new Float32Array(buffers.get(part.chunk)!,part.positions,part.vertexCount*3),indices:new Uint32Array(buffers.get(part.chunk)!,part.indices,part.indexCount)})));setLoading(false);}).catch(e=>{if(active){setError(e.message);setLoading(false);}});return()=>{active=false;};},[atlas,selected,retry]);
  const frames=useMemo(()=>comparisonFrames(atlas,a.selected,b.selected,framing),[atlas,a,b,framing]);
  const sideName=side==='right'?'Sağ':'Sol';
@@ -57,8 +60,9 @@ export default function AnatomyLab({atlas,initialStructure,initialRoute={},onRou
  const options=(exclude?:string)=>catalog.map(s=><option key={s.key} value={s.key} disabled={s.key===exclude}>{s.name}</option>);
  const sideControl=<label className="lab-side">Taraf<select aria-label="İncelenen taraf" value={side} onChange={e=>setSide(e.target.value as 'right'|'left')}><option value="right">Sağ</option><option value="left">Sol</option></select></label>;
  return <section className="anatomy-lab glass" aria-label="Karşılaştırma"><div className="panel-heading"><h2 ref={heading} tabIndex={-1}>Karşılaştırma</h2><Button variant="ghost" onClick={onClose} aria-label="İncelemeyi kapat">✕</Button></div>
-  <div className="learning-options" aria-label="İnceleme biçimi">{([{id:'compare',label:'Görsel karşılaştırma'},{id:'clinical',label:'Bilgiyi karşılaştır'}] as const).map(x=><Button key={x.id} aria-pressed={mode===x.id} variant={mode===x.id?'default':'outline'} onClick={()=>setMode(x.id)}>{x.label}</Button>)}</div>
-  <div className="learning-options lab-kind-selector" aria-label="Karşılaştırılan yapı grubu"><Button variant={kind==='muscles'?'default':'outline'} aria-pressed={kind==='muscles'} onClick={()=>changeKind('muscles')}>Kaslar</Button><Button variant={kind==='connective'?'default':'outline'} aria-pressed={kind==='connective'} onClick={()=>changeKind('connective')}>Bağ ve tendonlar</Button></div>
+  <div className="learning-options" aria-label="İnceleme biçimi">{([{id:'compare',label:'Görsel karşılaştırma'},{id:'clinical',label:'Bilgiyi karşılaştır'},{id:'neuro',label:'Klinik ayrım'}] as const).map(x=><Button key={x.id} aria-pressed={mode===x.id} variant={mode===x.id?'default':'outline'} onClick={()=>setMode(x.id)}>{x.label}</Button>)}</div>
+  {mode==='neuro'?<NeurologyComparison atlas={atlas} pair={neurologyPair} onPair={setNeurologyPair}/>:<>
+  <div className="learning-options lab-kind-selector"  aria-label="Karşılaştırılan yapı grubu"><Button variant={kind==='muscles'?'default':'outline'} aria-pressed={kind==='muscles'} onClick={()=>changeKind('muscles')}>Kaslar</Button><Button variant={kind==='connective'?'default':'outline'} aria-pressed={kind==='connective'} onClick={()=>changeKind('connective')}>Bağ ve tendonlar</Button></div>
   {mode==='clinical'&&kind==='connective'?<><div className="lab-selects">{sideControl}</div><TendonStudyPanel embedded side={side} pairId={pair} onPair={id=>{setPair(id);const match=TENDON_COMPARISONS.find(p=>p.id===id),key=match?.sides[0].route.structure;if(key){setLeft(key);setRight(match?.sides.find(s=>s.route.structure&&s.route.structure!==key)?.route.structure??suggestedComparison(key));}}} onQuiz={onQuiz} onClose={onClose}/></>:<>
     <div className="lab-selects"><label>Birinci yapı<select aria-label="Birinci yapı" value={left} onChange={e=>{const key=e.target.value;setLeft(key);setRight(suggest(key));const match=comparisonFor(key);if(match)setPair(match);}}>{options()}</select></label><label>İkinci yapı<select aria-label="İkinci yapı" value={right} onChange={e=>setRight(e.target.value)}>{options(left)}</select></label>{kind==='muscles'&&<label>Hazır çift<select aria-label="Hazır kas çifti" value={preset?.id??'custom'} onChange={e=>{const pair=MUSCLE_COMPARISON_PAIRS.find(p=>p.id===e.target.value);if(pair){setLeft('muscle:'+pair.left);setRight('muscle:'+pair.right);}}}><option value="custom">Özel seçim</option>{MUSCLE_COMPARISON_PAIRS.map(p=><option key={p.id} value={p.id}>{p.label}</option>)}</select></label>}{sideControl}</div>
     {mode==='compare'&&<>
@@ -73,5 +77,5 @@ export default function AnatomyLab({atlas,initialStructure,initialRoute={},onRou
    {kind==='muscles'&&<><ComparisonGuide key={left+'|'+right} left={left} right={right} onCamera={()=>{setMode('compare');setFraming('aligned');setYaw(0);setPitch(0);setZoom(1);}}/><MuscleComparisonInfo left={left} right={right}/></>}
    <Disclosure title="Kaynaklar ve gösterimin sınırları"><p>Bu görünüm 3D kaynak yüzeylerinin izdüşümüdür. Kaynaklarda bulunmayan dokular ve bireysel varyasyonlar bu görünümden çıkarılamaz. Anatomik sağ/sol, ekrandaki sağ/sol ile aynı anlamda değildir.</p><p>BodyParts3D · CC BY 4.0; Z-Anatomy ve Open3DModel · CC BY-SA 4.0. Renkler eğitim için eklenmiştir. <a href="/ATTRIBUTION.md" target="_blank" rel="noreferrer">Kaynaklar ve değişiklikler ↗</a></p></Disclosure>
   </>}
- </section>;
+ </>}</section>;
 }

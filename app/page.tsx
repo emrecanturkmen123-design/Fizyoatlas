@@ -111,11 +111,10 @@ const ClinicalPanel=lazy(()=>import('./clinical-panel'));
 const QuizPanel=lazy(()=>import('./quiz-panel'));
 const NotebookPanel=lazy(()=>import('./notebook-panel'));
 const ClinicalReference=lazy(()=>import('./clinical-reference'));
-const NeurologyComparison=lazy(()=>import('./neurology-study').then(m=>({default:m.NeurologyComparison})));
-const MeasureStudy=lazy(()=>import('./clinical-practice').then(m=>({default:m.MeasureStudy})));
-const MotorPractice=lazy(()=>import('./clinical-practice').then(m=>({default:m.MotorPractice})));
-const Osce=lazy(()=>import('./clinical-practice').then(m=>({default:m.Osce})));
-const ReflexStudy=lazy(()=>import('./clinical-practice').then(m=>({default:m.ReflexStudy})));
+const MeasureStudy=lazy(()=>import('./measurement-study').then(m=>({default:m.MeasureStudy})));
+const MotorPractice=lazy(()=>import('./neuro-practice'));
+const Osce=lazy(()=>import('./osce-practice'));
+const ReflexStudy=lazy(()=>import('./reflex-study').then(m=>({default:m.ReflexStudy})));
 const AnatomyLab=lazy(()=>import('./anatomy-lab'));
 import {DEFAULT_VISIBLE,SYSTEMS,EXPLANATIONS,explanation,type Atlas,type Concept,type SceneState,type SystemId,type View} from './anatomy';
 const initial:SceneState={explode:0,visible:DEFAULT_VISIBLE,selected:[],isolate:false,view:'three-quarter',rotate:false,reset:0,hidden:[],contextOpacity:1,focus:0};
@@ -155,13 +154,13 @@ export default function Home(){
  const [shoulderCase,setShoulderCase]=useState<ShoulderState|null>(null);
  const returnShoulder=useRef<ShoulderState|undefined>(undefined);
  const [mobileExpanded,setMobileExpanded]=useState(false);
- const [atlas,setAtlas]=useState<Atlas|null>(null),[state,setState]=useState(initial),[progress,setProgress]=useState(0),[error,setError]=useState(''),[panel,setPanel]=useState<'layers'|'search'|'study'|'shoulder'|'cases'|'quiz'|'elbow'|'movements'|'knee'|'learning'|'hip'|'ankle'|'hand'|'gait'|'spine'|'practice'|'tendons'|'lab'|'notebook'|'knee-course'|'courses'|'regional-course'|'clinical'|'neuro-compare'|'neuro-exam'|'osce'|'measures'|'reflexes'|null>(()=>{if(typeof window==='undefined')return 'study';const lesson=parseWorkspaceRoute(location.hash).lesson;return lesson==='lab'||lesson==='learning'||lesson==='notebook'||lesson==='tendons'||lesson==='knee-course'||lesson==='courses'||lesson==='regional-course'||lesson==='clinical'||lesson==='neuro-compare'||lesson==='neuro-exam'||lesson==='osce'||lesson==='measures'||lesson==='reflexes'?lesson:'study';}),[details,setDetails]=useState(false),[about,setAbout]=useState(false),[query,setQuery]=useState(''),[chosen,setChosen]=useState<Concept|null>(null),[nerveSelection,setNerveSelection]=useState<{nerve:Nerve;side:Side;focus:NerveFocus}|null>(null);
+ const [atlas,setAtlas]=useState<Atlas|null>(null),[state,setState]=useState(initial),[progress,setProgress]=useState(0),[error,setError]=useState(''),[panel,setPanel]=useState<'layers'|'search'|'study'|'shoulder'|'cases'|'quiz'|'elbow'|'movements'|'knee'|'learning'|'hip'|'ankle'|'hand'|'gait'|'spine'|'practice'|'tendons'|'lab'|'notebook'|'knee-course'|'courses'|'regional-course'|'clinical'|'neuro-exam'|'osce'|'measures'|'reflexes'|null>(()=>{if(typeof window==='undefined')return 'study';const lesson=parseWorkspaceRoute(location.hash).lesson;return lesson==='lab'||lesson==='learning'||lesson==='notebook'||lesson==='tendons'||lesson==='knee-course'||lesson==='courses'||lesson==='regional-course'||lesson==='clinical'||lesson==='neuro-exam'||lesson==='osce'||lesson==='measures'||lesson==='reflexes'?lesson:'study';}),[details,setDetails]=useState(false),[about,setAbout]=useState(false),[query,setQuery]=useState(''),[chosen,setChosen]=useState<Concept|null>(null),[nerveSelection,setNerveSelection]=useState<{nerve:Nerve;side:Side;focus:NerveFocus}|null>(null);
  const toolLayout=useModelToolLayout(!!toolsOpen,details);
  const closeModelTool=()=>{document.querySelector<HTMLButtonElement>('.model-toolbar button[aria-expanded=true]')?.focus();setToolsOpen(null);};
  useEffect(()=>{const abort=new AbortController();setProgress(0);setError('');setAtlas(null);setChosen(null);setDetails(false);setState({...initial,visible:DEFAULT_VISIBLE});fetch('/models/atlas.json',{signal:abort.signal}).then(r=>{if(!r.ok)throw new Error('Anatomi kataloğu yüklenemedi. Bağlantını kontrol edip yeniden dene.');return r.json();}).then(data=>setAtlas(data as Atlas)).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>abort.abort();},[catalogAttempt]);
  useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==='/'&&!(e.target instanceof HTMLInputElement)&&!(e.target instanceof HTMLTextAreaElement)){e.preventDefault();openSearch();}};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[]);
  useEffect(()=>{if(panel!=='quiz'){activeFinding.current=undefined;setState(s=>s.hideNames?{...s,hideNames:false}:s);}},[panel]);
- useEffect(()=>{if(['study','spine','tendons','lab'].includes(panel??''))setWorkspace('atlas');else if(panel==='clinical'||panel==='neuro-compare'||panel==='reflexes'||panel==='measures')setWorkspace('clinical');else if(['movements','shoulder','elbow','hip','ankle','knee','gait','hand'].includes(panel??''))setWorkspace('movements');else if(['courses','regional-course','knee-course'].includes(panel??''))setWorkspace('courses');else if(['practice','quiz','cases','learning','notebook','neuro-exam','osce'].includes(panel??''))setWorkspace('practice');setAbout(false);},[panel]);
+ useEffect(()=>{if(['study','spine','tendons','lab'].includes(panel??''))setWorkspace('atlas');else if(panel==='clinical'||panel==='reflexes'||panel==='measures')setWorkspace('clinical');else if(['movements','shoulder','elbow','hip','ankle','knee','gait','hand'].includes(panel??''))setWorkspace('movements');else if(['courses','regional-course','knee-course'].includes(panel??''))setWorkspace('courses');else if(['practice','quiz','cases','learning','notebook','neuro-exam','osce'].includes(panel??''))setWorkspace('practice');setAbout(false);},[panel]);
  useEffect(()=>{if(panel!=='gait'&&!(panel===null&&details))setState(s=>s.gait?{...s,hand:undefined,gait:undefined,reset:s.reset+1}:s);},[panel,details]);
  useEffect(()=>{const close=(event:KeyboardEvent)=>{if(event.key==='Escape'&&toolsOpen){event.preventDefault();event.stopPropagation();setToolsOpen(null);}};window.addEventListener('keydown',close,true);return()=>window.removeEventListener('keydown',close,true);},[toolsOpen]);
  useEffect(()=>{if(about)setToolsOpen(null);},[about]);
@@ -258,7 +257,7 @@ export default function Home(){
   const restore=(event?:Event)=>{
    navigation.current!.adopt(event?.type);setHistoryTick(v=>v+1);setRouteTick(v=>v+1);
    restoringRoute.current=true;const route=parseWorkspaceRoute(location.hash);lastRouteIdentity.current=routeIdentity(route);
-   if(route.lesson==='clinical'||route.lesson==='neuro-compare'||route.lesson==='neuro-exam'||route.lesson==='osce'||route.lesson==='measures'||route.lesson==='reflexes'){
+   if(route.lesson==='clinical'||route.lesson==='neuro-exam'||route.lesson==='osce'||route.lesson==='measures'||route.lesson==='reflexes'){
     setStudyVariant(route.compare);
     showStudySelection([]);setToolsOpen(null);setAbout(false);
     if(route.lesson==='clinical'){
@@ -312,7 +311,7 @@ export default function Home(){
  const activeMovement=movementLesson(routeScene);
  const currentRoute:WorkspaceRoute={lesson:details?(activeMovement??'study'):panel==='search'||panel==='layers'||!panel?(workspace==='atlas'?'study':workspace==='movements'?'movements':workspace==='clinical'?'clinical':workspace==='courses'?'courses':'practice'):panel==='practice'?'practice':panel as WorkspaceRoute['lesson']};
  if(currentRoute.lesson==='knee-course'||currentRoute.lesson==='regional-course')currentRoute.courseStep=courseStep;if(currentRoute.lesson==='regional-course'){currentRoute.courseId=regionalId;currentRoute.courseMotion=courseMotion;currentRoute.side=courseSide;}
- if(['osce','neuro-compare','measures','reflexes'].includes(currentRoute.lesson))currentRoute.compare=studyVariant;
+ if(['osce','neuro-exam','measures','reflexes'].includes(currentRoute.lesson))currentRoute.compare=studyVariant;
  if(currentRoute.lesson==='clinical'){
   currentRoute.clinicalMode=clinical.mode;
   currentRoute.side=clinical.side===defaultClinical.side?undefined:clinical.side;
@@ -331,7 +330,7 @@ export default function Home(){
  if(activeMovement&&(motion?.anatomicalMuscles||routeScene.gait?.muscles))currentRoute.motionMuscles=true;
  if(currentRoute.lesson==='cases'){currentRoute.caseId=activeCase;currentRoute.mode=activeCaseMode;}
  if(currentRoute.lesson==='quiz'){currentRoute.quizMuscle=quizReview||quizTendon||quizFinding?undefined:quizMuscle;currentRoute.quizTendon=quizReview||quizFinding?undefined:quizTendon;currentRoute.quizFinding=quizReview?undefined:quizFinding;if((quizTendon||quizFinding)&&!quizReview)currentRoute.side=tendonReturn.current?.side;}
- if(currentRoute.lesson==='learning'&&learningView==='favorites')currentRoute.learningView='favorites';if(details&&state.trace)currentRoute.trace=true;if(currentRoute.lesson==='lab'){Object.assign(currentRoute,labSettings);currentRoute.lesson='lab';currentRoute.structure=labSettings.structure??labStructure;}
+ if(currentRoute.lesson==='learning'&&learningView==='favorites')currentRoute.learningView='favorites';if(details&&state.trace)currentRoute.trace=true;if(currentRoute.lesson==='lab'){Object.assign(currentRoute,labSettings);currentRoute.lesson='lab';currentRoute.structure=labSettings.labMode==='neuro'?undefined:labSettings.structure??labStructure;}
  if(currentRoute.lesson==='hand')currentRoute.handDigit=routeScene.hand?.digit;
  const routeHash=workspaceHash(currentRoute),identity=routeIdentity(currentRoute);
  useEffect(()=>{
@@ -404,7 +403,7 @@ export default function Home(){
  const dermatomeMap=(initialFrame:MapView|'both',className:string)=>
   <Suspense fallback={null}><DermatomeMap className={className} initialFrame={initialFrame} level={clinical.levelId} side={clinical.side} onPick={pickDermatomeArea}/></Suspense>;
  useEffect(()=>{if(panel!=='cases')setCaseWithModel(false);},[panel]);
- const readerOnly=panel==='cases'&&!caseWithModel||['lab','notebook','learning','tendons','knee-course','courses','regional-course','neuro-compare','neuro-exam','osce','measures','reflexes'].includes(panel??'');
+ const readerOnly=panel==='cases'&&!caseWithModel||['lab','notebook','learning','tendons','knee-course','courses','regional-course','neuro-exam','osce','measures','reflexes'].includes(panel??'');
  const saveCurrent=()=>{if(notebookDraft){openStudyMode('notebook');return;}setNotebookDraft({id:newNotebookId(),title:chosen?.name??({shoulder:'Omuz',elbow:'Dirsek',knee:'Diz',hip:'Kalça',ankle:'Ayak bileği',hand:'El ve parmaklar',gait:'Yürüyüş'} as Record<string,string>)[currentRoute.lesson]+' · '+Math.round(currentRoute.progress??0)+'%',note:'',collection:'',hash:routeHash,updatedAt:0,archived:false});openStudyMode('notebook');};
  useEffect(()=>{setMobileExpanded(false);},[panel,details,chosen?.id]);
  const changeMobileReading=(expanded:boolean)=>{setMobileExpanded(expanded);setState(s=>({...s,reset:s.reset+1}));};
@@ -437,11 +436,10 @@ export default function Home(){
   <div className="workspace-utilities"><Button variant="ghost" className="share-button" onClick={()=>void shareLink()} aria-label="Bu çalışmanın bağlantısını kopyala"><Share2 size={17}/><span>Paylaş</span></Button>{shareStatus&&<span className="share-status" role="status">{shareStatus}</span>}<Button variant="outline" onClick={panel==='search'?goBack:openSearch} aria-label="Yapı ara"><Search size={17}/><span>Ara</span><kbd>/</kbd></Button><Button variant="ghost" className="icon-button" aria-label="Kaynaklar ve hakkında" onClick={()=>setAbout(true)}><Info size={18}/></Button></div>
   {panel==='shoulder'&&state.shoulder&&<Suspense fallback={<section className="study-panel glass" role="status">Çalışma ekranı yükleniyor…</section>}><ShoulderPanel key={state.shoulder!.side+state.shoulder!.id} atlas={atlas} value={state.shoulder} onStudy={openShoulderStudy} onCase={()=>{setShoulderCase({...state.shoulder!,playing:false});showStudySelection([]);setPanel('cases');}} onChange={changeShoulder} onAdvance={()=>setState(s=>s.shoulder?.playing?{...s,shoulder:advancePlayback(s.shoulder)}:s)} onClose={closeShoulder} onMuscle={(id,key)=>{if(id)choosePart(id);else selectMovementMuscle(key);}}/></Suspense>}
   <Suspense fallback={<section className="study-panel glass" role="status">Klinik içerik hazırlanıyor…</section>}>
-  {panel==='neuro-compare'&&<NeurologyComparison variant={studyVariant}/>}
-  {panel==='neuro-exam'&&atlas&&<MotorPractice atlas={atlas} learning={learning}/>}
+  {panel==='neuro-exam'&&atlas&&<MotorPractice key={studyVariant} atlas={atlas} learning={learning} variant={studyVariant}/>}
   {panel==='osce'&&atlas&&<Osce atlas={atlas} variant={studyVariant} learning={learning}/>}
   {panel==='measures'&&<MeasureStudy key={studyVariant} variant={studyVariant}/>}
-  {panel==='reflexes'&&<ReflexStudy key={studyVariant} variant={studyVariant}/>}
+  {panel==='reflexes'&&<ReflexStudy key={studyVariant} atlas={atlas??undefined} variant={studyVariant}/>}
   {panel==='clinical'&&clinicalModel&&<ClinicalReference value={clinical} parts={clinicalModel.parts} muscles={clinicalModel.muscles} hasPin={!!clinicalModel.focusPin} dermatome3D={dermatome3D} onDermatomeView={changeDermatomeView} dermatomeMap={showDermatomeMap?dermatomeMap('front','dermatome-map-mobile'):undefined} onChange={changeClinical} onPickLevel={pickClinicalLevel}/>}
   </Suspense>
   {(panel==='study'||panel===null&&workspace==='atlas')&&<AtlasIndex onLab={()=>openLab(atlasTab==='muscles'?'muscle:quadriceps':undefined)} atlas={atlas??undefined} region={atlasRegion} onRegionChange={region=>{setAtlasRegion(region);setDetails(false);}} selectedKey={connective?.key??nerveSelection?.nerve.id??muscleFor(chosen?.name??'')?.key??muscleGroupFor(chosen?.name??'')?.key} activeTab={atlasTab} onTabChange={tab=>{setAtlasTab(tab);setDetails(false);}} onStructure={key=>openConnective(key)} ready={!!atlas} onMuscle={selectEducation} onNerve={n=>openNerve(n,undefined)} onSpine={()=>openSpine()}/>}
@@ -471,6 +469,7 @@ import './mobile-workspace.css';
 import './atlas-expansion.css';
 
 import './study-workspace.css';
+import './clinical-study.css';
 import './muscle-comparison.css';
 import './comparison-camera.css';
 import './panel-widths.css';

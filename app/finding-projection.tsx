@@ -16,12 +16,16 @@ export default function FindingProjection({
   disabled,
   onPick,
   selectedId,
+  reveal = false,
+  reference = false,
 }: {
   atlas: Atlas;
   id: string;
   disabled: boolean;
   selectedId?: string;
-  onPick: (id: string) => void;
+  onPick?: (id: string) => void;
+  reveal?: boolean;
+  reference?: boolean;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null),
     triangles = useRef<FindingTriangle[]>([]),
@@ -33,6 +37,7 @@ export default function FindingProjection({
   const selected = selectedId ?? localSelected;
   const study = useMemo(() => findingScene(atlas, id), [atlas, id]);
   const candidateIds = study?.candidateIds ?? [];
+  const targets = study?.targetIds ?? [];
   useEffect(() => {
     let active = true;
     setMeshes([]);
@@ -101,7 +106,8 @@ export default function FindingProjection({
       ctx.fill();
     }
     for (const t of ts.filter((t) => candidateIds.includes(t.partId))) {
-      ctx.fillStyle = t.partId === selected ? "#cb8848" : "#287c85";
+      ctx.fillStyle = (reveal || reference) && targets.includes(t.partId) ? "#15785e" :
+        t.partId === selected ? "#cb8848" : reference ? "#d6e2df" : "#287c85";
       ctx.beginPath();
       ctx.moveTo(t.p[0][0], t.p[0][1]);
       ctx.lineTo(t.p[1][0], t.p[1][1]);
@@ -109,6 +115,7 @@ export default function FindingProjection({
       ctx.closePath();
       ctx.fill();
     }
+    if (reference) return;
     const candidates = meshes.filter((m) => candidateIds.includes(m.part.id));
     candidates.forEach((m, i) => {
       const own = ts.filter((t) => t.partId === m.part.id),
@@ -135,17 +142,17 @@ export default function FindingProjection({
       ctx.textBaseline = "middle";
       ctx.fillText(String(i + 1), lx, ly);
     });
-  }, [meshes, view, selected, study]);
+  }, [meshes, view, selected, study, reveal, reference]);
   const pick = (partId: string) => {
     if (disabled) return;
     setSelected(partId);
-    onPick(partId);
+    onPick?.(partId);
   };
   return (
     <div className="finding-projection">
       <p className="edu-footnote">
-        Kaynak modelin 2D izdüşümü · İsimler gizli. İstenen yapıya dokun veya numaralı bölgeyi seç.
-        Üç boyutlu görünüm açıksa aynı yapıyı modelden de seçebilirsin.
+        {reference ? "Anatomik kaynak modelin izdüşümü. İlgili yapı yeşil renkte." :
+          "Anatomik kaynak modelin izdüşümü. Yapıya dokun veya numaralı bölgeyi seç."}
       </p>
       <div className="learning-options" aria-label="İzdüşüm yönü">
         {(["front", "back", "side"] as View[]).map((v, i) => (
@@ -165,7 +172,7 @@ export default function FindingProjection({
         <>
           <canvas
             ref={canvas}
-            aria-label="İsimleri gizlenmiş anatomik kaynak model izdüşümü"
+            aria-label={reference ? study?.question.displayName : "İsimleri gizlenmiş anatomik kaynak model izdüşümü"}
             onClick={(e) => {
               const r = e.currentTarget.getBoundingClientRect(),
                 partId = pickFinding(
@@ -177,7 +184,7 @@ export default function FindingProjection({
               if (partId) pick(partId);
             }}
           />
-          <div className="finding-regions" aria-label="İzdüşümdeki numaralı yapılar">
+          {!reference && <div className="finding-regions" aria-label="İzdüşümdeki numaralı yapılar">
             {meshes
               .filter((m) => candidateIds.includes(m.part.id))
               .map((m, i) => (
@@ -191,7 +198,7 @@ export default function FindingProjection({
                   {i + 1}. bölge
                 </Button>
               ))}
-          </div>
+          </div>}
         </>
       )}
     </div>
