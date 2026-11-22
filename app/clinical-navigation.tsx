@@ -8,7 +8,7 @@ const sections = [
   { id: 'myotomes', label: 'Miyotom', route: { lesson: 'clinical', clinicalMode: 'myotomes' } },
   { id: 'reflexes', label: 'Refleksler', route: { lesson: 'reflexes' } },
   { id: 'measures', label: 'Ölçüm', route: { lesson: 'measures' } },
-  { id: 'compare', label: 'Karşılaştırma', route: { lesson: 'neuro-compare' } },
+  { id: 'compare', label: 'Karşılaştırma', route: { lesson: 'lab',labMode:'neuro',compare:'l5-fibular' } },
 ] as const satisfies ReadonlyArray<{ id: ClinicalMode | 'compare' | 'measures' | 'reflexes'; label: string; route: WorkspaceRoute }>;
 
 export function ClinicalLink({ route, children, className }: { route: WorkspaceRoute; children: React.ReactNode; className?: string }) {

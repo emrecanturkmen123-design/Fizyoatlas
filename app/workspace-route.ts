@@ -5,18 +5,19 @@ import {LESSON_HASHES,type Lesson} from './lesson-routes';
 import {isKneeCourseStep,type KneeCourseStep} from './knee-course-data';
 import {MOVEMENT_LAYER_OPTIONS} from './movement-options';
 export interface WorkspaceRoute {
- lesson:Lesson|'practice'|'clinical'|'neuro-compare'|'neuro-exam'|'osce'|'measures'|'reflexes';clinicalMode?:ClinicalMode;clinicalLevel?:string;clinicalTest?:string;clinicalMuscle?:string;courseId?:RegionalCourseId;courseStep?:KneeCourseStep;courseMotion?:number;tab?:'muscles'|'nerves'|'connective';region?:string;
+ lesson:Lesson|'practice'|'clinical'|'neuro-exam'|'osce'|'measures'|'reflexes';clinicalMode?:ClinicalMode;clinicalLevel?:string;clinicalTest?:string;clinicalMuscle?:string;courseId?:RegionalCourseId;courseStep?:KneeCourseStep;courseMotion?:number;tab?:'muscles'|'nerves'|'connective';region?:string;
  concept?:string;muscle?:string;nerve?:string;nerveFocus?:'targets';structure?:string;side?:'left'|'right';motion?:string;
  handDigit?:HandDigit|'all';progress?:number;motionMuscles?:true;motionLayers?:string[];caseId?:string;mode?:'learn'|'exam';quizMuscle?:string;quizTendon?:string;quizFinding?:string;compare?:string;
- attachment?:'both'|'origin'|'insertion';isolate?:true;tendons?:true;trace?:true;learningView?:'favorites';labMode?:'compare'|'clinical';labKind?:'muscles';labFrame?:'centered'|'aligned';labContext?:boolean;clinicalPair?:string;yaw?:number;pitch?:number;zoom?:number;
+ attachment?:'both'|'origin'|'insertion';isolate?:true;tendons?:true;trace?:true;learningView?:'favorites';labMode?:'compare'|'clinical'|'neuro';labKind?:'muscles';labFrame?:'centered'|'aligned';labContext?:boolean;clinicalPair?:string;yaw?:number;pitch?:number;zoom?:number;
 }
-const hashes:Record<WorkspaceRoute['lesson'],string>={clinical:'klinik-testler','neuro-compare':'norolojik-karsilastirma','neuro-exam':'norolojik-uygulama',osce:'uygulama-sinavi',measures:'olcum',reflexes:'refleksler',hand:'el-parmak',courses:'ogren','regional-course':'bolge-dersi','knee-course':'diz-dersi',notebook:'defter',lab:'inceleme',tendons:'tendonlar',study:'atlas',practice:'sinama',movements:'hareketler',shoulder:'omuz',elbow:'dirsek',hip:'kalca',ankle:'ayak-bilegi',knee:'diz',gait:'yuruyus',cases:'vakalar',quiz:'test',learning:'calismalarim',spine:'omurga',latissimus:'latissimus'};
+const hashes:Record<WorkspaceRoute['lesson'],string>={clinical:'klinik-testler','neuro-exam':'norolojik-uygulama',osce:'uygulama-sinavi',measures:'olcum',reflexes:'refleksler',hand:'el-parmak',courses:'ogren','regional-course':'bolge-dersi','knee-course':'diz-dersi',notebook:'defter',lab:'inceleme',tendons:'tendonlar',study:'atlas',practice:'sinama',movements:'hareketler',shoulder:'omuz',elbow:'dirsek',hip:'kalca',ankle:'ayak-bilegi',knee:'diz',gait:'yuruyus',cases:'vakalar',quiz:'test',learning:'calismalarim',spine:'omurga',latissimus:'latissimus'};
 export const clinicalHashes:Record<ClinicalMode,string>={tests:'klinik-testler',dermatomes:'dermatom',myotomes:'miyotom'};
 export function parseWorkspaceRoute(hash:string):WorkspaceRoute {
  const [base,query='']=hash.replace(/^#/,'').split('?'),params=new URLSearchParams(query);
  const clinicalMode=base==='klinik-atlas'?'tests':(Object.keys(clinicalHashes) as ClinicalMode[]).find(mode=>clinicalHashes[mode]===base);
- const learningSections=['neuro-compare','neuro-exam','osce','measures','reflexes'] as const;
+ const learningSections=['neuro-exam','osce','measures','reflexes'] as const;
  const special=learningSections.find(key=>hashes[key]===base);
+ if(base==='norolojik-karsilastirma')return {lesson:'lab',labMode:'neuro',compare:params.get('karsilastir')==='c8-t1'?'c8-t1':'l5-fibular'};
  const legacyCaseId=base==='ayak-dusmesi-vakasi'?'foot-drop':base==='ulnar-vaka'?'ulnar-hand':undefined;
  if(legacyCaseId)return {lesson:'cases',caseId:legacyCaseId,...(params.get('mod')==='exam'?{mode:'exam'}:{})};
  const lesson=clinicalMode?'clinical':base==='atlas'?'study':base==='sinama'?'practice':special??LESSON_HASHES['#'+base]??'study';
@@ -49,7 +50,7 @@ export function parseWorkspaceRoute(hash:string):WorkspaceRoute {
  if(lesson==='lab'&&params.get('karsilastirmagrubu')==='kaslar')route.labKind='muscles';
  if(params.get('cevre')==='1'||params.get('cevre')==='0')route.labContext=params.get('cevre')==='1';
  const clinicalPair=params.get('bilgikarsilastirma');if(clinicalPair&&clinicalPair.length<=120)route.clinicalPair=clinicalPair;
- const labMode=params.get('gosterim');if(labMode==='compare'||labMode==='clinical')route.labMode=labMode;else if(labMode==='section')route.labMode='compare';
+ const labMode=params.get('gosterim');if(labMode==='compare'||labMode==='clinical'||labMode==='neuro')route.labMode=labMode;else if(labMode==='section')route.labMode='compare';
  for(const [key,param,min,max] of [['yaw','donus',-180,180],['pitch','egim',-80,80],['zoom','yakinlik',.5,2]] as const){const raw=params.get(param);if(raw!==null&&raw!==''&&Number.isFinite(Number(raw)))route[key]=Math.max(min,Math.min(max,Number(raw)));}
  if(lesson==='latissimus'){route.lesson='study';route.muscle='latissimus dorsi';}
  return route;

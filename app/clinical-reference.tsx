@@ -150,8 +150,8 @@ export default function ClinicalReference({value, onChange, parts, muscles, hasP
           <div className="clinical-reference-views">
             <ClinicalLink route={{lesson:'clinical',clinicalMode:mode==='myotomes'?'dermatomes':'myotomes',clinicalLevel:levelId,side}}>{mode==='myotomes'?'Duyu haritasında göster':'Kasları ve sinirleri göster'}</ClinicalLink>
             {['C5','C6','C7','L4','S1'].includes(levelId)&&<ClinicalLink route={{lesson:'reflexes',compare:levelId}}>İlgili refleks</ClinicalLink>}
-            {['C8','T1'].includes(levelId)&&<ClinicalLink route={{lesson:'neuro-compare',compare:'c8-t1'}}>C8–T1 ve ulnar sinir</ClinicalLink>}
-            {levelId==='L5'&&<ClinicalLink route={{lesson:'neuro-compare'}}>L5 ve fibularis karşılaştırması</ClinicalLink>}
+            {['C8','T1'].includes(levelId)&&<ClinicalLink route={{lesson:'lab',labMode:'neuro',compare:'c8-t1'}}>C8–T1 ve ulnar sinir</ClinicalLink>}
+            {levelId==='L5'&&<ClinicalLink route={{lesson:'lab',labMode:'neuro',compare:'l5-fibular'}}>L5 ve fibularis karşılaştırması</ClinicalLink>}
           </div>
           {relatedTests.length>0&&<details className="clinical-related-muscles">
             <summary>İlişkili klinik testler</summary>

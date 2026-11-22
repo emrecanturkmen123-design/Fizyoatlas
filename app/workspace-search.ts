@@ -28,7 +28,7 @@ const destinations = [
   ...levels.map(level => destination('Miyotom', level.id + ' miyotomu',
     { lesson: 'clinical', clinicalMode: 'myotomes', clinicalLevel: level.id }, ...levelAliases(level.id, level.motor ?? ''))),
   ...CASE_JOURNEYS.map(c => destination('Vaka', c.title, { lesson: 'cases', caseId: c.id }, c.region, c.diagnosis, ...(caseAliases[c.id] ?? []))),
-  destination('Karşılaştırma', 'L5 ve fibular sinir', { lesson: 'neuro-compare' }, 'L5', 'ayak düşmesi', 'düşük ayak', 'peroneal'),
+  destination('Karşılaştırma', 'L5 ve fibular sinir', { lesson: 'lab',labMode:'neuro',compare:'l5-fibular' }, 'L5', 'ayak düşmesi', 'düşük ayak', 'peroneal'),
   destination('Alıştırma', 'Nörolojik uygulama', { lesson: 'neuro-exam' }, 'sinir kas hareket'),
   destination('Dersler', 'Baştan Sona Öğren', { lesson: 'courses' }, 'bölgesel ders omuz diz dirsek el kalça ayak bileği'),
   destination('Ders', 'Diz anatomisi dersi', { lesson: 'knee-course' }, 'diz', 'ön çapraz bağ', 'ÖÇB'),
@@ -40,7 +40,7 @@ const destinations = [
   destination('Ölçüm', 'Timed Up and Go', { lesson: 'measures',compare:'tug' }, 'TUG'),
   destination('Ölçüm', '5 Kez Otur-Kalk', { lesson: 'measures',compare:'sts' }, '5xSTS', '5 kez otur kalk'),
   destination('İstasyon', 'Uygulama sınavı', { lesson: 'osce' }, 'OSCE'),
-  destination('Karşılaştırma', 'C8–T1 ve ulnar sinir', { lesson: 'neuro-compare',compare:'c8-t1' }, 'C8', 'T1', 'ulnar'),
+  destination('Karşılaştırma', 'C8–T1 ve ulnar sinir', { lesson: 'lab',labMode:'neuro',compare:'c8-t1' }, 'C8', 'T1', 'ulnar'),
   destination('Tekrar', 'Çalışmalarım', { lesson: 'learning' }, 'tekrar', 'favoriler', 'ilerleme'),
 ];
 

@@ -1,4 +1,4 @@
-import { useEffect, useId, useState, type CSSProperties } from 'react';
+import { useEffect, useId, useState, type CSSProperties, type ReactNode } from 'react';
 import { Maximize2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -71,7 +71,7 @@ const testSteps: Record<string, readonly [string, string, string, string]> = {
   ],
 };
 
-function ClinicalDiagram({ testId, step }: { testId: string; step?: number }) {
+export function ClinicalDiagram({ testId, step, overlay }: { testId: string; step?: number; overlay?:ReactNode }) {
   const id = useId();
   const illustration = clinicalTestIllustrations[testId];
   const drawing = illustration.drawing.filter(item=>{
@@ -87,7 +87,7 @@ function ClinicalDiagram({ testId, step }: { testId: string; step?: number }) {
   const hasGhost = drawing.some(item => item.kind === 'ghost');
 
   return (
-      <div className="clinical-test-illustration-art">
+      <div className="clinical-test-illustration-art" data-study-overlay={!!overlay||undefined}>
         <svg viewBox={closeupViewBoxes[testId] ?? '0 0 320 188'} aria-hidden="true" focusable="false">
           <defs>
             <linearGradient id={id + '-skin'} x1="0" y1="10" x2="62" y2="180" gradientUnits="userSpaceOnUse">
@@ -161,6 +161,7 @@ function ClinicalDiagram({ testId, step }: { testId: string; step?: number }) {
           })}
           </g>
         </svg>
+        {overlay}
         {(hasHands || hasArrows || hasResistance || hasGhost) && (
           <div className="clinical-test-illustration-legend">
             {hasHands && <span data-key="hand">Klinisyenin eli</span>}
