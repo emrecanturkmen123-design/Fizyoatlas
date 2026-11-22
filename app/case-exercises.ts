@@ -1,11 +1,31 @@
-export type ExerciseKind='external'|'wrist'|'glide'|'heel'|'sitstand'|'hip'|'walk'|'ankle'|'elbow'|'knee-flexion';
+export type ExerciseKind='external'|'wrist'|'glide'|'heel'|'sitstand'|'hip'|'walk'|'ankle'|'elbow'|'knee-flexion'|'typing';
 export interface Exercise {id:string;title:string;kind:ExerciseKind;steps:readonly [string,string,string];quality:string;regress:string;progress:string;note:string;source:string;motion?:{joint:'shoulder'|'hip'|'ankle'|'knee'|'elbow';id:string}}
 const aaos='https://www.orthoinfo.org/recovery/';
 const external:Exercise={id:'external',title:'Kontrollü omuz dış rotasyonu',kind:'external',steps:['Dirsek gövde yanında bükülü; gövde sabit. Toleransa uygun hafif direnç seçilir.','Dirsek konumunu koruyarak önkolu dışa yönlendir.','Gövdeyi çevirmeden başlangıca kontrollü dön.'],quality:'Dirseği yana kaçırma ve gövde dönüşüyle hareketi büyütme.',regress:'Direnci ve hareket aralığını azalt.',progress:'Kontrol ve sonraki gün yanıtı uygunsa direnci kademelendir.',note:'Şema üstten görünüşle hareket yönünü gösterir. 3D görünümde kasların yaklaşık deformasyonu incelenebilir.',source:aaos+'rotator-cuff-and-shoulder-conditioning-program/',motion:{joint:'shoulder',id:'external'}};
 const heel:Exercise={id:'heel',title:'Destekli çift ayak topuk yükseltme',kind:'heel',steps:['Düz zeminde iki ayağa dengeli yük ver; sağlam bir destekten tutun.','Ön ayaklar yerde kalırken topukları birlikte kontrollü yükselt.','Topukları yavaşça zemine indir.'],quality:'Ayak bileklerini dışa kaçırma; destek güvenli olmalı.',regress:'Yükselme aralığını azalt; desteği artır.',progress:'Uygun kapasitede direnç veya tek ayak yüküne geçişi değerlendir.',note:'Şema yük taşıyan topuk yükseltmeyi gösterir. 3D bağlantı yalnız plantar fleksiyon bileşenidir; kapalı zincir egzersizin bütünü değildir.',source:aaos+'foot-and-ankle-conditioning-program/',motion:{joint:'ankle',id:'plantarflexion'}};
 const sitstand:Exercise={id:'sitstand',title:'Kontrollü otur-kalk',kind:'sitstand',steps:['Sabit sandalyede otur, ayakları zemine yerleştir; gerekiyorsa destek hazır olsun.','Gövdeyi öne taşıyıp ayaklardan yük alarak ayağa kalk.','Sandalyeye yavaş ve kontrollü otur.'],quality:'Sandalyeye düşer gibi oturma; yardım düzeyini güvenliğe göre seç.',regress:'Sandalye yüksekliğini ve el desteğini artır.',progress:'Kontrol uygunsa el desteğini azalt veya tekrarları kademelendir.',note:'Bu bir hareket öğretim şemasıdır; tekrar ve yardım düzeyi kişiye göre belirlenir.',source:'https://www.nice.org.uk/guidance/ng226/chapter/Recommendations'};
 const walk:Exercise={id:'walk',title:'Kısa, kontrollü yürüme',kind:'walk',steps:['Düz ve güvenli bir yol seç; mevcut belirtileri başlangıçta değerlendir.','Rahat tempoda kısa adım dizisiyle yürü.','Molada ve sonrasında belirtileri yeniden değerlendir.'],quality:'Hız ve süreyi aynı anda artırma; yeni nörolojik bulguları ayrı değerlendir.',regress:'Süreyi kısalt ve molaları artır.',progress:'Toleransa göre önce süreyi, sonra görev zorluğunu değiştir.',note:'Şema bir adımın basitleştirilmiş yönünü gösterir; tam yürüyüş analizi değildir.',source:'https://www.nice.org.uk/guidance/ng59/chapter/recommendations'};
+const supportedWalk:Exercise={
+ ...walk,id:'foot-clearance',title:'Destekli adım ve ayak ucu kontrolü',
+ steps:['Değerlendirmede seçilmiş destekle düz zeminde pozisyon al.','Rahat tempoda ayak ucunun zemine takılmadan geçtiği kısa bir adım dene.','Dengeyi yeniden kur. Takılma veya yorgunluk artıyorsa mola ver.'],
+ quality:'Hızdan önce güvenli ayak ucu açıklığı ve dengeyi izle.',
+ regress:'Parkuru kısalt ve destek gereksinimini yeniden değerlendir.',
+ progress:'Güvenli adımlar tekrar edilebiliyorsa mesafeyi görev toleransına göre artır.',
+ note:'Kurgusal vakada neden araştırıldıktan sonra planlanan görev pratiğidir. Destek seçimi kişiye göre yapılır.',
+ source:'https://pmc.ncbi.nlm.nih.gov/articles/PMC6637663/',
+};
 export const CASE_EXERCISES:Record<string,Exercise>={
+ 'foot-drop':supportedWalk,
+ 'lumbar-foot-drop':supportedWalk,
+ 'ulnar-hand':{
+  id:'typing-break',title:'Kısa yazı bloğu ve pozisyon molası',kind:'typing',
+  steps:['Klavyeyi yakına yerleştir. Dirseği masanın sert kenarına dayamadan otur.','Rahat pozisyonda kısa bir yazı bloğu dene. Uyuşma ve el kontrolünü izle.','Ellerini klavyeden çek, pozisyonu değiştir ve belirtileri yeniden değerlendir.'],
+  quality:'Medial dirseğe sürekli bası ve uzun süre aynı pozisyonda kalmaktan kaçın.',
+  regress:'Yazı bloğunu kısalt ve tetikleyen pozisyonu yeniden düzenle.',
+  progress:'Belirtiler ve el kontrolü izin verdikçe yazı süresini kademeli artır.',
+  note:'Göreve dönüş şemasıdır. İlerleyen kuvvet kaybı klinik yeniden değerlendirme gerektirir.',
+  source:'https://www.orthoinfo.org/bodypart/elbow/ulnar-nerve-entrapment-at-the-elbow/',
+ },
  'rotator-cuff':external,
  'frozen-shoulder':{...external,id:'assisted-external',title:'Nazik destekli dış rotasyon',steps:['Dirsek gövdeye yakın; sağlam el veya çubukla destek sağla.','Tolere edilen aralıkta dış rotasyona nazikçe yardım et.','Zorlamadan başlangıca dön.'],quality:'Gövdeyi çevirerek aralığı büyütme; ağrılı zorlamadan kaçın.',regress:'Aralığı ve uygulanan yardımı azalt.',progress:'İrritabilite azaldıkça aralık ve günlük kullanım hedeflerini artır.',note:'Şema omuz hareket yönünü gösterir; yardımcı el/çubuk ve uygulanan kuvvet 3D modele dahil değildir.'},
  'lateral-elbow':{id:'wrist',title:'Destekli el bileği ekstansiyonu',kind:'wrist',steps:['Önkolu masaya koy, avuç aşağı; el bileği masa kenarında serbest.','Tolere edilen hafif dirençle el sırtını yavaşça yukarı kaldır.','Bileği kontrollü indir; gerekirse kaldırma bölümüne diğer el yardım eder.'],quality:'Önkolu masadan kaldırıp hareketi dirsekten yapma.',regress:'Direnci azalt veya kaldırma bölümüne yardım ekle.',progress:'Tolere edilen direnç ve kavrama görevlerini kademelendir.',note:'Şema el bileği hareketini gösterir; kişisel doz ve direnç değerlendirmeyle seçilir.',source:aaos+'epicondylitis-therapeutic-exercise-program/'},

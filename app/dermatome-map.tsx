@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, type MouseEvent, type PointerEvent } from 'react';
-import { Minus, Plus, RotateCcw } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { sensoryLevels, levels, type ClinicalSide } from './clinical-model';
 import { ClinicalLink } from './clinical-navigation';
@@ -178,10 +178,14 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
             </Button>
           ))}
         </div>
-      </div>
-      <div className="dermatome-mobile-root">
-        <p><strong>{level} · {side==='left'?'Sol':'Sağ'}</strong> {sensoryLevels.find(item=>item.id===level)?.sensory}</p>
-        {levels.some(item=>item.id===level)&&<ClinicalLink route={{lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:level,side}}>Miyotoma geç</ClinicalLink>}
+        <div className="dermatome-map-zoom" role="group" aria-label="Harita yakınlaştırma">
+          <Button type="button" variant="outline" size="icon-sm" onClick={() => changeZoom(-1)} disabled={!camera.step}
+            aria-label="Uzaklaştır" title="Uzaklaştır"><Minus size={17} /></Button>
+          <Button type="button" variant="ghost" size="sm" onClick={resetZoom} disabled={!camera.step}
+            aria-label={`Yakınlaştırma: %${Math.round(zoom * 100)}. Yakınlaştırmayı sıfırla`} title="Yakınlaştırmayı sıfırla">{Math.round(zoom * 100)}%</Button>
+          <Button type="button" variant="outline" size="icon-sm" onClick={() => changeZoom(1)} disabled={camera.step === zoomLevels.length - 1}
+            aria-label="Yakınlaştır" title="Yakınlaştır"><Plus size={17} /></Button>
+        </div>
       </div>
       <div className="dermatome-map-canvas">
       <div ref={art} className="dermatome-map-art" data-zoomed={zoom > 1}
@@ -239,15 +243,10 @@ export default function DermatomeMap({ className, initialFrame, level, side, onP
           </g>
         </svg>
       </div>
-        <div className="dermatome-map-zoom" role="group" aria-label="Harita yakınlaştırma">
-          <Button type="button" variant="outline" size="icon-sm" onClick={() => changeZoom(-1)} disabled={!camera.step}
-            aria-label="Uzaklaştır" title="Uzaklaştır"><Minus size={17} /></Button>
-          <output aria-label="Yakınlaştırma düzeyi">{Math.round(zoom * 100)}%</output>
-          <Button type="button" variant="outline" size="icon-sm" onClick={() => changeZoom(1)} disabled={camera.step === zoomLevels.length - 1}
-            aria-label="Yakınlaştır" title="Yakınlaştır"><Plus size={17} /></Button>
-          <Button type="button" variant="ghost" size="icon-sm" onClick={resetZoom} disabled={!camera.step}
-            aria-label="Yakınlaştırmayı sıfırla" title="Yakınlaştırmayı sıfırla"><RotateCcw size={16} /></Button>
-        </div>
+      </div>
+      <div className="dermatome-mobile-root">
+        <p><strong>{level} · {side==='left'?'Sol':'Sağ'}</strong> {sensoryLevels.find(item=>item.id===level)?.sensory}</p>
+        {levels.some(item=>item.id===level)&&<ClinicalLink route={{lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:level,side}}>Miyotoma geç</ClinicalLink>}
       </div>
       <div className="dermatome-map-status">
         <div className="dermatome-map-selection" aria-live="polite">

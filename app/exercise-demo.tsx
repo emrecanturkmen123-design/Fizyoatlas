@@ -10,6 +10,18 @@ function ExerciseDrawing({kind,t,cue}:{kind:ExerciseKind;t:number;cue:boolean}){
  let drawing;
  if(kind==='external'){const e:Point=[210,130],angle=(-90+60*t)*Math.PI/180,hand:Point=[e[0]+62*Math.cos(angle),e[1]+62*Math.sin(angle)];drawing=<><ellipse cx="160" cy="157" rx="49" ry="29" fill="#d9e6ea"/><circle cx="160" cy="134" r="19" fill="#9db5bf"/>{seg([112,147],[106,100],'#9db5bf')}{seg([203,153],e)}{seg(e,hand)}{joint(e)}<path d="M211 64 Q254 69 274 97" stroke="#c67b34" fill="none" strokeWidth="2" markerEnd={`url(#${id})`}/><text x="160" y="219" textAnchor="middle">Üstten görünüş · dirsek sabit</text></>;}
  else if(kind==='wrist'){const wrist:Point=[218,132],a=(-40*t)*Math.PI/180,hand:Point=[218+61*Math.cos(a),132+61*Math.sin(a)];drawing=<><path d="M44 155H215V224" fill="none" stroke="#b8c6cd" strokeWidth="8"/>{seg([64,132],wrist,'#809da9',20)}{seg(wrist,hand,'#176b86',15)}{joint(wrist)}<text x="160" y="246" textAnchor="middle">Önkol destekli · avuç aşağı</text></>;}
+ else if(kind==='typing'){
+  const elbow:Point=[lerp(126,152,t),lerp(172,148,t)];
+  const wrist:Point=[lerp(177,224,t),lerp(143,134,t)];
+  const fingers:Point=[wrist[0]+23,wrist[1]+6];
+  drawing=<><path d="M171 154H295M270 156V240" fill="none" stroke="#a8b9c2" strokeWidth="7"/>
+    <rect x="219" y="141" width="64" height="10" rx="3" fill="#b5c7cf"/>
+    <circle cx="104" cy="68" r="21" fill="#9db5bf"/>
+    {seg([103,101],[103,202],'#9db5bf',30)}
+    {seg([113,112],elbow,'#809da9',16)}{seg(elbow,wrist,'#176b86',13)}{seg(wrist,fingers,'#176b86',8)}
+    {joint(elbow)}
+  </>;
+ }
  else if(kind==='glide'){drawing=<><path d="M128 232V182L106 153Q100 142 110 137L130 153V133H224V211Q210 237 184 240" fill="#d9e6ea" stroke="#809da9" strokeWidth="3"/>{[136,161,186,211].map((x,i)=>{const a:Point=[x,137],b:Point=[x,92-i%2*8],angle=(-90+100*t)*Math.PI/180,c:Point=[x+27*Math.cos(angle),b[1]+27*Math.sin(angle)],angle2=angle+85*t*Math.PI/180,d:Point=[c[0]+22*Math.cos(angle2),c[1]+22*Math.sin(angle2)];return <g key={x}>{seg(a,b)}{seg(b,c)}{seg(c,d)}{joint(b)}{joint(c)}</g>})}<text x="160" y="264" textAnchor="middle">Kanca · kök eklemler açık</text></>;}
  else{
  let head:Point=[150,49],shoulder:Point=[150,80],pelvis:Point=[150,151],knee:Point=[150,200],ankle:Point=[150,247],foot:Point=[175,247],otherKnee:Point=[135,200],otherAnkle:Point=[135,247],hand:Point=[217,128],elbow:Point=[181,111];

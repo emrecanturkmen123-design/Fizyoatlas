@@ -59,12 +59,12 @@ export default function ClinicalReference({value, onChange, parts, muscles, hasP
     </div>
     <ClinicalNavigation active={mode} level={mode==='tests'?undefined:levelId} side={side}/>
     {mode === 'dermatomes' && <>
+      {dermatomeMap}
       <div className="clinical-reference-views" role="group" aria-label="Dermatom görünümü">
         <Button variant={dermatome3D ? 'outline' : 'default'} aria-pressed={!dermatome3D} onClick={() => onDermatomeView?.(false)}>Harita</Button>
         <Button variant={dermatome3D ? 'default' : 'outline'} aria-pressed={!!dermatome3D} onClick={() => onDermatomeView?.(true)}>3D model</Button>
       </div>
-      <p className="clinical-reference-hint">Duyu alanını seçmek için renkli bölgeye dokun.</p>
-      {dermatomeMap}
+      <p className="clinical-reference-hint">{dermatome3D?'Duyu noktasını modelde incelemek için bir kök seç.':'Duyu alanını seçmek için renkli bölgeye dokun.'}</p>
     </>}
     {mode !== 'tests' && <div className="clinical-reference-views">
       <Button aria-pressed={side === 'left'} variant="outline" onClick={() => onChange({side:'left'})}>Sol</Button>
