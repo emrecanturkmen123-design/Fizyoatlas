@@ -133,3 +133,7 @@ body:has(.workspace-layout[data-tools-replace-card=true]) .detail-sheet{display:
 .context-presets button[aria-pressed=true]{background:#e4eff2;color:#164f60}
 .card-visibility .context-hint{margin-bottom:0}
 @media(max-width:767px),(max-height:500px){.card-visibility{padding:6px 0}.card-visibility .context-hint{display:none}.context-presets button{min-height:36px}.card-visibility .context-control label{font-size:13px}}
+
+.case-title{font-size:1.2rem;font-weight:650;margin:8px 0}
+.workspace-layout[data-reading-only=true] .case-panel.case-reading{left:50%;transform:translateX(-50%)}
+@media(max-width:767px){.workspace-layout[data-reading-only=true] .case-panel.case-reading{left:8px;transform:none}}

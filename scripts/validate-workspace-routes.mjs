@@ -16,7 +16,7 @@ const samples=[
  {lesson:'clinical',clinicalMode:'tests',clinicalTest:'lachman'},
  {lesson:'neuro-compare'},
  {lesson:'neuro-exam'},
- {lesson:'foot-drop-case'},
+ {lesson:'cases',caseId:'foot-drop'},
  {lesson:'study',concept:'FMA_24474'},
  {lesson:'study',structure:'biceps long head tendon',side:'left',attachment:'origin'},
  {lesson:'study',structure:'patellar ligament',side:'left',attachment:'both'},

@@ -1,5 +1,4 @@
-import { useState, type ReactNode } from 'react';
-import { Button } from '@/components/ui/button';
+import type { ReactNode } from 'react';
 import ClinicalNavigation, { ClinicalLink } from './clinical-navigation';
 import { upperLimbSource } from './clinical-learning-questions';
 
@@ -43,7 +42,7 @@ export function NeurologyComparison({ variant }: { variant?:string }) {
       <div className="clinical-reference-views">
         <ClinicalLink route={{lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:'T1'}}>T1 miyotomu</ClinicalLink>
         <ClinicalLink route={{lesson:'study',nerve:'ulnar'}}>Ulnar sinir kartı</ClinicalLink>
-        <ClinicalLink route={{lesson:'ulnar-case'}}>El uyuşması vakasını çöz</ClinicalLink>
+        <ClinicalLink route={{lesson:'cases',caseId:'ulnar-hand'}}>El uyuşması vakasını çöz</ClinicalLink>
       </div>
       <a className="source-link" href={upperLimbSource} target="_blank" rel="noreferrer">Karşılaştırmanın kaynağı ↗</a>
     </>:<>
@@ -58,76 +57,9 @@ export function NeurologyComparison({ variant }: { variant?:string }) {
       <ClinicalLink route={{lesson:'clinical',clinicalMode:'dermatomes',clinicalLevel:'L5'}}>L5 duyu alanı</ClinicalLink>
       <ClinicalLink route={{lesson:'clinical',clinicalMode:'myotomes',clinicalLevel:'L5'}}>L5 kasları</ClinicalLink>
       <ClinicalLink route={{lesson:'study',nerve:'common-fibular'}}>Siniri modelde göster</ClinicalLink>
-      <ClinicalLink route={{lesson:'foot-drop-case'}}>Ayak düşmesi vakasını çöz</ClinicalLink>
+      <ClinicalLink route={{lesson:'cases',caseId:'foot-drop'}}>Ayak düşmesi vakasını çöz</ClinicalLink>
     </div>
     <a className="source-link" href={footDropSource} target="_blank" rel="noreferrer">Kaynak · The Interdisciplinary Management of Foot Drop ↗</a>
     </>}
-  </StudyPanel>;
-}
-
-const hypotheses = ['L5 radikülopatisi','N. fibularis communis nöropatisi'];
-const examChoices = [
-  'Öyküyü derinleştir',
-  'Dorsifleksiyon ve eversiyonu değerlendir',
-  'İnversiyon ve kalça abdüksiyonunu değerlendir',
-  'Duyu dağılımını değerlendir',
-];
-const scenarios = [
-  {
-    findings:[
-      'Uzun süre bacak bacak üstüne attıktan sonra şikâyet başlamış. Beline veya uyluğuna yayılan ağrı tarif etmiyor.',
-      'Sol ayakta dorsifleksiyon ve eversiyon karşı tarafa göre zayıf.',
-      'Sol ayak inversiyonu ve sol kalça abdüksiyonu korunmuş.',
-      'Ayak sırtında ve birinci parmak aralığında his azalmış.',
-    ],
-    answer:hypotheses[1],
-    explanation:'Dorsifleksiyon ve eversiyon zayıfken inversiyon ve kalça abdüksiyonunun korunması fibular sinir tutulumunu destekliyor.',
-  },
-  {
-    findings:[
-      'Belde başlayan ağrı, sol bacağın dış yanından ayak sırtına yayılıyor.',
-      'Sol ayakta dorsifleksiyon ve eversiyon karşı tarafa göre zayıf.',
-      'Sol ayak inversiyonu ve sol kalça abdüksiyonu karşı tarafa göre zayıf.',
-      'Sol ayak sırtında his azalmış.',
-    ],
-    answer:hypotheses[0],
-    explanation:'Dorsifleksiyona ek olarak inversiyon ve kalça abdüksiyonunun zayıf olması, fibular sinirin dışındaki kasları da kapsayan L5 kök tutulumunu destekliyor.',
-  },
-];
-
-export function FootDropCase() {
-  const [scenarioIndex,setScenarioIndex] = useState(0);
-  const [checked,setChecked] = useState<number[]>([]);
-  const [answer,setAnswer] = useState('');
-  const scenario = scenarios[scenarioIndex];
-  const assessedMotor = checked.includes(1) && checked.includes(2);
-  const finished = !!answer && assessedMotor;
-  const reset = (next = scenarioIndex) => {setScenarioIndex(next);setChecked([]);setAnswer('');};
-
-  return <StudyPanel title="Ayak düşmesi vakası">
-    <p>Bir kişi yürürken sol ayak ucunun yere takıldığını ve ayak sırtında uyuşma olduğunu söylüyor. Bulguları hangi sırayla toplamak istediğini seç.</p>
-    <div className="clinical-reference-views" aria-label="Muayene seçenekleri">
-      {examChoices.map((label,index)=><Button key={label} variant="outline" disabled={checked.includes(index)} onClick={()=>setChecked([...checked,index])}>{label}</Button>)}
-    </div>
-    {checked.length>0&&<ol className="neuro-findings" aria-label="Toplanan bulgular" aria-live="polite">
-      {checked.map(index=><li key={index}><strong>{examChoices[index]}</strong><p>{scenario.findings[index]}</p></li>)}
-    </ol>}
-    <div className="neuro-question">
-      <h3>Bulgular hangi tutulumu daha çok destekliyor?</h3>
-      <div className="clinical-reference-views">
-        {hypotheses.map(label=><Button key={label} variant="outline" aria-pressed={answer===label} disabled={!checked.length} onClick={()=>setAnswer(label)}>{label}</Button>)}
-      </div>
-      {answer&&<div role="status">{finished?
-        <p><strong>{answer===scenario.answer?'Seçimin bulgularla uyumlu.':scenario.answer+' daha olası.'}</strong> {scenario.explanation}</p>:
-        <p>{answer===hypotheses[0]
-          ?'L5 olasılığını tartmak için inversiyon ve kalça abdüksiyonunu değerlendir. Diğer ayak hareketleriyle birlikte yorumla.'
-          :'Fibular sinir tutulumunu tartmak için dorsifleksiyon ve eversiyonu değerlendir. İnversiyon ve kalça abdüksiyonunun korunup korunmadığını kontrol et.'}</p>}
-      </div>}
-    </div>
-    <div className="clinical-reference-views">
-      <ClinicalLink route={{lesson:'neuro-compare'}}>Karşılaştırmayı aç</ClinicalLink>
-      {checked.length>0&&<Button variant="ghost" onClick={()=>reset()}>Vakayı sıfırla</Button>}
-      {finished&&<Button variant="outline" onClick={()=>reset((scenarioIndex+1)%scenarios.length)}>Diğer vakayı çöz</Button>}
-    </div>
   </StudyPanel>;
 }

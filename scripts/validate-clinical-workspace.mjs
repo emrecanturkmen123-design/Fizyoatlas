@@ -16,9 +16,12 @@ assert.equal(workspaceSearch('Spurling',[])[0].route.clinicalTest,'spurling');
 assert.equal(workspaceSearch('TUG',[])[0].route.compare,'tug');
 const l5=workspaceSearch('L5',[]);
 for(const pick of ['dermatomes','myotomes'])assert(l5.some(x=>x.route.clinicalMode===pick&&x.route.clinicalLevel==='L5'));
-assert(l5.some(x=>x.route.lesson==='foot-drop-case'));
+assert(l5.some(x=>x.route.lesson==='cases'&&x.route.caseId==='foot-drop'));
 assert(l5.some(x=>x.route.lesson==='neuro-compare'));
-for(const route of [{lesson:'osce',compare:'diz'},{lesson:'reflexes',compare:'L4'},{lesson:'measures',compare:'tug'},{lesson:'ulnar-case'},{lesson:'neuro-compare',compare:'c8-t1'}]){
+assert.deepEqual(parseWorkspaceRoute('#ayak-dusmesi-vakasi'),{lesson:'cases',caseId:'foot-drop'});
+assert.deepEqual(parseWorkspaceRoute('#ulnar-vaka?mod=exam'),{lesson:'cases',caseId:'ulnar-hand',mode:'exam'});
+assert(workspaceSearch('küçük parmak',[]).some(x=>x.route?.caseId==='ulnar-hand'));
+for(const route of [{lesson:'osce',compare:'diz'},{lesson:'reflexes',compare:'L4'},{lesson:'measures',compare:'tug'},{lesson:'cases',caseId:'ulnar-hand'},{lesson:'neuro-compare',compare:'c8-t1'}]){
   assert.deepEqual(parseWorkspaceRoute(workspaceHash(route)),route);
 }
 for(const motor of motorChecks){

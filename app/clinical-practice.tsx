@@ -4,7 +4,7 @@ import type { Atlas } from './anatomy';
 import ClinicalNavigation, { ClinicalLink } from './clinical-navigation';
 import FindingProjection from './finding-projection';
 import { findingChoice, findingScene } from './model-finding';
-import { motorChecks, motorQuestionId, stationQuestionId, stations, upperLimbSource } from './clinical-learning-questions';
+import { motorChecks, motorQuestionId, stationQuestionId, stations } from './clinical-learning-questions';
 import type { LearningController } from './use-learning';
 import type { WorkspaceRoute } from './workspace-route';
 
@@ -223,30 +223,4 @@ function MeasureExample({ measure }: { measure:typeof measures[number] }) {
     </label>)}
     <p role="status">{valid?measure.labels.map((label,i)=>label+' '+values[i]+' '+measure.unit).join(' · '):'İki ölçüm için de geçerli bir değer gir.'}</p>
   </fieldset>;
-}
-
-const upperFindings=[
-  ['Duyu dağılımını değerlendir','Küçük parmak ve yüzük parmağının ulnar yarısında duyu azalmış. Medial önkol duyusu korunmuş.'],
-  ['Median sinirle innerve edilen el kaslarını değerlendir','Başparmak abdüksiyonu ve opozisyonu iki tarafta benzer.'],
-  ['Elin ulnar motor hedeflerini değerlendir','Sağ parmak abdüksiyonu zayıf. Öyküde dirsek uzun süre bükülü kaldığında yakınmalar artıyor.'],
-];
-const upperOptions=['C8–T1 kök tutulumu','Dirsek düzeyinde ulnar nöropati'];
-
-export function UlnarCase() {
-  const [checked,setChecked]=useState<number[]>([]);
-  const [choice,setChoice]=useState('');
-  const ready=checked.length===upperFindings.length;
-  return <ClinicalStudyPanel title="El uyuşması vakası">
-    <p>Kurgusal vaka. Kişi sağ küçük parmağında uyuşma ve elini kullanırken güç kaybı tarif ediyor.</p>
-    <div className="clinical-reference-views">{upperFindings.map(([label],i)=><Button key={label} variant="outline" disabled={checked.includes(i)} onClick={()=>setChecked([...checked,i])}>{label}</Button>)}</div>
-    <ol className="neuro-findings">{checked.map(i=><li key={i}><strong>{upperFindings[i][0]}</strong><p>{upperFindings[i][1]}</p></li>)}</ol>
-    <PracticeQuestion question={{prompt:'Bu bulgular hangi tutulumu daha çok destekliyor?',options:upperOptions,answer:upperOptions[1],
-      explanation:'Ulnar duyu ve motor hedefleri etkilenmişken medial önkol duyusunun ve median sinirle çalışan el kaslarının korunması ulnar sinir tutulumunu destekler.'}}
-      choice={choice} choose={setChoice} disabled={!ready}/>
-    <div className="clinical-reference-views">
-      <ClinicalLink route={{lesson:'neuro-compare',compare:'c8-t1'}}>C8–T1 ve ulnar siniri karşılaştır</ClinicalLink>
-      {choice&&<Button variant="outline" onClick={()=>{setChecked([]);setChoice('');}}>Vakayı yeniden çöz</Button>}
-    </div>
-    <a className="source-link" href={upperLimbSource} target="_blank" rel="noreferrer">Kaynak · C8–T1 ve ulnar sinir ayrımı ↗</a>
-  </ClinicalStudyPanel>;
 }

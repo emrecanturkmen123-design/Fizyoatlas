@@ -362,11 +362,8 @@
 }
 .dermatome-map-views button,
 .dermatome-map-overlap button { padding-inline: .6rem; }
-.dermatome-map-art {
-  min-height: 0;
-  display: grid;
-  place-items: center;
-}
+.dermatome-map-canvas { position: relative; min-width: 0; min-height: 0; }
+.dermatome-map-art { position: absolute; inset: 0; }
 .dermatome-map svg { display: block; width: 100%; height: 100%; min-height: 0; }
 .dermatome-map-area {
   fill: transparent;
@@ -404,13 +401,32 @@
     height: auto !important;
     max-height: none !important;
   }
+  [data-dermatome-map=true] .clinical-reference > :is(.panel-heading,.clinical-reference-hint) { display: none; }
   .clinical-reference .dermatome-map-mobile {
     display: grid;
+    grid-template-rows: auto auto auto auto auto;
     flex-shrink: 0;
-    padding: .65rem;
+    margin: 0;
+    padding: .6rem;
   }
-  .dermatome-map-mobile .dermatome-map-art { height: clamp(265px, 48dvh, 530px); }
-  .dermatome-map-mobile .dermatome-map-views button { font-size: .82rem; }
+  .dermatome-map-mobile .dermatome-map-header {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: .35rem;
+  }
+  .dermatome-map-mobile .dermatome-map-header h2 { grid-column: 1 / -1; }
+  .dermatome-map-mobile :is(.dermatome-map-views,.dermatome-map-zoom) { gap: .15rem; }
+  .dermatome-map-mobile :is(.dermatome-map-views,.dermatome-map-zoom) button {
+    min-width: 0;
+    min-height: 32px;
+    padding-inline: .3rem;
+    font-size: .78rem;
+  }
+  .dermatome-map-mobile .dermatome-map-canvas {
+    height: clamp(135px, calc(100dvh - 422px - var(--mobile-top, 0px) - var(--mobile-bottom, 0px)), 520px);
+  }
+  .dermatome-map-mobile .dermatome-map-zoom button[title="Yakınlaştırmayı sıfırla"] { min-width: 2.3rem; }
+  .dermatome-map-mobile .dermatome-map-selection:has(> strong) { display: none; }
 }
 
 .dermatome-map-status {
@@ -426,7 +442,7 @@
   gap: .3rem;
 }
 .dermatome-map-zoom button { min-width: 36px; }
-.dermatome-map-zoom output {
+.dermatome-map-zoom button[title="Yakınlaştırmayı sıfırla"] {
   text-align: center;
   min-width: 3rem;
   font-size: .84rem;
@@ -517,14 +533,8 @@ body:has(.clinical-test-illustration-dialog) [data-slot=dialog-overlay] { z-inde
   .neuro-study .clinical-navigation { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .neuro-comparison { font-size:.78rem; }
   .neuro-comparison :is(th,td) { padding:.55rem .3rem; }
-  .workspace-layout .top-actions a { min-width:0;padding-inline:5px;text-align:center;line-height:1.15; }
 }
 
-.dermatome-map-canvas { position:relative; min-width:0; }
-.dermatome-map-canvas .dermatome-map-zoom {
-  position:absolute; top:.45rem; right:.45rem; z-index:1;
-  background:#fff; border:1px solid #d5e2e8; border-radius:10px; padding:3px;
-}
 .dermatome-mobile-root { display:none; }
 @media(max-width:767px) {
   .dermatome-mobile-root {
@@ -533,12 +543,18 @@ body:has(.clinical-test-illustration-dialog) [data-slot=dialog-overlay] { z-inde
   }
   .dermatome-mobile-root p { margin:0; flex:1; }
   .dermatome-mobile-root a { white-space:normal; height:auto; min-height:30px; padding:.25rem .35rem; text-align:center; }
-  .dermatome-map-mobile .dermatome-map-art { height:clamp(243px,39dvh,430px); }
 }
 
 @media(max-width:480px) {
-  .workspace-layout .top-actions { gap:2px; }
-  .workspace-layout .top-actions a { min-width:0; padding-inline:3px; font-size:clamp(.69rem,3vw,.82rem); }
+  .workspace-layout .top-actions {
+    display:grid;
+    grid-template-columns: auto minmax(0,.8fr) minmax(0,1.3fr) minmax(0,1fr) minmax(0,.95fr) minmax(0,1.2fr);
+    gap:2px;
+  }
+  .workspace-layout .top-actions .workspace-back { grid-column:1; }
+  .workspace-layout .top-actions a { min-width:0; padding-inline:2px; font-size:clamp(.69rem,3.1vw,.82rem); white-space:normal; text-align:center; line-height:1.15; }
+  .workspace-layout .top-actions a:first-of-type { grid-column:2; }
+  .workspace-layout .clinical-navigation { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
 
 .assessment-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.65rem; }
